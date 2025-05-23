@@ -12,7 +12,7 @@ import SpareParts from '../pages/Spare Parts/SpareParts';
 import SparePartsManagement from '../pages/Spare Parts Management/SparePartsManagement';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
-import FaqPage from '../pages/FAQpages/FaqPage';
+import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
 
 const AppRoutes = () => {
