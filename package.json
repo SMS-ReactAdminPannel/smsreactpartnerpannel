@@ -34,6 +34,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
     "recharts": "^2.15.3",
+    "swiper": "^11.2.7",
     "tailwind-scrollbar-hide": "^2.0.0"
   },
   "devDependencies": {

@@ -10,7 +10,6 @@ import Bookings from '../pages/Bookings/Bookings';
 import CustomerManagement from '../pages/Customer Management/CustomerManagement';
 import SpareParts from '../pages/Spare Parts/SpareParts';
 import SparePartsManagement from '../pages/Spare Parts Management/SparePartsManagement';
-import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/Help Center/HelpCenter';
 import FaqPage from '../pages/FAQ/FaqPage';
 import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
@@ -37,10 +36,10 @@ const AppRoutes = () => {
 				<Route path='customer' element={<CustomerManagement />} />
 				<Route path='spare-parts' element={<SpareParts />} />
 				<Route path='spares-management' element={<SparePartsManagement />} />
-				<Route path='settings' element={<SettingsPage />} />
 				<Route path='help-center' element={<HelpCenter />} />
 				<Route path='faq' element={<FaqPage />} />
 				<Route path='announcement' element={<AnnouncementPage />} />
+		        <Route  path='mustcare' element={<ServiceManagement />} />
 				<Route path='*' element={<Navigate to='/' />} />
 			</Route>
 		</Routes>
