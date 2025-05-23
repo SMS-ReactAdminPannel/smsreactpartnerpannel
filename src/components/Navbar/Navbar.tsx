@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
-import Logo from '../../assets/LOGO.jpg';
 
 interface User {
 	name: string;
@@ -132,15 +131,12 @@ const Navbar: React.FC = () => {
 				style={{ backgroundColor: COLORS.white, height: '95px' }}
 				className='flex items-center px-4'
 			>
-				<div className='flex justify-center items-center h-25'>
-					<img src={Logo} alt='YES Mechanic Logo' className='w-25 h-20' />
-				</div>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
 						className='bg-[#e6a89533] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
-						style={{width: '450px', height: '50px'}}
+						style={{ width: '450px', height: '50px' }}
 					/>
 					<button
 						type='submit'
@@ -320,19 +316,8 @@ const Navbar: React.FC = () => {
 									className='w-20 h-20 rounded-full border-4 border-white shadow-md'
 								/>
 								<div>
-									{isEditing ? (
-										<input
-											type='text'
-											value={editedUser.name}
-											onChange={(e) => handleChange('name', e.target.value)}
-											className='text-2xl font-bold bg-transparent border-b border-white placeholder-white placeholder-opacity-75 text-white'
-										/>
-									) : (
-										<h2 className='text-2xl font-bold'>{editedUser.name}</h2>
-									)}
-									<p className='text-sm opacity-90'>
-										Admin, Production Department
-									</p>
+									<h2 className='text-2xl font-bold'>{editedUser.name}</h2>
+									<p className='text-sm opacity-90'>Partner</p>
 								</div>
 							</div>
 							<button
@@ -364,20 +349,7 @@ const Navbar: React.FC = () => {
 										<h4 className='text-sm text-gray-500'>
 											{field.charAt(0).toUpperCase() + field.slice(1)}
 										</h4>
-										{isEditing ? (
-											<input
-												type='text'
-												value={editedUser[field as keyof User]}
-												onChange={(e) =>
-													handleChange(field as keyof User, e.target.value)
-												}
-												className='text-lg w-full border-b border-gray-400 focus:outline-none'
-											/>
-										) : (
-											<p className='text-lg'>
-												{editedUser[field as keyof User]}
-											</p>
-										)}
+										<p className='text-lg'>{editedUser[field as keyof User]}</p>
 									</div>
 								))}
 							</div>
@@ -412,7 +384,7 @@ const Navbar: React.FC = () => {
 							</div>
 						</div>
 
-						<div className='px-6 py-4 border-t flex justify-end gap-2'>
+						{/* <div className='px-6 py-4 border-t flex justify-end gap-2'>
 							{isEditing ? (
 								<>
 									<button
@@ -436,7 +408,7 @@ const Navbar: React.FC = () => {
 									Edit Profile
 								</button>
 							)}
-						</div>
+						</div> */}
 					</div>
 				</div>
 			)}
