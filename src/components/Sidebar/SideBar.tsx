@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import {
 	FiHome,
 	FiBell,
-	FiUsers,
-	FiClipboard,
+	// FiUsers,
+	// FiClipboard,
 	FiMapPin,
 	FiTruck,
 	FiSettings,
 	FiAlertTriangle,
-	FiMenu,
+	// FiMenu,
 } from 'react-icons/fi';
 import Logo from '../../assets/LOGO.jpg';
 import { Megaphone } from 'lucide-react';

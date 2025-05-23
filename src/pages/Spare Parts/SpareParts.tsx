@@ -9,7 +9,7 @@ interface SparePart {
   name: string;
   price: number;
   inStock: boolean;
-  images: string[]; // now array of images
+  images: string[];
   type: string;
 }
 
@@ -21,9 +21,9 @@ const partsData: SparePart[] = [
     inStock: true,
     images: [
       'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
-      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg', // Replace with left view image
-      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg', // Replace with right view image
-      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg', // Replace with back view image
+      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
+      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
+      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
     ],
     type: 'Slider',
   },
@@ -47,9 +47,9 @@ const partsData: SparePart[] = [
     inStock: true,
     images: [
       'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
-     'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
-    'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
-     'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
+      'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
+      'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
+      'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
     ],
     type: 'Switch & Buttons',
   },
@@ -59,10 +59,10 @@ const partsData: SparePart[] = [
     price: 2000,
     inStock: true,
     images: [
-       'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
       'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
-  'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
-       'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
+      'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
+      'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
+      'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
     ],
     type: 'Grille',
   },
@@ -72,10 +72,10 @@ const partsData: SparePart[] = [
     price: 1200,
     inStock: true,
     images: [
-       'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
       'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
-       'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
-       'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
+      'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
+      'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
+      'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
     ],
     type: 'Switch & Buttons',
   },
@@ -85,50 +85,41 @@ const partsData: SparePart[] = [
     price: 2200,
     inStock: true,
     images: [
-'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
- 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
-'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
-'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDTySYdVRIC4Gv0tW-bk17WanFzM-f3i-EFw&s',
     ],
     type: 'Interior',
   },
 ];
 
-const NextArrow = (props: any) => {
-  const { onClick } = props;
-  return (
-    <div
-      className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
-      onClick={onClick}
-    >
-      <FaArrowRight size={24} />
-    </div>
-  );
-};
+const NextArrow = ({ onClick }: any) => (
+  <div
+    className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    onClick={onClick}
+  >
+    <FaArrowRight size={24} />
+  </div>
+);
 
-const PrevArrow = (props: any) => {
-  const { onClick } = props;
-  return (
-    <div
-      className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
-      onClick={onClick}
-    >
-      <FaArrowLeft size={24} />
-    </div>
-  );
-};
+const PrevArrow = ({ onClick }: any) => (
+  <div
+    className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    onClick={onClick}
+  >
+    <FaArrowLeft size={24} />
+  </div>
+);
 
 const SpareParts: React.FC = () => {
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const partNames = Array.from(new Set(partsData.map((p) => p.name)));
-
   const filteredParts = partsData.filter((part) =>
     part.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // react-slick settings for carousel inside modal
   const sliderSettings = {
     dots: false,
     infinite: true,
@@ -142,21 +133,27 @@ const SpareParts: React.FC = () => {
   return (
     <div className="p-6">
       {/* Search Bar */}
-      <div className="mb-6">
-        <label className="block font-semibold text-[#9b111e] mb-3">Search Products</label>
-        <select
-          className="w-full md:w-96 border border-gray-300 rounded px-4 py-2"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        >
-          <option value="">All Products</option>
-          {partNames.map((name, idx) => (
-            <option key={idx} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-      </div>
+     <div className="mb-6 w-full max-w-sm relative">
+  <label className="block text-2xl font-semibold text-[#9b111e] mb-3">
+    Spare Parts
+  </label>
+  <input
+    type="text"
+    placeholder="Search by product name..."
+    className="w-full border border-gray-300 rounded-full px-5 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
+  <button
+    onClick={() => setSearchTerm('')}
+    className="absolute right-3 top-[53px] text-2xl text-gray-500 hover:text-gray-800 text-lg disabled:opacity-50"
+    aria-label="Clear search"
+    disabled={!searchTerm}
+  >
+    &times;
+  </button>
+</div>
+
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -194,7 +191,7 @@ const SpareParts: React.FC = () => {
         ))}
       </div>
 
-      {/* Modal with 4-image carousel */}
+      {/* Modal */}
       {selectedPart && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-xl p-6 max-w-md w-full relative">
