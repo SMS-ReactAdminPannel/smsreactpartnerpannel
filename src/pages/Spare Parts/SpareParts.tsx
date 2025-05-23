@@ -158,7 +158,7 @@ const SpareParts: React.FC = () => {
 </button>
 
   </div>
-</div>
+`</div>
 
 
       {/* Product Grid */}
