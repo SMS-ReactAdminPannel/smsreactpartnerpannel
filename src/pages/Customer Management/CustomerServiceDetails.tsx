@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiSearch, FiFilter, FiClock, FiCheckCircle, FiRotateCw } from 'react-icons/fi';
 
 interface Service {
   id: number;
@@ -9,70 +9,67 @@ interface Service {
   wash: string;
   duration: string;
   status: 'Completed' | 'In Progress' | 'Pending';
+  price: string;
+  date: string;
 }
 
 const CustomerServiceDetails = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'All' | 'Completed' | 'In Progress' | 'Pending'>('All');
+  const [showSearch, setShowSearch] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const services: Service[] = [
     {
       id: 1,
       name: "Engine Repair",
       description: "Complete engine diagnostics and repair service including oil change, filter replacement, and tune-up.",
-      wash: "foam",
+      wash: "Foam Wash",
       duration: "3-4 hours",
-      status: "Completed"
+      status: "Completed",
+      price: "Rs. 12,500",
+      date: "May 15, 2023"
     },
     {
       id: 2,
-      name: "Washing",
+      name: "Premium Wash",
       description: "Premium car wash service with interior cleaning, waxing, and polishing.",
-      wash: "foam",
+      wash: "Foam Wash",
       duration: "1 hour",
-      status: "In Progress"
+      status: "In Progress",
+      price: "Rs. 2,500",
+      date: "June 2, 2023"
     },
     {
       id: 3,
-      name: "Air Check",
+      name: "AC Service",
       description: "Complete AC system check including gas refill, compressor inspection, and cooling efficiency test.",
-      wash: "foam",
+      wash: "Basic Wash",
       duration: "2 hours",
-      status: "Pending"
+      status: "Pending",
+      price: "Rs. 5,800",
+      date: "June 10, 2023"
     },
     {
       id: 4,
-      name: "Tyre Check",
-      description: "Complete AC system check including gas refill, compressor inspection, and cooling efficiency test.",
-      wash: "foam",
-      duration: "2 hours",
-      status: "Pending"
+      name: "Tyre Alignment",
+      description: "Professional wheel alignment service to ensure proper vehicle handling and tire wear.",
+      wash: "Basic Wash",
+      duration: "1.5 hours",
+      status: "Pending",
+      price: "Rs. 3,200",
+      date: "June 12, 2023"
     },
-    {
-      id: 5,
-      name: "Bannet",
-      description: "Complete AC system check including gas refill, compressor inspection, and cooling efficiency test.",
-      wash: "foam",
-      duration: "2 hours",
-      status: "Pending"
-    },
-    {
-      id: 6,
-      name: "Seat Repair",
-      description: "Complete AC system check including gas refill, compressor inspection, and cooling efficiency test.",
-      wash: "foam",
-      duration: "2 hours",
-      status: "Pending"
-    },
-    {
-      id: 7,
-      name: "Sun Roof",
-      description: "Complete AC system check including gas refill, compressor inspection, and cooling efficiency test.",
-      wash: "foam",
-      duration: "2 hours",
-      status: "Pending"
-    }
   ];
+
+  const filteredServices = services.filter(service => {
+    const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         service.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'All' || service.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const handleViewClick = (service: Service) => {
     setSelectedService(service);
@@ -81,6 +78,16 @@ const CustomerServiceDetails = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+    setShowFilter(false);
+  };
+
+  const toggleFilter = () => {
+    setShowFilter(!showFilter);
+    setShowSearch(false);
   };
 
   const getStatusColor = (status: string) => {
@@ -96,34 +103,148 @@ const CustomerServiceDetails = () => {
     }
   };
 
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'Completed':
+        return <FiCheckCircle className="text-green-500" />;
+      case 'In Progress':
+        return <FiRotateCw className="text-blue-500 animate-spin" />;
+      case 'Pending':
+        return <FiClock className="text-yellow-500" />;
+      default:
+        return <FiClock className="text-gray-500" />;
+    }
+  };
+
   return (
-    <div className='grid grid-cols-2 gap-5'>
-    <div className="w-full p-4 bg-transparent dark:text-black border border-gray-200 rounded-lg shadow-sm sm:p-6 ">
-      <h2 className="text-xl font-bold mb-4  dark:text-black">Service History</h2>
-      
-      <ul className="my-4 space-y-3">
-        {services.map((service) => (
-          <motion.li 
-            key={service.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.02 }}
+    <div className="p-4">
+      {/* Header with Search and Filter */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">Service History</h2>
+        <div className="flex gap-3">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleSearch}
+            className="p-2 rounded-full bg-white border border-gray-300 shadow-sm hover:bg-gray-100 transition-colors"
           >
-            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-white transition-all duration-200">
-              <span className="flex-1 ms-3 whitespace-nowrap">{service.name}</span>
-              <motion.button 
-                onClick={() => handleViewClick(service)}
-                className="ml-4 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg px-3 py-1 text-sm font-medium transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View
-              </motion.button>
-            </div>
-          </motion.li>
-        ))}
-      </ul>
+            {showSearch ? <FiX size={20} /> : <FiSearch size={20} />}
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleFilter}
+            className="p-2 rounded-full bg-white border border-gray-300 shadow-sm hover:bg-gray-100 transition-colors"
+          >
+            <FiFilter size={20} />
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <AnimatePresence>
+        {showSearch && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-4 overflow-hidden"
+          >
+            <input
+              type="text"
+              placeholder="Search services..."
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Filter Dropdown */}
+      <AnimatePresence>
+        {showFilter && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-4 overflow-hidden"
+          >
+            <select
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+            >
+              <option value="All">All Statuses</option>
+              <option value="Completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Services Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {filteredServices.length > 0 ? (
+          filteredServices.map((service) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ y: -5 }}
+              className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
+            >
+              <div className="p-5">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">{service.name}</h3>
+                    <p className="text-sm text-gray-500 mt-1">{service.date}</p>
+                  </div>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(service.status)}`}>
+                    {service.status}
+                  </span>
+                </div>
+
+                <p className="text-gray-600 mt-3 text-sm">{service.description}</p>
+
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-gray-500">Wash Type</p>
+                    <p className="font-medium text-gray-800">{service.wash}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Duration</p>
+                    <p className="font-medium text-gray-800">{service.duration}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Price</p>
+                    <p className="font-medium text-gray-800">{service.price}</p>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <motion.button
+                    onClick={() => handleViewClick(service)}
+                    className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    View Details
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="col-span-2 py-10 text-center"
+          >
+            <p className="text-gray-500 text-lg">No services found matching your criteria</p>
+          </motion.div>
+        )}
+      </div>
 
       {/* Service Details Modal */}
       <AnimatePresence>
@@ -140,153 +261,66 @@ const CustomerServiceDetails = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 dark:bg-gray-700"
+              className="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedService.name}</h3>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{selectedService.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">{selectedService.date}</p>
+                </div>
                 <button
                   onClick={closeModal}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
+                  className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
                 >
                   <FiX size={24} />
                 </button>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2">{selectedService.description}</p>
+              <div className="space-y-5">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-700">{selectedService.description}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Price</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{selectedService.wash}</p>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Service Type</p>
+                    <p className="font-medium text-gray-900">{selectedService.wash}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{selectedService.duration}</p>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Duration</p>
+                    <p className="font-medium text-gray-900">{selectedService.duration}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Price</p>
+                    <p className="font-medium text-gray-900">{selectedService.price}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-xs text-gray-500">Status</p>
+                    <div className="flex items-center gap-2">
+                      {getStatusIcon(selectedService.status)}
+                      <span className="font-medium text-gray-900">{selectedService.status}</span>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Status</p>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(selectedService.status)}`}>
-                    {selectedService.status}
-                  </span>
-                </div>
-
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-                  <button
+                <div className="pt-4 border-t border-gray-200">
+                  <motion.button
                     onClick={closeModal}
-                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                    className="w-full px-4 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    Close
-                  </button>
+                    Close Details
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
-
- <div className="w-full p-4 bg-transparent dark:text-black border border-gray-200 rounded-lg shadow-sm sm:p-6 ">
-      <h2 className="text-xl font-bold mb-4  dark:text-black">Service History</h2>
-      
-      <ul className="my-4 space-y-3">
-        {services.map((service) => (
-          <motion.li 
-            key={service.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-white transition-all duration-200">
-              <span className="flex-1 ms-3 whitespace-nowrap">{service.name}</span>
-              <motion.button 
-                onClick={() => handleViewClick(service)}
-                className="ml-4 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg px-3 py-1 text-sm font-medium transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View
-              </motion.button>
-            </div>
-          </motion.li>
-        ))}
-      </ul>
-
-      {/* Service Details Modal */}
-      <AnimatePresence>
-        {isModalOpen && selectedService && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-            onClick={closeModal}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              transition={{ type: "spring", damping: 25 }}
-              className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 dark:bg-gray-700"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedService.name}</h3>
-                <button
-                  onClick={closeModal}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
-                >
-                  <FiX size={24} />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2">{selectedService.description}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Price</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{selectedService.wash}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Duration</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{selectedService.duration}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Status</p>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(selectedService.status)}`}>
-                    {selectedService.status}
-                  </span>
-                </div>
-
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-                  <button
-                    onClick={closeModal}
-                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-
     </div>
   );
 };
 
-
-export default CustomerServiceDetails
+export default CustomerServiceDetails;
