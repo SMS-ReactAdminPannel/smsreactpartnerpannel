@@ -13,6 +13,7 @@ import SparePartsManagement from '../pages/Spare Parts Management/SparePartsMana
 import HelpCenter from '../pages/Help Center/HelpCenter';
 import FaqPage from '../pages/FAQ/FaqPage';
 import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
+import SettingsPage from '../pages/SettingsPage/SettingsPage';
 
 const AppRoutes = () => {
 	// const { isAuthenticated } = true;
@@ -40,6 +41,7 @@ const AppRoutes = () => {
 				<Route path='faq' element={<FaqPage />} />
 				<Route path='announcement' element={<AnnouncementPage />} />
 		        <Route  path='mustcare' element={<ServiceManagement />} />
+				<Route path='/settings' element={<SettingsPage />}/>
 				<Route path='*' element={<Navigate to='/' />} />
 			</Route>
 		</Routes>

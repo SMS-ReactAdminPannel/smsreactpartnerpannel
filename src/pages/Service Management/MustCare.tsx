@@ -52,11 +52,7 @@ const MustCare: React.FC = () => {
   };
 
   return (
-    <section className="py-12 px-4 md:px-12 bg-gray-100 relative">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-        Must Care Services
-      </h2>
-
+    <section className="py-12 px-4 md:px-12 relative">
       {/* Scroll Buttons */}
       <button
         onClick={scrollLeft}
@@ -86,7 +82,7 @@ const MustCare: React.FC = () => {
               loop
               muted
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover overflow-hidden"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4 text-white">
               <h3 className="text-lg font-semibold mb-1">{item.title}</h3>

@@ -15,16 +15,11 @@ import {
   Trash2,
   BarChart3,
 } from "lucide-react";
-import { GrWorkshop } from "react-icons/gr";
-import { LuCarTaxiFront } from "react-icons/lu";
-import { PiSealCheckBold } from "react-icons/pi";
-import { LuHandshake } from "react-icons/lu";
-import { RiShieldStarFill } from "react-icons/ri";
-import { MdDateRange } from "react-icons/md";
 import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import MustCare from "./MustCare";
 
 const TermsConditionsPage: React.FC = () => {
   const serviceRequests = [
@@ -146,295 +141,287 @@ const TermsConditionsPage: React.FC = () => {
   };
 
   return (
-    <div className="">
-      {/* Main Content */}
-      <div className="">
-        {/* Header */}
-
-        {/* Stats Cards */}
-        <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stat.value}
-                  </p>
-                  <p
-                    className={`text-sm ${
-                      stat.change.startsWith("+")
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {stat.change} from last week
-                  </p>
-                </div>
-                <div className={`p-3 bg-${stat.color}-100 rounded-lg`}>
-                  <BarChart3 className={`w-6 h-6 text-${stat.color}-600`} />
-                </div>
+    <div>
+      <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
+        {stats.map((stat, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p
+                  className={`text-sm ${
+                    stat.change.startsWith("+")
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {stat.change} from last week
+                </p>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Service Requests Section */}
-        <div className="p-2">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            {/* Section Header */}
-            <div className="border-b border-gray-200 p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">
-                    Service Requests
-                  </h2>
-                  <p className="text-gray-600 mt-1">
-                    Manage incoming service appointments
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                    <input
-                      type="search"
-                      placeholder="Search requests..."
-                      className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
-                    />
-                  </div>
-                  <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                    <Filter className="w-4 h-4" />
-                    <span>Filter</span>
-                  </button>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg ">
-                    <Plus className="w-4 h-4" />
-                    <span>New Request</span>
-                  </button>
-                </div>
+              <div className={`p-3 bg-${stat.color}-100 rounded-lg`}>
+                <BarChart3 className={`w-6 h-6 text-${stat.color}-600`} />
               </div>
-            </div>
-
-            {/* Service Requests Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Request ID
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Customer
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Vehicle
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Service
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Schedule
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Status
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Priority
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Cost
-                    </th>
-                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {serviceRequests.map((request) => (
-                    <tr key={request.id} className="hover:bg-gray-50">
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-blue-600">
-                          {request.id}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            {request.customerName}
-                          </p>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <Phone className="w-3 h-3 mr-1" />
-                            {request.phone}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-2">
-                          <Car className="w-4 h-4 text-gray-500" />
-                          <span className="text-gray-900">
-                            {request.vehicleInfo}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-gray-900">
-                          {request.serviceType}
-                        </span>
-                        {request.notes && (
-                          <p className="text-xs text-gray-600 mt-1">
-                            {request.notes}
-                          </p>
-                        )}
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm">
-                          <p className="text-gray-900 flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
-                            {request.scheduledDate}
-                          </p>
-                          <p className="text-gray-600 flex items-center mt-1">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {request.scheduledTime}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span
-                          className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-                            request.status
-                          )}`}
-                        >
-                          {getStatusIcon(request.status)}
-                          <span className="capitalize">
-                            {request.status.replace("-", " ")}
-                          </span>
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span
-                          className={`text-sm font-medium capitalize ${getPriorityColor(
-                            request.priority
-                          )}`}
-                        >
-                          {request.priority}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-gray-900">
-                          {request.estimatedCost}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-2">
-                          <button className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-                            <Eye className="w-4 h-4" />
-                          </button>
-                          <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
-                            <Edit className="w-4 h-4" />
-                          </button>
-                          <button className="p-1 text-red-600 hover:bg-red-50 rounded">
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           </div>
-        </div>
-
-        {/* Services Section */}
-        <div className="p-2">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className="border-b border-gray-200 p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">
-                    Available Services
-                  </h2>
-                  <p className="text-gray-600 mt-1">
-                    Manage your service offerings
-                  </p>
+        ))}
+      </div>
+      <div className="p-2">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          {/* Section Header */}
+          <div className="border-b border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Service Requests
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Manage incoming service appointments
+                </p>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                  <input
+                    type="search"
+                    placeholder="Search requests..."
+                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
+                  />
                 </div>
+                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  <Filter className="w-4 h-4" />
+                  <span>Filter</span>
+                </button>
                 <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg ">
                   <Plus className="w-4 h-4" />
-                  <span>Add Service</span>
+                  <span>New Request</span>
                 </button>
               </div>
             </div>
-
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Wrench className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button className="p-1 text-red-600 hover:bg-red-50 rounded">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {service.name}
-                  </h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Price:</span>
-                      <span className="font-medium text-green-600">
-                        {service.price}
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Request ID
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Customer
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Vehicle
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Service
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Schedule
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Status
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Priority
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Cost
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {serviceRequests.map((request) => (
+                  <tr key={request.id} className="hover:bg-gray-50">
+                    <td className="py-4 px-6">
+                      <span className="font-medium text-blue-600">
+                        {request.id}
                       </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Duration:</span>
-                      <span className="text-gray-900">{service.duration}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                    </td>
+                    <td className="py-4 px-6">
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {request.customerName}
+                        </p>
+                        <p className="text-sm text-gray-600 flex items-center mt-1">
+                          <Phone className="w-3 h-3 mr-1" />
+                          {request.phone}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center space-x-2">
+                        <Car className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-900">
+                          {request.vehicleInfo}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span className="font-medium text-gray-900">
+                        {request.serviceType}
+                      </span>
+                      {request.notes && (
+                        <p className="text-xs text-gray-600 mt-1">
+                          {request.notes}
+                        </p>
+                      )}
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm">
+                        <p className="text-gray-900 flex items-center">
+                          <Calendar className="w-3 h-3 mr-1" />
+                          {request.scheduledDate}
+                        </p>
+                        <p className="text-gray-600 flex items-center mt-1">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {request.scheduledTime}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                          request.status
+                        )}`}
+                      >
+                        {getStatusIcon(request.status)}
+                        <span className="capitalize">
+                          {request.status.replace("-", " ")}
+                        </span>
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`text-sm font-medium capitalize ${getPriorityColor(
+                          request.priority
+                        )}`}
+                      >
+                        {request.priority}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span className="font-medium text-gray-900">
+                        {request.estimatedCost}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center space-x-2">
+                        <button className="p-1 text-blue-600 hover:bg-blue-50 rounded">
+                          <Eye className="w-4 h-4" />
+                        </button>
+                        <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button className="p-1 text-red-600 hover:bg-red-50 rounded">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div className="p-2">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="border-b border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Available Services
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Manage your service offerings
+                </p>
+              </div>
+              <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg ">
+                <Plus className="w-4 h-4" />
+                <span>Add Service</span>
+              </button>
             </div>
           </div>
-          <div className="flex rounded-lg mt-10 pl-32">
-              <div className="border-r border-gray-600 pr-6 text-center">
-                <div className="ml-20">
-                  <MdHomeFilled />
+
+          <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <Wrench className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button className="p-1 text-red-600 hover:bg-red-50 rounded">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-                <p className="font-bold text-xl">4000+</p>
-                <p>Authorized Service Centers</p>
-              </div>
-              <div className="border-r border-gray-600 pr-6 pl-6 text-center">
-                <div className="ml-20">
-                  <FaLocationDot />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  {service.name}
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Price:</span>
+                    <span className="font-medium text-green-600">
+                      {service.price}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Duration:</span>
+                    <span className="text-gray-900">{service.duration}</span>
+                  </div>
                 </div>
-                <p className="font-bold text-xl">3800+</p>
-                <p>Cities Nationwise Connected</p>
               </div>
-              <div className="border-r border-gray-600 pr-6 pl-6 text-center">
-                <div className="ml-14">
-                  <TbCertificate />
-                </div>
-                <p className="font-bold text-xl">5000+</p>
-                <p>Certified Technicians</p>
-              </div>
-              <div className="pl-6 text-center">
-                <div className="ml-20">
-                  <RiCustomerService2Fill />
-                </div>
-                <p className="font-bold text-xl">10+ yrs</p>
-                <p>Of Customer Care Expertise</p>
-              </div>
+            ))}
+          </div>
+        </div>
+        <h2 className="text-3xl font-bold text-center mt-16">
+          Customised Care For All Your Needs
+        </h2>
+        <div className="flex rounded-lg mt-10 pl-32">
+          <div className="border-r border-gray-600 pr-6 text-center">
+            <div className="ml-20">
+              <MdHomeFilled />
             </div>
+            <p className="font-bold text-xl">4000+</p>
+            <p>Authorized Service Centers</p>
+          </div>
+          <div className="border-r border-gray-600 pr-6 pl-6 text-center">
+            <div className="ml-20">
+              <FaLocationDot />
+            </div>
+            <p className="font-bold text-xl">3800+</p>
+            <p>Cities Nationwise Connected</p>
+          </div>
+          <div className="border-r border-gray-600 pr-6 pl-6 text-center">
+            <div className="ml-14">
+              <TbCertificate />
+            </div>
+            <p className="font-bold text-xl">5000+</p>
+            <p>Certified Technicians</p>
+          </div>
+          <div className="pl-6 text-center">
+            <div className="ml-20">
+              <RiCustomerService2Fill />
+            </div>
+            <p className="font-bold text-xl">10+ yrs</p>
+            <p>Of Customer Care Expertise</p>
+          </div>
+        </div>
+        <div>
+          <MustCare />
         </div>
       </div>
     </div>
