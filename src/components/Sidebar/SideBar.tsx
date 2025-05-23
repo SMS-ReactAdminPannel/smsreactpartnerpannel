@@ -72,6 +72,13 @@ const SideBar = () => {
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
+						to='/spare-parts'
+						icon={<FiMapPin />}
+						label='Spare Parts'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
 						to='/bookings'
 						icon={<FiTruck />}
 						label='Bookings'
