@@ -24,7 +24,7 @@ const SideBar = () => {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const handleLinkClick = () => {
-		// setIsOpen(false);
+		setIsOpen(false);
 	};
 
 	return (
