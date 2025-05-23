@@ -1,7 +1,13 @@
-import React from 'react';
+
+import SpareM from '../../components/SparePartsManagement/SpareManagement/SpareM';
 
 const SparePartsManagement = () => {
-	return <div>SparePartsManagement</div>;
+	return <div>
+
+		<div className='grid '>
+			<SpareM/>
+		</div>
+	</div>;
 };
 
 export default SparePartsManagement;
