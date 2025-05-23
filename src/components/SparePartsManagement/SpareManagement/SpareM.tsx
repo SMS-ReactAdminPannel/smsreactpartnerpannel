@@ -1,26 +1,50 @@
+import React from "react";
+import { COLORS, FONTS } from "../../../constants/constants";
+import dummyimg from "../../../assets/SpareManagement/jk.webp";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 
-export default function SpareM() {
-  return (
-    
-
-<div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-        <img className="rounded-t-lg" src=" " alt="" />
-    </a>
-    <div className="p-5">
-        <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-        </a>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Read more
-             <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
-        </a>
-    </div>
-</div>
-
-  )
+interface SpareMProps {
+  onImageClick: (imgUrl: string) => void;
 }
+
+const SpareM: React.FC<SpareMProps> = ({ onImageClick }) => {
+  const images = [dummyimg]; // replace with actual different images
+
+  return (
+    <div className="w-full  max-w-sm bg-#fdefe9  border border-gray-200 hover:bg-[#9b211e] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-90  rounded-lg shadow-sm" >
+      <div className="overflow-x-auto flex space-x-2 p-4">
+        {images.map((img, idx) => (
+          <img
+            key={idx}
+            src={img}
+            alt={`thumb-${idx}`}
+            className=" object-cover rounded-md cursor-pointer"
+            onClick={() => onImageClick(img)}
+          />
+        ))}
+      </div>
+      <div className="px-5 pb-5">
+        <h5
+          className="text-xl font-semibold tracking-tight"
+          style={{ ...FONTS.paragraph, color: COLORS.secondary }}
+        >
+          Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
+        </h5>
+      </div>
+      <div className="flex items-center justify-between p-5" >
+        <div className="flex text-lg">
+          <p style={{color:COLORS.secondary}}>Stock:</p>
+          <p style={{color:COLORS.primary}}> 599</p>
+        </div>
+        <div>
+            {images.map((img, idx) => (
+          <button className=" transition delay-10 duration-300 ease-in-out hover:-translate-x-1 hover:scale-270  text-xl hover:text-xl rounded-lg text-sm px- py-2.5 text-center" onClick={() => onImageClick(img)} ><AiOutlineArrowRight /> </button>
+        ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SpareM;
