@@ -93,6 +93,13 @@ const SideBar = () => {
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
+						to='/customer'
+						icon={<FiSettings />}
+						label='Customer Management'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
 						to='/announcement'
 						icon={<Megaphone />}
 						label='Announcement'
