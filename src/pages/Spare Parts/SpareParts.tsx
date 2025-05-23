@@ -67,7 +67,7 @@ const partsData: SparePart[] = [
     type: 'Grille',
   },
   {
-    id: 5,
+    id: 55,
     name: 'Dashboard Switch Button for Mercedes',
     price: 1200,
     inStock: true,
