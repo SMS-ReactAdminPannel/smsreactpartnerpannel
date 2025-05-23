@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
+import Logo from '../../assets/LOGO.jpg';
 
 interface User {
 	name: string;
@@ -27,9 +28,7 @@ const Navbar: React.FC = () => {
 	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 	const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
-
 	const navigate = useNavigate();
-
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
@@ -62,9 +61,9 @@ const Navbar: React.FC = () => {
 	]);
 
 	const [editedUser, setEditedUser] = useState<User>({
-		name: 'John ',
+		name: 'SMS Partner',
 		phone: '+1 856-589-998-1236',
-		email: 'johndoe3108@gmail.com',
+		email: 'smspartner@gmail.com',
 		avatar:
 			'https://img.freepik.com/free-photo/cute-smiling-young-man-with-bristle-looking-satisfied_176420-18989.jpg?semt=ais_hybrid&w=740',
 		role: 'System Administrator',
@@ -130,14 +129,18 @@ const Navbar: React.FC = () => {
 	return (
 		<>
 			<nav
-				style={{ backgroundColor: COLORS.primary_01, height: '64px' }}
-				className='flex items-center px-2 pl-8'
+				style={{ backgroundColor: COLORS.white, height: '95px' }}
+				className='flex items-center px-4'
 			>
+				<div className='flex justify-center items-center h-25'>
+					<img src={Logo} alt='YES Mechanic Logo' className='w-25 h-20' />
+				</div>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
-						className='bg-white text-black placeholder-gray-500 rounded-full px-4 py-2 w-60 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						className='bg-[#e6a89533] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						style={{width: '450px', height: '50px'}}
 					/>
 					<button
 						type='submit'
@@ -240,7 +243,7 @@ const Navbar: React.FC = () => {
 							onClick={toggleDropdown}
 							className='flex items-center space-x-3 cursor-pointer'
 						>
-							<div className='w-10 h-10 rounded-full overflow-hidden'>
+							<div className='w-12 h-12 rounded-full overflow-hidden'>
 								<img
 									src={editedUser.avatar}
 									alt='User Avatar'
@@ -252,7 +255,7 @@ const Navbar: React.FC = () => {
 									{editedUser.name}
 								</span>
 								<div className='flex items-center text-sm text-[#c13340]'>
-									Admin
+									Partner
 									<svg
 										className='w-4 h-6 ml-1 text-[#c13340]'
 										fill='none'
