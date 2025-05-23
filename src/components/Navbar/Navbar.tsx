@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
+import { useAuth } from '../../pages/auth/authContext';
 
 interface User {
 	name: string;
@@ -31,6 +32,7 @@ const Navbar: React.FC = () => {
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
+	const { logout } = useAuth();
 
 	const [notifications, setNotifications] = useState<Notification[]>([
 		{
@@ -383,32 +385,6 @@ const Navbar: React.FC = () => {
 								))}
 							</div>
 						</div>
-
-						{/* <div className='px-6 py-4 border-t flex justify-end gap-2'>
-							{isEditing ? (
-								<>
-									<button
-										className='bg-gray-200 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-300 transition'
-										onClick={() => setIsEditing(false)}
-									>
-										Cancel
-									</button>
-									<button
-										className='bg-gradient-to-r from-red-600 to-red-800 text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition'
-										onClick={() => setIsEditing(false)}
-									>
-										Save Changes
-									</button>
-								</>
-							) : (
-								<button
-									className='bg-gradient-to-r from-red-600 to-red-800 text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition'
-									onClick={() => setIsEditing(true)}
-								>
-									Edit Profile
-								</button>
-							)}
-						</div> */}
 					</div>
 				</div>
 			)}
@@ -433,8 +409,9 @@ const Navbar: React.FC = () => {
 									setShowLogoutSuccess(true);
 									setTimeout(() => {
 										setShowLogoutSuccess(false);
-										console.log('Redirect or clear session here');
-									}, 2000);
+										logout();
+										navigate('/');
+									}, 1000);
 								}}
 								className='px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700'
 							>

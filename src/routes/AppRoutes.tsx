@@ -16,8 +16,7 @@ import FaqPage from '../pages/FAQ/FaqPage';
 import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
 
 const AppRoutes = () => {
-	// const { isAuthenticated } = true;
-	const isAuthenticated = true;
+	const { isAuthenticated } = useAuth();
 
 	const AuthRoutes = () => (
 		<Routes>

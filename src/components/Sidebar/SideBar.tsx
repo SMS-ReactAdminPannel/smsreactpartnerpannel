@@ -11,8 +11,16 @@ import {
 	FiAlertTriangle,
 	FiMenu,
 } from 'react-icons/fi';
+import { IoIosHelpCircleOutline } from 'react-icons/io';
+import { FaQuestionCircle } from 'react-icons/fa';
+import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
 import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
+import { MdBuild } from 'react-icons/md';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { MdQuestionAnswer } from 'react-icons/md';
+import { FaCogs } from 'react-icons/fa';
+
 import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 
@@ -76,21 +84,21 @@ const SideBar = ({
 					/>
 					<SidebarLink
 						to='/spares-management'
-						icon={<FiMapPin />}
+						icon={<FaCogs />}
 						label='Spare Parts Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
 						to='/bookings'
-						icon={<FiTruck />}
+						icon={<AiOutlineCalendar />}
 						label='Bookings'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
 						to='/service'
-						icon={<Megaphone />}
+						icon={<MdBuild />}
 						label='Service Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
@@ -104,7 +112,7 @@ const SideBar = ({
 					/>
 					<SidebarLink
 						to='/customer'
-						icon={<FiSettings />}
+						icon={<RiCustomerService2Fill />}
 						label='Customer Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
@@ -118,14 +126,14 @@ const SideBar = ({
 					/>
 					<SidebarLink
 						to='/help-center'
-						icon={<FiAlertTriangle />}
+						icon={<IoIosHelpCircleOutline />}
 						label='Help Center'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
 						to='/faq'
-						icon={<FiAlertTriangle />}
+						icon={<MdQuestionAnswer />}
 						label='FAQs'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
