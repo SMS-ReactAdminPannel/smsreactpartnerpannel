@@ -59,7 +59,7 @@ const HelpCenter: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-50 flex flex-col items-center px-4 py-12">
+    <div className="h-screen bg-green-50 flex flex-col items-center px-4 py-12">
       <header className="w-full max-w-4xl text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">How can we help</h1>
         <div className="mt-4 flex items-center justify-center gap-2 max-w-md mx-auto">
