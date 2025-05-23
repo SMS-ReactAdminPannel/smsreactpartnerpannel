@@ -3,45 +3,58 @@ import { COLORS, FONTS } from "../../../constants/constants";
 import dummyimg from "../../../assets/SpareManagement/jk.webp";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
-
 interface SpareMProps {
-  onImageClick: (imgUrl: string) => void;
+  onImageClick: (imgUrls: string[]) => void;
+  onArrowClick: (imgUrls: string[]) => void;
 }
+const SpareM: React.FC<SpareMProps> = ({ onImageClick, onArrowClick }) => {
+  const images = [
+    dummyimg,
+    dummyimg,
+    dummyimg
 
-const SpareM: React.FC<SpareMProps> = ({ onImageClick }) => {
-  const images = [dummyimg]; // replace with actual different images
+
+  ]; // Replace with actual images
 
   return (
-    <div className="w-full  max-w-sm bg-#fdefe9  border border-gray-200 hover:bg-[#9b211e] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-90  rounded-lg shadow-sm" >
-      <div className="overflow-x-auto flex space-x-2 p-4">
-        {images.map((img, idx) => (
-          <img
-            key={idx}
-            src={img}
-            alt={`thumb-${idx}`}
-            className=" object-cover rounded-md cursor-pointer"
-            onClick={() => onImageClick(img)}
-          />
-        ))}
+    <div className="w-full max-w-sm bg-[#fdefe9] border border-gray-200 rounded-lg shadow-sm hover:bg-[#f9ccac] transition-transform duration-300 hover:-translate-y-1 hover:scale-90 shadow-xl " 
+    style={{transition: 'box-shadow 0.3s ease',
+         boxShadow:
+          '0 8px 20px rgba(155, 17, 30, 0.15), 0 4px 8px rgba(230, 168, 149, 0.2)',}}>
+      <div className="relative w-full h-34">
+        <img
+          src={images[0]}
+          alt="thumbnail"
+          className="object-cover rounded-md cursor-pointer"
+          onClick={() => onImageClick(images)}
+        />
       </div>
+
+
+      {/* Product Info */}
       <div className="px-5 pb-5">
         <h5
           className="text-xl font-semibold tracking-tight"
           style={{ ...FONTS.paragraph, color: COLORS.secondary }}
         >
-          Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport
+          NTK Car Engine Ignition Knock Detonation Sensor
         </h5>
       </div>
-      <div className="flex items-center justify-between p-5" >
-        <div className="flex text-lg">
-          <p style={{color:COLORS.secondary}}>Stock:</p>
-          <p style={{color:COLORS.primary}}> 599</p>
+
+      {/* Stock and Arrow Button */}
+      <div className="flex items-center justify-between p-5">
+        <div className="flex text-lg space-x-1">
+          <p style={{ color: COLORS.secondary }}>Stock:</p>
+          <p style={{ color: COLORS.primary }}>599</p>
         </div>
-        <div>
-            {images.map((img, idx) => (
-          <button className=" transition delay-10 duration-300 ease-in-out hover:-translate-x-1 hover:scale-270  text-xl hover:text-xl rounded-lg text-sm px- py-2.5 text-center" onClick={() => onImageClick(img)} ><AiOutlineArrowRight /> </button>
-        ))}
-        </div>
+
+        {/* Arrow Button for First Image or all */}
+        <button
+          onClick={() => onArrowClick}
+          className="hover:text-red-600 text-xl transition-transform hover:scale-110"
+        >
+          <AiOutlineArrowRight />
+        </button>
       </div>
     </div>
   );
