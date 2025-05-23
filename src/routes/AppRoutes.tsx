@@ -3,7 +3,7 @@ import { useAuth } from '../pages/auth/authContext';
 import LoginPage from '../pages/auth/LoginPage';
 import MainLayout from '../layout/MainLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
-import NotificationsPage from '../pages/Notifications/NotificationsPage';
+import NotificationsPage from '../pages/Notificationspages/NotificationsPage';
 import ServiceManagement from '../pages/Service Management/ServiceManagement';
 import ProfileManagement from '../pages/Profile Management/ProfileManagement';
 import Bookings from '../pages/Bookings/Bookings';
