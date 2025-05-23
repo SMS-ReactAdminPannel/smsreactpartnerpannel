@@ -17,7 +17,7 @@ import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
 
 const AppRoutes = () => {
 	// const { isAuthenticated } = true;
-	const isAuthenticated = true;
+	const isAuthenticated = false;
 
 	const AuthRoutes = () => (
 		<Routes>
