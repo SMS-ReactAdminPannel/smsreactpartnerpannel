@@ -1,7 +1,11 @@
 import React from 'react';
+import CustomerProfileDetails from './CustomerProfileDetails';
+
 
 const CustomerManagement = () => {
-	return <div>CustomerManagement</div>;
+	return <div>
+		<div><CustomerProfileDetails /></div>
+	</div>;
 };
 
 export default CustomerManagement;
