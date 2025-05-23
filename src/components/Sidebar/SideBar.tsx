@@ -65,20 +65,6 @@ const SideBar = () => {
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
-						to='/profile'
-						icon={<FiUsers />}
-						label='Profile'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
-					<SidebarLink
-						to='/spare-parts'
-						icon={<FiClipboard />}
-						label='Spare Parts'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
-					<SidebarLink
 						to='/spares-management'
 						icon={<FiMapPin />}
 						label='Spare Parts Management'
@@ -107,9 +93,30 @@ const SideBar = () => {
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
-						to='/sos'
+						to='/customer'
+						icon={<FiSettings />}
+						label='Customer Management'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/announcement'
+						icon={<Megaphone />}
+						label='Announcement'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/help-center'
 						icon={<FiAlertTriangle />}
-						label='SOS'
+						label='Help Center'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/faq'
+						icon={<FiAlertTriangle />}
+						label='FAQs'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
