@@ -4,6 +4,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+
 interface SparePart {
   id: number;
   name: string;
@@ -96,7 +97,7 @@ const partsData: SparePart[] = [
 
 const NextArrow = ({ onClick }: any) => (
   <div
-    className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] cursor-pointer"
     onClick={onClick}
   >
     <FaArrowRight size={24} />
@@ -105,7 +106,7 @@ const NextArrow = ({ onClick }: any) => (
 
 const PrevArrow = ({ onClick }: any) => (
   <div
-    className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] cursor-pointer"
     onClick={onClick}
   >
     <FaArrowLeft size={24} />
