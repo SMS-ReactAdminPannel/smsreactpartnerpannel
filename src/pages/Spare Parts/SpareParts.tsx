@@ -4,6 +4,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+
 interface SparePart {
   id: number;
   name: string;
@@ -96,7 +97,7 @@ const partsData: SparePart[] = [
 
 const NextArrow = ({ onClick }: any) => (
   <div
-    className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    className="absolute top-1/2 right-2 transform -translate-y-1/2 z-20 text-[#9b111e] cursor-pointer"
     onClick={onClick}
   >
     <FaArrowRight size={24} />
@@ -105,7 +106,7 @@ const NextArrow = ({ onClick }: any) => (
 
 const PrevArrow = ({ onClick }: any) => (
   <div
-    className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] hover:text-indigo-700 cursor-pointer"
+    className="absolute top-1/2 left-2 transform -translate-y-1/2 z-20 text-[#9b111e] cursor-pointer"
     onClick={onClick}
   >
     <FaArrowLeft size={24} />
@@ -137,21 +138,26 @@ const SpareParts: React.FC = () => {
   <label className="block text-2xl font-semibold text-[#9b111e] mb-3">
     Spare Parts
   </label>
-  <input
-    type="text"
-    placeholder="Search by product name..."
-    className="w-full border border-gray-300 rounded-full px-5 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
-  <button
-    onClick={() => setSearchTerm('')}
-    className="absolute right-3 top-[53px] text-2xl text-gray-500 hover:text-gray-800 text-lg disabled:opacity-50"
-    aria-label="Clear search"
-    disabled={!searchTerm}
-  >
-    &times;
-  </button>
+
+  <div className="relative">
+    <input
+      type="text"
+      placeholder="Search by product name..."
+      className="w-full border border-gray-300 rounded-full px-5 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+
+    <button
+  onClick={() => setSearchTerm('')}
+  className="absolute right-3 top-[42%] -translate-y-1/2 text-3xl text-[#9b111e] hover:text-red-600 transition-transform hover:scale-125 disabled:opacity-50"
+  aria-label="Clear search"
+  disabled={!searchTerm}
+>
+  &times;
+</button>
+
+  </div>
 </div>
 
 
