@@ -1,6 +1,6 @@
 import React, { useState, type JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiHome, FiBell, FiSettings } from 'react-icons/fi';
+import { FiHome, FiBell, FiSettings, FiMapPin } from 'react-icons/fi';
 import { IoIosHelpCircleOutline } from 'react-icons/io';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
@@ -74,6 +74,13 @@ const SideBar = ({
 						to='/spares-management'
 						icon={<FaCogs />}
 						label='Spare Parts Management'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/spare-parts'
+						icon={<FiMapPin />}
+						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
