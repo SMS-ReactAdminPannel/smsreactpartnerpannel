@@ -1,162 +1,81 @@
-import React, { useState } from 'react';
+import ServiceBookingPanel from "../../components/Booking/BookingCom";
+import { RiUser6Line } from "react-icons/ri";
+import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
+import { COLORS, FONTS } from "../../constants/constants";
 
-type BookingStatus = 'Pending' | 'Viewed' | 'Solved';
-
-interface ServiceBooking {
-  id: number;
-  customerName: string;
-  carModel: string;
-  servicePurpose: string;
-  serviceDateTime: string;
-  status: BookingStatus;
-}
-
-const initialBookings: ServiceBooking[] = [
-  {
-    id: 1,
-    customerName: 'John Doe',
-    carModel: 'Toyota Camry',
-    servicePurpose: 'Engine Check',
-    serviceDateTime: '2025-05-24T10:00',
-    status: 'Pending',
-  },
-  {
-    id: 2,
-    customerName: 'Jane Smith',
-    carModel: 'Honda Civic',
-    servicePurpose: 'Oil Change',
-    serviceDateTime: '2025-05-25T14:30',
-    status: 'Viewed',
-  },
-  {
-    id: 3,
-    customerName: 'Alice Brown',
-    carModel: 'BMW X5',
-    servicePurpose: 'Brake Repair',
-    serviceDateTime: '2025-05-26T09:00',
-    status: 'Solved',
-  },
-
-   {
-    id: 4,
-    customerName: 'berlin',
-    carModel: 'Audi A4',
-    servicePurpose: 'car service',
-    serviceDateTime: '2025-05-6T02:00',
-    status: 'Solved',
-  },
-];
-
-const formatDateTime = (dateTime: string) => {
-  const date = new Date(dateTime);
-  return date.toLocaleString();
-};
-
-const ServiceBookingPanel: React.FC = () => {
-  const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
-  const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(null);
-
-  const updateStatus = (id: number, newStatus: BookingStatus) => {
-    setBookings((prev) =>
-      prev.map((booking) =>
-        booking.id === id ? { ...booking, status: newStatus } : booking
-      )
-    );
-  };
-
+const Bookings = () => {
   return (
-    <div className="p-2 max-w-5xl mx-auto">
-      <h2 className="text-2xl  font-bold text-[#9b111e] mb-4">Service Bookings</h2>
-
-      <div className="space-y-4">
-        {bookings.map((booking) => (
-          <div
-            key={booking.id}
-            className="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row justify-between gap-4 items-start md:items-center transition transform hover:shadow-lg hover:scale-[1.02] cursor-pointer"
-
+    <div>
+      <div>
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+          {/* Header Row */}
+          <h2
+            className="text-2xl font-semibold text-[#9b111e]"
+            style={{ ...FONTS.header, color: COLORS.primary }}
           >
-            <div className="flex-1">
-              <p className="font-semibold text-lg">
-                {booking.customerName} – {booking.carModel}
-              </p>
-              <p className="text-gray-500">{booking.servicePurpose}</p>
-              <p className="text-sm text-gray-600">
-                Scheduled: {formatDateTime(booking.serviceDateTime)}
-              </p>
-              <p
-                className={`mt-1 text-sm font-medium ${
-                  booking.status === 'Solved'
-                    ? 'text-green-600'
-                    : booking.status === 'Viewed'
-                    ? 'text-yellow-600'
-                    : 'text-red-500'
-                }`}
-              >
-                Status: {booking.status}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedBooking(booking)}
-                className="bg-[#55ACEE] text-white px-3 py-1 rounded hover:bg-[#0F7DC2] transition text-sm"
-              >
-                Open Service
-              </button>
-              <button
-                onClick={() => updateStatus(booking.id, 'Viewed')}
-                className="bg-[#F2E394] text-white px-3 py-1 rounded hover:bg-[#FFBB00] transition text-sm"
-              >
-                Mark as Viewed
-              </button>
-              <button
-                onClick={() => updateStatus(booking.id, 'Solved')}
-                className="bg-[#86AF49] text-white px-3 py-1 rounded hover:bg-[#34A853] transition text-sm"
-              >
-                Mark as Solved
-              </button>
+            Service Bookings
+          </h2>
+          <button className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0">
+            History
+          </button>
+        </div>
+      </div>
+      <div className="w-full flex justify-center">
+        <div className="w-full max-w-6xl px-1 py-2">
+          {/* Dashboard Section */}
+          <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4">
+              <DashboardCard
+                icon={<RiUser6Line />}
+                title="Schedule Request"
+                value={20}
+                per={10}
+                perColor="#facc15"
+                borderColor="rgba(234,179,8,0.8)"
+                backgroundColor="#facc15"
+                dataPoints={[1, 3, 2, 5, 4, 6, 5]}
+              />
+              <DashboardCard
+                icon={<RiUser6Line />}
+                title="Emergency Service"
+                value={10}
+                per={5}
+                perColor="#f87171"
+                borderColor="rgba(248,113,113,0.8)"
+                backgroundColor="#f87171"
+                dataPoints={[2, 1, 4, 3, 5, 2, 1]}
+              />
+              <DashboardCard
+                icon={<RiUser6Line />}
+                title="Service Requests"
+                value={2}
+                per={5}
+                perColor="#3b82f6"
+                borderColor="rgba(59,130,246,0.8)"
+                backgroundColor="#3b82f6"
+                dataPoints={[1, 2, 1, 6, 4, 3, 6]}
+              />
+              <DashboardCard
+                icon={<RiUser6Line />}
+                title="Total Transactions"
+                value={22}
+                per={15}
+                perColor="#10b981"
+                borderColor="rgba(16,185,129,0.8)"
+                backgroundColor="#10b981"
+                dataPoints={[1, 5, 2, 4, 3, 5, 6]}
+              />
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Modal */}
-      {selectedBooking && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl max-w-md w-full shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Service Details</h3>
-            <p><strong>Customer:</strong> {selectedBooking.customerName}</p>
-            <p><strong>Car Model:</strong> {selectedBooking.carModel}</p>
-            <p><strong>Purpose:</strong> {selectedBooking.servicePurpose}</p>
-            <p><strong>Date & Time:</strong> {formatDateTime(selectedBooking.serviceDateTime)}</p>
-            <p>
-              <strong>Status:</strong>{' '}
-              <span
-                className={`font-medium ${
-                  selectedBooking.status === 'Solved'
-                    ? 'text-green-600'
-                    : selectedBooking.status === 'Viewed'
-                    ? 'text-yellow-600'
-                    : 'text-red-500'
-                }`}
-              >
-                {selectedBooking.status}
-              </span>
-            </p>
-
-            <div className="mt-6 flex justify-end">
-              <button
-                onClick={() => setSelectedBooking(null)}
-                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
-              >
-                Close
-              </button>
-            </div>
+          {/* Booking Panel */}
+          <div className="mb-6 p-4 bg-white rounded-xl shadow-md ">
+            <ServiceBookingPanel />
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default ServiceBookingPanel;
+export default Bookings;
