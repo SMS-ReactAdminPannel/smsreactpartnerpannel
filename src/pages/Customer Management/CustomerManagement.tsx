@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import CustomerProfileDetails from './CustomerProfileDetails';
-import { Diameter } from 'lucide-react';
-import CustomerServiceDetails from './CustomerServiceDetails';
+import CustomerDetails from './CustomerDetails';
 
 
 const CustomerManagement = () => {
-	const [isClicked,setIsClicked] = useState<number>(0)
-
-	const Display = (value: number) => {
-		setIsClicked(value)
-	}
-
-
+	const [activeStep , setActiveStep] = useState (0);
 	return <div>
-		<div className='flex gap-5 mb-5'>
-			<button onClick={()=>Display(0)}>Profile</button>
-			<button  onClick={()=>Display(1)}>Services</button>
-		</div>
-		{isClicked === 0 && <CustomerProfileDetails />}
-		{isClicked === 1 && <CustomerServiceDetails />} 
+		{activeStep === 0 && (
+          <CustomerDetails onProfileView={() => setActiveStep(1)} />
+        )}
+        {activeStep === 1 && (
+          <CustomerProfileDetails />
+        )}
 	</div>;
 };
 
