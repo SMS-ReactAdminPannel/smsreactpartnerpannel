@@ -3,7 +3,7 @@ import { useAuth } from '../pages/auth/authContext';
 import LoginPage from '../pages/auth/LoginPage';
 import MainLayout from '../layout/MainLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
-import NotificationsPage from '../pages/Notifications/NotificationsPage';
+import NotificationsPage from '../pages/Notificationspages/NotificationsPage';
 import ServiceManagement from '../pages/Service Management/ServiceManagement';
 import ProfileManagement from '../pages/Profile Management/ProfileManagement';
 import Bookings from '../pages/Bookings/Bookings';
@@ -11,9 +11,9 @@ import CustomerManagement from '../pages/Customer Management/CustomerManagement'
 import SpareParts from '../pages/Spare Parts/SpareParts';
 import SparePartsManagement from '../pages/Spare Parts Management/SparePartsManagement';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
-import HelpCenter from '../pages/Help Center/HelpCenter';
-import FaqPage from '../pages/FAQ/FaqPage';
-import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
+import HelpCenter from '../pages/HelpCenter/HelpCenter';
+import FaqPage from '../pages/FAQpages/FaqPages';
+import AnnouncementPage from '../pages//Announcements/Announcementspages';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
