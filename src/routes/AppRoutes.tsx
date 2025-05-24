@@ -9,7 +9,6 @@ import ProfileManagement from '../pages/Profile Management/ProfileManagement';
 import Bookings from '../pages/Bookings/Bookings';
 import CustomerManagement from '../pages/Customer Management/CustomerManagement';
 import SpareParts from '../pages/Spare Parts/SpareParts';
-import SparePartsManagement from '../pages/Spare Parts Management/SparePartsManagement';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
@@ -35,7 +34,6 @@ const AppRoutes = () => {
 				<Route path='bookings' element={<Bookings />} />
 				<Route path='customer' element={<CustomerManagement />} />
 				<Route path='spare-parts' element={<SpareParts />} />
-				<Route path='spares-management' element={<SparePartsManagement />} />
 				<Route path='settings' element={<SettingsPage />} />
 				<Route path='help-center' element={<HelpCenter />} />
 				<Route path='faq' element={<FaqPage />} />

@@ -71,15 +71,8 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
-						to='/spares-management'
-						icon={<FaCogs />}
-						label='Spare Parts Management'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
-					<SidebarLink
 						to='/spare-parts'
-						icon={<FiMapPin />}
+						icon={<FaCogs />}
 						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
