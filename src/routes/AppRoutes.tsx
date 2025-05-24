@@ -13,7 +13,7 @@ import SparePartsManagement from '../pages/Spare Parts Management/SparePartsMana
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
-import AnnouncementPage from '../pages/Announcement/AnnouncementPage';
+import AnnouncementPage from '../pages/Announcements/Announcementspages.tsx';
 
 const AppRoutes = () => {
 	const isAuthenticated = true
