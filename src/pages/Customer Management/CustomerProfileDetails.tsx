@@ -20,7 +20,8 @@ interface Product {
   estimatedDelivery?: string;
 }
 
-const CustomerProfileDetails = () => {
+
+const CustomerProfileDetails = ({}) => {
   const initialProducts: Product[] = [
     {
       id: 1,
