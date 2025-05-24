@@ -65,7 +65,7 @@ const ServiceBookingPanel: React.FC = () => {
   };
 
   return (
-    <div className="p-2 max-w-6xl mx-auto">
+    <div className="p-2 max-w-5xl mx-auto">
       <h2 className="text-2xl  font-bold text-[#9b111e] mb-4">Service Bookings</h2>
 
       <div className="space-y-4">
@@ -99,19 +99,19 @@ const ServiceBookingPanel: React.FC = () => {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedBooking(booking)}
-                className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm"
+                className="bg-[#55ACEE] text-white px-3 py-1 rounded hover:bg-[#0F7DC2] transition text-sm"
               >
                 Open Service
               </button>
               <button
                 onClick={() => updateStatus(booking.id, 'Viewed')}
-                className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition text-sm"
+                className="bg-[#F2E394] text-white px-3 py-1 rounded hover:bg-[#FFBB00] transition text-sm"
               >
                 Mark as Viewed
               </button>
               <button
                 onClick={() => updateStatus(booking.id, 'Solved')}
-                className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition text-sm"
+                className="bg-[#86AF49] text-white px-3 py-1 rounded hover:bg-[#34A853] transition text-sm"
               >
                 Mark as Solved
               </button>
