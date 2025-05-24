@@ -110,7 +110,7 @@ const CustomerServiceDetails = () => {
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.02 }}
           >
-            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-white transition-all duration-200">
+            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-black transition-all duration-200">
               <span className="flex-1 ms-3 whitespace-nowrap">{service.name}</span>
               <motion.button 
                 onClick={() => handleViewClick(service)}
@@ -203,7 +203,7 @@ const CustomerServiceDetails = () => {
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.02 }}
           >
-            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-white transition-all duration-200">
+            <div className="flex items-center p-3 text-base font-bold dark:text-black rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-white dark:hover:bg-gray-200 dark:text-black transition-all duration-200">
               <span className="flex-1 ms-3 whitespace-nowrap">{service.name}</span>
               <motion.button 
                 onClick={() => handleViewClick(service)}

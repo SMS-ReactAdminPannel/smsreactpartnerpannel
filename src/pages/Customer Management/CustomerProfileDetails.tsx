@@ -281,7 +281,7 @@ const CustomerProfileDetails = () => {
             
             <div className="p-4 relative min-h-screen">
                 <div className="flex m">
-                <button className=" border-b-2 border-black">Orders</button>
+                <button className=" border-b-2 border-black" >Orders</button>
                 <button className="ml-5  border-b-2 border-black">Services</button>
             </div>
       {/* Search and Filter Icons */}
@@ -508,7 +508,6 @@ const CustomerProfileDetails = () => {
         )}
       </AnimatePresence>
     </div>
-      <CustomerServiceDetails />
 
         </div>
        
