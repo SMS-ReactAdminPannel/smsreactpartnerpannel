@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { TiPin } from "react-icons/ti";
 
 const categories = [
@@ -48,7 +48,7 @@ const AnnouncementPages = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [announcements, setAnnouncements] = useState(initialAnnouncements);
 
-  const togglePin = (id) => {
+  const togglePin = (id:number) => {
     const updated = announcements.map(a =>
       a.id === id ? { ...a, isPinned: !a.isPinned } : a
     );
@@ -107,7 +107,7 @@ const AnnouncementPages = () => {
           ))}
         </div>
 
-        {/* Pinned Announcements */}
+     
         <div className="w-1/3 bg-white rounded-xl shadow p-4">
           <h2 className="text-2xl font-semibold mb-4 flex items-center gap-1">
             Pinned Announcements
