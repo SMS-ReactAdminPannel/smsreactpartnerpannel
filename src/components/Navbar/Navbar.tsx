@@ -130,15 +130,15 @@ const Navbar: React.FC = () => {
 	return (
 		<>
 			<nav
-				style={{ backgroundColor: COLORS.white, height: '95px' }}
+				style={{ backgroundColor: COLORS.primary_01, height: '65px' }}
 				className='flex items-center px-4'
 			>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
-						className='bg-[#e6a89533] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
-						style={{ width: '450px', height: '50px' }}
+						className='bg-[#f0c9bd5d] border border-[#6b1b1b] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						style={{ width: '450px', height: '45px' }}
 					/>
 					<button
 						type='submit'

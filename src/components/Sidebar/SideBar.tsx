@@ -1,18 +1,7 @@
 import React, { useState, type JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-	FiHome,
-	FiBell,
-	FiUsers,
-	FiClipboard,
-	FiMapPin,
-	FiTruck,
-	FiSettings,
-	FiAlertTriangle,
-	FiMenu,
-} from 'react-icons/fi';
+import { FiHome, FiBell, FiSettings } from 'react-icons/fi';
 import { IoIosHelpCircleOutline } from 'react-icons/io';
-import { FaQuestionCircle } from 'react-icons/fa';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
 import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
@@ -20,7 +9,6 @@ import { MdBuild } from 'react-icons/md';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdQuestionAnswer } from 'react-icons/md';
 import { FaCogs } from 'react-icons/fa';
-
 import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 
@@ -182,7 +170,7 @@ const SidebarLink = ({
 			className={`flex items-center transition-all px-2 py-1
         ${
 					isOpen
-						? 'w-full justify-start gap-5 pl-5 pr-1'
+						? 'w-full justify-start gap-3 pl-5 pr-5'
 						: 'justify-center w-10 h-8'
 				} 
     rounded-full
