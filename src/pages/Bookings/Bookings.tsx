@@ -65,7 +65,7 @@ const ServiceBookingPanel: React.FC = () => {
   };
 
   return (
-    <div className="p-2 max-w-6xl mx-auto">
+    <div className="p-2 max-w-5xl mx-auto">
       <h2 className="text-2xl  font-bold text-[#9b111e] mb-4">Service Bookings</h2>
 
       <div className="space-y-4">
