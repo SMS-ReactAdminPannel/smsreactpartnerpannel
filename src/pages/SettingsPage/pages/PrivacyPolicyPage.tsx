@@ -24,8 +24,8 @@ const PrivacyPolicySettings: React.FC = () => {
       description: 'Add an extra layer of security to your account by requiring a verification code from your phone in addition to your password.',
       isToggle: true,
       enabled: false,
-      status: 'Disabled',
-      statusColor: 'text-red-600'
+      status: "Disabled",
+      statusColor: "text-red-600",
     },
     {
       id: 'secondary-verification',
@@ -34,8 +34,8 @@ const PrivacyPolicySettings: React.FC = () => {
       description: 'Require additional identity verification for sensitive account changes, such as password resets or payment method updates.',
       isToggle: true,
       enabled: true,
-      status: 'Active',
-      statusColor: 'text-green-600'
+      status: "Active",
+      statusColor: "text-green-600",
     },
     {
       id: 'backup-codes',

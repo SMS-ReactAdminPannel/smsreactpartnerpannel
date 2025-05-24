@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
+import { useAuth } from '../../pages/auth/authContext';
 
 interface User {
 	name: string;
@@ -27,12 +28,11 @@ const Navbar: React.FC = () => {
 	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 	const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
-
 	const navigate = useNavigate();
-
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
+	const { logout } = useAuth();
 
 	const [notifications, setNotifications] = useState<Notification[]>([
 		{
@@ -62,9 +62,9 @@ const Navbar: React.FC = () => {
 	]);
 
 	const [editedUser, setEditedUser] = useState<User>({
-		name: 'John ',
+		name: 'SMS Partner',
 		phone: '+1 856-589-998-1236',
-		email: 'johndoe3108@gmail.com',
+		email: 'smspartner@gmail.com',
 		avatar:
 			'https://img.freepik.com/free-photo/cute-smiling-young-man-with-bristle-looking-satisfied_176420-18989.jpg?semt=ais_hybrid&w=740',
 		role: 'System Administrator',
@@ -130,14 +130,15 @@ const Navbar: React.FC = () => {
 	return (
 		<>
 			<nav
-				style={{ backgroundColor: COLORS.primary_01, height: '64px' }}
-				className='flex items-center px-2 pl-8'
+				style={{ backgroundColor: COLORS.primary_01, height: '65px' }}
+				className='flex items-center px-4'
 			>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
-						className='bg-white text-black placeholder-gray-500 rounded-full px-4 py-2 w-60 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						className='bg-[#f0c9bd5d] border border-[#6b1b1b] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						style={{ width: '450px', height: '45px' }}
 					/>
 					<button
 						type='submit'
@@ -240,7 +241,7 @@ const Navbar: React.FC = () => {
 							onClick={toggleDropdown}
 							className='flex items-center space-x-3 cursor-pointer'
 						>
-							<div className='w-10 h-10 rounded-full overflow-hidden'>
+							<div className='w-12 h-12 rounded-full overflow-hidden'>
 								<img
 									src={editedUser.avatar}
 									alt='User Avatar'
@@ -252,7 +253,7 @@ const Navbar: React.FC = () => {
 									{editedUser.name}
 								</span>
 								<div className='flex items-center text-sm text-[#c13340]'>
-									Admin
+									Partner
 									<svg
 										className='w-4 h-6 ml-1 text-[#c13340]'
 										fill='none'
@@ -317,19 +318,8 @@ const Navbar: React.FC = () => {
 									className='w-20 h-20 rounded-full border-4 border-white shadow-md'
 								/>
 								<div>
-									{isEditing ? (
-										<input
-											type='text'
-											value={editedUser.name}
-											onChange={(e) => handleChange('name', e.target.value)}
-											className='text-2xl font-bold bg-transparent border-b border-white placeholder-white placeholder-opacity-75 text-white'
-										/>
-									) : (
-										<h2 className='text-2xl font-bold'>{editedUser.name}</h2>
-									)}
-									<p className='text-sm opacity-90'>
-										Admin, Production Department
-									</p>
+									<h2 className='text-2xl font-bold'>{editedUser.name}</h2>
+									<p className='text-sm opacity-90'>Partner</p>
 								</div>
 							</div>
 							<button
@@ -361,20 +351,7 @@ const Navbar: React.FC = () => {
 										<h4 className='text-sm text-gray-500'>
 											{field.charAt(0).toUpperCase() + field.slice(1)}
 										</h4>
-										{isEditing ? (
-											<input
-												type='text'
-												value={editedUser[field as keyof User]}
-												onChange={(e) =>
-													handleChange(field as keyof User, e.target.value)
-												}
-												className='text-lg w-full border-b border-gray-400 focus:outline-none'
-											/>
-										) : (
-											<p className='text-lg'>
-												{editedUser[field as keyof User]}
-											</p>
-										)}
+										<p className='text-lg'>{editedUser[field as keyof User]}</p>
 									</div>
 								))}
 							</div>
@@ -408,32 +385,6 @@ const Navbar: React.FC = () => {
 								))}
 							</div>
 						</div>
-
-						<div className='px-6 py-4 border-t flex justify-end gap-2'>
-							{isEditing ? (
-								<>
-									<button
-										className='bg-gray-200 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-300 transition'
-										onClick={() => setIsEditing(false)}
-									>
-										Cancel
-									</button>
-									<button
-										className='bg-gradient-to-r from-red-600 to-red-800 text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition'
-										onClick={() => setIsEditing(false)}
-									>
-										Save Changes
-									</button>
-								</>
-							) : (
-								<button
-									className='bg-gradient-to-r from-red-600 to-red-800 text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition'
-									onClick={() => setIsEditing(true)}
-								>
-									Edit Profile
-								</button>
-							)}
-						</div>
 					</div>
 				</div>
 			)}
@@ -458,8 +409,9 @@ const Navbar: React.FC = () => {
 									setShowLogoutSuccess(true);
 									setTimeout(() => {
 										setShowLogoutSuccess(false);
-										console.log('Redirect or clear session here');
-									}, 2000);
+										logout();
+										navigate('/');
+									}, 1000);
 								}}
 								className='px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700'
 							>
