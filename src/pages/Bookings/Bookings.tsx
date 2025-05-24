@@ -54,7 +54,7 @@ const Bookings = () => {
         <div className="w-full flex justify-center">
           <div className="w-full max-w-6xl px-1 py-2">
             {/* Dashboard Section */}
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+            <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4">
                 <DashboardCard
                   icon={<RiUser6Line />}
@@ -100,7 +100,7 @@ const Bookings = () => {
             </div>
 
             {/* Booking Panel */}
-            <div className="mb-6 p-4 bg-white rounded-xl shadow-md">
+            <div className="mb-6 p-4 bg-[#eae5d9] rounded-xl shadow-md">
               <ServiceBookingPanel />
             </div>
           </div>

@@ -82,7 +82,7 @@ const ServiceBookingPanel: React.FC = () => {
         {bookings.map((booking) => (
           <div
             key={booking.id}
-            className="bg-[#FBFBFB] rounded-xl shadow p-6 flex flex-cols md:flex-row justify-between gap-4 items-start md:items-center transition transform hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+            className="bg-[#FAF3EB] rounded-xl shadow p-6 flex flex-cols md:flex-row justify-between gap-4 items-start md:items-center transition transform hover:shadow-lg hover:scale-[1.02] cursor-pointer"
           >
             <div className="flex-1">
               <p className="font-semibold text-lg ">
