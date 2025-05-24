@@ -12,6 +12,7 @@
 		"tailwind": "tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch"
 	},
 	"dependencies": {
+		"@headlessui/react": "^2.2.4",
 		"@heroicons/react": "^2.2.0",
 		"@hookform/resolvers": "^5.0.1",
 		"@preline/accordion": "^3.0.0",
