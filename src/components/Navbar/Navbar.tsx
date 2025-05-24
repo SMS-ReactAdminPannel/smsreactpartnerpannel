@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/authContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaTools } from 'react-icons/fa';
 
 interface User {
 	name: string;
@@ -20,7 +22,18 @@ interface Notification {
 	time: string;
 	isRead: boolean;
 }
-const Navbar: React.FC = () => {
+
+type Props = {
+	hasNewBooking: boolean;
+};
+interface NavbarProps {
+	onToolsClick?: () => void;
+}
+type NavbarCombinedProps = Props & NavbarProps;
+const Navbar: React.FC<NavbarCombinedProps> = ({
+	hasNewBooking,
+	onToolsClick,
+}) => {
 	const [isBellActive, setIsBellActive] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [showProfileDetails, setShowProfileDetails] = useState(false);
@@ -33,7 +46,6 @@ const Navbar: React.FC = () => {
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
 	const { logout } = useAuth();
-
 	const [notifications, setNotifications] = useState<Notification[]>([
 		{
 			id: 1,
@@ -156,6 +168,27 @@ const Navbar: React.FC = () => {
 							<path d='M21 21l-4.35-4.35M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z' />
 						</svg>
 					</button>
+				</div>
+
+				<div className='relative bg-[#9b111e] rounded-full p-3 left-[530px] cursor-pointer'>
+					<FaTools className='w-4 h-4 text-white' onClick={onToolsClick} />
+					<AnimatePresence>
+						{hasNewBooking && (
+							<motion.div
+								className='absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full'
+								initial={{ scale: 0 }}
+								animate={{ scale: 1.5 }}
+								exit={{ scale: 0 }}
+								transition={{
+									type: 'spring',
+									stiffness: 300,
+									damping: 10,
+									repeat: Infinity,
+									repeatType: 'mirror',
+								}}
+							/>
+						)}
+					</AnimatePresence>
 				</div>
 
 				<div className='ml-auto flex items-center space-x-4 pr-4'>

@@ -14,6 +14,7 @@ import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
+import ResetPassword from '../pages/auth/ResetPassword';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
@@ -21,6 +22,7 @@ const AppRoutes = () => {
 	const AuthRoutes = () => (
 		<Routes>
 			<Route path='/login' element={<LoginPage />} />
+			<Route path='/reset-password' element={<ResetPassword />} />
 			<Route path='*' element={<Navigate to='/login' />} />
 		</Routes>
 	);
