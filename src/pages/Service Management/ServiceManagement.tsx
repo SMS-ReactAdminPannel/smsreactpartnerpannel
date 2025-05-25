@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Car,
   Wrench,
@@ -22,6 +22,15 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import MustCare from "./MustCare";
 
 const TermsConditionsPage: React.FC = () => {
+  const [services, setServices] = useState([
+    { id: 1, name: "Oil Change", price: "$89", duration: "30 min", isEditing: false },
+    { id: 2, name: "Brake Service", price: "$150-300", duration: "1-2 hours", isEditing: false },
+    { id: 3, name: "Tire Service", price: "$80-400", duration: "45 min", isEditing: false },
+    { id: 4, name: "Engine Diagnostic", price: "$120-250", duration: "1 hour", isEditing: false },
+    { id: 5, name: "Battery Service", price: "$100-200", duration: "30 min", isEditing: false },
+    { id: 6, name: "AC Service", price: "$150-350", duration: "1-2 hours", isEditing: false },
+  ]);
+
   const serviceRequests = [
     {
       id: "SR-001",
@@ -81,15 +90,6 @@ const TermsConditionsPage: React.FC = () => {
     },
   ];
 
-  const services = [
-    { name: "Oil Change", price: "$89", duration: "30 min" },
-    { name: "Brake Service", price: "$150-300", duration: "1-2 hours" },
-    { name: "Tire Service", price: "$80-400", duration: "45 min" },
-    { name: "Engine Diagnostic", price: "$120-250", duration: "1 hour" },
-    { name: "Battery Service", price: "$100-200", duration: "30 min" },
-    { name: "AC Service", price: "$150-350", duration: "1-2 hours" },
-  ];
-
   const stats = [
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
     { label: "Completed Today", value: "23", change: "+8%", color: "green" },
@@ -139,7 +139,6 @@ const TermsConditionsPage: React.FC = () => {
         return <Clock className="w-4 h-4" />;
     }
   };
-
   return (
     <div>
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
@@ -331,62 +330,153 @@ const TermsConditionsPage: React.FC = () => {
         </div>
       </div>
       <div className="p-2">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="border-b border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">
-                  Available Services
-                </h2>
-                <p className="text-gray-600 mt-1">
-                  Manage your service offerings
-                </p>
-              </div>
-              <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg ">
-                <Plus className="w-4 h-4" />
-                <span>Add Service</span>
+        {/* Available Services Panel */}
+<div className="p-2">
+  <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="border-b border-gray-200 p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900">Available Services</h2>
+          <p className="text-gray-600 mt-1">Manage your service offerings</p>
+        </div>
+        <button
+          onClick={() =>
+            setServices([
+              ...services,
+              {
+                id: services.length ? services[services.length - 1].id + 1 : 1,
+                name: "",
+                price: "",
+                duration: "",
+                isEditing: true,
+              },
+            ])
+          }
+          className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add Service</span>
+        </button>
+      </div>
+    </div>
+
+    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((service) => (
+        <div
+          key={service.id}
+          className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+        >
+          <div className="flex items-start justify-between mb-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Wrench className="w-5 h-5 text-blue-600" />
+            </div>
+            <div className="flex items-center space-x-1">
+              <button
+                onClick={() =>
+                  setServices(
+                    services.map((s) =>
+                      s.id === service.id
+                        ? { ...s, isEditing: !s.isEditing }
+                        : s
+                    )
+                  )
+                }
+                className="p-1 text-gray-600 hover:bg-gray-50 rounded"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() =>
+                  setServices(
+                    services.map((s) =>
+                      s.id === service.id
+                        ? { ...s, price: "", duration: "" }
+                        : s
+                    )
+                  )
+                }
+                className="p-1 text-red-600 hover:bg-red-50 rounded"
+              >
+                <Trash2 className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Wrench className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button className="p-1 text-red-600 hover:bg-red-50 rounded">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+          {service.isEditing ? (
+            <div className="space-y-2">
+              <input
+                type="text"
+                placeholder="Service Name"
+                className="w-full border p-2 rounded"
+                value={service.name}
+                onChange={(e) =>
+                  setServices(
+                    services.map((s) =>
+                      s.id === service.id
+                        ? { ...s, name: e.target.value }
+                        : s
+                    )
+                  )
+                }
+              />
+              <input
+                type="text"
+                placeholder="Price"
+                className="w-full border p-2 rounded"
+                value={service.price}
+                onChange={(e) =>
+                  setServices(
+                    services.map((s) =>
+                      s.id === service.id
+                        ? { ...s, price: e.target.value }
+                        : s
+                    )
+                  )
+                }
+              />
+              <input
+                type="text"
+                placeholder="Duration"
+                className="w-full border p-2 rounded"
+                value={service.duration}
+                onChange={(e) =>
+                  setServices(
+                    services.map((s) =>
+                      s.id === service.id
+                        ? { ...s, duration: e.target.value }
+                        : s
+                    )
+                  )
+                }
+              />
+            </div>
+          ) : (
+            <>
+              <h3 className="font-semibold text-gray-900 mb-2">
+                {service.name}
+              </h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Price:</span>
+                  <span className="font-medium text-green-600">
+                    {service.price || "-"}
+                  </span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  {service.name}
-                </h3>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="font-medium text-green-600">
-                      {service.price}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Duration:</span>
-                    <span className="text-gray-900">{service.duration}</span>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Duration:</span>
+                  <span className="text-gray-900">
+                    {service.duration || "-"}
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
+      ))}
+    </div>
+  </div>
+</div>
+
         <h2 className="text-3xl font-bold text-center mt-16">
           Customised Care For All Your Needs
         </h2>
