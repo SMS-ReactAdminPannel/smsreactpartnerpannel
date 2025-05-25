@@ -1,18 +1,16 @@
-import { useState, type JSX } from 'react';
+import React, { useState, type JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-	FiHome,
-	FiBell,
-	FiUsers,
-	FiClipboard,
-	FiMapPin,
-	FiTruck,
-	FiSettings,
-	FiAlertTriangle,
-	FiMenu,
-} from 'react-icons/fi';
-import Logo from '../../assets/LOGO.jpg';
+import { FiHome, FiBell, FiSettings, FiMapPin } from 'react-icons/fi';
+import { IoIosHelpCircleOutline } from 'react-icons/io';
+import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
+import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
+import { MdBuild } from 'react-icons/md';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { MdQuestionAnswer } from 'react-icons/md';
+import { FaCogs } from 'react-icons/fa';
+import { COLORS } from '../../constants/constants';
+import Logo from '../../assets/LOGO.jpg';
 
 const COLOR = {
 	primary: '#9b111e',
@@ -20,9 +18,13 @@ const COLOR = {
 	secondary: '#E6A895',
 };
 
-const SideBar = () => {
-	const [isOpen, setIsOpen] = useState(true);
-
+const SideBar = ({
+	isOpen,
+	setIsOpen,
+}: {
+	isOpen: boolean;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
 	const handleLinkClick = () => {
 		setIsOpen(false);
 	};
@@ -35,18 +37,22 @@ const SideBar = () => {
 						src={Logo}
 						alt='YES Mechanic Logo'
 						className={`object-contain transition-all duration-300 ${
-							isOpen ? 'w-20 h-20' : 'w-10 h-10'
+							isOpen ? 'w-25 h-20' : 'w-10 h-10'
 						}`}
 					/>
 				</div>
 				<div className='w-full flex justify-end px-2 mt-2'>
-					{/* <button
-						// onClick={() => setIsOpen(!isOpen)}
+					<button
+						onClick={() => setIsOpen(!isOpen)}
 						className='text-gray-600 hover:text-black p-2 rounded-md transition duration-200 hover:bg-gray-100'
 						title='Toggle Sidebar'
 					>
-						<FiMenu size={20} style={{ color: COLOR.primary }} />
-					</button> */}
+						{isOpen ? (
+							<RiMenu3Line size={20} style={{ color: COLOR.primary }} />
+						) : (
+							<RiMenu2Line size={20} style={{ color: COLOR.primary }} />
+						)}
+					</button>
 				</div>
 
 				<nav className='flex flex-col gap-4 mt-4 w-full items-center'>
@@ -66,21 +72,28 @@ const SideBar = () => {
 					/>
 					<SidebarLink
 						to='/spares-management'
-						icon={<FiMapPin />}
+						icon={<FaCogs />}
 						label='Spare Parts Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
+						to='/spare-parts'
+						icon={<FiMapPin />}
+						label='Spare Parts'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
 						to='/bookings'
-						icon={<FiTruck />}
+						icon={<AiOutlineCalendar />}
 						label='Bookings'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
 						to='/service'
-						icon={<Megaphone />}
+						icon={<MdBuild />}
 						label='Service Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
@@ -94,7 +107,7 @@ const SideBar = () => {
 					/>
 					<SidebarLink
 						to='/customer'
-						icon={<FiSettings />}
+						icon={<RiCustomerService2Fill />}
 						label='Customer Management'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
@@ -108,14 +121,14 @@ const SideBar = () => {
 					/>
 					<SidebarLink
 						to='/help-center'
-						icon={<FiAlertTriangle />}
+						icon={<IoIosHelpCircleOutline />}
 						label='Help Center'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
 						to='/faq'
-						icon={<FiAlertTriangle />}
+						icon={<MdQuestionAnswer />}
 						label='FAQs'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
@@ -147,28 +160,33 @@ const SidebarLink = ({
 	const location = useLocation();
 	const [isHovered, setIsHovered] = useState(false);
 	const isActive = location.pathname === to;
+	const backgroundColor = isActive
+		? COLOR.primary
+		: isHovered
+		? COLOR.bgColor
+		: 'transparent';
+	const textColor = isActive ? COLOR.bgColor : COLOR.primary;
+
 	return (
 		<Link
 			to={to}
 			onClick={onClick}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
-			style={{
-				backgroundColor: isHovered || isActive ? '#faf3eb' : 'transparent',
-			}}
-			className={`flex items-center transition-all px-2 py-1 
+			style={{ backgroundColor }}
+			className={`flex items-center transition-all px-2 py-1
         ${
 					isOpen
-						? 'w-full justify-start gap-5 pl-5 pr-1'
+						? 'w-full justify-start gap-3 pl-5 pr-5'
 						: 'justify-center w-10 h-8'
 				} 
-        ${isHovered || isActive ? 'bg-[#faf3eb] rounded-full' : 'rounded-full'}
+    rounded-full
     `}
 		>
-			<div className='text-xl' style={{ color: COLOR.primary }}>
+			<div className='text-xl' style={{ color: textColor }}>
 				{icon}
 			</div>
-			{isOpen && <span style={{ color: COLOR.primary }}>{label}</span>}
+			{isOpen && <span style={{ color: textColor }}>{label}</span>}
 		</Link>
 	);
 };
