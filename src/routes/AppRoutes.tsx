@@ -12,7 +12,9 @@ import SpareParts from '../pages/Spare Parts/SpareParts';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
-import AnnouncementPage from '../pages/Announcements/Announcementspages.tsx';
+import AnnouncementPage from '../pages//Announcements/Announcementspages';
+import JobCard from '../pages/Service Management/jobCard';
+import Service from '../pages/Service Management/Service';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
@@ -29,7 +31,7 @@ const AppRoutes = () => {
 			<Route path='/' element={<MainLayout />}>
 				<Route index element={<Dashboard />} />
 				<Route path='notifications' element={<NotificationsPage />} />
-				<Route path='service' element={<ServiceManagement />} />
+				<Route path='service' element={<Service/>} />
 				<Route path='profile' element={<ProfileManagement />} />
 				<Route path='bookings' element={<Bookings />} />
 				<Route path='customer' element={<CustomerManagement />} />
@@ -38,6 +40,7 @@ const AppRoutes = () => {
 				<Route path='help-center' element={<HelpCenter />} />
 				<Route path='faq' element={<FaqPage />} />
 				<Route path='announcement' element={<AnnouncementPage />} />
+
 				<Route path='*' element={<Navigate to='/' />} />
 			</Route>
 		</Routes>
