@@ -15,13 +15,14 @@ import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
 import ResetPassword from '../pages/auth/ResetPassword';
+import LoginPage1 from '../pages/auth/LoginPage1';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
 
 	const AuthRoutes = () => (
 		<Routes>
-			<Route path='/login' element={<LoginPage />} />
+			<Route path='/login' element={<LoginPage1 />} />
 			<Route path='/reset-password' element={<ResetPassword />} />
 			<Route path='*' element={<Navigate to='/login' />} />
 		</Routes>

@@ -17,8 +17,8 @@ import {
 	Cell,
 } from 'recharts';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 
 const revenueData = [
 	{ month: 'Jan', revenue: 4000 },
@@ -41,20 +41,33 @@ const COLORS_01 = ['#8884d8', '#82ca9d', '#FFE99A', '#9EBC8A', '#F79B72'];
 
 const Dashboard = () => {
 	const navigate = useNavigate();
-	const recentBookingsRef = useRef<HTMLDivElement>(null);
-	const [highlight, setHighlight] = useState(false);
+	const location = useLocation();
+	const [highlight, setHighlight] = useState(true);
+	const bookingsRef = useRef<HTMLDivElement | null>(null);
 
-	const scrollToRecentBookings = () => {
-		if (recentBookingsRef.current) {
-			recentBookingsRef.current.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start',
-			});
+	useEffect(() => {
+		const scrollTimeout = setTimeout(() => {
+			if (bookingsRef.current) {
+				bookingsRef.current.scrollIntoView({
+					behavior: 'smooth',
+					block: 'center',
+				});
+			}
+		}, 100);
 
-			setHighlight(true);
-			setTimeout(() => setHighlight(false), 2000); // Remove highlight after 2 seconds
-		}
-	};
+		const resetTimeout = setTimeout(() => {
+			setHighlight(false);
+
+			setTimeout(() => {
+				window.scrollTo({ top: -10, behavior: 'smooth' });
+			}, 100);
+		}, 3000);
+
+		return () => {
+			clearTimeout(scrollTimeout);
+			clearTimeout(resetTimeout);
+		};
+	}, [location.key]);
 
 	return (
 		<div className='w-full px-4 py-6 -mt-6 dashboard'>
@@ -74,7 +87,7 @@ const Dashboard = () => {
 				</p>
 
 				{/* Dashboard Cards */}
-				<div className='mx-4 justify-center items-center px-2'>
+				<div className='mx-1 justify-center items-center px-2'>
 					<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10'>
 						<DashboardCard
 							icon={<RiUser6Line />}
@@ -216,12 +229,15 @@ const Dashboard = () => {
 					</Card>
 				</motion.div>
 
-				<motion.div whileHover={{}} className='md:col-span-2 xl:col-span-3'>
+				<motion.div
+					whileHover={{}}
+					className='md:col-span-2 xl:col-span-3'
+					ref={bookingsRef}
+				>
 					<Card
-						className={` shadow-lg transition-all duration-500 p-4 rounded ${
+						className={`transition-all duration-500 p-4 rounded-xl ${
 							highlight ? 'ring-4 ring-yellow-400 bg-yellow-100' : ''
 						}`}
-						ref={recentBookingsRef}
 					>
 						<CardContent>
 							<h2
@@ -236,7 +252,7 @@ const Dashboard = () => {
 								Recent Bookings
 							</h2>
 							<div className='overflow-x-auto'>
-								<table className='table-auto w-full border-collapse'>
+								<table className='table-auto w-full min-w-max border-collapse'>
 									<thead>
 										<tr className='bg-gray-100 text-left'>
 											<th
@@ -250,7 +266,7 @@ const Dashboard = () => {
 												Customer
 											</th>
 											<th
-												className='p-2'
+												className='p-2 relative'
 												style={{
 													...FONTS.paragraph,
 													fontSize: '16px',
@@ -258,6 +274,9 @@ const Dashboard = () => {
 												}}
 											>
 												Service
+												<span className='absolute top-1 bg-green-100 text-green-600 text-[10px] font-semibold px-2 py-1 rounded-full shadow-sm ml-1'>
+													New Bookings
+												</span>
 											</th>
 											<th
 												className='p-2'
@@ -299,21 +318,23 @@ const Dashboard = () => {
 											<td className='p-2'>9:30 am</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded  text-white'
+													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
+													style={{ ...FONTS.paragraph, color: COLORS.white }}
 												>
 													View
 												</button>
 											</td>
 										</tr>
-										<tr className='bg-gray-50'>
+										<tr>
 											<td className='p-2'>Jane Smith</td>
 											<td className='p-2'>Brake Inspection</td>
 											<td className='p-2'>2025-05-22</td>
 											<td className='p-2'>1:45 am</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded  text-white'
+													className='bg-[#9b111e] px-2 py-1 rounded'
+													style={{ ...FONTS.paragraph, color: COLORS.white }}
 													onClick={() => navigate('/service')}
 												>
 													View
@@ -327,8 +348,9 @@ const Dashboard = () => {
 											<td className='p-2'>8:10 pm</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded  text-white'
+													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
+													style={{ ...FONTS.paragraph, color: COLORS.white }}
 												>
 													View
 												</button>
@@ -343,7 +365,7 @@ const Dashboard = () => {
 			</div>
 
 			{/* Footer */}
-			<footer className='bg-white shadow-md rounded-xl p-4 w-full text-center mt-4 -mb-10'>
+			<footer className='bg-white shadow-md rounded-xl p-4 w-full text-center my-6 -mb-8'>
 				<div>
 					<div className='flex items-center justify-center space-x-1'>
 						<AiOutlineCopyrightCircle color={COLORS.primary} size={18} />

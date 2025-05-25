@@ -26,14 +26,8 @@ interface Notification {
 type Props = {
 	hasNewBooking: boolean;
 };
-interface NavbarProps {
-	onToolsClick?: () => void;
-}
-type NavbarCombinedProps = Props & NavbarProps;
-const Navbar: React.FC<NavbarCombinedProps> = ({
-	hasNewBooking,
-	onToolsClick,
-}) => {
+
+const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const [isBellActive, setIsBellActive] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [showProfileDetails, setShowProfileDetails] = useState(false);
@@ -170,28 +164,31 @@ const Navbar: React.FC<NavbarCombinedProps> = ({
 					</button>
 				</div>
 
-				<div className='relative bg-[#9b111e] rounded-full p-3 left-[530px] cursor-pointer'>
-					<FaTools className='w-4 h-4 text-white' onClick={onToolsClick} />
-					<AnimatePresence>
-						{hasNewBooking && (
-							<motion.div
-								className='absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full'
-								initial={{ scale: 0 }}
-								animate={{ scale: 1.5 }}
-								exit={{ scale: 0 }}
-								transition={{
-									type: 'spring',
-									stiffness: 300,
-									damping: 10,
-									repeat: Infinity,
-									repeatType: 'mirror',
-								}}
-							/>
-						)}
-					</AnimatePresence>
-				</div>
-
 				<div className='ml-auto flex items-center space-x-4 pr-4'>
+					<div
+						className='ml-2 relative rounded-full p-3 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
+						onClick={() => navigate('/bookings')}
+					>
+						<FaTools className='w-4 h-4 text-white' />
+						<AnimatePresence>
+							{hasNewBooking && (
+								<motion.div
+									key='new-bookings'
+									initial={{ scale: 0 }}
+									animate={{ scale: [1, 1.1, 1] }}
+									exit={{ scale: 0 }}
+									transition={{
+										duration: 1.5,
+										repeat: Infinity,
+										ease: 'easeInOut',
+									}}
+									className='absolute -top-2 -left-0 px-1 py-0.4 text-[8px] font-semibold bg-gradient-to-r from-[#9b111e] to-red-500 text-white rounded-full shadow-md whitespace-nowrap'
+								>
+									New Bookings
+								</motion.div>
+							)}
+						</AnimatePresence>
+					</div>
 					<div className='relative' ref={notificationRef}>
 						<button
 							aria-label='Notifications'

@@ -22,7 +22,7 @@ const MainLayout = () => {
 				<Navbar hasNewBooking={true} />
 				<main className='flex-1 overflow-auto scrollbar-hide'>
 					<div
-						className='p-4 rounded shadow'
+						className='p-2 rounded shadow'
 						style={{ backgroundColor: COLORS.bgColor }}
 					>
 						<Outlet />
