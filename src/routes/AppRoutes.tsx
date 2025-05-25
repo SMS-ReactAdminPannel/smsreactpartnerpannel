@@ -13,15 +13,16 @@ import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
-import JobCard from '../pages/Service Management/jobCard';
-import Service from '../pages/Service Management/Service';
+import ResetPassword from '../pages/auth/ResetPassword';
+import LoginPage1 from '../pages/auth/LoginPage1';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
 
 	const AuthRoutes = () => (
 		<Routes>
-			<Route path='/login' element={<LoginPage />} />
+			<Route path='/login' element={<LoginPage1 />} />
+			<Route path='/reset-password' element={<ResetPassword />} />
 			<Route path='*' element={<Navigate to='/login' />} />
 		</Routes>
 	);
@@ -31,7 +32,7 @@ const AppRoutes = () => {
 			<Route path='/' element={<MainLayout />}>
 				<Route index element={<Dashboard />} />
 				<Route path='notifications' element={<NotificationsPage />} />
-				<Route path='service' element={<Service/>} />
+				<Route path='service' element={<ServiceManagement/>} />
 				<Route path='profile' element={<ProfileManagement />} />
 				<Route path='bookings' element={<Bookings />} />
 				<Route path='customer' element={<CustomerManagement />} />
