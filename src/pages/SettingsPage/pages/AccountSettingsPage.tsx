@@ -16,7 +16,7 @@ import { IoShareSocial } from "react-icons/io5";
 
 const AccountSettingsPage: React.FC = () => {
   return (
-    <div className="p-6 mx-auto bg-white shadow-lg rounded-xl">
+    <div className="p-6 mx-auto bg-white shadow-lg rounded-lg">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-[#9b111e] ">Profile Settings</h1>
         <p className="text-gray-600 mt-2">
