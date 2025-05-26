@@ -1,8 +1,16 @@
-import { RiUser6Line } from 'react-icons/ri';
-import { AiOutlineCopyrightCircle } from 'react-icons/ai';
+
+import { AiOutlineCopyrightCircle, AiOutlineDashboard } from 'react-icons/ai';
 import { COLORS, FONTS } from '../../constants/constants';
 import DashboardCard from '../../components/dashboard/DashboradCard/DashboradCard';
 import { Card, CardContent } from '../../components/dashboard/ui/card';
+import {
+   AiOutlineThunderbolt, 
+  AiOutlineClockCircle, 
+  AiFillCheckCircle,        
+  AiOutlineUser,    
+} from 'react-icons/ai';
+
+
 import {
 	BarChart,
 	Bar,
@@ -12,21 +20,67 @@ import {
 	ResponsiveContainer,
 	LineChart,
 	Line,
-	PieChart,
-	Pie,
-	Cell,
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { useState, useEffect, useRef } from 'react';
 
-const revenueData = [
-	{ month: 'Jan', revenue: 4000 },
-	{ month: 'Feb', revenue: 3000 },
-	{ month: 'Mar', revenue: 5000 },
-	{ month: 'Apr', revenue: 4000 },
-	{ month: 'May', revenue: 6000 },
-	{ month: 'Jun', revenue: 8000 },
+
+const dailyRevenueData = [
+  { day: 'Mon', revenue: 500 },
+  { day: 'Tue', revenue: 700 },
+  { day: 'Wed', revenue: 600 },
+  { day: 'Thu', revenue: 800 },
+  { day: 'Fri', revenue: 750 },
+  { day: 'Sat', revenue: 900 },
+  { day: 'Sun', revenue: 650 },
+];
+
+const weeklyRevenueData = [
+  { week: 'Week 1', revenue: 3500 },
+  { week: 'Week 2', revenue: 4200 },
+  { week: 'Week 3', revenue: 3900 },
+  { week: 'Week 4', revenue: 4800 },
+  { week: 'Week 5', revenue: 5300 },
+  { week: 'Week 6', revenue: 6000 },
+];
+
+const monthlyRevenueData = [
+  { month: 'Jan', revenue: 4000 },
+  { month: 'Feb', revenue: 3000 },
+  { month: 'Mar', revenue: 5000 },
+  { month: 'Apr', revenue: 4000 },
+  { month: 'May', revenue: 6000 },
+  { month: 'Jun', revenue: 8000 },
+];
+
+//  spare parts revenue data
+const dailySparePartsRevenueData = [
+  { day: 'Mon', sparePartsRevenue: 200 },
+  { day: 'Tue', sparePartsRevenue: 300 },
+  { day: 'Wed', sparePartsRevenue: 250 },
+  { day: 'Thu', sparePartsRevenue: 350 },
+  { day: 'Fri', sparePartsRevenue: 300 },
+  { day: 'Sat', sparePartsRevenue: 400 },
+  { day: 'Sun', sparePartsRevenue: 320 },
+];
+
+const weeklySparePartsRevenueData = [
+  { week: 'Week 1', sparePartsRevenue: 1500 },
+  { week: 'Week 2', sparePartsRevenue: 1700 },
+  { week: 'Week 3', sparePartsRevenue: 1600 },
+  { week: 'Week 4', sparePartsRevenue: 1800 },
+  { week: 'Week 5', sparePartsRevenue: 2100 },
+  { week: 'Week 6', sparePartsRevenue: 2300 },
+];
+
+const monthlySparePartsRevenueData = [
+  { month: 'Jan', sparePartsRevenue: 1600 },
+  { month: 'Feb', sparePartsRevenue: 1400 },
+  { month: 'Mar', sparePartsRevenue: 2000 },
+  { month: 'Apr', sparePartsRevenue: 1800 },
+  { month: 'May', sparePartsRevenue: 2200 },
+  { month: 'Jun', sparePartsRevenue: 2700 },
 ];
 
 const bookingData = [
@@ -37,23 +91,25 @@ const bookingData = [
 	{ name: 'Service E', bookings: 50 },
 ];
 
-const COLORS_01 = ['#8884d8', '#82ca9d', '#FFE99A', '#9EBC8A', '#F79B72'];
+
 
 const Dashboard = () => {
 	const navigate = useNavigate();
-	// const location = useLocation();
-	// const [highlight, setHighlight] = useState(true);
-	// const bookingsRef = useRef<HTMLDivElement | null>(null);
+	const location = useLocation();
+	const [highlight, setHighlight] = useState(true);
+	const bookingsRef = useRef<HTMLDivElement | null>(null);
+	const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
 
-	// useEffect(() => {
-	// 	const scrollTimeout = setTimeout(() => {
-	// 		if (bookingsRef.current) {
-	// 			bookingsRef.current.scrollIntoView({
-	// 				behavior: 'smooth',
-	// 				block: 'center',
-	// 			});
-	// 		}
-	// 	}, 100);
+
+	useEffect(() => {
+		const scrollTimeout = setTimeout(() => {
+			if (bookingsRef.current) {
+				bookingsRef.current.scrollIntoView({
+					behavior: 'smooth',
+					block: 'center',
+				});
+			}
+		}, 100);
 
 	// 	const resetTimeout = setTimeout(() => {
 	// 		setHighlight(false);
@@ -69,6 +125,31 @@ const Dashboard = () => {
 	// 	};
 	// }, [location.key]);
 
+  
+
+  // Combine revenue and spare parts revenue data for the selected period
+  let data = [];
+  let xDataKey = '';
+
+  if (period === 'daily') {
+    data = dailyRevenueData.map((item, index) => ({
+      ...item,
+      sparePartsRevenue: dailySparePartsRevenueData[index]?.sparePartsRevenue || 0,
+    }));
+    xDataKey = 'day';
+  } else if (period === 'weekly') {
+    data = weeklyRevenueData.map((item, idx) => ({
+      ...item,
+      sparePartsRevenue: weeklySparePartsRevenueData[idx]?.sparePartsRevenue || 0,
+    }));
+    xDataKey = 'week';
+  } else {
+    data = monthlyRevenueData.map((item, idx) => ({
+      ...item,
+      sparePartsRevenue: monthlySparePartsRevenueData[idx]?.sparePartsRevenue || 0,
+    }));
+    xDataKey = 'month';
+  }
 	return (
 		<div className='w-full px-4 py-6 -mt-6 dashboard'>
 			{/* Header */}
@@ -90,7 +171,7 @@ const Dashboard = () => {
 				<div className='mx-1 justify-center items-center px-2'>
 					<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10'>
 						<DashboardCard
-							icon={<RiUser6Line />}
+							icon={< AiOutlineThunderbolt  />}
 							title='Active Services'
 							value={10}
 							per={10}
@@ -100,7 +181,7 @@ const Dashboard = () => {
 							dataPoints={[1, 5, 1, 5]}
 						/>
 						<DashboardCard
-							icon={<RiUser6Line />}
+							icon={< AiOutlineClockCircle />}
 							title='Pending Services'
 							value={2}
 							per={-5}
@@ -110,7 +191,7 @@ const Dashboard = () => {
 							dataPoints={[6, 5, 4, 4, 4, 4, 4.5, 1]}
 						/>
 						<DashboardCard
-							icon={<RiUser6Line />}
+							icon={<AiFillCheckCircle />}
 							title='Completed Services'
 							value={10}
 							per={5}
@@ -118,9 +199,10 @@ const Dashboard = () => {
 							borderColor='rgba(59,130,246,0.8)'
 							backgroundColor='#3b82f6'
 							dataPoints={[1, 4, 3, 3, 3, 3, 5]}
+							
 						/>
 						<DashboardCard
-							icon={<RiUser6Line />}
+							icon={<AiOutlineDashboard  />}
 							title='Overall Services'
 							value={22}
 							per={15}
@@ -133,37 +215,57 @@ const Dashboard = () => {
 				</div>
 			</div>
 
-			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-3'>
-				<motion.div whileHover={{ scale: 1.02 }}>
-					<Card className='rounded-2xl shadow-lg'>
-						<CardContent>
-							<h2
-								className='mb-4'
-								style={{
-									...FONTS.paragraph,
-									fontSize: '18px',
-									color: COLORS.primary,
-									fontWeight: 500,
-								}}
-							>
-								Monthly Revenue
-							</h2>
-							<ResponsiveContainer width='100%' height={200}>
-								<LineChart data={revenueData}>
-									<XAxis dataKey='month' />
-									<YAxis />
-									<Tooltip />
-									<Line
-										type='monotone'
-										dataKey='revenue'
-										stroke='#F49BAB'
-										strokeWidth={2}
-									/>
-								</LineChart>
-							</ResponsiveContainer>
-						</CardContent>
-					</Card>
-				</motion.div>
+			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 my-3'>
+				  <motion.div whileHover={{ scale: 1.02 }}>
+      <Card className="rounded-2xl shadow-lg">
+        <CardContent>
+          <div className="flex justify-between items-center mb-4">
+            <h2
+              style={{
+                ...FONTS.paragraph,
+                fontSize: '18px',
+                color: COLORS.primary,
+                fontWeight: 500,
+              }}
+            >
+              {period.charAt(0).toUpperCase() + period.slice(1)} Revenue
+            </h2>
+            <select
+              value={period}
+              onChange={(e) => setPeriod(e.target.value as 'daily' | 'weekly' | 'monthly')}
+              className="border rounded px-2 py-1"
+              aria-label="Select period"
+            >
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={data}>
+              <XAxis dataKey={xDataKey} />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="revenue"
+                stroke="#F49BAB"
+                strokeWidth={2}
+                name="Revenue"
+              />
+              <Line
+                type="monotone"
+                dataKey="sparePartsRevenue"
+                stroke="#4CAF50"
+                strokeWidth={2}
+                name="Spare Parts Revenue"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </motion.div>
 
 				<motion.div whileHover={{ scale: 1.02 }}>
 					<Card className='rounded-2xl shadow-lg'>
@@ -179,7 +281,7 @@ const Dashboard = () => {
 							>
 								Service Bookings
 							</h2>
-							<ResponsiveContainer width='100%' height={200}>
+							<ResponsiveContainer width='100%' height={250}>
 								<BarChart data={bookingData}>
 									<XAxis dataKey='name' />
 									<YAxis />
@@ -191,43 +293,7 @@ const Dashboard = () => {
 					</Card>
 				</motion.div>
 
-				<motion.div whileHover={{ scale: 1.02 }}>
-					<Card className='rounded-2xl shadow-lg'>
-						<CardContent>
-							<h2
-								className='mb-4'
-								style={{
-									...FONTS.paragraph,
-									fontSize: '18px',
-									color: COLORS.primary,
-									fontWeight: 500,
-								}}
-							>
-								Booking Share
-							</h2>
-							<ResponsiveContainer width='100%' height={200}>
-								<PieChart>
-									<Pie
-										data={bookingData}
-										cx='50%'
-										cy='50%'
-										outerRadius={70}
-										dataKey='bookings'
-										label
-									>
-										{bookingData.map((_, index) => (
-											<Cell
-												key={`cell-${index}`}
-												fill={COLORS_01[index % COLORS_01.length]}
-											/>
-										))}
-									</Pie>
-									<Tooltip />
-								</PieChart>
-							</ResponsiveContainer>
-						</CardContent>
-					</Card>
-				</motion.div>
+			
 
 				<motion.div
 					whileHover={{}}
