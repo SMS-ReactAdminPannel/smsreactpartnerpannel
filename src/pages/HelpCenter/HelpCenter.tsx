@@ -80,7 +80,7 @@ const HelpCenter: React.FC = () => {
   };
 
   return (
-    <div className="h-full  bg-green-50 flex flex-col items-center px-4 py-12">
+    <div className="h-screen  bg-green-50 flex flex-col items-center px-4 py-12">
       <header className="w-full  text-center mb-8">
         <h1 className="text-4xl font-bold text-[#9b111e] pt-10">How can we help</h1>
         <div className="mt-4 flex items-center justify-center pt-8 pb-10 gap-2 max-w-md mx-auto">
@@ -124,7 +124,7 @@ const HelpCenter: React.FC = () => {
         onSubmit={handleSubmit}
         className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
       >
-        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Enqurie?</h2>
+        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Still need help?</h2>
 
         <div className="flex flex-col md:flex-row gap-6 items-end">
         
