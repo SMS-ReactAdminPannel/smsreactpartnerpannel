@@ -5,7 +5,7 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import { BiMaleFemale } from "react-icons/bi";
 import { HiMiniInformationCircle } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
-import { PiPhonePlus } from "react-icons/pi";
+import { PiPhonePlusFill } from "react-icons/pi";
 import { RiContactsBook3Fill } from "react-icons/ri";
 import { MdAttachEmail } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
@@ -94,7 +94,7 @@ const AccountSettingsPage: React.FC = () => {
 
         <section className="space-y-6">
           <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
-            <PiPhonePlus />
+            <RiContactsBook3Fill /> 
             <h2>Contact Information</h2>
           </div>
 
@@ -108,7 +108,7 @@ const AccountSettingsPage: React.FC = () => {
 
             <div>
               <label htmlFor="phone" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
-                <RiContactsBook3Fill /> Phone Number
+               <PiPhonePlusFill />Phone Number
               </label>
               <input type="tel" id="phone" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
