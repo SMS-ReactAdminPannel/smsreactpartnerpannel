@@ -365,8 +365,8 @@ const CustomerServiceDetails = () => {
       {/* Services Grid */}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg border-black dark:border-black">
         <table className="w-full text-left rtl:text-right dark:text-black pt-5">
-          <thead className="text-xs uppercase bg-gray-50 dark:bg-white border-b-2 dark:text-black">
-            <tr className='text-lg'>
+          <thead className="text-xs uppercase dark:bg-white border-b-2 dark:text-black">
+            <tr className='text-md'>
               <th scope="col" className="p-4 dark:text-black text-2xl">
                 <div className="flex items-center dark:text-black">
                   <label htmlFor="checkbox-all-search" className="sr-only">Select all</label>
