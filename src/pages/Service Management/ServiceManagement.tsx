@@ -6,8 +6,6 @@ import {
   Calendar,
   Clock,
   Phone,
-  CheckCircle,
-  AlertCircle,
   Plus,
   Filter,
   Search,
@@ -20,9 +18,6 @@ import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { TbCategoryPlus } from "react-icons/tb";
-// import MustCare from "./MustCare";
-// import JobCard from "./jobCard";
-// import { useNavigate } from "react-router-dom";
 import JobCardDetailsPage from "./JobCardDetailsPages"
 
 interface TermsConditionsPageProps {
@@ -273,7 +268,7 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
                         {request.priority}
                       </span>
                     </td>
-                   
+                  
                     <td className="py-4 px-6">
                       <button 
                         onClick={() => setShowForm(true)}

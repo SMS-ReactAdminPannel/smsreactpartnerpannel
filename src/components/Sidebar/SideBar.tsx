@@ -30,7 +30,7 @@ const SideBar = ({
 	};
 
 	return (
-		<div className='flex h-screen'>
+		<div className='flex h-screen overflow-y-auto scrollbar-hide'>
 			<div className='bg-white border-r shadow-md p-2 transition-all duration-300 fixed top-0 left-0 h-screen z-40 flex flex-col items-center'>
 				<div className='flex justify-center items-center h-20'>
 					<img
@@ -55,7 +55,7 @@ const SideBar = ({
 					</button>
 				</div>
 
-				<nav className='flex flex-col gap-4 mt-4 w-full items-center'>
+				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'>
 					<SidebarLink
 						to='/'
 						icon={<FiHome />}

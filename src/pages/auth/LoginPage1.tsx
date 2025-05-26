@@ -116,7 +116,7 @@ const LoginPage1 = () => {
 					transition={{ duration: 1.2 }}
 					className='hidden md:block w-full md:w-3/5 h-64 md:h-screen relative'
 				>
-					<div className='bg-[#9b111e] h-full w-[90%]'>
+					<div className='bg-gradient-to-r from-[#9b111e] to-red-600 h-full w-[90%]'>
 						<img
 							src={carImage}
 							alt='Login illustration'
@@ -124,7 +124,7 @@ const LoginPage1 = () => {
 							style={{
 								position: 'absolute',
 								top: '-5px',
-								left: '35px',
+								left: '55px',
 								width: '95%',
 								height: 'auto',
 							}}
