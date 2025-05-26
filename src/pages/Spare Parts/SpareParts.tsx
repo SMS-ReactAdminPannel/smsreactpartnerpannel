@@ -225,36 +225,37 @@ const SpareParts: React.FC = () => {
 
 
       {/* Hero Card */}
-      <div className="mb-8 w-full bg-gray-100 rounded-xl shadow p-6 flex flex-col lg:flex-row items-center gap-6">
-        <div className="flex-1">
-          <h2 className="text-3xl font-bold text-[#9b111e] mb-4">
-            Welcome to Auto Spare Hub
-          </h2>
-          <p className="text-gray-700 mb-3">
-            Discover top-quality auto spare parts. We offer genuine and aftermarket
-            components with fast delivery and customer satisfaction guaranteed.
-          </p>
-          <button 
-            onClick={() => setShowAddForm(true)}
-            className="mt-4 bg-[#9b111e] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            Add New Product
-          </button>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <img
-            src="https://t4.ftcdn.net/jpg/05/21/93/17/360_F_521931702_TXOHZBa3tLVISome894Zc061ceab4Txm.jpg"
-            alt="Spare Parts Overview"
-            className="rounded-lg max-h-[250px] w-full object-cover shadow"
-          />
-        </div>
-      </div>
+      <div className="mb-8 w-full bg-gray-100 rounded-xl shadow p-6 flex flex-col lg:flex-row items-center gap-6 hover:shadow-lg hover:scale-[1.01] transition-transform duration-300 ease-in-out">
+  <div className="flex-1">
+    <h2 className="text-3xl font-bold text-[#9b111e] mb-4">
+      Welcome to Auto Spare Hub
+    </h2>
+    <p className="text-gray-700 mb-3">
+      Discover top-quality auto spare parts. We offer genuine and aftermarket
+      components with fast delivery and customer satisfaction guaranteed.
+    </p>
+    <button 
+      onClick={() => setShowAddForm(true)}
+      className="mt-4 bg-[#9b111e] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      </svg>
+      Add New Product
+    </button>
+  </div>
+  <div className="flex-1 flex justify-center">
+    <img
+      src="https://t4.ftcdn.net/jpg/05/21/93/17/360_F_521931702_TXOHZBa3tLVISome894Zc061ceab4Txm.jpg"
+      alt="Spare Parts Overview"
+      className="rounded-lg max-h-[250px] w-full object-cover shadow"
+    />
+  </div>
+</div>
+
 
  <div className="flex  justify-between mb-6">
-  <h2 className="text-3xl font-bold text-[#9b111e] text-left">
+  <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
     Products
   </h2>
   <button
@@ -459,30 +460,38 @@ const SpareParts: React.FC = () => {
               </div>
 
               {/* Image URL */}
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Image URL *
-                </label>
-                <input
-                  type="url"
-                  value={newPart.images[0]}
-                  onChange={(e) => setNewPart({...newPart, images: [e.target.value]})}
-                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
-                  placeholder="Enter image URL"
-                />
-                {newPart.images[0] && (
-                  <div className="mt-2 flex justify-center">
-                    <img
-                      src={newPart.images[0]}
-                      alt="Preview"
-                      className="w-32 h-32 object-cover rounded border"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+             <div>
+  <label className="block text-sm font-medium mb-2 text-gray-700">
+    Upload Image *
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        setNewPart({ ...newPart, images: [imageUrl] });
+      }
+    }}
+    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
+  />
+
+  {newPart.images[0] && (
+    <div className="mt-2 flex justify-center">
+      <img
+        src={newPart.images[0]}
+        alt="Preview"
+        className="w-32 h-32 object-cover rounded border"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+        }}
+      />
+    </div>
+  )}
+</div>
+
 
               {/* Stock Status */}
               
