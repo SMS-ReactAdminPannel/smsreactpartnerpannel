@@ -46,7 +46,7 @@ const History: React.FC<HistoryProps> = ({ bkings }) => {
         completedBookings.map((booking) => (
           <div
             key={booking.id}
-            className="border p-4 mb-3 rounded-md shadow-sm bg-green-50"
+            className="border p-4 mb-3 rounded-md shadow-sm bg-[#fbfbfb]"
           >
             <p>
               <strong className="text-[#E6A895]">Customer:</strong>{" "}

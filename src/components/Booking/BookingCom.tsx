@@ -91,7 +91,7 @@ const ServiceBookingPanel: React.FC = () => {
     <div className="p-2 lg:max-w-6xl mx-auto md:max-w-full">
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold text-[#9b111e]" style={{color:COLORS.primary}}>Orders</h2>
+          <h2 className="text-xl font-semibold text-[#9b111e]" style={{color:COLORS.primary}}>Slot Bookings</h2>
         </div>
         {bookings.map((booking) => (
           <div
@@ -150,7 +150,7 @@ const ServiceBookingPanel: React.FC = () => {
           onClick={() => setSelectedBooking(null)}
         >
           <div
-            className="p-6 rounded-xl max-w-5xl w-full h-3/4 shadow-lg grid lg:grid-cols-2 md:grid-cols-1 gap-4 overflow-y-auto md:max-h-[90vh] md:m-10"
+            className="p-6 rounded-xl max-w-5xl w-full h-3/4 shadow-lg grid lg:grid-cols-2 md:grid-cols-2 gap-4 overflow-y-auto md:max-h-[90vh] md:m-10"
             onClick={(e) => e.stopPropagation()}
             style={{ backgroundColor: COLORS.bgColor }}
           >
@@ -185,15 +185,15 @@ const ServiceBookingPanel: React.FC = () => {
 
               <div className="p-4 flex-1 flex flex-col">
                 <h4 className="font-semibold mb-2 text-[#9b111e]">Services</h4>
-                <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64">
+                <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64 scrollbar-hide">
                   {selectedBooking.servicePurpose.map((purpose, index) => (
-                    <div key={index} className="bg-gray-100 rounded p-3 text-sm shadow-sm">
+                    <div key={index} className="bg-gray-100 hover:scale-[1.022] rounded p-3 text-sm shadow-sm  ">
                       <p
                         onClick={() => {
                           setSelectedService(purpose);
                           handleClick();
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer "
                       >
                         {purpose}
                       </p>
@@ -204,15 +204,15 @@ const ServiceBookingPanel: React.FC = () => {
             </div>
 
             {/* Right Column */}
-            <div className="p-4 flex flex-col justify-between bg-[#FBFBFB] rounded-xl shadow-xl">
-              <div>
+            <div className="p-4 flex flex-col justify-between bg-[#FBFBFB] rounded-xl shadow-xl  overflow-auto">
+              <div className=" ">
                 {selectedService && isVisible ? (
                   <div className="cursor-default">
-                    <h4 className="text-2xl font-bold text-[#9b111e]">Service Preview</h4>
+                    <h4 className="text-2xl font-bold text-[#9b111e] ">Service Preview</h4>
                     <p className="text-xl mt-2 text-[#E6A895]">{selectedService}</p>
                     <div className="mt-8 space-y-4">
                       {["In-Process", "Pending", "Completed"].map((label, i) => (
-                        <div key={i} className="flex flex-col md:flex-row justify-between p-4 gap-3">
+                        <div key={i} className="flex flex-col md:flex-row justify-between p-4 gap-3 md:h-20 ">
                           <button
                             className={`${
                               label === "In-Process"
@@ -220,7 +220,7 @@ const ServiceBookingPanel: React.FC = () => {
                                 : label === "Pending"
                                 ? "bg-[#F2E394] hover:bg-[#FFBB00]"
                                 : "bg-[#86AF49] hover:bg-[#34A853]"
-                            } text-white w-32 px-3 py-2 rounded-lg shadow transition font-medium`}
+                            } text-white w-32 px-3 py-2 rounded-lg shadow transition font-medium md:text-sm`}
                           >
                             {label}
                           </button>
@@ -236,7 +236,13 @@ const ServiceBookingPanel: React.FC = () => {
                   <p>Select a service to preview...</p>
                 )}
               </div>
-              <div className="flex justify-end mt-4">
+              <div className="flex justify-end  gap-3">
+                <button
+                  // onClick={() => setSelectedBooking(null)}
+                  className=" text-white px-4 py-2 rounded hover:bg-red-900 transition bg-[#C5172E]"
+                >
+                  Save
+                </button>
                 <button
                   onClick={() => setSelectedBooking(null)}
                   className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
