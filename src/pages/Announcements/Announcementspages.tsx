@@ -4,7 +4,7 @@ import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 
 const categories = [
-  "All", "General", "Booking", "SOS Updates", "Payments",
+  "All", "General", "Booking", "Payments",
 ];
 
 const initialAnnouncements = [
