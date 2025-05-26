@@ -14,35 +14,46 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="p-6">
       <div className="flex flex-wrap align-center justify-center gap-4 mb-6">
-        <button
-          onClick={() => handleRenderComponent('Account Settings')}
-        
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] active:bg-[#9b111e]"
+       <button onClick={() => handleRenderComponent('Account Settings')}
+             className="text-[#9b111e] font-semibold py-2 px-4 ml-4 border rounded 
+             border-[#9b111e] bg-transparent
+             hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]
+             hover:text-white 
+             focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]
+             active:bg-[#700808] active:text-white transition-all duration-200"
         >
-          Account Settings
+           Account Settings
         </button>
 
-        <button
-          onClick={() => handleRenderComponent('About us')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
+        <button onClick={() => handleRenderComponent('About us')}
+          className="text-[#9b111e] font-semibold py-2 px-4 ml-4 border rounded 
+             border-[#9b111e] bg-transparent
+             hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]
+             hover:text-white 
+             focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]
+             active:bg-[#700808] active:text-white transition-all duration-200"
         >
           About us
         </button>
 
-        <button
-          onClick={() => handleRenderComponent('Privacy Policy')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
+        <button onClick={() => handleRenderComponent('Privacy Policy')}
+          className="text-[#9b111e] font-semibold py-2 px-4 ml-4 border rounded 
+             border-[#9b111e] bg-transparent
+             hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]
+             hover:text-white 
+             focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]
+             active:bg-[#700808] active:text-white transition-all duration-200"
         >
           Privacy Policy
         </button>
 
-        <button
-          onClick={() => handleRenderComponent('Terms & Conditions')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
+        <button onClick={() => handleRenderComponent('Terms & Conditions')}
+          className="text-[#9b111e] font-semibold py-2 px-4 ml-4 border rounded 
+             border-[#9b111e] bg-transparent
+             hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]
+             hover:text-white 
+             focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]
+             active:bg-[#700808] active:text-white transition-all duration-200] "
         >
           Terms & Conditions
         </button>

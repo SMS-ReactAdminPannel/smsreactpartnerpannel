@@ -16,7 +16,7 @@ import { IoShareSocial } from "react-icons/io5";
 
 const AccountSettingsPage: React.FC = () => {
   return (
-    <div className="p-6 mx-auto bg-white shadow-lg rounded-xl">
+    <div className="p-6 mx-auto bg-white shadow-lg rounded-lg">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-[#9b111e] ">Profile Settings</h1>
         <p className="text-gray-600 mt-2">
@@ -34,28 +34,28 @@ const AccountSettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="firstName" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="firstName" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <MdOutlineDriveFileRenameOutline /> First Name
               </label>
               <input type="text" id="firstName" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="lastName" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="lastName" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <MdOutlineDriveFileRenameOutline /> Last Name
               </label>
               <input type="text" id="lastName" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="dob" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="dob" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <LiaBirthdayCakeSolid /> Date of Birth
               </label>
               <input type="date" id="dob" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="gender" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="gender" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <BiMaleFemale /> Gender
               </label>
               <select id="gender" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition">
@@ -69,14 +69,14 @@ const AccountSettingsPage: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="bio" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+            <label htmlFor="bio" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
               <HiMiniInformationCircle /> About You
             </label>
             <textarea id="bio" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" rows={4} placeholder="Tell us about yourself..." />
           </div>
 
           <div>
-            <label htmlFor="photo" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+            <label htmlFor="photo" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
               <CgProfile /> Profile Photo
             </label>
             <div className="flex items-center gap-4">
@@ -87,7 +87,7 @@ const AccountSettingsPage: React.FC = () => {
                   target.className = 'w-full h-full object-contain';
                 }} />
               </div>
-              <input type="file" id="photo" accept="image/*" className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#9b111e]/10 file:text-[#9b111e] hover:file:bg-[#9b111e]/20" />
+              <input type="file" id="photo" accept="image/*" className=" w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#9b111e]/10 file:text-[#9b111e] hover:file:bg-[#9b111e]/20" />
             </div>
           </div>
         </section>
@@ -100,28 +100,28 @@ const AccountSettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="email" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="email" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <MdAttachEmail /> Email Address
               </label>
               <input type="email" id="email" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="phone" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="phone" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <RiContactsBook3Fill /> Phone Number
               </label>
               <input type="tel" id="phone" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="address" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="address" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <FaRegAddressCard /> Address
               </label>
               <input type="text" id="address" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="State" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="State" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <FaMapLocationDot /> State
               </label>
               <select id="State" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition">
@@ -144,14 +144,14 @@ const AccountSettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="companyName" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="companyName" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <TbBuildingWarehouse /> Company Name
               </label>
               <input type="text" id="companyName" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" />
             </div>
 
             <div>
-              <label htmlFor="companyWebsite" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="companyWebsite" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <IoIosLink /> Company Website
               </label>
               <input type="url" id="companyWebsite" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" placeholder="https://" />
@@ -167,14 +167,14 @@ const AccountSettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="facebook" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="facebook" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <FaFacebook /> Facebook Profile
               </label>
               <input type="url" id="facebook" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" placeholder="https://facebook.com/username" />
             </div>
 
             <div>
-              <label htmlFor="youtube" className="block mb-2 font-medium text-gray-700 flex items-center gap-2">
+              <label htmlFor="youtube" className=" mb-2 font-medium text-gray-700 flex items-center gap-2">
                 <FaYoutube /> YouTube Channel
               </label>
               <input type="url" id="youtube" className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition" placeholder="https://youtube.com/username" />
