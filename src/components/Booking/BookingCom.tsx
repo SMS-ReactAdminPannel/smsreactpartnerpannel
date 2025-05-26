@@ -102,8 +102,8 @@ const ServiceBookingPanel: React.FC = () => {
               <p className="font-semibold text-lg text-[#9b111e]">
                 {booking.customerName} – {booking.carModel}
               </p>
-              <p className="text-[#E6A895]">{booking.servicePurpose.join(", ")}</p>
-              <p className="text-sm text-[#E6A895]">
+              <p className="text-[#e07f62]">{booking.servicePurpose.join(", ")}</p>
+              <p className="text-sm text-[#e07f62]">
                 Scheduled: {formatDateTime(booking.serviceDateTime)}
               </p>
               <p
@@ -122,19 +122,19 @@ const ServiceBookingPanel: React.FC = () => {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedBooking(booking)}
-                className="bg-[#55ACEE] text-white px-3 py-1 rounded hover:bg-[#0F7DC7] transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#0F7DC7] hover:bg-[#55ACEE] transition text-sm"
               >
                 Open Service
               </button>
               <button
                 onClick={() => updateStatus(booking.id, "Viewed")}
-                className="bg-[#F2E394] text-white px-3 py-1 rounded hover:bg-[#FFBB00] transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#FFBB00] hover:bg-[#F2E394] transition text-sm"
               >
                 Mark as Viewed
               </button>
               <button
                 onClick={() => updateStatus(booking.id, "Solved")}
-                className="bg-[#86AF49] text-white px-3 py-1 rounded hover:bg-[#34A853] transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#34A853] hover:bg-[#86AF49]  transition text-sm"
               >
                 Completed
               </button>
@@ -159,16 +159,16 @@ const ServiceBookingPanel: React.FC = () => {
               <div className="cursor-default p-4">
                 <h3 className="text-2xl font-bold mb-4 text-[#9b111e]">Service Details</h3>
                 <p>
-                  <strong className="text-[#E6A895]">Customer:</strong> {selectedBooking.customerName}
+                  <strong className="text-[#e07f62]">Customer:</strong> {selectedBooking.customerName}
                 </p>
                 <p>
-                  <strong className="text-[#E6A895]">Car Model:</strong> {selectedBooking.carModel}
+                  <strong className="text-[#e07f62]">Car Model:</strong> {selectedBooking.carModel}
                 </p>
                 <p>
-                  <strong className="text-[#E6A895]">Date & Time:</strong> {formatDateTime(selectedBooking.serviceDateTime)}
+                  <strong className="text-[#e07f62]">Date & Time:</strong> {formatDateTime(selectedBooking.serviceDateTime)}
                 </p>
                 <p>
-                  <strong className="text-[#E6A895]">Status:</strong>{" "}
+                  <strong className="text-[#e07f62]">Status:</strong>{" "}
                   <span
                     className={`font-medium ${
                       selectedBooking.status === "Solved"
@@ -216,10 +216,10 @@ const ServiceBookingPanel: React.FC = () => {
                           <button
                             className={`${
                               label === "In-Process"
-                                ? "bg-[#55ACEE] hover:bg-[#0F7DC7]"
+                                ? "bg-[#0F7DC7] hover:bg-[#55ACEE]"
                                 : label === "Pending"
-                                ? "bg-[#F2E394] hover:bg-[#FFBB00]"
-                                : "bg-[#86AF49] hover:bg-[#34A853]"
+                                ? "bg-[#FFBB00] hover:bg-[#F2E394]"
+                                : "bg-[#34A853] hover:bg-[#86AF49]"
                             } text-white w-32 px-3 py-2 rounded-lg shadow transition font-medium md:text-sm`}
                           >
                             {label}

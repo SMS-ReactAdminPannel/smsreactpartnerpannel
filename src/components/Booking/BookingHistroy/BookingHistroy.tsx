@@ -49,15 +49,15 @@ const History: React.FC<HistoryProps> = ({ bkings }) => {
             className="border p-4 mb-3 rounded-md shadow-sm bg-[#fbfbfb]"
           >
             <p>
-              <strong className="text-[#E6A895]">Customer:</strong>{" "}
+              <strong className="text-[#e07f62]">Customer:</strong>{" "}
               {booking.customerName}
             </p>
             <p>
-              <strong className="text-[#E6A895]">Car Model:</strong>{" "}
+              <strong className="text-[#e07f62]">Car Model:</strong>{" "}
               {booking.carModel}
             </p>
             <p>
-              <strong className="text-[#E6A895]">Purpose:</strong>{" "}
+              <strong className="text-[#e07f62]">Purpose:</strong>{" "}
               {booking.servicePurpose.join(", ")}
             </p>
             <p className="text-green-600">
