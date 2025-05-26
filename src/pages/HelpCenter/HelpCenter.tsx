@@ -15,32 +15,32 @@ const helpCards = [
   {
     title: "My account",
     description: "Create and manage your account",
-    icon: <FaUser size={32} className="text-green-600" />,
+    icon: <FaUser size={32} className="text-[#9b111e]" />,
   },
   {
     title: "Bookings",
     description: "Manage your bookings and appointments",
-    icon: <MdEventAvailable size={32} className="text-green-600" />,
+    icon: <MdEventAvailable size={32} className="text-[#9b111e]" />,
   },
   {
     title: "Services",
     description: "Explore and manage our available services",
-    icon: <SiGooglecloudspanner size={32} className="text-green-600" />,
+    icon: <SiGooglecloudspanner size={32} className="text-[#9b111e]" />,
   },
   {
     title: "Spare spots",
     description: "View and reserve available time slots",
-    icon: <FaBoxOpen size={32} className="text-green-600" />,
+    icon: <FaBoxOpen size={32} className="text-[#9b111e]" />,
   },
   {
     title: "Payment Issues",
     description: "Get help with billing and payment problems",
-    icon: <MdPayment size={32} className="text-green-600" />,
+    icon: <MdPayment size={32} className="text-[#9b111e]" />,
   },
   {
     title: "Settings",
     description: "Customize your experience and preferences",
-    icon: <FaCogs size={32} className="text-green-600" />,
+    icon: <FaCogs size={32} className="text-[#9b111e]" />,
   },
 ];
 
@@ -82,18 +82,18 @@ const HelpCenter: React.FC = () => {
   return (
     <div className="h-screen  bg-green-50 flex flex-col items-center px-4 py-12">
       <header className="w-full  text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 pt-10">How can we help</h1>
+        <h1 className="text-4xl font-bold text-[#9b111e] pt-10">How can we help</h1>
         <div className="mt-4 flex items-center justify-center pt-8 pb-10 gap-2 max-w-md mx-auto">
           <input
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-grow px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="flex-grow px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ffd46b]"
           />
           <button
             onClick={handleSearch}
-            className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none"
+            className="bg-[#9b111e] text-white p-2 rounded-full hover:bg-orange-600 focus:outline-none"
             aria-label="Search help topics"
           >
             <FaSearch />
@@ -108,7 +108,7 @@ const HelpCenter: React.FC = () => {
           {results.map((card, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow hover:shadow-md p-6 flex flex-col items-center text-center transition duration-300 h-[180px]"
+              className="bg-white rounded-xl shadow hover:bg-orange-100 p-6 flex flex-col items-center text-center transition duration-300 h-[180px]"
             >
               <div className="mb-3">{card.icon}</div>
               <h2 className="text-lg font-semibold text-gray-800">{card.title}</h2>
@@ -124,12 +124,12 @@ const HelpCenter: React.FC = () => {
         onSubmit={handleSubmit}
         className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
       >
-        <h2 className="text-xl font-semibold text-gray-800 mb-6">Still need help?</h2>
+        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Still need help?</h2>
 
         <div className="flex flex-col md:flex-row gap-6 items-end">
         
           <div className="flex-1">
-            <label htmlFor="subject" className="block text-gray-700 mb-1">
+            <label htmlFor="subject" className="block text-black-700 mb-1">
               Subject
             </label>
             <input
@@ -138,14 +138,14 @@ const HelpCenter: React.FC = () => {
               placeholder="Enter the subject"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
               style={{ height: '60px' }}
             />
           </div>
 
          
           <div className="flex-1">
-            <label htmlFor="description" className="block text-gray-700 mb-1">
+            <label htmlFor="description" className="block text-black-700 mb-1">
               Description
             </label>
             <textarea
@@ -154,7 +154,7 @@ const HelpCenter: React.FC = () => {
               placeholder="Describe your issue or question"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
               style={{ height: '60px' }}
             />
           </div>
@@ -163,7 +163,7 @@ const HelpCenter: React.FC = () => {
           <div className='mb-3 '>
             <button
               type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md w-full md:w-auto"
+              className="bg-[#9b111e] hover:bg-orange-600 text-white px-6 py-3 rounded-md w-full md:w-auto"
             >
               Submit
             </button>
@@ -171,7 +171,7 @@ const HelpCenter: React.FC = () => {
         </div>
 
         {submitted && (
-          <p className="mt-4 text-green-600 font-medium">
+          <p className="mt-4 text-orange-600 font-medium">
             Thank you! Your request has been submitted.
           </p>
         )}
@@ -179,7 +179,7 @@ const HelpCenter: React.FC = () => {
 
       <div className="mt-4 text-end self-end text-sm text-gray-600 max-w-4xl w-full px-4">
         For further assistance, email us at{' '}
-        <a href="mailto:helpsupport@example.com" className="text-green-600 underline">
+        <a href="mailto:helpsupport@example.com" className="text-orange-600 underline">
           helpsupport@example.com
         </a>
       </div>

@@ -15,6 +15,7 @@ import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
 import ResetPassword from '../pages/auth/ResetPassword';
 import LoginPage1 from '../pages/auth/LoginPage1';
+import Service from '../pages/Service Management/Service';
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
@@ -32,7 +33,7 @@ const AppRoutes = () => {
 			<Route path='/' element={<MainLayout />}>
 				<Route index element={<Dashboard />} />
 				<Route path='notifications' element={<NotificationsPage />} />
-				<Route path='service' element={<ServiceManagement/>} />
+				<Route path='service' element={<Service/>} />
 				<Route path='profile' element={<ProfileManagement />} />
 				<Route path='bookings' element={<Bookings />} />
 				<Route path='customer' element={<CustomerManagement />} />
