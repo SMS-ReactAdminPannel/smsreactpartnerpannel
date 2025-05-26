@@ -81,12 +81,12 @@ const AnnouncementPages = () => {
         
        
         <div className="w-1/6 bg-white rounded-xl shadow p-2 flex flex-col">
-          <h2 className="text-2xl font-semibold mb-2">Category</h2>
+          <h2 className="text-2xl text-[#9b111e] font-semibold mb-2">Category</h2>
           <ul>
             {categories.map(cat => (
               <li
                 key={cat}
-                className={`cursor-pointer p-2 rounded ${selectedCategory === cat ? "bg-blue-100 font-bold" : ""}`}
+                className={`cursor-pointer p-2 rounded ${selectedCategory === cat ? "bg-orange-100 font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -96,9 +96,9 @@ const AnnouncementPages = () => {
         </div>
 
       
-        <div className="w-2/4 bg-white rounded-xl shadow p-4 flex flex-col space-y-4">
+        <div className="w-2/4 bg-white rounded-xl  shadow p-4 flex flex-col space-y-4">
           {filteredAnnouncements.map(a => (
-            <div key={a.id} className="bg-gray-50 p-4 rounded-xl shadow relative">
+            <div key={a.id} className="bg-gray-50 p-4 hover:bg-orange-100 rounded-xl shadow relative">
               <div
                 className="absolute top-2 right-2 cursor-pointer text-xl text-gray-500 hover:text-red-600"
                 onClick={() => togglePin(a.id)}
@@ -121,8 +121,8 @@ const AnnouncementPages = () => {
         </div>
 
         
-        <div className="w-1/3 bg-white rounded-xl shadow p-4 flex flex-col">
-          <h2 className="text-2xl font-semibold mb-4 flex items-center gap-1">
+        <div className="w-1/3 bg-white rounded-xl  shadow p-4 flex flex-col">
+          <h2 className="text-2xl font-semibold  text-[#9b111e] mb-4 flex items-center gap-1">
             Pinned Announcements
           </h2>
           {pinnedAnnouncements.length === 0 ? (
@@ -137,7 +137,7 @@ const AnnouncementPages = () => {
                 >
                   <TiPin className="rotate-45 text-red-500" />
                 </div>
-                <div className="flex items-center text-sm text-gray-500 space-x-2 mb-1">
+                <div className="flex items-center  text-sm text-gray-500 space-x-2 mb-1">
                   <img
                     src={`https://i.pravatar.cc/32?u=${a.author}`}
                     alt={a.author}
