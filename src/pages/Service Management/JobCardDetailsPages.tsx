@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Lock, Car, Wrench, Save, Edit3, Plus, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { HiXMark } from "react-icons/hi2";
+import { IoArrowBack } from "react-icons/io5";
 
 // Type definitions
 interface ApiData {
@@ -63,6 +65,7 @@ interface InventoryItem {
 
 interface JobCardDetailsPageProps {
   apiData?: ApiData;
+  onClose?: () => void;
 }
 
 // Mock API data - in real app this would come from props
@@ -76,7 +79,7 @@ const defaultApiData: ApiData = {
 };
 
 const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({ 
-  apiData = defaultApiData 
+  apiData = defaultApiData, onClose
 }) => {
   const [formData, setFormData] = useState<FormData>({
     // Vehicle Inventory
@@ -247,11 +250,14 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4">
+    <div className=" bg-gradient-to-br from-gray-50 to-blue-50 p-2">
+      <div className="flex justify-end w-full ">
+        <HiXMark className="w-8 h-10 bg-white hover:from-red-700 hover:to-red-900 text-white rounded-lg " />
+      </div>
       <div className=" mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent mb-2">
             Job Card Details
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-red-800 mx-auto rounded-full"></div>
@@ -260,10 +266,10 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
         <div className="space-y-8">
           {/* Job Information Section - Read Only */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 p-4">
+            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Lock className="w-5 h-5" />
-                <h2 className="text-xl font-semibold">Job Information (Read Only)</h2>
+                <h2 className="text-lg font-semibold">Job Information (Read Only)</h2>
               </div>
             </div>
             <div className="p-6 bg-gray-50">
@@ -312,11 +318,11 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
           </div>
 
           {/* Vehicle Inventory Section */}
-          <div className="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-4">
+          <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Car className="w-5 h-5" />
-                <h2 className="text-xl font-semibold">Vehicle Inventory</h2>
+                <h2 className="text-lg font-semibold">Vehicle Inventory</h2>
               </div>
             </div>
             <div className="p-6">
@@ -331,6 +337,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                     />
                     <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">
                       {item.label}
+                      <input type="file" />
                     </span>
                   </label>
                 ))}
@@ -353,11 +360,11 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
           </div>
 
           {/* Vehicle Information Section */}
-          <div className="bg-white rounded-2xl shadow-xl border border-green-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-green-800 p-4">
+          <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Edit3 className="w-5 h-5" />
-                <h2 className="text-xl font-semibold">Vehicle Information</h2>
+                <h2 className="text-lg font-semibold">Vehicle Information</h2>
               </div>
             </div>
             <div className="p-6">
@@ -446,11 +453,11 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
           </div>
 
           {/* Service Information Section */}
-          <div className="bg-white rounded-2xl shadow-xl border border-purple-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-4">
+          <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Wrench className="w-5 h-5" />
-                <h2 className="text-xl font-semibold">Service Information</h2>
+                <h2 className="text-lg font-semibold">Service Information</h2>
               </div>
             </div>
             <div className="p-6 space-y-6">
@@ -482,7 +489,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                   <button
                     type="button"
                     onClick={addServiceItem}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                    className="bg-[#9b111e] text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     Add Item
@@ -538,7 +545,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                       </div>
                       <div className="mt-3 text-right">
                         <span className="text-sm font-medium text-gray-600">Amount: </span>
-                        <span className="text-lg font-bold text-purple-600">₹{item.amount || '0.00'}</span>
+                        <span className="text-lg font-bold text-[#9b111e]">₹{item.amount || '0.00'}</span>
                       </div>
                     </div>
                   ))}
@@ -547,13 +554,13 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                 {/* Total Amount */}
                 <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold text-purple-800">Total Amount:</span>
-                    <span className="text-2xl font-bold text-purple-600">₹{formData.totalAmount}</span>
+                    <span className="text-lg font-semibold text-[#9b111e]">Total Amount:</span>
+                    <span className="text-2xl font-bold text-[#9b111e]">₹{formData.totalAmount}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Work Status</label>
                 <select
                   value={formData.workDone}
@@ -564,26 +571,26 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                   <option value="in-progress">In Progress</option>
                   <option value="completed">Completed</option>
                 </select>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Action Button */}
-          <div className="flex justify-center align-items-center gap-4 mt-8">
+          <div className="flex justify-center items-center gap-4 mt-8">
             <button
               type="button"
               onClick={handleSave}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-4 h-[40px]  rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 "
             >
-              <Save className="w-5 h-5" />
-              Save Job Card
+              {/* <Save className="w-5 h-5" /> */}
+              Save 
             </button>
             <button
               type="button"
-              onClick={handleBack}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              onClick={onClose}
+              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-4 h-[40px] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
-              Back
+              Cancel
             </button>
           </div>
         </div>

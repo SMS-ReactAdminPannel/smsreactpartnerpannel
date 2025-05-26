@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Car,
   Wrench,
@@ -13,10 +14,6 @@ import {
   Edit,
   Trash2,
   BarChart3,
-  X,
-  Save,
-  MapPin,
-  DollarSign,
 } from "lucide-react";
 import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
@@ -26,6 +23,7 @@ import { TbCategoryPlus } from "react-icons/tb";
 // import MustCare from "./MustCare";
 // import JobCard from "./jobCard";
 // import { useNavigate } from "react-router-dom";
+import JobCardDetailsPage from "./JobCardDetailsPages"
 
 interface TermsConditionsPageProps {
   setstate: React.Dispatch<React.SetStateAction<boolean>>;
@@ -128,12 +126,12 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
       estimatedCost: "$200",
       notes: "Check engine light is on",
     },
-  ]);
+  ];
 
   const stats = [
-    { label: "Total Requests", value: serviceRequests.length.toString(), change: "+12%", color: "blue" },
-    { label: "Completed Today", value: serviceRequests.filter(r => r.status === "completed").length.toString(), change: "+8%", color: "green" },
-    { label: "Pending", value: serviceRequests.filter(r => r.status === "pending").length.toString(), change: "-5%", color: "yellow" },
+    { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
+    { label: "Completed Today", value: "23", change: "+8%", color: "green" },
+    { label: "Pending", value: "15", change: "-5%", color: "yellow" },
     { label: "Revenue", value: "$12,450", change: "+15%", color: "purple" },
   ];
 
@@ -159,137 +157,11 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
     </div>
   );
 
-  const handleAddService = () => {
-    if (newService.name && newService.price && newService.duration) {
-      const service = {
-        id: services.length + 1,
-        ...newService,
-      };
-      setServices([...services, service]);
-      setNewService({ name: "", price: "", duration: "", description: "" });
-      setShowServiceModal(false);
-    }
-  };
-
-  const handleEditService = (service: { id: number; name: string; price: string; duration: string; description: string }) => {
-    setEditingService(service);
-    setNewService({
-      name: service.name,
-      price: service.price,
-      duration: service.duration,
-      description: service.description,
-    });
-    setShowServiceModal(true);
-  };
-
-  const handleUpdateService = () => {
-    if (editingService) {
-      setServices(services.map(s => s.id === editingService.id ? { ...editingService, ...newService } : s));
-      setEditingService(null);
-      setNewService({ name: "", price: "", duration: "", description: "" });
-      setShowServiceModal(false);
-    }
-  };
-
-  const handleDeleteService = (serviceId: number) => {
-    if (window.confirm("Are you sure you want to delete this service?")) {
-      setServices(services.filter(s => s.id !== serviceId));
-    }
-  };
-
-  const handleAddRequest = () => {
-    if (newRequest.customerName && newRequest.vehicleInfo && newRequest.serviceType) {
-      const request = {
-        id: `SR-${String(serviceRequests.length + 1).padStart(3, '0')}`,
-        ...newRequest,
-      };
-      setServiceRequests([...serviceRequests, request]);
-      setNewRequest({
-        customerName: "",
-        phone: "",
-        vehicleInfo: "",
-        serviceType: "",
-        scheduledDate: "",
-        scheduledTime: "",
-        status: "pending",
-        priority: "medium",
-        location: "",
-        estimatedCost: "",
-        notes: "",
-      });
-      setShowRequestModal(false);
-    }
-  };
-
-// const navigate = useNavigate();
-// const handleForm = () => {
-//   navigate('/JobCardDetailsPage');
-// }
-
-  const handleViewRequest = (request: {
-    id: string;
-    customerName: string;
-    phone: string;
-    vehicleInfo: string;
-    serviceType: string;
-    scheduledDate: string;
-    scheduledTime: string;
-    status: string;
-    priority: string;
-    location: string;
-    estimatedCost: string;
-    notes: string;
-  }) => {
-    setViewingRequest(request);
-    setShowViewModal(true);
-  };
-
-  const handleEditRequest = (request: { id?: string; customerName: string; phone: string; vehicleInfo: string; serviceType: string; scheduledDate: string; scheduledTime: string; status: string; priority: string; location: string; estimatedCost: string; notes: string; }) => {
-    setEditingRequest(request);
-    setNewRequest(request);
-    setShowRequestModal(true);
-  };
-
-  const handleUpdateRequest = () => {
-    if (editingRequest) {
-      setServiceRequests(serviceRequests.map(r => r.id === editingRequest.id ? { ...editingRequest, ...newRequest, id: editingRequest.id! } : r));
-      setEditingRequest(null);
-      setNewRequest({
-        customerName: "",
-        phone: "",
-        vehicleInfo: "",
-        serviceType: "",
-        scheduledDate: "",
-        scheduledTime: "",
-        status: "pending",
-        priority: "medium",
-        location: "",
-        estimatedCost: "",
-        notes: "",
-      });
-      setShowRequestModal(false);
-    }
-  };
-
-  const handleDeleteRequest = (requestId: string) => {
-    if (window.confirm("Are you sure you want to delete this service request?")) {
-      setServiceRequests(serviceRequests.filter(r => r.id !== requestId));
-    }
-  };
-
-  const filteredRequests = serviceRequests.filter(request => {
-    const matchesSearch = request.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         request.vehicleInfo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         request.serviceType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         request.id.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesFilter = filterStatus === "all" || request.status === filterStatus;
-    
-    return matchesSearch && matchesFilter;
-  });
+  // Showform 
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   return (
-    <div>
+    <div className = "relative min-h-screen bg-gray-100 p-8">
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div
@@ -320,6 +192,7 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
       
       <div className="p-2">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          {/* Section Header */}
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -334,8 +207,6 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
                   <input
                     type="search"
                     placeholder="Search requests..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
@@ -344,15 +215,9 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
                   <span>Filter</span>
                 </button>
               </div>
-              <button 
-                  onClick={onView}
-                  className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-[#8a0e1a]"
-                >
-                  <Plus className="w-4 h-4" />
-                  New Form
-                </button>
             </div>
           </div>
+
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -367,7 +232,7 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
               </thead>
 
               <tbody className="divide-y divide-gray-200">
-                {filteredRequests.map((request) => (
+                {serviceRequests.map((request) => (
                   <tr key={request.id} className="hover:bg-gray-50">
                     <td className="py-4 px-6">
                       <span className="font-medium text-blue-600">{request.id}</span>
@@ -411,18 +276,26 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
                    
                     <td className="py-4 px-6">
                       <button 
-                        onClick={() => setstate(false)}
+                        onClick={() => setShowForm(true)}
                         className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Create</span>
                       </button>
+                      
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          {/* {showForm && (
+                        <div className="fixed h-full inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 overflow-y-auto">
+                          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+                            <JobCardDetailsPage onClose={() => setShowForm(false)} />
+                          </div>
+                        </div>
+                      )}     */}
         </div>
       </div>
       
@@ -431,8 +304,12 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Available Services</h2>
-                <p className="text-gray-600 mt-1">Manage your service offerings</p>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Available Services
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Manage your service offerings
+                </p>
               </div>
               <div className="flex items-center space-x-3">
                 <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg">
@@ -596,7 +473,14 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
       <div>
         <MustCare />
       </div>
-      < JobCardDetailsPage />
+            {showForm && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center z-50 overflow-y-auto">
+                          <div className="">
+                            <JobCardDetailsPage onClose={() => setShowForm(false)} />
+                          </div>
+                        </div>
+                      )}
+                  
     </div>
   );
 };
