@@ -6,7 +6,7 @@ import { Card, CardContent } from '../../components/dashboard/ui/card';
 import {
    AiOutlineThunderbolt, 
   AiOutlineClockCircle, 
-  AiOutlineCheck,        
+  AiFillCheckCircle,        
   AiOutlineUser,    
 } from 'react-icons/ai';
 
@@ -24,9 +24,6 @@ import {
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-
-
-
 
 
 const dailyRevenueData = [
@@ -57,6 +54,35 @@ const monthlyRevenueData = [
   { month: 'Jun', revenue: 8000 },
 ];
 
+//  spare parts revenue data
+const dailySparePartsRevenueData = [
+  { day: 'Mon', sparePartsRevenue: 200 },
+  { day: 'Tue', sparePartsRevenue: 300 },
+  { day: 'Wed', sparePartsRevenue: 250 },
+  { day: 'Thu', sparePartsRevenue: 350 },
+  { day: 'Fri', sparePartsRevenue: 300 },
+  { day: 'Sat', sparePartsRevenue: 400 },
+  { day: 'Sun', sparePartsRevenue: 320 },
+];
+
+const weeklySparePartsRevenueData = [
+  { week: 'Week 1', sparePartsRevenue: 1500 },
+  { week: 'Week 2', sparePartsRevenue: 1700 },
+  { week: 'Week 3', sparePartsRevenue: 1600 },
+  { week: 'Week 4', sparePartsRevenue: 1800 },
+  { week: 'Week 5', sparePartsRevenue: 2100 },
+  { week: 'Week 6', sparePartsRevenue: 2300 },
+];
+
+const monthlySparePartsRevenueData = [
+  { month: 'Jan', sparePartsRevenue: 1600 },
+  { month: 'Feb', sparePartsRevenue: 1400 },
+  { month: 'Mar', sparePartsRevenue: 2000 },
+  { month: 'Apr', sparePartsRevenue: 1800 },
+  { month: 'May', sparePartsRevenue: 2200 },
+  { month: 'Jun', sparePartsRevenue: 2700 },
+];
+
 const bookingData = [
 	{ name: 'Service A', bookings: 240 },
 	{ name: 'Service B', bookings: 130 },
@@ -72,6 +98,7 @@ const Dashboard = () => {
 	const location = useLocation();
 	const [highlight, setHighlight] = useState(true);
 	const bookingsRef = useRef<HTMLDivElement | null>(null);
+	const [period, setPeriod] = useState<'daily' | 'weekly' | 'monthly'>('daily');
 
 
 	useEffect(() => {
@@ -98,27 +125,31 @@ const Dashboard = () => {
 		};
 	}, [location.key]);
 
-	 const [period, setPeriod] = useState('monthly');
+  
 
-interface RevenueData {
-  day?: string;
-  week?: string;
-  revenue: number;
-}
-
-let data: RevenueData[] = [];
-let xDataKey: keyof RevenueData = 'day';
-;
+  // Combine revenue and spare parts revenue data for the selected period
+  let data = [];
+  let xDataKey = '';
 
   if (period === 'daily') {
-    data = dailyRevenueData;
+    data = dailyRevenueData.map((item, index) => ({
+      ...item,
+      sparePartsRevenue: dailySparePartsRevenueData[index]?.sparePartsRevenue || 0,
+    }));
     xDataKey = 'day';
   } else if (period === 'weekly') {
-    data = weeklyRevenueData;
+    data = weeklyRevenueData.map((item, idx) => ({
+      ...item,
+      sparePartsRevenue: weeklySparePartsRevenueData[idx]?.sparePartsRevenue || 0,
+    }));
     xDataKey = 'week';
+  } else {
+    data = monthlyRevenueData.map((item, idx) => ({
+      ...item,
+      sparePartsRevenue: monthlySparePartsRevenueData[idx]?.sparePartsRevenue || 0,
+    }));
+    xDataKey = 'month';
   }
-
-	
 	return (
 		<div className='w-full px-4 py-6 -mt-6 dashboard'>
 			{/* Header */}
@@ -160,7 +191,7 @@ let xDataKey: keyof RevenueData = 'day';
 							dataPoints={[6, 5, 4, 4, 4, 4, 4.5, 1]}
 						/>
 						<DashboardCard
-							icon={<  AiOutlineUser />}
+							icon={<AiFillCheckCircle />}
 							title='Completed Services'
 							value={10}
 							per={5}
@@ -185,49 +216,56 @@ let xDataKey: keyof RevenueData = 'day';
 			</div>
 
 			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 my-3'>
-				 <motion.div whileHover={{ scale: 1.02 }}>
-        <Card className="rounded-2xl shadow-lg">
-          <CardContent>
-            <div className="flex justify-between items-center mb-4">
-              <h2
-                style={{
-                  ...FONTS.paragraph,
-                  fontSize: '18px',
-                  color: COLORS.primary,
-                  fontWeight: 500,
-                }}
-              >
-                {period.charAt(0).toUpperCase() + period.slice(1)} Revenue
-              </h2>
-             <select
-  value={period}
-  onChange={(e) => setPeriod(e.target.value as 'daily' | 'weekly' | 'monthly')}
-  className="border rounded px-2 py-1"
-  aria-label="Select period"
->
-  <option value="daily">Daily</option>
-  <option value="weekly">Weekly</option>
-  <option value="monthly">Monthly</option>
-</select>
+				  <motion.div whileHover={{ scale: 1.02 }}>
+      <Card className="rounded-2xl shadow-lg">
+        <CardContent>
+          <div className="flex justify-between items-center mb-4">
+            <h2
+              style={{
+                ...FONTS.paragraph,
+                fontSize: '18px',
+                color: COLORS.primary,
+                fontWeight: 500,
+              }}
+            >
+              {period.charAt(0).toUpperCase() + period.slice(1)} Revenue
+            </h2>
+            <select
+              value={period}
+              onChange={(e) => setPeriod(e.target.value as 'daily' | 'weekly' | 'monthly')}
+              className="border rounded px-2 py-1"
+              aria-label="Select period"
+            >
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
 
-            </div>
-
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={data}>
-                <XAxis dataKey={xDataKey} />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#F49BAB"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </motion.div>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={data}>
+              <XAxis dataKey={xDataKey} />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="revenue"
+                stroke="#F49BAB"
+                strokeWidth={2}
+                name="Revenue"
+              />
+              <Line
+                type="monotone"
+                dataKey="sparePartsRevenue"
+                stroke="#4CAF50"
+                strokeWidth={2}
+                name="Spare Parts Revenue"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </motion.div>
 
 				<motion.div whileHover={{ scale: 1.02 }}>
 					<Card className='rounded-2xl shadow-lg'>
