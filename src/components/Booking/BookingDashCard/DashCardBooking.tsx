@@ -36,7 +36,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
         {/* Title and Value */}
         <div className="flex flex-col justify-center ml-2 grow">
           <p className="text-xs text-[#9b111e]">{title}</p>
-          <h3 className="text-xl font-semibold text-[#E6A895]">{value}</h3>
+          <h3 className="text-xl font-semibold text-[#e3957d]">{value}</h3>
         </div>
 
         {/* Percentage */}

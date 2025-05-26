@@ -59,7 +59,7 @@ const Bookings = () => {
 
 
       ) : (
-        <div className="w-full flex justify-center m-3 -m-4 ">
+        <div className="w-full flex justify-center m-3  ">
           <div className="w-full max-w-7xl px-4 py-2 ml-3  ">
             {/* Dashboard Section */}
             <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
