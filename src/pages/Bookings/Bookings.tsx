@@ -1,9 +1,17 @@
 import  { useState } from "react";
-import ServiceBookingPanel from "../../components/Booking/BookingCom";
-import { RiUser6Line } from "react-icons/ri";
-import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
 import { COLORS, FONTS } from "../../constants/constants";
+
+//getting file
+import ServiceBookingPanel from "../../components/Booking/BookingCom";
+import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
 import History from "../../components/Booking/BookingHistroy/BookingHistroy";
+
+//icons
+import { MdCollectionsBookmark } from "react-icons/md";
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { GiIncomingRocket } from "react-icons/gi";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+
 
 // Dummy values
 const bookingsss = [
@@ -28,10 +36,10 @@ const Bookings = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 m-5">
         {/* Header Row */}
         <h2
-          className="text-2xl font-semibold text-[#9b111e]"
+          className="text-2xl font-semibold text-[#9b111e] ml-4"
           style={{ ...FONTS.header, color: COLORS.primary }}
         >
           Service Bookings
@@ -39,26 +47,26 @@ const Bookings = () => {
 
         {/* Toggle History View */}
         <button
-          className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0"
+          className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0 "
           onClick={() => setShowHistory(!showHistory)}
         >
-          {showHistory ? "Hide History" : "Show History"}
+          {showHistory ? "Back" : "Completed Booking"}
         </button>
       </div>
 
       {showHistory ? (
-        <History bkings={bookingsss} />
+        <History bkings={bookingsss}  />
 
 
       ) : (
-        <div className="w-full flex justify-center">
-          <div className="w-full max-w-6xl px-1 py-2">
+        <div className="w-full flex justify-center m-3  ">
+          <div className="w-full max-w-7xl px-4 py-2 ml-3  ">
             {/* Dashboard Section */}
-            <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4">
+            <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10">
                 <DashboardCard
-                  icon={<RiUser6Line />}
-                  title="Schedule Request"
+                  icon={<GiIncomingRocket />}
+                  title="In-Coming"
                   value={20}
                   per={10}
                   perColor="#facc15"
@@ -67,8 +75,8 @@ const Bookings = () => {
                   dataPoints={[1, 3, 2, 5, 4, 6, 5]}
                 />
                 <DashboardCard
-                  icon={<RiUser6Line />}
-                  title="Emergency Service"
+                  icon={<IoCheckmarkDoneCircleOutline />}
+                  title="Completed"
                   value={10}
                   per={5}
                   perColor="#f87171"
@@ -77,18 +85,18 @@ const Bookings = () => {
                   dataPoints={[2, 1, 4, 3, 5, 2, 1]}
                 />
                 <DashboardCard
-                  icon={<RiUser6Line />}
-                  title="Service Requests"
+                  icon={<AiOutlineLoading3Quarters />}
+                  title="In-Process"
                   value={2}
-                  per={5}
+                  per={50}
                   perColor="#3b82f6"
                   borderColor="rgba(59,130,246,0.8)"
                   backgroundColor="#3b82f6"
                   dataPoints={[1, 2, 1, 6, 4, 3, 6]}
                 />
                 <DashboardCard
-                  icon={<RiUser6Line />}
-                  title="Total Transactions"
+                  icon={<MdCollectionsBookmark />}
+                  title="Total-Booking"
                   value={22}
                   per={15}
                   perColor="#10b981"
@@ -100,7 +108,7 @@ const Bookings = () => {
             </div>
 
             {/* Booking Panel */}
-            <div className="mb-6 p-4 bg-[#eae5d9] rounded-xl shadow-md">
+            <div className="mb-6 p-4 bg-[#eae5d9] rounded-xl shadow-md mx-4 justify-center items-center px-1">
               <ServiceBookingPanel />
             </div>
           </div>

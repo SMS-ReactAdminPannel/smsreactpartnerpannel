@@ -14,38 +14,48 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="p-6">
       <div className="flex flex-wrap align-center justify-center gap-4 mb-6">
-        <button
-          onClick={() => handleRenderComponent('Account Settings')}
-        
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] active:bg-[#9b111e]"
-        >
-          Account Settings
-        </button>
+       <button
+  onClick={() => handleRenderComponent('Account Settings')}
+  className={`font-semibold py-2 px-4 ml-4 border rounded transition-all duration-200
+    ${tab === 'Account Settings'
+      ? 'bg-gradient-to-br from-[#700808] via-[#a61c1c] to-[#d23c3c] text-white border-[#9b111e]'
+      : 'text-[#9b111e] border-[#9b111e] bg-transparent hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] hover:text-white focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]'
+    }`}
+>
+  Account Settings
+</button>
 
-        <button
-          onClick={() => handleRenderComponent('About us')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
-        >
-          About us
-        </button>
+       <button
+  onClick={() => handleRenderComponent('About us')}
+  className={`font-semibold py-2 px-4 ml-4 border rounded transition-all duration-200
+    ${tab === 'About us'
+      ? 'bg-gradient-to-br from-[#700808] via-[#a61c1c] to-[#d23c3c] text-white border-[#9b111e]'
+      : 'text-[#9b111e] border-[#9b111e] bg-transparent hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] hover:text-white focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]'
+    }`}
+>
+  About Us
+</button>
+<button
+  onClick={() => handleRenderComponent('Privacy Policy')}
+  className={`font-semibold py-2 px-4 ml-4 border rounded transition-all duration-200
+    ${tab === 'Privacy Policy'
+      ? 'bg-gradient-to-br from-[#700808] via-[#a61c1c] to-[#d23c3c] text-white border-[#9b111e]'
+      : 'text-[#9b111e] border-[#9b111e] bg-transparent hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] hover:text-white focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]'
+    }`}
+>
+  Privacy Policy
+</button>
 
-        <button
-          onClick={() => handleRenderComponent('Privacy Policy')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
-        >
-          Privacy Policy
-        </button>
-
-        <button
-          onClick={() => handleRenderComponent('Terms & Conditions')}
-          className="text-[#9b111e] font-semibold hover:text-white py-2 px-4 border rounded border-[#9b111e]
-            bg-white hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c]"
-        >
-          Terms & Conditions
-        </button>
+      <button
+  onClick={() => handleRenderComponent('Terms & Conditions')}
+  className={`font-semibold py-2 px-4 ml-4 border rounded transition-all duration-200
+    ${tab === 'Terms & Conditions'
+      ? 'bg-gradient-to-br from-[#700808] via-[#a61c1c] to-[#d23c3c] text-white border-[#9b111e]'
+      : 'text-[#9b111e] border-[#9b111e] bg-transparent hover:bg-gradient-to-br hover:from-[#700808] hover:via-[#a61c1c] hover:to-[#d23c3c] hover:text-white focus:bg-[#9b111e] focus:text-white focus:border-[#9b111e]'
+    }`}
+>
+  Terms & Conditions
+</button>
       </div>
 
       <div>
