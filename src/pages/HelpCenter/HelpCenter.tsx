@@ -124,7 +124,7 @@ const HelpCenter: React.FC = () => {
         onSubmit={handleSubmit}
         className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
       >
-        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Still need help?</h2>
+        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Enqurie?</h2>
 
         <div className="flex flex-col md:flex-row gap-6 items-end">
         
