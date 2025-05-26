@@ -140,7 +140,7 @@ const LoginPage = () => {
 						{/* Forgot Password */}
 						<div className='text-right mt-1'>
 							<Link
-								to='/forgot-password'
+								to='/reset-password'
 								className='text-white hover:underline text-sm'
 							>
 								Forgot Password?

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CustomerProfileDetails from './CustomerProfileDetails';
 import CustomerDetails from './CustomerDetails';
 
 
 const CustomerManagement = () => {
+	const [activeStep , setActiveStep] = useState (0);
 	return <div>
-		<div><CustomerProfileDetails /></div>
-		<div><CustomerDetails/></div>
+		{activeStep === 0 && (
+          <CustomerDetails onProfileView={() => setActiveStep(1)} />
+        )}
+        {activeStep === 1 && (
+          <CustomerProfileDetails />
+        )}
 	</div>;
 };
 

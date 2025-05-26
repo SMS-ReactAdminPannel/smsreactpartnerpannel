@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import {
   FaUser,
   FaCogs,
+  FaSearch,
+  FaBoxOpen,
 } from 'react-icons/fa';
 import {
   MdEventAvailable,
   MdPayment,
 } from 'react-icons/md';
-
-import { FaSearch } from 'react-icons/fa';
 import { SiGooglecloudspanner } from "react-icons/si";
-import { FaBoxOpen } from "react-icons/fa";
 
 const helpCards = [
   {
@@ -49,6 +48,10 @@ const HelpCenter: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState(helpCards);
 
+  const [subject, setSubject] = useState('');
+  const [description, setDescription] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
   const handleSearch = () => {
     const filtered = helpCards.filter(
       (card) =>
@@ -58,11 +61,29 @@ const HelpCenter: React.FC = () => {
     setResults(filtered);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!subject.trim() || !description.trim()) {
+      alert('Please fill in both Subject and Description.');
+      return;
+    }
+
+    console.log('Subject:', subject);
+    console.log('Description:', description);
+
+    setSubject('');
+    setDescription('');
+    setSubmitted(true);
+
+    setTimeout(() => setSubmitted(false), 4000);
+  };
+
   return (
-    <div className="h-screen bg-green-50 flex flex-col items-center px-4 py-12">
-      <header className="w-full max-w-4xl text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">How can we help</h1>
-        <div className="mt-4 flex items-center justify-center gap-2 max-w-md mx-auto">
+    <div className="h-screen  bg-green-50 flex flex-col items-center px-4 py-12">
+      <header className="w-full  text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-800 pt-10">How can we help</h1>
+        <div className="mt-4 flex items-center justify-center pt-8 pb-10 gap-2 max-w-md mx-auto">
           <input
             type="text"
             placeholder="Search"
@@ -73,6 +94,7 @@ const HelpCenter: React.FC = () => {
           <button
             onClick={handleSearch}
             className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none"
+            aria-label="Search help topics"
           >
             <FaSearch />
           </button>
@@ -82,11 +104,11 @@ const HelpCenter: React.FC = () => {
       {results.length === 0 ? (
         <p className="text-gray-600 mt-4">No results found.</p>
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full w-5xl">
           {results.map((card, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow hover:shadow-md p-6 flex flex-col items-center text-center transition duration-300"
+              className="bg-white rounded-xl shadow hover:shadow-md p-6 flex flex-col items-center text-center transition duration-300 h-[180px]"
             >
               <div className="mb-3">{card.icon}</div>
               <h2 className="text-lg font-semibold text-gray-800">{card.title}</h2>
@@ -94,8 +116,74 @@ const HelpCenter: React.FC = () => {
             </div>
           ))}
         </section>
-		
       )}
+
+      
+    
+      <form
+        onSubmit={handleSubmit}
+        className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
+      >
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">Still need help?</h2>
+
+        <div className="flex flex-col md:flex-row gap-6 items-end">
+        
+          <div className="flex-1">
+            <label htmlFor="subject" className="block text-gray-700 mb-1">
+              Subject
+            </label>
+            <input
+              id="subject"
+              type="text"
+              placeholder="Enter the subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              style={{ height: '60px' }}
+            />
+          </div>
+
+         
+          <div className="flex-1">
+            <label htmlFor="description" className="block text-gray-700 mb-1">
+              Description
+            </label>
+            <textarea
+              id="description"
+              rows={2}
+              placeholder="Describe your issue or question"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
+              style={{ height: '60px' }}
+            />
+          </div>
+
+        
+          <div className='mb-3 '>
+            <button
+              type="submit"
+              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md w-full md:w-auto"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+
+        {submitted && (
+          <p className="mt-4 text-green-600 font-medium">
+            Thank you! Your request has been submitted.
+          </p>
+        )}
+      </form>
+
+      <div className="mt-4 text-end self-end text-sm text-gray-600 max-w-4xl w-full px-4">
+        For further assistance, email us at{' '}
+        <a href="mailto:helpsupport@example.com" className="text-green-600 underline">
+          helpsupport@example.com
+        </a>
+      </div>
+
     </div>
   );
 };

@@ -33,16 +33,16 @@ const AboutPage: React.FC = () => {
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
     },
     {
-      name: "Sarah Davis",
+      name: "Davis",
       role: "Service Manager",
       experience: "12+ years",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
     },
     {
       name: "Carlos Rodriguez",
       role: "Engine Specialist",
       experience: "10+ years",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
     }
   ];
 

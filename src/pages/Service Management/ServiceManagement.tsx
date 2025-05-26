@@ -1,21 +1,4 @@
-// import React from 'react';
-
-// ;
-
-// const ServiceManagementPage: React.FC = () => {
-//   return (
-//     <>
-//       <h1>Service Management</h1>
-//       <JobCardDetailsPage />
-//     </>
-//   );
-// }
-
-// export default ServiceManagementPage;
-
-
 import React, { useState } from "react";
-import JobCardDetailsPage from "./JobCardDetailsPages";
 import {
   Car,
   Wrench,
@@ -27,7 +10,6 @@ import {
   Plus,
   Filter,
   Search,
-  Eye,
   Edit,
   Trash2,
   BarChart3,
@@ -40,13 +22,56 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import { TbCategoryPlus } from "react-icons/tb";
+// import MustCare from "./MustCare";
+// import JobCard from "./jobCard";
+// import { useNavigate } from "react-router-dom";
 
-type JobCardView = {
-  onView : () => void;
+interface TermsConditionsPageProps {
+  setstate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
-  const [serviceRequests, setServiceRequests] = useState([
+interface Service {
+  id: string;
+  name: string;
+  price: string;
+  duration: string;
+  isEditing: boolean;
+}
+
+const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => {
+  const [services, setServices] = useState<Service[]>([
+    {
+      id: "1",
+      name: "Oil Change",
+      price: "$89",
+      duration: "30 mins",
+      isEditing: false,
+    },
+    {
+      id: "2",
+      name: "Brake Inspection",
+      price: "$150",
+      duration: "45 mins",
+      isEditing: false,
+    },
+    {
+      id: "3",
+      name: "Tire Replacement",
+      price: "$320",
+      duration: "60 mins",
+      isEditing: false,
+    },
+    {
+      id: "4",
+      name: "Engine Diagnostic",
+      price: "$200",
+      duration: "90 mins",
+      isEditing: false,
+    },
+  ]);
+
+  const serviceRequests = [
     {
       id: "SR-001",
       customerName: "John Smith",
@@ -105,93 +130,12 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
     },
   ]);
 
-  const [services, setServices] = useState([
-    { id: 1, name: "Oil Change", price: "$89", duration: "30 min", description: "Complete oil and filter change" },
-    { id: 2, name: "Brake Service", price: "$150-300", duration: "1-2 hours", description: "Brake inspection and repair" },
-    { id: 3, name: "Tire Service", price: "$80-400", duration: "45 min", description: "Tire rotation, balancing, and replacement" },
-    { id: 4, name: "Engine Diagnostic", price: "$120-250", duration: "1 hour", description: "Computer diagnostic scan" },
-    { id: 5, name: "Battery Service", price: "$100-200", duration: "30 min", description: "Battery testing and replacement" },
-    { id: 6, name: "AC Service", price: "$150-350", duration: "1-2 hours", description: "Air conditioning repair and maintenance" },
-  ]);
-
-  const [showServiceModal, setShowServiceModal] = useState(false);
-  const [showRequestModal, setShowRequestModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
-  const [editingService, setEditingService] = useState<null | { id: number; name: string; price: string; duration: string; description: string }>(null);
-  const [editingRequest, setEditingRequest] = useState<null | {
-    id?: string;
-    customerName: string;
-    phone: string;
-    vehicleInfo: string;
-    serviceType: string;
-    scheduledDate: string;
-    scheduledTime: string;
-    status: string;
-    priority: string;
-    location: string;
-    estimatedCost: string;
-    notes: string;
-  }>(null);
-  const [viewingRequest, setViewingRequest] = useState<null | {
-    id: string;
-    customerName: string;
-    phone: string;
-    vehicleInfo: string;
-    serviceType: string;
-    scheduledDate: string;
-    scheduledTime: string;
-    status: string;
-    priority: string;
-    location: string;
-    estimatedCost: string;
-    notes: string;
-  }>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
-
-  const [newService, setNewService] = useState({
-    name: "",
-    price: "",
-    duration: "",
-    description: "",
-  });
-
-  const [newRequest, setNewRequest] = useState({
-    customerName: "",
-    phone: "",
-    vehicleInfo: "",
-    serviceType: "",
-    scheduledDate: "",
-    scheduledTime: "",
-    status: "pending",
-    priority: "medium",
-    location: "",
-    estimatedCost: "",
-    notes: "",
-  });
-
   const stats = [
     { label: "Total Requests", value: serviceRequests.length.toString(), change: "+12%", color: "blue" },
     { label: "Completed Today", value: serviceRequests.filter(r => r.status === "completed").length.toString(), change: "+8%", color: "green" },
     { label: "Pending", value: serviceRequests.filter(r => r.status === "pending").length.toString(), change: "-5%", color: "yellow" },
     { label: "Revenue", value: "$12,450", change: "+15%", color: "purple" },
   ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "pending":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "confirmed":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "in-progress":
-        return "bg-orange-100 text-orange-800 border-orange-200";
-      case "completed":
-        return "bg-green-100 text-green-800 border-green-200";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -206,20 +150,14 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "pending":
-        return <Clock className="w-4 h-4" />;
-      case "confirmed":
-        return <CheckCircle className="w-4 h-4" />;
-      case "in-progress":
-        return <AlertCircle className="w-4 h-4" />;
-      case "completed":
-        return <CheckCircle className="w-4 h-4" />;
-      default:
-        return <Clock className="w-4 h-4" />;
-    }
-  };
+  const MustCare = () => (
+    <div className="mt-8 p-6 bg-gray-50 rounded-lg">
+      <h3 className="text-xl font-bold text-center mb-4">Must Care Services</h3>
+      <p className="text-center text-gray-600">
+        Premium care services for your vehicle maintenance needs.
+      </p>
+    </div>
+  );
 
   const handleAddService = () => {
     if (newService.name && newService.price && newService.duration) {
@@ -352,7 +290,6 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
 
   return (
     <div>
-      {/* Stats Dashboard */}
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div
@@ -380,16 +317,13 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
           </div>
         ))}
       </div>
-
-      {/* Service Requests Section */}
+      
       <div className="p-2">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
-                  Service Requests
-                </h2>
+                <h2 className="text-xl font-bold text-gray-900">Service Requests</h2>
                 <p className="text-gray-600 mt-1">
                   Manage incoming service appointments
                 </p>
@@ -405,41 +339,9 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                <div className="relative">
-                  <button 
-                    onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                    className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
-                  >
-                    <Filter className="w-4 h-4" />
-                    <span>Filter</span>
-                  </button>
-                  {showFilterDropdown && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                      <div className="p-2">
-                        {["all", "pending", "confirmed", "in-progress", "completed"].map((status) => (
-                          <button
-                            key={status}
-                            onClick={() => {
-                              setFilterStatus(status);
-                              setShowFilterDropdown(false);
-                            }}
-                            className={`w-full text-left px-3 py-2 rounded hover:bg-gray-100 capitalize ${
-                              filterStatus === status ? "bg-blue-50 text-blue-600" : ""
-                            }`}
-                          >
-                            {status === "all" ? "All Status" : status.replace("-", " ")}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <button 
-                  onClick={() => setShowRequestModal(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-[#8a0e1a]"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>New Request</span>
+                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  <Filter className="w-4 h-4" />
+                  <span>Filter</span>
                 </button>
               </div>
               <button 
@@ -451,7 +353,6 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                 </button>
             </div>
           </div>
-          
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -459,14 +360,12 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Request ID</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Customer</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Vehicle</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Service</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Schedule</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Status</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Priority</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Cost</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Actions</th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Jobcard</th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-gray-200">
                 {filteredRequests.map((request) => (
                   <tr key={request.id} className="hover:bg-gray-50">
@@ -489,12 +388,6 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                       </div>
                     </td>
                     <td className="py-4 px-6">
-                      <span className="font-medium text-gray-900">{request.serviceType}</span>
-                      {request.notes && (
-                        <p className="text-xs text-gray-600 mt-1">{request.notes}</p>
-                      )}
-                    </td>
-                    <td className="py-4 px-6">
                       <div className="text-sm">
                         <p className="text-gray-900 flex items-center">
                           <Calendar className="w-3 h-3 mr-1" />
@@ -507,40 +400,23 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                       </div>
                     </td>
                     <td className="py-4 px-6">
-                      <span className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(request.status)}`}>
-                        {getStatusIcon(request.status)}
-                        <span className="capitalize">{request.status.replace("-", " ")}</span>
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className={`text-sm font-medium capitalize ${getPriorityColor(request.priority)}`}>
+                      <span
+                        className={`text-sm font-medium capitalize ${getPriorityColor(
+                          request.priority
+                        )}`}
+                      >
                         {request.priority}
                       </span>
                     </td>
+                   
                     <td className="py-4 px-6">
-                      <span className="font-medium text-gray-900">{request.estimatedCost}</span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center space-x-2">
-                        <button 
-                          onClick={() => handleViewRequest(request)}
-                          className="p-1 text-blue-600 hover:bg-blue-50 rounded"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => handleEditRequest(request)}
-                          className="p-1 text-gray-600 hover:bg-gray-50 rounded"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => handleDeleteRequest(request.id)}
-                          className="p-1 text-red-600 hover:bg-red-50 rounded"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <button 
+                        onClick={() => setstate(false)}
+                        className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Create</span>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -549,8 +425,7 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
           </div>
         </div>
       </div>
-
-      {/* Available Services Section */}
+      
       <div className="p-2">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="border-b border-gray-200 p-6">
@@ -559,13 +434,16 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                 <h2 className="text-xl font-bold text-gray-900">Available Services</h2>
                 <p className="text-gray-600 mt-1">Manage your service offerings</p>
               </div>
-              <button 
-                onClick={() => setShowServiceModal(true)}
-                className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-[#8a0e1a]"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Service</span>
-              </button>
+              <div className="flex items-center space-x-3">
+                <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg">
+                  <Plus className="w-4 h-4" />
+                  <span>Add Service</span>
+                </button>
+                <button className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg">
+                  <TbCategoryPlus className="w-4 h-4" />
+                  <span>Category</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -580,484 +458,147 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
                     <Wrench className="w-5 h-5 text-blue-600" />
                   </div>
                   <div className="flex items-center space-x-1">
-                    <button 
-                      onClick={() => handleEditService(service)}
+                    <button
+                      onClick={() =>
+                        setServices(
+                          services.map((s) =>
+                            s.id === service.id
+                              ? { ...s, isEditing: !s.isEditing }
+                              : s
+                          )
+                        )
+                      }
                       className="p-1 text-gray-600 hover:bg-gray-50 rounded"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
-                    <button 
-                      onClick={() => handleDeleteService(service.id)}
+                    <button
+                      onClick={() =>
+                        setServices(
+                          services.filter((s) => s.id !== service.id)
+                        )
+                      }
                       className="p-1 text-red-600 hover:bg-red-50 rounded"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{service.name}</h3>
-                {service.description && (
-                  <p className="text-sm text-gray-600 mb-3">{service.description}</p>
+
+                {service.isEditing ? (
+                  <div className="space-y-2">
+                    <input
+                      type="text"
+                      placeholder="Service Name"
+                      className="w-full border p-2 rounded"
+                      value={service.name}
+                      onChange={(e) =>
+                        setServices(
+                          services.map((s) =>
+                            s.id === service.id
+                              ? { ...s, name: e.target.value }
+                              : s
+                          )
+                        )
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Price"
+                      className="w-full border p-2 rounded"
+                      value={service.price}
+                      onChange={(e) =>
+                        setServices(
+                          services.map((s) =>
+                            s.id === service.id
+                              ? { ...s, price: e.target.value }
+                              : s
+                          )
+                        )
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Duration"
+                      className="w-full border p-2 rounded"
+                      value={service.duration}
+                      onChange={(e) =>
+                        setServices(
+                          services.map((s) =>
+                            s.id === service.id
+                              ? { ...s, duration: e.target.value }
+                              : s
+                          )
+                        )
+                      }
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <h3 className="font-semibold text-gray-900 mb-2">
+                      {service.name}
+                    </h3>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Price:</span>
+                        <span className="font-medium text-green-600">
+                          {service.price || "-"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Duration:</span>
+                        <span className="text-gray-900">
+                          {service.duration || "-"}
+                        </span>
+                      </div>
+                    </div>
+                  </>
                 )}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="font-medium text-green-600">{service.price}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Duration:</span>
-                    <span className="text-gray-900">{service.duration}</span>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Service Modal */}
-      {showServiceModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {editingService ? "Edit Service" : "Add New Service"}
-              </h3>
-              <button
-                onClick={() => {
-                  setShowServiceModal(false);
-                  setEditingService(null);
-                  setNewService({ name: "", price: "", duration: "", description: "" });
-                }}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
-                <input
-                  type="text"
-                  value={newService.name}
-                  onChange={(e) => setNewService({ ...newService, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter service name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
-                <input
-                  type="text"
-                  value={newService.price}
-                  onChange={(e) => setNewService({ ...newService, price: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., $89 or $150-300"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Duration</label>
-                <input
-                  type="text"
-                  value={newService.duration}
-                  onChange={(e) => setNewService({ ...newService, duration: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., 30 min or 1-2 hours"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
-                <textarea
-                  value={newService.description}
-                  onChange={(e) => setNewService({ ...newService, description: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Brief description of the service"
-                  rows={3}
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-end space-x-3 mt-6">
-              <button
-                onClick={() => {
-                  setShowServiceModal(false);
-                  setEditingService(null);
-                  setNewService({ name: "", price: "", duration: "", description: "" });
-                }}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={editingService ? handleUpdateService : handleAddService}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                <Save className="w-4 h-4" />
-                <span>{editingService ? "Update" : "Save"}</span>
-              </button>
-            </div>
+      <h2 className="text-3xl font-bold text-center mt-16">
+        Customised Care For All Your Needs
+      </h2>
+      <div className="flex rounded-lg mt-8 pl-52">
+        <div className="border-r border-gray-600 pr-6 text-center">
+          <div className="ml-20">
+            <MdHomeFilled />
           </div>
+          <p className="font-bold text-xl">4000+</p>
+          <p>Authorized Service Centers</p>
         </div>
-      )}
-
-      {/* Request Modal */}
-      {showRequestModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {editingRequest ? "Edit Service Request" : "Add New Service Request"}
-              </h3>
-              <button
-                onClick={() => {
-                  setShowRequestModal(false);
-                  setEditingRequest(null);
-                  setNewRequest({
-                    customerName: "",
-                    phone: "",
-                    vehicleInfo: "",
-                    serviceType: "",
-                    scheduledDate: "",
-                    scheduledTime: "",
-                    status: "pending",
-                    priority: "medium",
-                    location: "",
-                    estimatedCost: "",
-                    notes: "",
-                  });
-                }}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                <input
-                  type="text"
-                  value={newRequest.customerName}
-                  onChange={(e) => setNewRequest({ ...newRequest, customerName: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter customer name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input
-                  type="tel"
-                  value={newRequest.phone}
-                  onChange={(e) => setNewRequest({ ...newRequest, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter phone number"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Info</label>
-                <input
-                  type="text"
-                  value={newRequest.vehicleInfo}
-                  onChange={(e) => setNewRequest({ ...newRequest, vehicleInfo: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., 2020 Honda Civic"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
-                <select
-                  value={newRequest.serviceType}
-                  onChange={(e) => setNewRequest({ ...newRequest, serviceType: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">Select service type</option>
-                  {services.map((service) => (
-                    <option key={service.id} value={service.name}>
-                      {service.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Scheduled Date</label>
-                <input
-                  type="date"
-                  value={newRequest.scheduledDate}
-                  onChange={(e) => setNewRequest({ ...newRequest, scheduledDate: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Scheduled Time</label>
-                <input
-                  type="time"
-                  value={newRequest.scheduledTime}
-                  onChange={(e) => setNewRequest({ ...newRequest, scheduledTime: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select
-                  value={newRequest.status}
-                  onChange={(e) => setNewRequest({ ...newRequest, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="confirmed">Confirmed</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-                <select
-                  value={newRequest.priority}
-                  onChange={(e) => setNewRequest({ ...newRequest, priority: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-              
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <input
-                  type="text"
-                  value={newRequest.location}
-                  onChange={(e) => setNewRequest({ ...newRequest, location: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter service location"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Cost</label>
-                <input
-                  type="text"
-                  value={newRequest.estimatedCost}
-                  onChange={(e) => setNewRequest({ ...newRequest, estimatedCost: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., $89"
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                <textarea
-                  value={newRequest.notes}
-                  onChange={(e) => setNewRequest({ ...newRequest, notes: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Additional notes or special requirements"
-                  rows={3}
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-end space-x-3 mt-6">
-              <button
-                onClick={() => {
-                  setShowRequestModal(false);
-                  setEditingRequest(null);
-                  setNewRequest({
-                    customerName: "",
-                    phone: "",
-                    vehicleInfo: "",
-                    serviceType: "",
-                    scheduledDate: "",
-                    scheduledTime: "",
-                    status: "pending",
-                    priority: "medium",
-                    location: "",
-                    estimatedCost: "",
-                    notes: "",
-                  });
-                }}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={editingRequest ? handleUpdateRequest : handleAddRequest}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                <Save className="w-4 h-4" />
-                <span>{editingRequest ? "Update" : "Save"}</span>
-              </button>
-            </div>
+        <div className="border-r border-gray-600 pr-6 pl-6 text-center">
+          <div className="ml-20">
+            <FaLocationDot />
           </div>
+          <p className="font-bold text-xl">3800+</p>
+          <p>Cities Nationwise Connected</p>
         </div>
-      )}
-
-      {/* View Request Modal */}
-      {showViewModal && viewingRequest && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Service Request Details</h3>
-              <button
-                onClick={() => setShowViewModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-3">Customer Information</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-600">Name:</span>
-                      <span className="text-sm font-medium">{viewingRequest.customerName}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm">{viewingRequest.phone}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm">{viewingRequest.location}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-3">Service Information</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <Wrench className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium">{viewingRequest.serviceType}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Car className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm">{viewingRequest.vehicleInfo}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <DollarSign className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium text-green-600">{viewingRequest.estimatedCost}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <Calendar className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                  <p className="text-sm text-gray-600">Scheduled Date</p>
-                  <p className="font-medium">{viewingRequest.scheduledDate}</p>
-                </div>
-                
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <Clock className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                  <p className="text-sm text-gray-600">Scheduled Time</p>
-                  <p className="font-medium">{viewingRequest.scheduledTime}</p>
-                </div>
-                
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <AlertCircle className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-                  <p className="text-sm text-gray-600">Priority</p>
-                  <p className={`font-medium capitalize ${getPriorityColor(viewingRequest.priority)}`}>
-                    {viewingRequest.priority}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-gray-900">Status</h4>
-                  <span className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(viewingRequest.status)}`}>
-                    {getStatusIcon(viewingRequest.status)}
-                    <span className="capitalize">{viewingRequest.status.replace("-", " ")}</span>
-                  </span>
-                </div>
-              </div>
-              
-              {viewingRequest.notes && (
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Notes</h4>
-                  <p className="text-sm text-gray-700">{viewingRequest.notes}</p>
-                </div>
-              )}
-            </div>
-            
-            <div className="flex items-center justify-end space-x-3 mt-6">
-              <button
-                onClick={() => setShowViewModal(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Close
-              </button>
-              <button
-                onClick={() => {
-                  setShowViewModal(false);
-                  handleEditRequest(viewingRequest);
-                }}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                <Edit className="w-4 h-4" />
-                <span>Edit Request</span>
-              </button>
-            </div>
+        <div className="border-r border-gray-600 pr-6 pl-6 text-center">
+          <div className="ml-14">
+            <TbCertificate />
           </div>
+          <p className="font-bold text-xl">5000+</p>
+          <p>Certified Technicians</p>
         </div>
-      )}
-
-      {/* Statistics Section */}
-      <div className="p-2">
-        <h2 className="text-3xl font-bold text-center mt-16">
-          Customised Care For All Your Needs
-        </h2>
-        <div className="flex rounded-lg mt-10 pl-32">
-          <div className="border-r border-gray-600 pr-6 text-center">
-            <div className="ml-20">
-              <MdHomeFilled className="w-8 h-8" />
-            </div>
-            <p className="font-bold text-xl">4000+</p>
-            <p>Authorized Service Centers</p>
+        <div className="pl-6 text-center">
+          <div className="ml-20">
+            <RiCustomerService2Fill />
           </div>
-          <div className="border-r border-gray-600 pr-6 pl-6 text-center">
-            <div className="ml-20">
-              <FaLocationDot className="w-8 h-8" />
-            </div>
-            <p className="font-bold text-xl">3800+</p>
-            <p>Cities Nationwise Connected</p>
-          </div>
-          <div className="border-r border-gray-600 pr-6 pl-6 text-center">
-            <div className="ml-14">
-              <TbCertificate className="w-8 h-8" />
-            </div>
-            <p className="font-bold text-xl">5000+</p>
-            <p>Certified Technicians</p>
-          </div>
-          <div className="pl-6 text-center">
-            <div className="ml-20">
-              <RiCustomerService2Fill className="w-8 h-8" />
-            </div>
-            <p className="font-bold text-xl">10+ yrs</p>
-            <p>Of Customer Care Expertise</p>
-          </div>
+          <p className="font-bold text-xl">10+ yrs</p>
+          <p>Of Customer Care Expertise</p>
         </div>
+      </div>
+      <div>
+        <MustCare />
       </div>
       < JobCardDetailsPage />
     </div>
   );
 };
 
-export default ServiceManagementPage;
-
-
-
+export default ServiceManagement;
