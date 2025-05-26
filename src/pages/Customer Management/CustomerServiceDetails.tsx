@@ -316,9 +316,9 @@ const CustomerServiceDetails = () => {
   };
 
   return (
-    <div className="w- " style={{ fontFamily: FONTS.header.fontFamily }}>
+    <div className="w-full " style={{ fontFamily: FONTS.header.fontFamily }}>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-xl md:text-2xl font-bold text-[#9b111e]">Service History</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-[#9b111e] pl-2">Service History</h2>
         
         <div className="flex gap-3 w-full md:w-auto">
           <motion.div
