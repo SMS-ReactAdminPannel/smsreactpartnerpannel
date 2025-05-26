@@ -185,15 +185,15 @@ const ServiceBookingPanel: React.FC = () => {
 
               <div className="p-4 flex-1 flex flex-col">
                 <h4 className="font-semibold mb-2 text-[#9b111e]">Services</h4>
-                <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64">
+                <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64 scrollbar-hide">
                   {selectedBooking.servicePurpose.map((purpose, index) => (
-                    <div key={index} className="bg-gray-100 hover:scale-[1.022] rounded p-3 text-sm shadow-sm">
+                    <div key={index} className="bg-gray-100 hover:scale-[1.022] rounded p-3 text-sm shadow-sm  ">
                       <p
                         onClick={() => {
                           setSelectedService(purpose);
                           handleClick();
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer "
                       >
                         {purpose}
                       </p>
