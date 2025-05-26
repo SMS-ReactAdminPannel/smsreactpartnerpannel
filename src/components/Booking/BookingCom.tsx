@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../constants/constants";
 
@@ -13,7 +13,6 @@ interface ServiceBooking {
   status: BookingStatus;
 }
 
-
 const initialBookings: ServiceBooking[] = [
   {
     id: 1,
@@ -23,7 +22,7 @@ const initialBookings: ServiceBooking[] = [
       "Engine oil",
       "tyre",
       "headlight",
-      "fuse change ",
+      "fuse change",
       "full normal check up",
     ],
     serviceDateTime: "2025-05-24T10:30",
@@ -61,12 +60,14 @@ const formatDateTime = (dateTime: string) => {
 };
 
 const ServiceBookingPanel: React.FC = () => {
-//   const navigate = useNavigate();
   const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
-  const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(
-    null
-  );
+  const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  // const navigate=useNavigate();
+  const handleClick = () => {
+    setIsVisible(true);
+  };
 
   const updateStatus = (id: number, newStatus: BookingStatus) => {
     setBookings((prev) =>
@@ -76,28 +77,39 @@ const ServiceBookingPanel: React.FC = () => {
     );
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Backspace" && selectedBooking) {
+        setSelectedBooking(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedBooking]);
+
   return (
-    <div className="p-2 lg:max-w-6xl mx-auto md:max-w-xl ">
+    <div className="p-2 lg:max-w-6xl mx-auto md:max-w-full">
       <div className="space-y-4">
+        <div>
+          <h2 className="text-xl font-semibold text-[#9b111e]" style={{color:COLORS.primary}}>Orders</h2>
+        </div>
         {bookings.map((booking) => (
           <div
             key={booking.id}
-            className="bg-[#FAF3EB] rounded-xl shadow p-6 flex flex-cols md:flex-row justify-between gap-4 items-start md:items-center transition transform hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+            className="bg-[#FAF3EB] rounded-xl shadow p-6 flex flex-col md:flex-row justify-between gap-4 items-start md:items-center hover:shadow-lg hover:scale-[1.02] transition cursor-pointer"
           >
             <div className="flex-1">
-              <p className="font-semibold text-lg ">
+              <p className="font-semibold text-lg text-[#9b111e]">
                 {booking.customerName} – {booking.carModel}
               </p>
-              <p className="text-gray-500 words-clamp-2">
-                {booking.servicePurpose.join(", ")}
-              </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-[#E6A895]">{booking.servicePurpose.join(", ")}</p>
+              <p className="text-sm text-[#E6A895]">
                 Scheduled: {formatDateTime(booking.serviceDateTime)}
               </p>
               <p
                 className={`mt-1 text-sm font-medium ${
                   booking.status === "Solved"
-                    ? "text-green-200"
+                    ? "text-green-600"
                     : booking.status === "Viewed"
                     ? "text-yellow-600"
                     : "text-red-500"
@@ -133,27 +145,27 @@ const ServiceBookingPanel: React.FC = () => {
 
       {/* Modal */}
       {selectedBooking && (
-        // overall modal
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ">
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center md:overflow-auto"
+          onClick={() => setSelectedBooking(null)}
+        >
           <div
-            className=" p-10 rounded-xl max-w-5xl w-full h-3/4 shadow-lg grid lg:grid-cols-2 gap-2 md:grid-cols-1 md:overflow-auto "
+            className="p-6 rounded-xl max-w-5xl w-full h-3/4 shadow-lg grid lg:grid-cols-2 md:grid-cols-1 gap-4 overflow-y-auto md:max-h-[90vh] md:m-10"
+            onClick={(e) => e.stopPropagation()}
             style={{ backgroundColor: COLORS.bgColor }}
           >
-            {/* Left section - Service Details & Scrollable Content */}
-            <div className="grid lg:grid-rows-2 md:grid-cols-1  p-4 overflow-auto bg-[#FBFBFB] rounded-xl shadow-xl">
-              {/* Service Details */}
+            {/* Left Column */}
+            <div className="grid lg:grid-rows-2 md:grid-cols-1 p-4 overflow-auto bg-[#FBFBFB] rounded-xl shadow-xl ">
               <div className="cursor-default p-4">
                 <h3 className="text-2xl font-bold mb-4 text-[#9b111e]">Service Details</h3>
                 <p>
-                  <strong className="text-[#E6A895] ">Customer:</strong> {selectedBooking.customerName}
+                  <strong className="text-[#E6A895]">Customer:</strong> {selectedBooking.customerName}
                 </p>
                 <p>
-                  <strong className="text-[#E6A895]" >Car Model:</strong> {selectedBooking.carModel}
+                  <strong className="text-[#E6A895]">Car Model:</strong> {selectedBooking.carModel}
                 </p>
-
                 <p>
-                  <strong className="text-[#E6A895]">Date & Time:</strong>{" "}
-                  {formatDateTime(selectedBooking.serviceDateTime)}
+                  <strong className="text-[#E6A895]">Date & Time:</strong> {formatDateTime(selectedBooking.serviceDateTime)}
                 </p>
                 <p>
                   <strong className="text-[#E6A895]">Status:</strong>{" "}
@@ -171,18 +183,18 @@ const ServiceBookingPanel: React.FC = () => {
                 </p>
               </div>
 
-              {/* Scrollable Area */}
               <div className="p-4 flex-1 flex flex-col">
-                <h4 className="font-semibold mb-2 cursor-default text-[#9b111e]">Services</h4>
-
-                {/* Scrollable list only */}
-                <div className="space-y-2 overflow-y-auto flex-1 pr-1 ">
+                <h4 className="font-semibold mb-2 text-[#9b111e]">Services</h4>
+                <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64">
                   {selectedBooking.servicePurpose.map((purpose, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-100 rounded p-3 text-sm shadow-sm  "
-                    >
-                      <p onClick={() => setSelectedService(purpose)} className="cursor-pointer">
+                    <div key={index} className="bg-gray-100 rounded p-3 text-sm shadow-sm">
+                      <p
+                        onClick={() => {
+                          setSelectedService(purpose);
+                          handleClick();
+                        }}
+                        className="cursor-pointer"
+                      >
                         {purpose}
                       </p>
                     </div>
@@ -191,47 +203,40 @@ const ServiceBookingPanel: React.FC = () => {
               </div>
             </div>
 
-            {/* Right section - Preview + Close Button */}
-            <div className=" p-4 flex flex-col justify-between bg-white rounded-xl shadow-xl  ">
-              <div >
-                {selectedService ? (
+            {/* Right Column */}
+            <div className="p-4 flex flex-col justify-between bg-[#FBFBFB] rounded-xl shadow-xl">
+              <div>
+                {selectedService && isVisible ? (
                   <div className="cursor-default">
-                    <h4 className="text-2xl font-bold text-[#9b111e] ">Service Preview</h4>
-                    <p className="text-2xl mt-2 text-[#E6A895]">{selectedService}</p>
-                    <div className=" mt-10">
-                        <div className=" ">
-                            <div className="flex flex-rows justify-between p-4">
-                                <button className="bg-[#55ACEE] text-white w-32 px-4 py-2 rounded-lg shadow  hover:bg-[#0F7DC7] transition font-medium mt-2 md:mt-0 " >In-Process</button>
-                                <textarea name="" id="" placeholder="Text...."></textarea>
-                            </div>
+                    <h4 className="text-2xl font-bold text-[#9b111e]">Service Preview</h4>
+                    <p className="text-xl mt-2 text-[#E6A895]">{selectedService}</p>
+                    <div className="mt-8 space-y-4">
+                      {["In-Process", "Pending", "Completed"].map((label, i) => (
+                        <div key={i} className="flex flex-col md:flex-row justify-between p-4 gap-3">
+                          <button
+                            className={`${
+                              label === "In-Process"
+                                ? "bg-[#55ACEE] hover:bg-[#0F7DC7]"
+                                : label === "Pending"
+                                ? "bg-[#F2E394] hover:bg-[#FFBB00]"
+                                : "bg-[#86AF49] hover:bg-[#34A853]"
+                            } text-white w-32 px-3 py-2 rounded-lg shadow transition font-medium`}
+                          >
+                            {label}
+                          </button>
+                          <textarea
+                            placeholder="Text..."
+                            className="w-full border p-2 rounded resize-none"
+                          />
                         </div>
-                        <div>
-                            <div className="flex flex-rows justify-between p-4">
-                                <button className="bg-[#F2E394] text-white w-32 px-4 py-2 rounded-lg shadow hover:bg-[#FFBB00] transition font-medium mt-2 md:mt-0">Pending</button>
-                                <textarea name="" id="" placeholder="Text...."></textarea>
-
-                            </div>
-                        </div>
-                        <div>
-                            <div className="flex flex-rows justify-between p-4">
-                                <button className="bg-[#86AF49] text-white w-32 px-4 py-2 rounded-lg shadow hover:bg-[#34A853] transition font-medium mt-2 md:mt-0">Completed</button>
-                                <textarea name="" id="" placeholder="Text...."></textarea>
-                            </div>
-                        </div>
+                      ))}
                     </div>
                   </div>
                 ) : (
                   <p>Select a service to preview...</p>
-
                 )}
               </div>
-              <div className="flex justify-end gap-2">
-                {/* <button
-                  onClick={() => navigate(-1)}
-                  className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
-                >
-                  Back
-                </button> */}
+              <div className="flex justify-end mt-4">
                 <button
                   onClick={() => setSelectedBooking(null)}
                   className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
@@ -240,7 +245,6 @@ const ServiceBookingPanel: React.FC = () => {
                 </button>
               </div>
             </div>
-            
           </div>
         </div>
       )}
