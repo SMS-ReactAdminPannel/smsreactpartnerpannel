@@ -50,12 +50,12 @@ const Bookings = () => {
           className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0 "
           onClick={() => setShowHistory(!showHistory)}
         >
-          {showHistory ? "Hide History" : "Show History"}
+          {showHistory ? "Back" : "Completed Booking"}
         </button>
       </div>
 
       {showHistory ? (
-        <History bkings={bookingsss} />
+        <History bkings={bookingsss}  />
 
 
       ) : (
