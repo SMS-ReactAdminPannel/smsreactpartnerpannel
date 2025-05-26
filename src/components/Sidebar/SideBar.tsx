@@ -11,6 +11,7 @@ import { MdQuestionAnswer } from 'react-icons/md';
 import { FaCogs, FaTools } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
+import { BsCart4 } from 'react-icons/bs';
 
 const COLOR = {
 	primary: '#9b111e',
@@ -130,6 +131,13 @@ const SideBar = ({
 						to='/faq'
 						icon={<MdQuestionAnswer />}
 						label='FAQs'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/order'
+						icon={<BsCart4 />}
+						label='orders'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>

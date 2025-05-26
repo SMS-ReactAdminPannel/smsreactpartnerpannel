@@ -151,19 +151,10 @@ const CustomerProfileDetails = ({}) => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="text-2xl font-bold text-gray-800"
+              className="text-2xl font-bold text-[#9b111e]"
             >
               Chris Bumstead
             </motion.h5>
-            
-            <motion.span 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-sm text-amber-600 font-medium"
-            >
-              Professional Athlete
-            </motion.span>
             
             <motion.div 
               className="flex gap-5 mt-4"
@@ -227,10 +218,10 @@ const CustomerProfileDetails = ({}) => {
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             {[
-              { icon: <MdCall />, label: "Phone", value: "+1 234 567 6789" },
-              { icon: <MdEmail />, label: "Email", value: "Cbum@gmail.com" },
-              { icon: <FaCar />, label: "Vehicles", value: "PORSCHE 911 GT3 , Nissan GTR,  Ford 1978 F150 Lariat edition, 1969 Chevrolet Camaro" },
-              { icon: <FaLocationDot />, label: "Address", value: "3512 Carlson Road, Prince George, British Columbia, Canada" }
+              { icon: <MdCall className="text-[#9b111e]"/>, label: "Phone", value: "+1 234 567 6789" },
+              { icon: <MdEmail className="text-[#9b111e]"/>, label: "Email", value: "Cbum@gmail.com" },
+              { icon: <FaCar className="text-[#9b111e]"/>, label: "Vehicles", value: "PORSCHE 911 GT3 , Nissan GTR,  Ford 1978 F150 Lariat edition, 1969 Chevrolet Camaro" },
+              { icon: <FaLocationDot className="text-[#9b111e]"/>, label: "Address", value: "3512 Carlson Road, Prince George, British Columbia, Canada" }
             ].map((item, index) => (
               <motion.div 
                 key={index}
@@ -279,13 +270,13 @@ const CustomerProfileDetails = ({}) => {
         {/* Tab Navigation */}
         <div className="flex mb-4 border-b">
           <button 
-            className={`pb-2 px-4 ${activeTab === 'orders' ? 'border-b-2 border-amber-500 font-medium text-amber-600' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`pb-2 px-4 ${activeTab === 'orders' ? 'border-b-2 border-[#9b111e] font-medium text-[#9b111e]' : 'text-gray-500 hover:text-gray-700'}`}
             onClick={() => setActiveTab('orders')}
           >
             Orders
           </button>
           <button 
-            className={`pb-2 px-4 ${activeTab === 'services' ? 'border-b-2 border-amber-500 font-medium text-amber-600' : 'text-orange-800 hover:text-gray-700'}`}
+            className={`pb-2 px-4 ${activeTab === 'services' ? 'border-b-2 border-[#9b111e] font-medium text-[#9b111e]' : 'text-orange-800 hover:text-gray-700'}`}
             onClick={() => setActiveTab('services')}
           >
             Services
@@ -299,7 +290,7 @@ const CustomerProfileDetails = ({}) => {
           <div className="p-4 rounded-lg shadow-sm">
             {/* Search and Filter Controls */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-              <h2 className="text-xl font-bold text-gray-800" style={{ fontFamily: FONTS.header.fontFamily }}>
+              <h2 className="text-xl font-bold text-[#9b111e]" style={{ fontFamily: FONTS.header.fontFamily }}>
                 Order History
               </h2>
               <div className="flex gap-2">
