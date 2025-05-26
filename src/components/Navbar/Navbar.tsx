@@ -4,7 +4,8 @@ import { COLORS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/authContext';
 import { motion, AnimatePresence } from 'framer-motion';
 // import { FaTools } from 'react-icons/fa';
-import { VscExpandAll } from "react-icons/vsc";
+
+import { PiCarFill } from "react-icons/pi";
 
 
 interface User {
@@ -168,11 +169,12 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 
 				<div className='ml-auto flex items-center space-x-4 pr-4'>
 					<div
-						className='ml-2 relative rounded-full p-3 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
+						className='ml-2 relative rounded-full p-2.5 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-700 to-red-700'
 						onClick={() => navigate('/bookings')}
 					>
-						{/* <FaTools className='w-4 h-4 text-white' /> */}
-						< VscExpandAll className='w-4 h-4 text-white' />
+						
+						<PiCarFill className='w-5 h-5 text-white' />
+
 						<AnimatePresence>
 							{hasNewBooking && (
 								<motion.div

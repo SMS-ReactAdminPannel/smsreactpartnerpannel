@@ -15,11 +15,15 @@ import {
 	PieChart,
 	Pie,
 	Cell,
+
 } from 'recharts';
+
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import pieChart from '../../components/defaultgraph'
+// import carNotificationSymbol from '../../assets/car (1).png	'
+
+
 
 const revenueData = [
 	{ month: 'Jan', revenue: 4000 },
@@ -224,13 +228,16 @@ const Dashboard = () => {
 											/>
 										))}
 									</Pie>
+									
+									
 									<Tooltip />
 								</PieChart>
 							</ResponsiveContainer>
 						</CardContent>
 					</Card>
 				</motion.div>
-
+				
+				
 				<motion.div
 					whileHover={{}}
 					className='md:col-span-2 xl:col-span-3'
