@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Car,
   Wrench,
@@ -22,6 +23,7 @@ import { TbCategoryPlus } from "react-icons/tb";
 // import MustCare from "./MustCare";
 // import JobCard from "./jobCard";
 // import { useNavigate } from "react-router-dom";
+import JobCardDetailsPage from "./JobCardDetailsPages"
 
 interface TermsConditionsPageProps {
   setstate: React.Dispatch<React.SetStateAction<boolean>>;
@@ -155,8 +157,11 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
     </div>
   );
 
+  // Showform 
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   return (
-    <div>
+    <div className = "relative min-h-screen bg-gray-100 p-8">
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div
@@ -271,18 +276,26 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
                    
                     <td className="py-4 px-6">
                       <button 
-                        onClick={() => setstate(false)}
+                        onClick={() => setShowForm(true)}
                         className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Create</span>
                       </button>
+                      
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          {/* {showForm && (
+                        <div className="fixed h-full inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 overflow-y-auto">
+                          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+                            <JobCardDetailsPage onClose={() => setShowForm(false)} />
+                          </div>
+                        </div>
+                      )}     */}
         </div>
       </div>
       
@@ -460,6 +473,14 @@ const ServiceManagement: React.FC<TermsConditionsPageProps> = ({ setstate }) => 
       <div>
         <MustCare />
       </div>
+            {showForm && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center z-50 overflow-y-auto">
+                          <div className="">
+                            <JobCardDetailsPage onClose={() => setShowForm(false)} />
+                          </div>
+                        </div>
+                      )}
+                  
     </div>
   );
 };
