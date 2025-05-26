@@ -1,104 +1,116 @@
 import { useState } from "react";
 
-type Notification = {
+type MailItem = {
   id: number;
-  title: string;
-  message: string;
-  date: string;
-  read: boolean;
+  sender: string;
+  subject: string;
+  preview: string;
+  fullMessage: string;
+  time: string;
+  unread: boolean;
 };
 
-const notifications: Notification[] = [
+const mails: MailItem[] = [
   {
     id: 1,
-    title: "Welcome!",
-    message: "Thanks for signing up. We're glad to have you.",
-    date: "May 23, 2025",
-    read: false,
+    sender: "albert",
+    subject: "Help Center",
+    preview: "Welcome to Help Center",
+    fullMessage:
+      "Dear User,\n\nHere is the full message from the help center. It includes detailed guidance on importing React components, managing state, and more...\n\nBest regards,\nHelp Center Team",
+    time: "Sat, May 24, 2:54 PM",
+    unread: true,
   },
   {
     id: 2,
-    title: "New Feature",
-    message: "Check out our new dashboard features.",
-    date: "May 22, 2025",
-    read: true,
+    sender: "leoreddy",
+    subject: "New Feature Announcement",
+    preview: "We’ve just added new dashboard features...",
+    fullMessage:
+      "Hi there,\n\nThe dashboard now includes analytics, customizable widgets, and faster performance. Visit the updates page for more details.\n\nCheers,\nThe Product Team",
+    time: "Fri, May 23, 2:30 PM",
+    unread: true,
   },
   {
     id: 3,
-    title: "Reminder",
-    message: "Don't forget to update your profile.",
-    date: "May 21, 2025",
-    read: false,
+    sender: "albert",
+    subject: "Help Center",
+    preview: "Welcome to Help Center",
+    fullMessage:
+      "Dear User,\n\nHere is another copy of the Help Center message. It includes detailed guidance on importing React components, managing state, and more...\n\nThanks,\nSupport Team",
+    time: "Tue, Feb 4, 10:03 AM",
+    unread: true,
   },
 ];
 
-function NotificationsPage() {
-  const [filter, setFilter] = useState<"all" | "read" | "unread">("all");
+export default function MailNotifications() {
+  const [selectedMail, setSelectedMail] = useState<MailItem | null>(null);
+  const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
 
-  const filteredNotifications = notifications.filter((n) => {
-    if (filter === "all") return true;
-    if (filter === "read") return n.read;
-    if (filter === "unread") return !n.read;
-  });
+  const filtered = mails.filter((m) =>
+    filter === "all" ? true : filter === "unread" ? m.unread : !m.unread
+  );
 
   return (
-    <div className="bg-white min-h-screen">
-      <h2 className="text-4xl font-bold pt-8 pl-12 bg-gradient-to-r from-red-600 to-red-800 text-transparent bg-clip-text">
-        Notifications
-      </h2>
+    <div className="bg-gray-100 min-h-screen p-6">
+      <h1 className="text-3xl text-[#9b111e] font-bold mb-4">Notifications</h1>
 
-      <div className="pt-6">
-        <div className="w-[90%] mx-auto border-b-2 flex justify-between pb-4">
-          <div className="flex flex-row gap-10 cursor-pointer">
-            <p
-              onClick={() => setFilter("all")}
-              className={`text-lg ${
-                filter === "all" ? "text-red-800 border-b-2 border-red-800 font-semibold" : "text-gray-600"
-              }`}
-            >
-              All
+      {!selectedMail ? (
+        <>
+          <div className="flex gap-6 border-b pb-2 mb-4">
+            {["all", "unread", "read"].map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f as any)}
+                className={`capitalize text-lg ${
+                  filter === f
+                    ? "text-blue-700 font-semibold border-b-2 border-blue-700"
+                    : "text-gray-600"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-md shadow divide-y">
+            {filtered.map((mail) => (
+              <div
+                key={mail.id}
+                onClick={() => setSelectedMail(mail)}
+                className="cursor-pointer flex justify-between p-4 hover:bg-gray-50"
+              >
+                <div className="flex flex-col text-gray-700">
+                  <p className="text-sm">{mail.sender}</p>
+                  <p className="font-semibold">{mail.subject}</p>
+                </div>
+                <span className="text-xs text-gray-400">{mail.time}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="bg-white rounded-md shadow p-6">
+          <button
+            onClick={() => setSelectedMail(null)}
+            className="text-blue-600 text-sm mb-4"
+          >
+            ← Back
+          </button>
+          <div className="mb-4 border-b pb-2">
+            <p className="text-sm text-gray-500">
+              <strong>From:</strong> {selectedMail.sender}
             </p>
-            <p
-              onClick={() => setFilter("unread")}
-              className={`text-lg ${
-                filter === "unread" ? "text-red-800 border-b-2 border-red-800 font-semibold" : "text-gray-600"
-              }`}
-            >
-              Unread
+            <p className="text-sm text-gray-500">
+              <strong>Subject:</strong> {selectedMail.subject}
             </p>
-            <p
-              onClick={() => setFilter("read")}
-              className={`text-lg ${
-                filter === "read" ? "text-red-800 border-b-2 border-red-800 font-semibold" : "text-gray-600"
-              }`}
-            >
-              Read
+            <p className="text-xs text-gray-400">
+              <strong>Date:</strong> {selectedMail.time}
             </p>
           </div>
-          <button className="text-red-800 text-lg pr-2">
-            Mark all as read
-          </button>
+          <pre className="text-gray-700 whitespace-pre-wrap">{selectedMail.fullMessage}</pre>
         </div>
-
-        <div className="w-[90%] mx-auto pt-6 space-y-4">
-          {filteredNotifications.map((notification) => (
-            <div
-              key={notification.id}
-              className={`p-4 rounded-lg shadow-md border ${
-                notification.read ? "border-gray-100" : "border-red-800"
-              }`}
-            >
-              <h3 className="text-xl font-semibold text-gray-800">
-                {notification.title}
-              </h3>
-              <p className="text-gray-600">{notification.message}</p>
-              <p className="text-sm text-gray-400 mt-2">{notification.date}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
-
-export default NotificationsPage;

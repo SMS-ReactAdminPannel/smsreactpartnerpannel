@@ -23,4 +23,8 @@ module.exports = {
     },
   },
 }
+// Example Tailwind plugin or in your CSS (optional)
+.input-style {
+  @apply w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition;
+}
 

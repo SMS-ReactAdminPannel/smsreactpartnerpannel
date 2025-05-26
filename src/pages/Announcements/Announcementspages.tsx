@@ -1,5 +1,7 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { TiPin } from "react-icons/ti";
+import { HiArrowLeft } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   "All", "General", "Booking", "SOS Updates", "Payments",
@@ -20,7 +22,7 @@ const initialAnnouncements = [
   },
   {
     id: 2,
-    title: "SOP Updates",
+    title: "SOS Updates",
     content: "We've been hard at work refining our SOPs to make them even more user-friendly!",
     author: "suba reddy",
     category: "SOS Updates",
@@ -32,7 +34,7 @@ const initialAnnouncements = [
   },
   {
     id: 3,
-    title: "More SOP Changes",
+    title: "More SOS Changes",
     content: "Our latest SOP updates include feedback from the community.",
     author: "suba reddy",
     category: "SOS Updates",
@@ -47,8 +49,9 @@ const initialAnnouncements = [
 const AnnouncementPages = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [announcements, setAnnouncements] = useState(initialAnnouncements);
+  const navigate = useNavigate();
 
-  const togglePin = (id:number) => {
+  const togglePin = (id: number) => {
     const updated = announcements.map(a =>
       a.id === id ? { ...a, isPinned: !a.isPinned } : a
     );
@@ -62,12 +65,22 @@ const AnnouncementPages = () => {
   const pinnedAnnouncements = announcements.filter(a => a.isPinned);
 
   return (
-    <div className="flex flex-col p-4 space-x-4 bg-gray-50 min-h-screen">
-      <h1 className='text-[#9b111e] font-bold text-4xl'>Announcements</h1>
-      <div className='flex gap-4 flex-row mt-10'>
+    <div className="flex flex-col p-2 bg-gray-50 h-screen">
+     <div className='flex flex-row  '>
+      <button
+        onClick={() => navigate(-1)}
+        className="text-blue-600 hover:underline mt-3 flex items-center w-fit"
+      >
+        <HiArrowLeft className="text-3xl  text-[#9b111e] " />
         
+      </button>
+
+      <h1 className="text-[#9b111e] font-bold  text-center p-4 text-4xl">Announcements</h1>
+      </div>
+      <div className="flex gap-4 flex-row mt-3 items-stretch">
         
-        <div className="w-1/6 bg-white rounded-xl shadow p-4">
+       
+        <div className="w-1/6 bg-white rounded-xl shadow p-2 flex flex-col">
           <h2 className="text-2xl font-semibold mb-2">Category</h2>
           <ul>
             {categories.map(cat => (
@@ -82,10 +95,10 @@ const AnnouncementPages = () => {
           </ul>
         </div>
 
-        
-        <div className="w-2/4 space-y-4">
+      
+        <div className="w-2/4 bg-white rounded-xl shadow p-4 flex flex-col space-y-4">
           {filteredAnnouncements.map(a => (
-            <div key={a.id} className="bg-white p-4 rounded-xl shadow relative">
+            <div key={a.id} className="bg-gray-50 p-4 rounded-xl shadow relative">
               <div
                 className="absolute top-2 right-2 cursor-pointer text-xl text-gray-500 hover:text-red-600"
                 onClick={() => togglePin(a.id)}
@@ -107,13 +120,13 @@ const AnnouncementPages = () => {
           ))}
         </div>
 
-     
-        <div className="w-1/3 bg-white rounded-xl shadow p-4">
+        
+        <div className="w-1/3 bg-white rounded-xl shadow p-4 flex flex-col">
           <h2 className="text-2xl font-semibold mb-4 flex items-center gap-1">
             Pinned Announcements
           </h2>
           {pinnedAnnouncements.length === 0 ? (
-            <p className="text-gray-500">No pinned announcements.</p>
+            <p className="text-gray-500  font-bold text-center p-10">No pinned announcements.</p>
           ) : (
             pinnedAnnouncements.map(a => (
               <div key={a.id} className="bg-gray-50 p-4 rounded-lg shadow mb-4 relative">
@@ -138,7 +151,6 @@ const AnnouncementPages = () => {
             ))
           )}
         </div>
-
       </div>
     </div>
   );

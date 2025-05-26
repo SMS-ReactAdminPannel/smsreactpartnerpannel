@@ -158,7 +158,11 @@ const SimpleDonutChart = () => {
   );
 };
 
-const CustomerDetails: React.FC = () => {
+type ProfileViewComponent ={
+  onProfileView : ()=> void
+}
+
+const CustomerDetails: React.FC<ProfileViewComponent> = ({onProfileView}) => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -264,7 +268,7 @@ const CustomerDetails: React.FC = () => {
                 </span>
               </div>
               <div className="pl-2">
-                <button className="relative overflow-hidden px-4 py-2 bg-[#800000] text-white rounded hover:bg-[#990000] transition">
+                <button onClick={onProfileView} className="relative overflow-hidden px-4 py-2 bg-[#800000] text-white rounded hover:bg-[#990000] transition">
                   <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition"></span>
                   View
                 </button>

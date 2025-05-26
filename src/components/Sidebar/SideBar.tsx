@@ -8,8 +8,8 @@ import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
 import { MdBuild } from 'react-icons/md';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdQuestionAnswer } from 'react-icons/md';
-import { FaCogs } from 'react-icons/fa';
-import { COLORS } from '../../constants/constants';
+import { FaCogs, FaTools } from 'react-icons/fa';
+// import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 
 const COLOR = {
@@ -71,7 +71,7 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
-						to='/spares-management'
+						to='/spare-parts'
 						icon={<FaCogs />}
 						label='Spare Parts Management'
 						isOpen={isOpen}
@@ -79,7 +79,7 @@ const SideBar = ({
 					/>
 					<SidebarLink
 						to='/spare-parts'
-						icon={<FiMapPin />}
+						icon={<FaTools />}
 						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
