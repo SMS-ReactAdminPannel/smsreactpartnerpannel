@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/authContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaTools } from 'react-icons/fa';
 
 interface User {
 	name: string;
@@ -20,7 +22,12 @@ interface Notification {
 	time: string;
 	isRead: boolean;
 }
-const Navbar: React.FC = () => {
+
+type Props = {
+	hasNewBooking: boolean;
+};
+
+const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const [isBellActive, setIsBellActive] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [showProfileDetails, setShowProfileDetails] = useState(false);
@@ -33,7 +40,6 @@ const Navbar: React.FC = () => {
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
 	const { logout } = useAuth();
-
 	const [notifications, setNotifications] = useState<Notification[]>([
 		{
 			id: 1,
@@ -159,6 +165,30 @@ const Navbar: React.FC = () => {
 				</div>
 
 				<div className='ml-auto flex items-center space-x-4 pr-4'>
+					<div
+						className='ml-2 relative rounded-full p-3 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
+						onClick={() => navigate('/bookings')}
+					>
+						<FaTools className='w-4 h-4 text-white' />
+						<AnimatePresence>
+							{hasNewBooking && (
+								<motion.div
+									key='new-bookings'
+									initial={{ scale: 0 }}
+									animate={{ scale: [1, 1.1, 1] }}
+									exit={{ scale: 0 }}
+									transition={{
+										duration: 1.5,
+										repeat: Infinity,
+										ease: 'easeInOut',
+									}}
+									className='absolute -top-2 -left-0 px-1 py-0.4 text-[8px] font-semibold bg-gradient-to-r from-[#9b111e] to-red-500 text-white rounded-full shadow-md whitespace-nowrap'
+								>
+									New Bookings
+								</motion.div>
+							)}
+						</AnimatePresence>
+					</div>
 					<div className='relative' ref={notificationRef}>
 						<button
 							aria-label='Notifications'

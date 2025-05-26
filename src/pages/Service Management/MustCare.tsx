@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import oilcare from "../../assets/oilcare.mp4";
-import breakcln from "../../assets/breakcln.mp4"
- import airfilter from "../../assets/airfilter.mp4";
- import battery from "../../assets/battery.mp4";
+import breakcln from "../../assets/breakcln.mp4";
+import airfilter from "../../assets/airfilter.mp4";
+import battery from "../../assets/battery.mp4";
 import waterwash from "../../assets/waterwash.mp4";
 
 interface CareItem {
@@ -32,7 +32,6 @@ const careItems: CareItem[] = [
     title: "Battery Check",
     description: "Avoid sudden breakdowns with routine battery checks.",
   },
-  
   {
     video: waterwash,
     title: "Water Wash",
@@ -43,35 +42,57 @@ const careItems: CareItem[] = [
 const MustCare: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
-    sliderRef.current?.scrollBy({ left: -300, behavior: "smooth" });
-  };
+  const scrollByAmount = 300;
 
-  const scrollRight = () => {
-    sliderRef.current?.scrollBy({ left: 300, behavior: "smooth" });
-  };
+  // Auto-scroll in circular fashion
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    let isResetting = false;
+
+    const scroll = () => {
+      if (!slider) return;
+
+      if (
+        slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - scrollByAmount
+      ) {
+        isResetting = true;
+
+        // Disable smooth scroll temporarily
+        slider.style.scrollBehavior = "auto";
+
+        // Reset to beginning
+        slider.scrollLeft = 0;
+
+        // Restore smooth scroll after reset
+        setTimeout(() => {
+          slider.style.scrollBehavior = "smooth";
+          isResetting = false;
+        }, 50);
+      } else {
+        slider.scrollBy({ left: scrollByAmount, behavior: "smooth" });
+      }
+    };
+
+    const interval = setInterval(scroll, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Duplicate items for smooth circular effect
+  const extendedItems = [...careItems, ...careItems];
 
   return (
-    <section className="py-12 px-4 md:px-12 relative">
-      {/* Scroll Buttons */}
-      <button
-        onClick={scrollLeft}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10 hover:bg-gray-200"
-      >
-        ❮
-      </button>
-      <button
-        onClick={scrollRight}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10 hover:bg-gray-200"
-      >
-        ❯
-      </button>
+    <section className="w-full py-16 px-4 md:px-17 relative overflow-hidden">
+    
 
       <div
         ref={sliderRef}
-        className="flex overflow-x-auto space-x-6 no-scrollbar px-2"
+        className="flex w-full overflow-x-auto space-x-6 px-2 scroll-smooth"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {careItems.map((item, index) => (
+        {extendedItems.map((item, index) => (
           <div
             key={index}
             className="min-w-[300px] h-64 flex-shrink-0 rounded-xl overflow-hidden relative shadow-md hover:shadow-lg transition"
@@ -82,7 +103,7 @@ const MustCare: React.FC = () => {
               loop
               muted
               playsInline
-              className="w-full h-full object-cover overflow-hidden"
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4 text-white">
               <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
@@ -91,6 +112,8 @@ const MustCare: React.FC = () => {
           </div>
         ))}
       </div>
+
+    
     </section>
   );
 };
