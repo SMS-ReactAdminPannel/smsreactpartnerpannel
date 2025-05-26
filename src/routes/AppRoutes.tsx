@@ -1,10 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../pages/auth/authContext';
-import LoginPage from '../pages/auth/LoginPage';
 import MainLayout from '../layout/MainLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import NotificationsPage from '../pages/Notificationspages/NotificationsPage';
-import ServiceManagement from '../pages/Service Management/ServiceManagement';
 import ProfileManagement from '../pages/Profile Management/ProfileManagement';
 import Bookings from '../pages/Bookings/Bookings';
 import CustomerManagement from '../pages/Customer Management/CustomerManagement';
@@ -42,7 +40,6 @@ const AppRoutes = () => {
 				<Route path='help-center' element={<HelpCenter />} />
 				<Route path='faq' element={<FaqPage />} />
 				<Route path='announcement' element={<AnnouncementPage />} />
-
 				<Route path='*' element={<Navigate to='/' />} />
 			</Route>
 		</Routes>

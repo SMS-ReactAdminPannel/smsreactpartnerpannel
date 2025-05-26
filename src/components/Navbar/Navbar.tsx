@@ -4,6 +4,7 @@ import { COLORS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/authContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTools } from 'react-icons/fa';
+import carLogo from '../../assets/icons8-car-service-64.png';
 
 interface User {
 	name: string;
@@ -166,10 +167,15 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 
 				<div className='ml-auto flex items-center space-x-4 pr-4'>
 					<div
-						className='ml-2 relative rounded-full p-3 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
+						className='ml-2 relative rounded-full p-2 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
 						onClick={() => navigate('/bookings')}
 					>
-						<FaTools className='w-4 h-4 text-white' />
+						{/* <FaTools className='w-4 h-4 text-white' /> */}
+						<img
+							src={carLogo}
+							alt=''
+							style={{ width: '25px', height: '25px' }}
+						/>
 						<AnimatePresence>
 							{hasNewBooking && (
 								<motion.div

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import carImage from '../../assets/login-pg-img/freepik__background__8757.png';
+import carImage from '../../assets/login-pg-img/porshe.webp';
 import { useAuth } from './authContext';
 import { FONTS } from '../../constants/constants';
 
@@ -92,7 +92,7 @@ const LoginPage1 = () => {
 						{text.split('').map((char, index) => (
 							<motion.span
 								key={index}
-								className='inline-block text-white shadow-2xs transition-all duration-300 glow-border'
+								className='inline-block text-[#f9f9f6] font-mono italic uppercase tracking-widest shadow-2xs transition-all duration-300 glow-border'
 								style={{
 									animationDelay: `${index * 0.1}s`,
 									...FONTS.header,
@@ -116,7 +116,7 @@ const LoginPage1 = () => {
 					transition={{ duration: 1.2 }}
 					className='hidden md:block w-full md:w-3/5 h-64 md:h-screen relative'
 				>
-					<div className='bg-[#9b111e] h-full w-[90%]'>
+					<div className='bg-gradient-to-r from-[#9b111e] to-red-600 h-full w-[90%]'>
 						<img
 							src={carImage}
 							alt='Login illustration'
@@ -124,8 +124,8 @@ const LoginPage1 = () => {
 							style={{
 								position: 'absolute',
 								top: '-5px',
-								left: '35px',
-								width: '105%',
+								left: '55px',
+								width: '95%',
 								height: 'auto',
 							}}
 						/>
