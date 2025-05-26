@@ -18,7 +18,7 @@ import {
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+// import { useState, useEffect, useRef } from 'react';
 
 const revenueData = [
 	{ month: 'Jan', revenue: 4000 },
@@ -41,33 +41,33 @@ const COLORS_01 = ['#8884d8', '#82ca9d', '#FFE99A', '#9EBC8A', '#F79B72'];
 
 const Dashboard = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
-	const [highlight, setHighlight] = useState(true);
-	const bookingsRef = useRef<HTMLDivElement | null>(null);
+	// const location = useLocation();
+	// const [highlight, setHighlight] = useState(true);
+	// const bookingsRef = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		const scrollTimeout = setTimeout(() => {
-			if (bookingsRef.current) {
-				bookingsRef.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-				});
-			}
-		}, 100);
+	// useEffect(() => {
+	// 	const scrollTimeout = setTimeout(() => {
+	// 		if (bookingsRef.current) {
+	// 			bookingsRef.current.scrollIntoView({
+	// 				behavior: 'smooth',
+	// 				block: 'center',
+	// 			});
+	// 		}
+	// 	}, 100);
 
-		const resetTimeout = setTimeout(() => {
-			setHighlight(false);
+	// 	const resetTimeout = setTimeout(() => {
+	// 		setHighlight(false);
 
-			setTimeout(() => {
-				window.scrollTo({ top: -10, behavior: 'smooth' });
-			}, 100);
-		}, 3000);
+	// 		setTimeout(() => {
+	// 			window.scrollTo({ top: -10, behavior: 'smooth' });
+	// 		}, 100);
+	// 	}, 3000);
 
-		return () => {
-			clearTimeout(scrollTimeout);
-			clearTimeout(resetTimeout);
-		};
-	}, [location.key]);
+	// 	return () => {
+	// 		clearTimeout(scrollTimeout);
+	// 		clearTimeout(resetTimeout);
+	// 	};
+	// }, [location.key]);
 
 	return (
 		<div className='w-full px-4 py-6 -mt-6 dashboard'>
@@ -232,12 +232,12 @@ const Dashboard = () => {
 				<motion.div
 					whileHover={{}}
 					className='md:col-span-2 xl:col-span-3'
-					ref={bookingsRef}
+					// ref={bookingsRef}
 				>
 					<Card
-						className={`transition-all duration-500 p-4 rounded-xl ${
-							highlight ? 'ring-4 ring-yellow-400 bg-yellow-100' : ''
-						}`}
+						className={`transition-all duration-500 p-4 rounded-xl
+							${NaN ? 'ring-4 ring-yellow-400 bg-yellow-100' : ''}
+						`}
 					>
 						<CardContent>
 							<h2
