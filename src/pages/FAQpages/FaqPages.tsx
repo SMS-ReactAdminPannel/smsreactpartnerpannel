@@ -68,15 +68,15 @@ const FaqPage = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen ml-4 p-6">
-      <h1 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-red-600 to-red-800 text-transparent bg-clip-text">
+    <div className="bg-white min-h-screen rounded-2xl">
+      <h1 className="text-4xl font-bold text-center mb-2 pt-4 bg-gradient-to-r from-red-600 to-red-800 text-transparent bg-clip-text">
         FaQ
       </h1>
       <p className="text-center text-gray-600 mb-8 mt-4">
         Your questions answered here.
       </p>
 
-      <div className="flex pl-20">
+      <div className="flex pl-5">
         {/* Sidebar */}
         <div className="w-1/4 pr-6">
           <ul className="space-y-2">
@@ -99,7 +99,7 @@ const FaqPage = () => {
 
         {/* FAQ Section */}
         <div
-          className="w-3/4 pr-10 max-h-[70vh] overflow-auto pl-4"
+          className="w-3/4  max-h-[70vh] overflow-auto pl-4"
           style={{ scrollbarWidth: "none" }}
         >
           <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-red-800 flex items-center gap-2">
