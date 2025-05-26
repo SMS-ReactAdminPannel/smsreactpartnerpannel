@@ -1,6 +1,6 @@
 import React, { useState, type JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiHome, FiBell, FiSettings, FiMapPin } from 'react-icons/fi';
+import { FiHome, FiBell, FiSettings} from 'react-icons/fi';
 import { IoIosHelpCircleOutline } from 'react-icons/io';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
@@ -8,7 +8,7 @@ import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
 import { MdBuild } from 'react-icons/md';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdQuestionAnswer } from 'react-icons/md';
-import { FaCogs, FaTools } from 'react-icons/fa';
+import { FaCogs } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 
