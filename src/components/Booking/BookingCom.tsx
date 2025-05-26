@@ -122,19 +122,19 @@ const ServiceBookingPanel: React.FC = () => {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedBooking(booking)}
-                className=" text-white px-3 py-1 rounded bg-[#0F7DC7] hover:bg-[#55ACEE] transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#4e9bcd] hover:bg-[#55ACEE] transition text-sm"
               >
                 Open Service
               </button>
               <button
                 onClick={() => updateStatus(booking.id, "Viewed")}
-                className=" text-white px-3 py-1 rounded bg-[#FFBB00] hover:bg-[#F2E394] transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#dcbb63] hover:bg-[#d6c779] transition text-sm"
               >
                 Mark as Viewed
               </button>
               <button
                 onClick={() => updateStatus(booking.id, "Solved")}
-                className=" text-white px-3 py-1 rounded bg-[#34A853] hover:bg-[#86AF49]  transition text-sm"
+                className=" text-white px-3 py-1 rounded bg-[#60cc7d] hover:bg-[#86AF49]  transition text-sm"
               >
                 Completed
               </button>
