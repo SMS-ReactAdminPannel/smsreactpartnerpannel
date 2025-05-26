@@ -104,7 +104,7 @@ const HelpCenter: React.FC = () => {
       {results.length === 0 ? (
         <p className="text-gray-600 mt-4">No results found.</p>
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full w-5xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {results.map((card, index) => (
             <div
               key={index}
