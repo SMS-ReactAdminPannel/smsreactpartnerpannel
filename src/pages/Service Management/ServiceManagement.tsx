@@ -16,7 +16,6 @@
 
 import React, { useState } from "react";
 import JobCardDetailsPage from "./JobCardDetailsPages";
-import {useNavigate} from "react-router-dom";
 import {
   Car,
   Wrench,
@@ -41,7 +40,6 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import JobCardDetailsPages from "./JobCardDetailsPages";
 
 type JobCardView = {
   onView : () => void;
@@ -285,12 +283,25 @@ const ServiceManagementPage: React.FC<JobCardView> = ({onView}) => {
     }
   };
 
-const navigate = useNavigate();
+// const navigate = useNavigate();
 // const handleForm = () => {
 //   navigate('/JobCardDetailsPage');
 // }
 
-  const handleViewRequest = (request: React.SetStateAction<null>) => {
+  const handleViewRequest = (request: {
+    id: string;
+    customerName: string;
+    phone: string;
+    vehicleInfo: string;
+    serviceType: string;
+    scheduledDate: string;
+    scheduledTime: string;
+    status: string;
+    priority: string;
+    location: string;
+    estimatedCost: string;
+    notes: string;
+  }) => {
     setViewingRequest(request);
     setShowViewModal(true);
   };
@@ -1041,6 +1052,7 @@ const navigate = useNavigate();
           </div>
         </div>
       </div>
+      < JobCardDetailsPage />
     </div>
   );
 };

@@ -558,7 +558,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                 <select
                   value={formData.workDone}
                   onChange={(e) => handleInputChange('workDone', e.target.value as FormData['workDone'])}
-                  className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
+                  className="w-full m-3 md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
                 >
                   <option value="pending">Pending</option>
                   <option value="in-progress">In Progress</option>
