@@ -25,7 +25,7 @@ const TermsConditionsPage: React.FC = () => {
   ];
 
   return (
-    <div className=" mx-auto p-6 bg-white">
+    <div className=" mx-auto p-6 bg-[#f4eae5]">
       <div className="space-y-8">
         <div className="border-b border-gray-200 pb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms & Conditions</h1>
@@ -34,7 +34,7 @@ const TermsConditionsPage: React.FC = () => {
 
         <div className="space-y-6">
           {sections.map((section, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+            <div key={index} className="bg-[#ead7cf] rounded-lg p-6 hover:bg-[#e9ccc0] transition-colors duration-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4 leading-tight">
                 {section.title}
               </h2>

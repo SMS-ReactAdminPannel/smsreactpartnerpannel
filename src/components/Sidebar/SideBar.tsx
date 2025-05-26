@@ -77,13 +77,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/spare-parts'
 						icon={<FaTools />}
 						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/bookings'
 						icon={<AiOutlineCalendar />}
