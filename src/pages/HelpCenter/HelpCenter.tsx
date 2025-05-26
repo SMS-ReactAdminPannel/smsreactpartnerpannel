@@ -122,7 +122,7 @@ const HelpCenter: React.FC = () => {
     
       <form
         onSubmit={handleSubmit}
-        className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
+        className="mt-10 w-full bg-white shadow-md rounded-lg p-6"
       >
         <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Enqurie?</h2>
 
