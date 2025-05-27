@@ -14,6 +14,8 @@ import AnnouncementPage from '../pages//Announcements/Announcementspages';
 import ResetPassword from '../pages/auth/ResetPassword';
 import LoginPage1 from '../pages/auth/LoginPage1';
 import Service from '../pages/Service Management/Service';
+import Order from '../pages/Orders/order';
+
 
 const AppRoutes = () => {
 	const { isAuthenticated } = useAuth();
@@ -41,6 +43,7 @@ const AppRoutes = () => {
 				<Route path='faq' element={<FaqPage />} />
 				<Route path='announcement' element={<AnnouncementPage />} />
 				<Route path='*' element={<Navigate to='/' />} />
+				<Route path='order' element={<Order />} />
 			</Route>
 		</Routes>
 	);
