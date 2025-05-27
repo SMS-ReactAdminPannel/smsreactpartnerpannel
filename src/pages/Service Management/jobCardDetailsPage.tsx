@@ -324,11 +324,6 @@ const removeFuelLevelImage = (index: number) => {
 
   return (
     <div className=" bg-gradient-to-br from-gray-50 to-blue-50 p-2 ">
-      <div className="flex justify-end w-full ">
-        <HiXMark 
-        onClick={onClose}
-        className="w-8 h-10 text-black hover:bg-gradient-to-r hover:from-red-700 hover:to-red-900 hover:text-white " />
-      </div>
       <div className=" mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
