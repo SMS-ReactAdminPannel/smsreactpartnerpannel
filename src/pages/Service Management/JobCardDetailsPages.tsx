@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Lock, Car, Wrench, Save, Edit3, Plus, Trash2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 import { HiXMark } from "react-icons/hi2";
-import { IoArrowBack } from "react-icons/io5";
+import { FaRegAddressCard} from "react-icons/fa";
+
 
 // Type definitions
 interface ApiData {
@@ -30,6 +30,9 @@ interface VehicleInventory {
   bodyDamages: boolean;
   wheelCovers: boolean;
   others: boolean;
+  images: {
+    [key: string]: File[];
+  };
 }
 
 interface ServiceItem {
@@ -43,6 +46,7 @@ interface ServiceItem {
 interface FormData {
   inventory: VehicleInventory;
   fuelLevel: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full';
+  fuelLevelImages: File[];
   registrationNo: string;
   model: string;
   engineNo: string;
@@ -56,10 +60,16 @@ interface FormData {
   workDone: 'pending' | 'in-progress' | 'completed';
   serviceItems: ServiceItem[];
   totalAmount: string;
+
+  name: string;
+  address: string;
+  officeaddress: string;
+  contactno: string;
+  email: string;
 }
 
 interface InventoryItem {
-  key: keyof VehicleInventory;
+  key: keyof Omit<VehicleInventory, 'images'>;
   label: string;
 }
 
@@ -98,10 +108,18 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
       battery: false,
       bodyDamages: false,
       wheelCovers: false,
-      others: false
+      others: false,
+      images: {}
     },
     fuelLevel: 'Empty',
-    
+    fuelLevelImages: [],
+
+    //Customer Information
+    name: '',
+    address: '',
+    officeaddress: '',
+    contactno: '',
+    email: '',
     // Vehicle Information
     registrationNo: '',
     model: '',
@@ -132,15 +150,69 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
     }));
   };
 
-  const handleInventoryChange = (item: keyof VehicleInventory): void => {
+  const handleInventoryChange = (key: keyof Omit<VehicleInventory, 'images'>) => {
     setFormData(prev => ({
       ...prev,
       inventory: {
         ...prev.inventory,
-        [item]: !prev.inventory[item]
+        [key]: !prev.inventory[key],
+        images: {
+          ...prev.inventory.images,
+          ...(prev.inventory[key] ? { [key]: [] } : {})
+        }
       }
     }));
   };
+
+  //handle image upload
+
+  const handleImageUpload = (key: string, files: FileList | null) => {
+    if (files) {
+      const fileArray = Array.from(files);
+      setFormData(prev => ({
+        ...prev,
+        inventory: {
+          ...prev.inventory,
+          images: {
+            ...prev.inventory.images,
+            [key]: [...(prev.inventory.images[key] || []), ...fileArray]
+          }
+        }
+      }));
+    }
+  };
+
+  // handle remove image
+    const removeImage = (key: string, index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      inventory: {
+        ...prev.inventory,
+        images: {
+          ...prev.inventory.images,
+          [key]: prev.inventory.images[key]?.filter((_, i) => i !== index) || []
+        }
+      }
+    }));
+  };
+
+// handleFuelLevel 
+const handleFuelLevelImageUpload = (files: FileList | null) => {
+  if (files) {
+    const fileArray = Array.from(files);
+    setFormData(prev => ({
+      ...prev,
+      fuelLevelImages: [...prev.fuelLevelImages, ...fileArray]
+    }));
+  }
+};
+
+const removeFuelLevelImage = (index: number) => {
+  setFormData(prev => ({
+    ...prev,
+    fuelLevelImages: prev.fuelLevelImages.filter((_, i) => i !== index)
+  }));
+};
 
   // Dynamic Service Items Functions
   const addServiceItem = (): void => {
@@ -221,14 +293,9 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
   const handleSave = (): void => {
     console.log('Form Data:', formData);
     // In real app, you would send this data to your API
-    alert('Job card saved successfully!');
-  };
-
-  const navigate = useNavigate();
-
-  const handleBack = (): void => {
-    // Logic to navigate back, e.g., using history or navigate function
-    navigate(-1); // Go back to the previous page
+    if (onClose) {
+      onClose();
+    }
   };
 
   const inventoryItems: InventoryItem[] = [
@@ -249,10 +316,16 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
     { key: 'others', label: 'OTHERS' }
   ];
 
+  function handleFuelLevelChange(arg0: string): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
-    <div className=" bg-gradient-to-br from-gray-50 to-blue-50 p-2">
+    <div className=" bg-gradient-to-br from-gray-50 to-blue-50 p-2 ">
       <div className="flex justify-end w-full ">
-        <HiXMark className="w-8 h-10 bg-white hover:from-red-700 hover:to-red-900 text-white rounded-lg " />
+        <HiXMark 
+        onClick={onClose}
+        className="w-8 h-10 text-black hover:bg-gradient-to-r hover:from-red-700 hover:to-red-900 hover:text-white " />
       </div>
       <div className=" mx-auto">
         {/* Header */}
@@ -317,6 +390,70 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
             </div>
           </div>
 
+          {/* Cutomer Information Section */}
+          <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
+          <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+          <div className="flex items-center gap-2 text-white">
+            <FaRegAddressCard />
+                <h2 className="text-lg font-semibold">Customer Information</h2>
+          </div>   
+          </div>
+          <div className="p-6 bg-gray-50">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Name</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    placeholder="Customer name"
+                  />
+          </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Address </label>
+                  <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => handleInputChange('address', e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    placeholder="Address"
+                  />
+          </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Office Address </label>
+                  <input
+                    type="text"
+                    value={formData.officeaddress}
+                    onChange={(e) => handleInputChange('officeaddress', e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    placeholder="Office Address"
+                  />
+          </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Contact No </label>
+                  <input
+                    type="text"
+                    value={formData.contactno}
+                    onChange={(e) => handleInputChange('contactno', e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    placeholder="Contact No"
+                  />
+          </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">E mail </label>
+                  <input
+                    type="text"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    placeholder="Address"
+                  />
+          </div>
+          </div>
+          </div>
+          </div>  
+
           {/* Vehicle Inventory Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
@@ -326,39 +463,120 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
               </div>
             </div>
             <div className="p-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-3 mb-6">
                 {inventoryItems.map((item) => (
-                  <label key={item.key} className="flex items-center space-x-2 cursor-pointer group">
+                <React.Fragment key={item.key}>
+                  <label className="flex items-center space-x-2 cursor-pointer group">
                     <input
                       type="checkbox"
                       checked={formData.inventory[item.key]}
                       onChange={() => handleInventoryChange(item.key)}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
-                    <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">
+                    <span className="text-sm font-semibold text-gray-700 group-hover:text-[#9b111e]">
                       {item.label}
-                      <input type="file" />
                     </span>
                   </label>
-                ))}
-              </div>
-              <div className="border-t pt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Fuel Level</label>
-                <select
-                  value={formData.fuelLevel}
-                  onChange={(e) => handleInputChange('fuelLevel', e.target.value as FormData['fuelLevel'])}
-                  className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                >
-                  <option value="Empty">Empty</option>
-                  <option value="1/4">1/4</option>
-                  <option value="1/2">1/2</option>
-                  <option value="3/4">3/4</option>
-                  <option value="Full">Full</option>
-                </select>
-              </div>
-            </div>
-          </div>
 
+                  {formData.inventory[item.key] && (
+                    <div className="ml-6 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(item.key, e.target.files)}
+                          className="text-xs file:text-black file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-white file:hover:text-white file:hover:bg-gradient-to-r file:hover:from-red-600 file:hover:to-red-800"
+                        />
+                      </div>
+
+                      {formData.inventory.images[item.key] && formData.inventory.images[item.key].length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {formData.inventory.images[item.key].map((file, index) => (
+                            <div key={index} className="relative group">
+                              <img
+                                src={URL.createObjectURL(file)}
+                                alt={`${item.label} ${index + 1}`}
+                                className="w-16 h-16 object-cover rounded border border-gray-200"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeImage(item.key, index)}
+                                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </React.Fragment>
+            ))}
+          </div>
+          
+          <div className="border-t pt-4">
+         <label className="block text-sm font-medium text-gray-700 mb-2">Fuel Level</label>
+         <div className="space-y-3">
+           <select
+             value={formData.fuelLevel}
+             onChange={(e) => handleFuelLevelChange(e.target.value as FormData['fuelLevel'])}
+             className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+           >
+             <option value="Empty">Empty</option>
+             <option value="1/4">1/4</option>
+             <option value="1/2">1/2</option>
+             <option value="3/4">3/4</option>
+             <option value="Full">Full</option>
+           </select>
+                  
+           {/* Add this entire section */}
+           <div className="space-y-2">
+             <label className="block text-sm font-medium text-gray-700">Upload Fuel Level Images</label>
+             <input
+               type="file"
+               multiple
+               accept="image/*"
+               onChange={(e) => handleFuelLevelImageUpload(e.target.files)}
+               className="text-xs file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:hover:text-white file:hover:bg-gradient-to-r file:hover:from-red-600 file:hover:to-red-800"
+             />
+
+             {formData.fuelLevelImages.length > 0 && (
+               <div className="flex flex-wrap gap-2">
+                 {formData.fuelLevelImages.map((file, index) => (
+                   <div key={index} className="relative group">
+                     <img
+                       src={URL.createObjectURL(file)}
+                       alt={`Fuel Level ${index + 1}`}
+                       className="w-16 h-16 object-cover rounded border border-gray-200"
+                     />
+                     <button
+                       type="button"
+                       onClick={() => removeFuelLevelImage(index)}
+                       className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                     >
+                       ×
+                     </button>
+                   </div>
+                 ))}
+               </div>
+             )}
+           </div>
+         </div>
+        </div>
+        </div>
+      </div>
+      
+      {/* Debug Info */}
+      <div className="mt-4 p-4 bg-white rounded-lg shadow">
+        <h3 className="font-semibold text-gray-800 mb-2">Current State:</h3>
+        <div className="text-sm text-gray-600">
+          <p><strong>Fuel Level:</strong> {formData.fuelLevel}</p>
+          <p><strong>Selected Items:</strong> {Object.entries(formData.inventory).filter(([key, value]) => key !== 'images' && value).map(([key]) => key).join(', ') || 'None'}</p>
+          <p><strong>Images Uploaded:</strong> {Object.entries(formData.inventory.images).map(([key, files]) => `${key}: ${files.length}`).join(', ') || 'None'}</p>
+        </div>
+      </div>
           {/* Vehicle Information Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
@@ -489,7 +707,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
                   <button
                     type="button"
                     onClick={addServiceItem}
-                    className="bg-[#9b111e] text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                    className="bg-gradient-to-r from-red-600 to-red-800 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     Add Item

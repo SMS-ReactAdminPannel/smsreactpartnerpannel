@@ -138,7 +138,7 @@ const Dashboard = () => {
 					className='text-gray-500 text-sm pb-5 pl-7'
 					style={{ ...FONTS.paragraph, color: COLORS.secondary }}
 				>
-					Service details latest updates and statistics	
+					Service details latest updates and statistics
 				</p>
 
 				{/* Dashboard Cards */}
@@ -188,9 +188,9 @@ const Dashboard = () => {
 				</div>
 			</div>
 
-			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 my-3'>
-				<motion.div whileHover={{ scale: 1.02 }}>
-					<Card className='rounded-2xl shadow-lg'>
+			<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 my-3'>
+				<motion.div whileHover={{ scale: 1.01 }}>
+					<Card className='rounded-xl shadow-lg mr-2'>
 						<CardContent>
 							<div className='flex justify-between items-center mb-4'>
 								<h2
@@ -242,8 +242,8 @@ const Dashboard = () => {
 					</Card>
 				</motion.div>
 
-				<motion.div whileHover={{ scale: 1.02 }}>
-					<Card className='rounded-2xl shadow-lg'>
+				<motion.div whileHover={{ scale: 1.01 }}>
+					<Card className='rounded-xl shadow-lg'>
 						<CardContent>
 							<h2
 								className='mb-4'
@@ -256,7 +256,7 @@ const Dashboard = () => {
 							>
 								Service Bookings
 							</h2>
-							<ResponsiveContainer width='100%' height={250}>
+							<ResponsiveContainer width='100%' height={254}>
 								<BarChart data={bookingData}>
 									<XAxis dataKey='name' />
 									<YAxis />
@@ -270,7 +270,7 @@ const Dashboard = () => {
 
 				<motion.div
 					whileHover={{}}
-					className='md:col-span-2 xl:col-span-3'
+					className='md:col-span-2 xl:col-span-3 mt-3'
 					// ref={bookingsRef}
 				>
 					<Card
