@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState } from "react"
 import {
@@ -54,17 +52,16 @@ interface JobCard {
 }
 
 interface ServiceManagementProps {
-  setstate: React.Dispatch<React.SetStateAction<boolean>>
-  jobCards: JobCard[]
-  setJobCards: React.Dispatch<React.SetStateAction<JobCard[]>>
+  onView: () => void;
 }
 
-const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCards, setJobCards }) => {
+const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedJobCard, setSelectedJobCard] = useState<JobCard | null>(null)
   const [showJobCardModal, setShowJobCardModal] = useState(false)
   const [isEditingModal, setIsEditingModal] = useState(false)
   const [editFormData, setEditFormData] = useState<JobCard | null>(null)
+  const [jobCards, setJobCards] = useState<JobCard[]>([])
 
   const serviceRequests = [
     {
@@ -109,48 +106,48 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
       estimatedCost: " ₹320",
       notes: "All four tires need replacement",
     },
-	{
-		id: "SR-004",
-		customerName: "Mike Wilson",
-		phone: "+1 234-567-8902",
-		vehicleInfo: "2021 Ford F-150",
-		serviceType: "Tire Replacement",
-		scheduledDate: "2024-01-16",
-		scheduledTime: "9:00 AM",
-		status: "in-progress",
-		priority: "medium",
-		location: "789 Pine St, Suburb",
-		estimatedCost: " ₹320",
-		notes: "All four tires need replacement",
-	  },
-	  {
-		id: "SR-005",
-		customerName: "Sarah Johnson",
-		phone: "+1 234-567-8901",
-		vehicleInfo: "2019 Toyota Camry",
-		serviceType: "Brake Inspection",
-		scheduledDate: "2024-01-15",
-		scheduledTime: "2:00 PM",
-		status: "confirmed",
-		priority: "high",
-		location: "456 Oak Ave, Uptown",
-		estimatedCost: " ₹150",
-		notes: "Customer reported squeaking sounds",
-	  },
-	  {
-		id: "SR-001",
-		customerName: "John Smith",
-		phone: "+1 234-567-8900",
-		vehicleInfo: "2020 Honda Civic",
-		serviceType: "Oil Change",
-		scheduledDate: "2024-01-15",
-		scheduledTime: "10:00 AM",
-		status: "pending",
-		priority: "medium",
-		location: "123 Main St, Downtown",
-		estimatedCost: " ₹89",
-		notes: "Customer prefers synthetic oil",
-	  },
+    {
+      id: "SR-004",
+      customerName: "Mike Wilson",
+      phone: "+1 234-567-8902",
+      vehicleInfo: "2021 Ford F-150",
+      serviceType: "Tire Replacement",
+      scheduledDate: "2024-01-16",
+      scheduledTime: "9:00 AM",
+      status: "in-progress",
+      priority: "medium",
+      location: "789 Pine St, Suburb",
+      estimatedCost: " ₹320",
+      notes: "All four tires need replacement",
+    },
+    {
+      id: "SR-005",
+      customerName: "Sarah Johnson",
+      phone: "+1 234-567-8901",
+      vehicleInfo: "2019 Toyota Camry",
+      serviceType: "Brake Inspection",
+      scheduledDate: "2024-01-15",
+      scheduledTime: "2:00 PM",
+      status: "confirmed",
+      priority: "high",
+      location: "456 Oak Ave, Uptown",
+      estimatedCost: " ₹150",
+      notes: "Customer reported squeaking sounds",
+    },
+    {
+      id: "SR-001",
+      customerName: "John Smith",
+      phone: "+1 234-567-8900",
+      vehicleInfo: "2020 Honda Civic",
+      serviceType: "Oil Change",
+      scheduledDate: "2024-01-15",
+      scheduledTime: "10:00 AM",
+      status: "pending",
+      priority: "medium",
+      location: "123 Main St, Downtown",
+      estimatedCost: " ₹89",
+      notes: "Customer prefers synthetic oil",
+    },
   ]
 
   const stats = [
@@ -176,35 +173,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
   const handleView = (jobCard: JobCard) => {
     setSelectedJobCard(jobCard)
     setShowJobCardModal(true)
-  }
-
-  const handleCreateJobCard = (request: any) => {
-    const newCard: JobCard = {
-      id: Date.now().toString(),
-      customerName: request.customerName,
-      phone: request.phone,
-      vehicleInfo: request.vehicleInfo,
-      jobNumber: `JC-${String(jobCards.length + 1).padStart(3, "0")}`,
-      isEditing: false,
-      address: request.location,
-      email: `${request.customerName.toLowerCase().replace(" ", ".")}@email.com`,
-      vehicleNumber: `VEH-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      engineNumber: `ENG-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      chassisNumber: `CHS-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      makeModel: request.vehicleInfo,
-      color: "Unknown",
-      fuelLevel: "Unknown",
-      complaint: request.notes || "No specific complaint",
-      estimateLabour: "$100",
-      estimateParts: "$50",
-      totalEstimate: request.estimatedCost,
-      technicianName: "TBD",
-      serviceAdvisor: "TBD",
-      promisedDeliveryDate: request.scheduledDate,
-      contactNumber: request.phone,
-      createdDate: new Date().toISOString().split("T")[0],
-    }
-    setJobCards((prev) => [...prev, newCard])
   }
 
   const handleEditModal = () => {
@@ -234,9 +202,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
     }
   }
 
- 
   return (
-    <div className="p-4"style={{background:COLORS.bgColor}} >
+    <div className="p-4" style={{ background: COLORS.bgColor }}>
       {/* Stats Section */}
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
@@ -257,7 +224,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
         ))}
       </div>
 
-      
       <div className="p-2">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="border-b border-gray-200 p-6">
@@ -335,7 +301,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
                     </td>
                     <td className="py-4 px-6">
                       <button
-                        onClick={() => handleCreateJobCard(request)}
+                        onClick={onView}
                         className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
                       >
                         <Plus className="w-4 h-4" />
@@ -370,13 +336,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                {/* <button
-                  onClick={() => setstate(false)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-800"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>New Job Card</span>
-                </button> */}
               </div>
             </div>
           </div>
@@ -403,14 +362,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
                       >
                         <Eye className="w-4 h-4" />
                       </button>
-                      {/* <button
-                        onClick={() =>
-                          setJobCards(jobCards.map((c) => (c.id === card.id ? { ...c, isEditing: !c.isEditing } : c)))
-                        }
-                        className="p-1 text-gray-600 hover:bg-gray-50 rounded"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </button> */}
                       <button
                         onClick={() => setJobCards(jobCards.filter((c) => c.id !== card.id))}
                         className="p-1 text-red-600 hover:bg-red-50 rounded"
@@ -452,18 +403,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
               </div>
               <div className="flex items-center space-x-2">
                 {!isEditingModal ? (
-                  <><button
-									  onClick={handleEditModal}
-									  className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-800"
-								  >
-									  <Edit className="w-4 h-4" />
-									  <span>Edit</span>
-								  </button><button
-									  onClick={() => setShowJobCardModal(false)}
-									  className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-								  >
-										  <X className="w-6 h-6" />
-									  </button></>
+                  <>
+                    <button
+                      onClick={handleEditModal}
+                      className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-800"
+                    >
+                      <Edit className="w-4 h-4" />
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      onClick={() => setShowJobCardModal(false)}
+                      className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </>
                 ) : (
                   <div className="flex space-x-2">
                     <button
@@ -482,12 +436,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ setstate, jobCard
                     </button>
                   </div>
                 )}
-                {/* <button
-                  onClick={() => setShowJobCardModal(false)}
-                  className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                >
-                  <X className="w-6 h-6" />
-                </button> */}
               </div>
             </div>
 
