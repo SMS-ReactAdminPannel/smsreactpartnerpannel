@@ -76,6 +76,8 @@ interface InventoryItem {
 interface JobCardDetailsPageProps {
   apiData?: ApiData;
   onClose?: () => void;
+  handleBack: ()=> void;
+
 }
 
 // Mock API data - in real app this would come from props
@@ -89,7 +91,7 @@ const defaultApiData: ApiData = {
 };
 
 const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({ 
-  apiData = defaultApiData, onClose
+  apiData = defaultApiData, onClose, handleBack
 }) => {
   const [formData, setFormData] = useState<FormData>({
     // Vehicle Inventory
@@ -805,7 +807,7 @@ const removeFuelLevelImage = (index: number) => {
             </button>
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleBack}
               className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-4 h-[40px] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               Cancel
