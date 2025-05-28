@@ -54,10 +54,9 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="  bg-white shadow-lg rounded-xl ">
       {/* Hero Section */}
-      <div className="relative bg-[#9b111e] text-white">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
+      <div className="relative bg-[#9b111e] text-white rounded-lg ">
         <div className="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
@@ -72,9 +71,9 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-white py-16 border-b border-gray-200">
+      <div className="bg-white  mb-3  px-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-200 py-12">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group hover:transform hover:scale-105 transition-all duration-300">
                 <div className="text-4xl font-bold text-[#9b111e] mb-2 group-hover:text-[#9b111e] ">
@@ -92,7 +91,7 @@ const AboutPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-gray-900">Our Story</h2>
+              <h2 className="text-4xl font-bold text-[#9b111e]">Our Story</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p className="text-lg">
                   Founded in 2008 by automotive enthusiast John Miller, AutoCare Pro began as a small 
@@ -127,7 +126,7 @@ const AboutPage: React.FC = () => {
       <div className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Us</h2>
+            <h2 className="text-4xl font-bold text-[#9b111e] mb-4">Why Choose Us</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               We're not just another auto shop. Here's what sets us apart from the competition.
             </p>
@@ -151,7 +150,7 @@ const AboutPage: React.FC = () => {
       <div className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Expert Team</h2>
+            <h2 className="text-4xl font-bold text-[#9b111e] mb-4">Meet Our Expert Team</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Our certified technicians bring decades of combined experience to every job.
             </p>
@@ -180,58 +179,63 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Mission & Values */}
-      <div className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <div className="w-3 h-3 bg-blue-600 rounded-full mr-3"></div>
-                  Our Mission
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  To provide exceptional automotive service that exceeds expectations while building 
-                  lasting relationships with our customers through honesty, expertise, and reliability.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <div className="w-3 h-3 bg-green-600 rounded-full mr-3"></div>
-                  Our Values
-                </h3>
-                <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                    <span>Integrity in every interaction and repair</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                    <span>Continuous learning and skill development</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                    <span>Environmental responsibility in our practices</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                    <span>Community involvement and support</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl transform -rotate-3"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&h=500&fit=crop" 
-                alt="Modern auto service bay"
-                className="relative rounded-2xl shadow-2xl w-full h-96 object-cover"
-              />
-            </div>
-          </div>
+<div className="py-20 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Left Column */}
+      <div className="space-y-12">
+        {/* Our Mission */}
+        <div className="text-left">
+          <h3 className="text-2xl font-bold text-[#d35028] mb-4">
+            Our Mission
+          </h3>
+          <p className="text-gray-600 leading-relaxed text-lg">
+            To provide exceptional automotive service that exceeds expectations while building 
+            lasting relationships with our customers through honesty, expertise, and reliability.
+          </p>
+        </div>
+
+        {/* Our Values */}
+        <div className="text-left">
+          <h3 className="text-2xl font-bold text-[#d35028] mb-4">
+            Our Values
+          </h3>
+          <ul className="space-y-3 text-gray-600">
+            <li className="flex items-start">
+              <div className="w-2 h-2 bg-[#E6A895] rounded-full mr-3 mt-2 flex-shrink-0"></div>
+              <span>Integrity in every interaction and repair</span>
+            </li>
+            <li className="flex items-start">
+              <div className="w-2 h-2 bg-[#E6A895] rounded-full mr-3 mt-2 flex-shrink-0"></div>
+              <span>Continuous learning and skill development</span>
+            </li>
+            <li className="flex items-start">
+              <div className="w-2 h-2 bg-[#E6A895] rounded-full mr-3 mt-2 flex-shrink-0"></div>
+              <span>Environmental responsibility in our practices</span>
+            </li>
+            <li className="flex items-start">
+              <div className="w-2 h-2 bg-[#E6A895] rounded-full mr-3 mt-2 flex-shrink-0"></div>
+              <span>Community involvement and support</span>
+            </li>
+          </ul>
         </div>
       </div>
+
+      {/* Right Image Column */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl transform -rotate-3"></div>
+        <img 
+          src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&h=500&fit=crop" 
+          alt="Modern auto service bay"
+          className="relative rounded-2xl shadow-2xl w-full h-96 object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
       {/* Contact CTA */}
       <div className="bg-[#9b111e] py-20">

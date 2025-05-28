@@ -104,7 +104,7 @@ const HelpCenter: React.FC = () => {
       {results.length === 0 ? (
         <p className="text-gray-600 mt-4">No results found.</p>
       ) : (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full w-5xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {results.map((card, index) => (
             <div
               key={index}
@@ -122,7 +122,7 @@ const HelpCenter: React.FC = () => {
     
       <form
         onSubmit={handleSubmit}
-        className="mt-10 w-full w-4xl bg-white shadow-md rounded-lg p-6"
+        className="mt-10 w-full bg-white shadow-md rounded-lg p-6"
       >
         <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Still need help?</h2>
 

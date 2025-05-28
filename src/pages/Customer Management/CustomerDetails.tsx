@@ -1,100 +1,145 @@
 import React, { useState } from 'react';
-import { FaSearch, FaArrowUp } from 'react-icons/fa';
+import { FaSearch, FaArrowUp, FaChevronRight, FaChevronLeft, FaFilter } from 'react-icons/fa';
 import CountUp from 'react-countup';
 import { motion } from 'framer-motion';
+import { FaUsers, FaTools, FaShoppingCart } from 'react-icons/fa';
 
 const customerData = [
-     {
-        name: 'John Doe',
-        email: 'john@example.com',
-        services: '6',
-        orders: 3,
-        spec: 'Toyota Camry',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Jane Smith',
-        email: 'jane@example.com',
-        services: '8',
-        orders: 5,
-        spec: 'Honda Civic',
-        status: 'Inactive',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Sam Wilson',
-        email: 'sam@example.com',
-        services: '3',
-        orders: 2,
-        spec: 'Ford Explorer',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Emily Johnson',
-        email: 'emily@example.com',
-        services: '7',
-        orders: 4,
-        spec: 'Nissan Altima',
-        status: 'Inactive',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Michael Brown',
-        email: 'michael@example.com',
-        services: '5',
-        orders: 1,
-        spec: 'BMW 3 Series',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Emily Johnson',      
-        email: 'emily@example.com',
-        services: '7',
-        orders: 4,
-        spec: 'Nissan Altima',
-        status: 'Inactive',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Michael Brown',
-        email: 'michael@example.com',
-        services: '5',
-        orders: 1,
-        spec: 'BMW 3 Series',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'John Doe',
-        email: 'john@example.com',
-        services: '6',
-        orders: 3,
-        spec: 'Toyota Camry',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Jane Smith',
-        email: 'jane@example.com',
-        services: '8',
-        orders: 5,
-        spec: 'Honda Civic',
-        status: 'Inactive',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
-    {
-        name: 'Sam Wilson',
-        email: 'sam@example.com',
-        services: '3',
-        orders: 2,
-        spec: 'Ford Explorer',
-        status: 'Active',
-        image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
-    },
- 
+  {
+    name: 'John Doe',
+    email: 'john@example.com',
+    services: '6',
+    orders: 3,
+    spec: 'Toyota Camry',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    services: '8',
+    orders: 5,
+    spec: 'Honda Civic',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Sam Wilson',
+    email: 'sam@example.com',
+    services: '3',
+    orders: 2,
+    spec: 'Ford Explorer',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Emily Johnson',
+    email: 'emily@example.com',
+    services: '7',
+    orders: 4,
+    spec: 'Nissan Altima',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Michael Brown',
+    email: 'michael@example.com',
+    services: '5',
+    orders: 1,
+    spec: 'BMW 3 Series',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Emily Johnson',
+    email: 'emily@example.com',
+    services: '7',
+    orders: 4,
+    spec: 'Nissan Altima',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Michael Brown',
+    email: 'michael@example.com',
+    services: '5',
+    orders: 1,
+    spec: 'BMW 3 Series',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'John Doe',
+    email: 'john@example.com',
+    services: '6',
+    orders: 3,
+    spec: 'Toyota Camry',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Emily Johnson',
+    email: 'emily@example.com',
+    services: '7',
+    orders: 4,
+    spec: 'Nissan Altima',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Michael Brown',
+    email: 'michael@example.com',
+    services: '5',
+    orders: 1,
+    spec: 'BMW 3 Series',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Emily Johnson',
+    email: 'emily@example.com',
+    services: '7',
+    orders: 4,
+    spec: 'Nissan Altima',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Michael Brown',
+    email: 'michael@example.com',
+    services: '5',
+    orders: 1,
+    spec: 'BMW 3 Series',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'John Doe',
+    email: 'john@example.com',
+    services: '6',
+    orders: 3,
+    spec: 'Toyota Camry',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    services: '8',
+    orders: 5,
+    spec: 'Honda Civic',
+    status: 'Inactive',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
+  {
+    name: 'Sam Wilson',
+    email: 'sam@example.com',
+    services: '3',
+    orders: 2,
+    spec: 'Ford Explorer',
+    status: 'Active',
+    image: 'https://static.vecteezy.com/system/resources/previews/024/354/252/non_2x/businessman-isolated-illustration-ai-generative-free-photo.jpg',
+  },
 ];
 
 const ITEMS_PER_PAGE = 5;
@@ -105,8 +150,8 @@ const SimpleDonutChart = () => {
   const circumference = 2 * Math.PI * radius;
 
   const data = [
-    { label: 'Active', value: 50, color: '#800000' },
-    { label: 'Inactive', value: 50, color: '#A05252' },
+    { label: 'Active', value: 65, color: '#10B981' },
+    { label: 'Inactive', value: 35, color: '#EF4444' },
   ];
 
   let cumulativePercent = 0;
@@ -137,38 +182,78 @@ const SimpleDonutChart = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative p-4 h-36 w-full max-w-[240px] flex items-center gap-4 rounded-lg shadow-md border border-[#800000] hover:shadow-xl hover:scale-105 transform transition-transform duration-300"
+      className="relative p-6 h-full w-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl bg-white shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300"
     >
-      <div className="space-y-1 text-sm text-gray-700 font-semibold">
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-[#800000]" />
-          Active: 50%
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-[#A05252]" />
-          Inactive: 50%
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-[#800000] pb-5">Customer Status</h3>
+        <div className="space-y-2">
+          {data.map((item, idx) => (
+            <motion.div 
+              key={idx} 
+              className="flex items-center gap-2 text-sm font-medium"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + idx * 0.1 }}
+            >
+              <span
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-gray-700">{item.label}:</span>
+              <span className="text-gray-900">{item.value}%</span>
+            </motion.div>
+          ))}
         </div>
       </div>
-      <svg width="100" height="100" viewBox="0 0 100 100">
-        {renderSegments}
-        <circle cx="50" cy="50" r="30" fill="white" />
-        <text x="50" y="54" textAnchor="middle" fontSize="12" fill="#333">100%</text>
-      </svg>
+      <div className="relative">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <motion.g 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          >
+            {renderSegments}
+          </motion.g>
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="30" 
+            fill="white"
+          />
+          <text
+            x="50"
+            y="54"
+            textAnchor="middle"
+            fontSize="14"
+            fontWeight="600"
+            fill="#800000"
+          >
+            {data.reduce((acc, item) => acc + item.value, 0)}%
+          </text>
+        </svg>
+      </div>
     </motion.div>
   );
 };
 
-type ProfileViewComponent ={
-  onProfileView : ()=> void
-}
+type ProfileViewComponent = {
+  onProfileView: () => void;
+};
 
-const CustomerDetails: React.FC<ProfileViewComponent> = ({onProfileView}) => {
+const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
-  const filteredData = customerData.filter((customer) =>
-    customer.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredData = customerData.filter((customer) => {
+    const matchesSearch =
+      customer.name.toLowerCase().includes(search.toLowerCase()) ||
+      customer.email.toLowerCase().includes(search.toLowerCase());
+
+    const matchesStatus = statusFilter ? customer.status === statusFilter : true;
+
+    return matchesSearch && matchesStatus;
+  });
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const paginatedData = filteredData.slice(
@@ -182,125 +267,282 @@ const CustomerDetails: React.FC<ProfileViewComponent> = ({onProfileView}) => {
     }
   };
 
+  const handleFilterClick = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const handleStatusFilter = (status: string | null) => {
+    setStatusFilter(status);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="p-6 min-h-screen">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6 mr-10 gap-6">
+    <div className="min-h-screen p-6 bg-gradient-to-br from-red-50 to-gray-50">
+      {/* Page Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <h1 className="text-3xl font-bold text-[#800000] mb-2">Customer Management</h1>
+        
+      </motion.div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {['Total Customers', 'Total Services', 'Total Orders'].map((title, i) => (
           <motion.div
             key={title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="relative p-5 max-w-[220px] h-36 w-full rounded-lg shadow-md border border-[#800000] hover:shadow-xl transform transition-transform duration-300 hover:scale-105"
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 relative h-48"
           >
-            <div className="absolute bottom-3 right-3 flex items-center space-x-1 bg-green-100 text-green-700 text-sm font-medium px-2 py-1 rounded-full w-fit">
+            {/* Percentage in top right corner */}
+            <motion.div 
+              className="absolute top-4 right-4 flex items-center space-x-1 bg-green-50 text-green-700 text-xs font-medium px-2 py-1 rounded-full"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <FaArrowUp className="text-xs" />
               <span>{[15, 8, 12][i]}%</span>
+            </motion.div>
+
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <p className="text-sm font-medium text-[#800000]">{title}</p>
+                <p className="mt-12 text-5xl font-bold text-gray-800">
+                  <CountUp
+                    end={
+                      i === 0
+                        ? customerData.length
+                        : i === 1
+                          ? customerData.reduce((acc, c) => acc + Number(c.services), 0)
+                          : customerData.reduce((acc, c) => acc + c.orders, 0)
+                    }
+                    duration={2.5}
+                  />
+                </p>
+              </div>
+
+              <div className="flex justify-end -mt-12">
+                <motion.div 
+                  className="text-[#b94747]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  {i === 0 ? (
+                    <FaUsers className="text-4xl" />
+                  ) : i === 1 ? (
+                    <FaTools className="text-4xl" />
+                  ) : (
+                    <FaShoppingCart className="text-4xl" />
+                  )}
+                </motion.div>
+              </div>
             </div>
-            <h2 className="text-lg font-semibold text-gray-700">{title}</h2>
-            <p className="absolute bottom-4 left-4 text-5xl text-black">
-              <CountUp
-                end={
-                  i === 0
-                    ? customerData.length
-                    : i === 1
-                    ? customerData.reduce((acc, c) => acc + Number(c.services), 0)
-                    : customerData.reduce((acc, c) => acc + c.orders, 0)
-                }
-                duration={2}
-              />
-            </p>
           </motion.div>
         ))}
-        <SimpleDonutChart />
+
+        {/* Donut Chart Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          whileHover={{ y: -5 }}
+          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 relative h-48"
+        >
+          <SimpleDonutChart />
+        </motion.div>
       </div>
 
-      <div className="relative w-80 mb-6">
-        <span className="absolute inset-y-0 left-3 flex items-center text-[#800000]">
-          <FaSearch />
-        </span>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setCurrentPage(1);
-          }}
-          placeholder="Search customers..."
-          className="pl-10 pr-4 py-2 w-full border border-[#800000] rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#800000]"
-        />
-      </div>
+      {/* Customer Table Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden"
+      >
+        {/* Search and Filter Bar */}
+        <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="relative w-full sm:w-80">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+              <FaSearch />
+            </div>
+            <motion.input
+              type="text"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+              placeholder="Search by name or email..."
+              className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-[#800000] focus:border-transparent"
+              whileFocus={{ scale: 1.01 }}
+            />
+          </div>
 
-      <div className="overflow-x-auto">
-        <div className="grid grid-cols-7 gap-6 text-[16px] font-bold text-gray-800 p-4 border-b text-left">
-          <div className="pl-10">Name</div>
-          <div className="pl-10">Email</div>
-          <div className="pl-8">Services</div>
-          <div className="pl-2">Orders</div>
-          <div className="pl-6">Spec</div>
-          <div className="pl-2">Status</div>
-        </div>
-
-        {paginatedData.length > 0 ? (
-          paginatedData.map((customer, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="grid grid-cols-7 gap-6 items-center text-[17px] py-4 px-4 border-b text-left shadow-md rounded-md mb-4 hover:shadow-lg transition-shadow duration-300 bg-white"
-            >
-              <div className="flex items-center gap-4 pr-1">
-                <img
-                  src={customer.image}
-                  alt={customer.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <span className="font-bold">{customer.name}</span>
-              </div>
-              <div className="pl-1">{customer.email}</div>
-              <div className="pl-12">{customer.services}</div>
-              <div className="pl-5">{customer.orders}</div>
-              <div className="pr-5">{customer.spec}</div>
-              <div className="pl-2 font-semibold">
-                <span className={customer.status === 'Active' ? 'text-green-600' : 'text-red-600'}>
-                  {customer.status}
-                </span>
-              </div>
-              <div className="pl-2">
-                <button onClick={onProfileView} className="relative overflow-hidden px-4 py-2 bg-[#800000] text-white rounded hover:bg-[#990000] transition">
-                  <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition"></span>
-                  View
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            {showFilters && (
+              <motion.div 
+                className="flex items-center gap-2 bg-gray-100 rounded-lg p-1"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                <button
+                  onClick={() => handleStatusFilter(null)}
+                  className={`px-3 py-1 text-sm rounded-md transition-colors ${!statusFilter ? 'bg-white shadow-sm text-[#800000]' : 'hover:bg-gray-50'}`}
+                >
+                  All
                 </button>
-              </div>
-            </motion.div>
-          ))
-        ) : (
-          <p className="text-center text-gray-500 text-base mt-6">No customers found.</p>
-        )}
-      </div>
+                <button
+                  onClick={() => handleStatusFilter('Active')}
+                  className={`px-3 py-1 text-sm rounded-md transition-colors ${statusFilter === 'Active' ? 'bg-green-100 text-green-800' : 'hover:bg-gray-50'}`}
+                >
+                  Active
+                </button>
+                <button
+                  onClick={() => handleStatusFilter('Inactive')}
+                  className={`px-3 py-1 text-sm rounded-md transition-colors ${statusFilter === 'Inactive' ? 'bg-red-100 text-red-800' : 'hover:bg-gray-50'}`}
+                >
+                  Inactive
+                </button>
+              </motion.div>
+            )}
 
-      {filteredData.length > ITEMS_PER_PAGE && (
-        <div className="flex justify-center mt-10 space-x-2 items-center">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="w-10 h-10 text-lg flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
-          >
-            &lt;
-          </button>
-          <span className="px-4 py-2 text-base text-gray-700">
-            {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="w-10 h-10 text-lg flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
-          >
-            &gt;
-          </button>
+            <motion.button
+              onClick={handleFilterClick}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${showFilters ? 'bg-[#800000] text-white border-[#800000]' : 'border-gray-300 hover:bg-gray-100'}`}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaFilter className="text-sm" />
+              <span className="text-sm">Filters</span>
+            </motion.button>
+          </div>
         </div>
-      )}
+
+        {/* Customer Table */}
+        <div className="overflow-x-auto">
+          <div className="min-w-full">
+            {/* Table Header */}
+            <div className="grid grid-cols-7 gap-4 text-sm font-semibold text-gray-600 p-4 bg-gray-50 border-b border-gray-200">
+              <div className="pl-6">Customer</div>
+              <div className="pl-2">Email</div>
+              <div className="pl-2 text-center">Services</div>
+              <div className="pl-2 text-center">Orders</div>
+              <div className="pl-2">Vehicle</div>
+              <div className="pl-2 text-center">Status</div>
+              <div className="pl-2">Action</div>
+            </div>
+
+            {/* Table Body */}
+            <div className="divide-y divide-gray-200">
+              {paginatedData.length > 0 ? (
+                paginatedData.map((customer, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ backgroundColor: '#fef2f2' }}
+                    className="grid grid-cols-7 gap-4 items-center text-sm p-4 transition-colors duration-200"
+                  >
+                    <div className="flex items-center gap-3 pl-2">
+                      <motion.img
+                        src={customer.image}
+                        alt={customer.name}
+                        className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                        whileHover={{ scale: 1.1 }}
+                      />
+                      <span className="font-medium text-gray-800">{customer.name}</span>
+                    </div>
+                    <div className="text-gray-600 truncate pr-2">{customer.email}</div>
+                    <div className="text-center text-gray-700">{customer.services}</div>
+                    <div className="text-center text-gray-700">{customer.orders}</div>
+                    <div className="text-gray-600 truncate pr-2">{customer.spec}</div>
+                    <div className="flex justify-center">
+                      <motion.span 
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${customer.status === 'Active'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                          }`}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        {customer.status}
+                      </motion.span>
+                    </div>
+                    <div>
+                      <motion.button
+                        onClick={onProfileView}
+                        className="text-[#800000] hover:text-[#990000] font-medium text-sm flex items-center gap-1"
+                        whileHover={{ x: 3 }}
+                      >
+                        View <FaChevronRight className="text-xs" />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <motion.div 
+                  className="p-8 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <p className="text-gray-500">No customers found matching your search</p>
+                </motion.div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Pagination */}
+        {filteredData.length > ITEMS_PER_PAGE && (
+          <motion.div 
+            className="px-6 py-4 border-t border-gray-200 flex items-center justify-between"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <motion.button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-lg border flex items-center gap-2 transition 
+                ${currentPage === 1
+                  ? 'text-gray-400 cursor-not-allowed bg-gray-100 border-gray-200'
+                  : 'text-white bg-gradient-to-r from-red-800 to-red-600 hover:from-red-900 hover:to-red-700 border-transparent'
+                }`}
+              whileHover={currentPage !== 1 ? { scale: 1.03 } : {}}
+              whileTap={currentPage !== 1 ? { scale: 0.97 } : {}}
+            >
+              <FaChevronLeft className="text-xs" />
+              Previous
+            </motion.button>
+
+            <div className="text-sm text-gray-600">
+              Page {currentPage} of {totalPages}
+            </div>
+
+            <motion.button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded-lg border flex items-center gap-2 transition 
+                ${currentPage === totalPages
+                  ? 'text-gray-400 cursor-not-allowed bg-gray-100 border-gray-200'
+                  : 'text-white bg-gradient-to-r from-red-800 to-red-600 hover:from-red-900 hover:to-red-700 border-transparent'
+                }`}
+              whileHover={currentPage !== totalPages ? { scale: 1.03 } : {}}
+              whileTap={currentPage !== totalPages ? { scale: 0.97 } : {}}
+            >
+              Next
+              <FaChevronRight className="text-xs" />
+            </motion.button>
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 };

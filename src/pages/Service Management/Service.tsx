@@ -1,19 +1,26 @@
-import React, { useState } from 'react'
-import JobCard from './jobCard';
+import { useState } from 'react'
 import ServiceManagement from './ServiceManagement';
+import { useNavigate } from 'react-router-dom';
+import JobCardDetailsPage from './JobCardDetailsPages';
 
-const Service:React.FC = () => {
-    // const [activeStep, setActiveStep] = useState<boolean>(true);
-    const [state, setstate] = useState<boolean>(true)
-
-    console.log("state", state);
+const Service = () => {
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const navigate = useNavigate()
+  const handleBack = () => {
+    if (activeStep > 0) {
+      setActiveStep(prev => prev - 1);
+    } else {
+      navigate(-1);
+    }
+  };
   return (
-
-      <div>
-        {/* {activeStep ? <TermsConditionsPage setActiveStep={setActiveStep} /> : <JobCard />} */}
-        {state ? <ServiceManagement setstate={setstate} /> : <JobCard />}
-        
-
+    <div>
+      {activeStep === 0 && (
+          <ServiceManagement onView={() => setActiveStep(1)}  />
+        )}
+        {activeStep === 1 && (
+          <JobCardDetailsPage handleBack={handleBack} />
+        )}
     </div>
   )
 }

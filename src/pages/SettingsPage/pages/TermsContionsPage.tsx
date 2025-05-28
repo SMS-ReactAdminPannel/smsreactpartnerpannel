@@ -25,16 +25,16 @@ const TermsConditionsPage: React.FC = () => {
   ];
 
   return (
-    <div className=" mx-auto p-6 bg-white">
+    <div className=" mx-auto p-6 bg-[#f4eae5]">
       <div className="space-y-8">
         <div className="border-b border-gray-200 pb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms & Conditions</h1>
+          <h1 className="text-3xl font-bold text-[#9b111e] mb-2">Terms & Conditions</h1>
           <p className="text-gray-600">Please read these terms and conditions carefully before using our service.</p>
         </div>
 
         <div className="space-y-6">
           {sections.map((section, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+            <div key={index} className="bg-[#ead7cf] rounded-lg p-6 hover:bg-[#e9ccc0] transition-colors duration-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4 leading-tight">
                 {section.title}
               </h2>
@@ -45,14 +45,6 @@ const TermsConditionsPage: React.FC = () => {
           ))}
         </div>
 
-        <div className="border-t border-gray-200 pt-6">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-blue-800 text-sm">
-              <span className="font-semibold">Last updated:</span> January 2024. 
-              These terms and conditions are subject to change. Please review them periodically for updates.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );

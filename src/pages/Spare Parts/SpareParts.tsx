@@ -15,7 +15,9 @@ const initialPartsData: SparePart[] = [
     name: 'AC Vent Grille Clip Slider Set',
     price: 3500,
     inStock: true,
-    images: ['https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg'],
+    images: ['https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi67ZT0gklmtrW2cnDI_610wn2Zns2BDH7kw&s',
+    ],
     type: 'Slider',
   },
   {
@@ -23,7 +25,9 @@ const initialPartsData: SparePart[] = [
     name: 'Air Conditioning A/C Pressure ',
     price: 1500,
     inStock: false,
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi67ZT0gklmtrW2cnDI_610wn2Zns2BDH7kw&s'],
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi67ZT0gklmtrW2cnDI_610wn2Zns2BDH7kw&s',
+      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
+    ],
     type: 'Sensor',
   },
   {
@@ -31,7 +35,9 @@ const initialPartsData: SparePart[] = [
     name: 'Mercedes Engine Start Stop Button',
     price: 1200,
     inStock: true,
-    images: ['https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg'],
+    images: ['https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
+      'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
+    ],
     type: 'Switch & Buttons',
   },
   {
@@ -39,7 +45,9 @@ const initialPartsData: SparePart[] = [
     name: 'Front Grille Body Kit for MG 5/6/ZS',
     price: 2000,
     inStock: true,
-    images: ['https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg'],
+    images: ['https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
+      'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
+    ],
     type: 'Grille',
   },
   {
@@ -47,7 +55,9 @@ const initialPartsData: SparePart[] = [
     name: 'Dashboard Switch Button',
     price: 1200,
     inStock: true,
-    images: ['https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg'],
+    images: ['https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
+      'https://image.made-in-china.com/202f0j00BpMoIvJnQHcS/All-Aftermarket-Spare-Auto-Part-Engine-Suspension-Electrical-Body-System-Car-Parts-with-Bom-One-Stop-Service.webp',
+    ],
     type: 'Switch & Buttons',
   },
   {
@@ -55,7 +65,9 @@ const initialPartsData: SparePart[] = [
     name: 'Rearview Mirror for Toyota Corolla',
     price: 2200,
     inStock: false,
-    images: ['https://image.made-in-china.com/202f0j00BpMoIvJnQHcS/All-Aftermarket-Spare-Auto-Part-Engine-Suspension-Electrical-Body-System-Car-Parts-with-Bom-One-Stop-Service.webp'],
+    images: ['https://image.made-in-china.com/202f0j00BpMoIvJnQHcS/All-Aftermarket-Spare-Auto-Part-Engine-Suspension-Electrical-Body-System-Car-Parts-with-Bom-One-Stop-Service.webp',
+      'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
+    ],
     type: 'Mirror',
   },
   {
@@ -63,7 +75,9 @@ const initialPartsData: SparePart[] = [
     name: 'Headlight Assembly for BMW X5',
     price: 5500,
     inStock: true,
-    images: ['https://image.made-in-china.com/2f0j00FJbVaGrlOtqE/Good-Price-Auto-Components-Car-Engine-Parts-Cooling-Water-Pump-OEM-1300A066-MD979395-for-Mitsubishi-Outlander-Galant-Saloon-Grandis.webp'],
+    images: ['https://image.made-in-china.com/2f0j00FJbVaGrlOtqE/Good-Price-Auto-Components-Car-Engine-Parts-Cooling-Water-Pump-OEM-1300A066-MD979395-for-Mitsubishi-Outlander-Galant-Saloon-Grandis.webp',
+      'https://image.made-in-china.com/202f0j00JhgkzEWKbUbB/Engine-Parts-371-Cylinder-Head-for-Chery-371-1003015mA.webp',
+    ],
     type: 'Lighting',
   },
   {
@@ -71,7 +85,9 @@ const initialPartsData: SparePart[] = [
     name: 'Radiator Fan Motor Honda Civic',
     price: 3000,
     inStock: true,
-    images: ['https://image.made-in-china.com/202f0j00JhgkzEWKbUbB/Engine-Parts-371-Cylinder-Head-for-Chery-371-1003015mA.webp'],
+    images: ['https://image.made-in-china.com/202f0j00JhgkzEWKbUbB/Engine-Parts-371-Cylinder-Head-for-Chery-371-1003015mA.webp',
+      'https://image.made-in-china.com/2f0j00FJbVaGrlOtqE/Good-Price-Auto-Components-Car-Engine-Parts-Cooling-Water-Pump-OEM-1300A066-MD979395-for-Mitsubishi-Outlander-Galant-Saloon-Grandis.webp',
+    ],
     type: 'Cooling',
   },
   {
@@ -79,7 +95,9 @@ const initialPartsData: SparePart[] = [
     name: 'Brake Pads for Hyundai i20',
     price: 1800,
     inStock: false,
-    images: ['https://www.wagnerbrake.com/content/loc-na/loc-us/fmmp-wagner/en_US/technical/parts-matter/driver-education-and-vehicle-safety/how-the-brake-system-works/_jcr_content/article/article-par/image_1776083492.img.jpg/car-brake-pad-rotor-1738009820082.jpg'],
+    images: ['https://www.wagnerbrake.com/content/loc-na/loc-us/fmmp-wagner/en_US/technical/parts-matter/driver-education-and-vehicle-safety/how-the-brake-system-works/_jcr_content/article/article-par/image_1776083492.img.jpg/car-brake-pad-rotor-1738009820082.jpg',
+      'https://thumbs.dreamstime.com/b/hybrid-electric-car-interior-element-metal-gas-accelerate-brake-pedal-sport-automatic-gearbox-controls-329261803.jpg',
+    ],
     type: 'Brakes',
   },
   {
@@ -87,7 +105,9 @@ const initialPartsData: SparePart[] = [
     name: 'Spark Plug for Maruti Suzuki',
     price: 400,
     inStock: true,
-    images: ['https://thumbs.dreamstime.com/b/hybrid-electric-car-interior-element-metal-gas-accelerate-brake-pedal-sport-automatic-gearbox-controls-329261803.jpg'],
+    images: ['https://thumbs.dreamstime.com/b/hybrid-electric-car-interior-element-metal-gas-accelerate-brake-pedal-sport-automatic-gearbox-controls-329261803.jpg',
+      'https://www.wagnerbrake.com/content/loc-na/loc-us/fmmp-wagner/en_US/technical/parts-matter/driver-education-and-vehicle-safety/how-the-brake-system-works/_jcr_content/article/article-par/image_1776083492.img.jpg/car-brake-pad-rotor-1738009820082.jpg',
+    ],
     type: 'Engine',
   },
 ];
@@ -118,6 +138,7 @@ const ToggleSwitch: React.FC<{ enabled: boolean; onToggle: () => void }> = ({
 );
 
 const SpareParts: React.FC = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [partsData, setPartsData] = useState<SparePart[]>(initialPartsData);
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -204,36 +225,37 @@ const SpareParts: React.FC = () => {
 
 
       {/* Hero Card */}
-      <div className="mb-8 w-full bg-gray-100 rounded-xl shadow p-6 flex flex-col lg:flex-row items-center gap-6">
-        <div className="flex-1">
-          <h2 className="text-3xl font-bold text-[#9b111e] mb-4">
-            Welcome to Auto Spare Hub
-          </h2>
-          <p className="text-gray-700 mb-3">
-            Discover top-quality auto spare parts. We offer genuine and aftermarket
-            components with fast delivery and customer satisfaction guaranteed.
-          </p>
-          <button 
-            onClick={() => setShowAddForm(true)}
-            className="mt-4 bg-[#9b111e] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            Add New Product
-          </button>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <img
-            src="https://t4.ftcdn.net/jpg/05/21/93/17/360_F_521931702_TXOHZBa3tLVISome894Zc061ceab4Txm.jpg"
-            alt="Spare Parts Overview"
-            className="rounded-lg max-h-[250px] w-full object-cover shadow"
-          />
-        </div>
-      </div>
+      <div className="mb-8 w-full bg-gray-100 rounded-xl shadow p-6 flex flex-col lg:flex-row items-center gap-6 hover:shadow-lg hover:scale-[1.01] transition-transform duration-300 ease-in-out">
+  <div className="flex-1">
+    <h2 className="text-3xl font-bold text-[#9b111e] mb-4">
+      Welcome to Auto Spare Hub
+    </h2>
+    <p className="text-gray-700 mb-3">
+      Discover top-quality auto spare parts. We offer genuine and aftermarket
+      components with fast delivery and customer satisfaction guaranteed.
+    </p>
+    <button 
+      onClick={() => setShowAddForm(true)}
+      className="mt-4 bg-[#9b111e] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      </svg>
+      Add New Product
+    </button>
+  </div>
+  <div className="flex-1 flex justify-center">
+    <img
+      src="https://t4.ftcdn.net/jpg/05/21/93/17/360_F_521931702_TXOHZBa3tLVISome894Zc061ceab4Txm.jpg"
+      alt="Spare Parts Overview"
+      className="rounded-lg max-h-[250px] w-full object-cover shadow"
+    />
+  </div>
+</div>
+
 
  <div className="flex  justify-between mb-6">
-  <h2 className="text-4xl font-bold text-[#9b111e] text-left">
+  <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
     Products
   </h2>
   <button
@@ -247,41 +269,96 @@ const SpareParts: React.FC = () => {
 
       
 
-      {/* Product Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
+     {/* Product Grid */}
+<div className="max-w-6xl mx-auto grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8 px-2">
 
-        
-        {filteredParts.map((part) => (
-          <div
-            key={part.id}
-            className="group relative border rounded-lg overflow-hidden shadow transition-ease duration-300 cursor-pointer h-[260px] bg-[#efe7d0] hover:scale-100 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
-            onClick={() => setSelectedPart(part)}
-          >
-            <div className="h-[180px] flex justify-center items-center overflow-hidden">
-              <img
-                src={part.images[0]}
-                alt={part.name}
-                className="w-[160px] h-[160px] object-cover transition-transform duration-300  rounded-md"
-              />
-            </div>
-            <div className="p-3">
-              <div className="text-xs font-semibold line-clamp-2 mb-1">{part.name}</div>
-              <div className="text-xs text-gray-600 mb-1">{part.type}</div>
-              <div className="text-sm font-bold text-[#9b111e]">
-                ₹{part.price.toLocaleString()}
-              </div>
-              
-              <div
-                className={`mt-1 text-xs font-semibold ${
-                  part.inStock ? 'text-green-600' : 'text-red-600'
-                }`}
-              >
-                {part.inStock ? 'In Stock' : 'Out of Stock'}
-              </div>
-            </div>
-          </div>
-        ))}
+  {filteredParts.map((part, index) => (
+    <div
+      key={part.id}
+      className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#efe7d0] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
+      onClick={() => setSelectedPart(part)}
+      onMouseEnter={() => setHoveredIndex(index)}
+      onMouseLeave={() => setHoveredIndex(null)}
+      style={{ minHeight: '260px' }} // ensures min height but allows vertical flexibility
+    >
+      <div className="h-[180px] flex justify-center items-center overflow-hidden">
+        <img
+          src={hoveredIndex === index && part.images[1] ? part.images[1] : part.images[0]}
+          alt={part.name}
+          className="max-w-[160px] max-h-[160px] w-auto h-auto object-cover transition-all duration-300 ease-in-out rounded-md"
+        />
       </div>
+      <div className="p-3">
+        <div className="text-xs font-semibold line-clamp-2 mb-1">{part.name}</div>
+        <div className="text-xs text-gray-600 mb-1">{part.type}</div>
+        <div className="text-sm font-bold text-[#9b111e]">
+          ₹{part.price.toLocaleString()}
+        </div>
+        <div
+          className={`mt-1 text-xs font-semibold ${
+            part.inStock ? 'text-green-600' : 'text-red-600'
+          }`}
+        >
+          {part.inStock ? 'In Stock' : 'Out of Stock'}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+
+<div className="max-w-full px-4 md:px-6 lg:px-8">
+  <h1 className="text-2xl font-bold text-[#9b111e] mb-8 text-center md:text-left">BY CATEGORIES</h1>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    
+    {/* Category Card */}
+    {[
+      {
+        title: "Wheels and Tires",
+        image: "https://img.freepik.com/free-vector/realistic-complete-set-car-wheels_1284-29765.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
+        items: ["Bearings & Hubs", "Chrome Rims", "Hybrid Tyres", "Seasonal Tyres", "Wheel Bolts"]
+      },
+      {
+        title: "Body Parts",
+        image: "https://img.freepik.com/premium-photo/two-metal-pistons-white_241146-682.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
+        items: ["Headlights", "Accelerator", "Bumpers", "Clutch", "Washers"]
+      },
+      {
+        title: "Performance Parts",
+        image: "https://img.freepik.com/free-psd/3d-style-mechanical-item-isolated-transparent-background_191095-13746.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
+        items: ["Drive Belts", "Engine Gasket", "Fuel Pumps", "Head Bolts", "Piston Rings"]
+      },
+      {
+        title: "Maintenance",
+        image: "https://img.freepik.com/free-vector/engine-pistons-system-composition-with-realistic-image-assembled-metal-engine-elements-isolated_1284-53969.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
+        items: ["Cleaners", "Antifreeze", "Engine Oil", "Repair Kits", "Bodypaint"]
+      },
+    ].map(({ title, image, items }, index) => (
+    <div className="flex flex-col gap-4 p-6 border  rounded-xl shadow-md">
+      <div className="flex justify-between items-center">
+        <h2 className="text-md font-bold uppercase text-[#9b111e]">{title}</h2>
+        <img
+      src={image}
+      alt={title}
+      className="w-16 h-16 object-contain"
+    />
+      </div>
+      <ul className="space-y-1 text-sm">
+          {items.map((item, idx) => (
+            <li key={idx} className="hover:underline cursor-pointer">{item}</li>
+          ))}
+        </ul>
+        <span className="text-sm font-semibold text-red-700 cursor-pointer hover:underline mt-1">
+          ALL CATEGORIES →
+        </span>
+
+  </div>
+    ))}
+</div>
+</div>
 
      {/* Bottom Full Width Section */}
 <div className="w-full py-12 px-6 flex flex-col lg:flex-row items-center gap-8">
@@ -383,30 +460,38 @@ const SpareParts: React.FC = () => {
               </div>
 
               {/* Image URL */}
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Image URL *
-                </label>
-                <input
-                  type="url"
-                  value={newPart.images[0]}
-                  onChange={(e) => setNewPart({...newPart, images: [e.target.value]})}
-                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
-                  placeholder="Enter image URL"
-                />
-                {newPart.images[0] && (
-                  <div className="mt-2 flex justify-center">
-                    <img
-                      src={newPart.images[0]}
-                      alt="Preview"
-                      className="w-32 h-32 object-cover rounded border"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+             <div>
+  <label className="block text-sm font-medium mb-2 text-gray-700">
+    Upload Image *
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        setNewPart({ ...newPart, images: [imageUrl] });
+      }
+    }}
+    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
+  />
+
+  {newPart.images[0] && (
+    <div className="mt-2 flex justify-center">
+      <img
+        src={newPart.images[0]}
+        alt="Preview"
+        className="w-32 h-32 object-cover rounded border"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+        }}
+      />
+    </div>
+  )}
+</div>
+
 
               {/* Stock Status */}
               

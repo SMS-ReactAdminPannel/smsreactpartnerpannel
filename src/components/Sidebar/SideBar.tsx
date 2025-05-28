@@ -1,6 +1,6 @@
 import React, { useState, type JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiHome, FiBell, FiSettings, FiMapPin } from 'react-icons/fi';
+import { FiHome, FiBell, FiSettings} from 'react-icons/fi';
 import { IoIosHelpCircleOutline } from 'react-icons/io';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { Megaphone } from 'lucide-react';
@@ -8,9 +8,10 @@ import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
 import { MdBuild } from 'react-icons/md';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdQuestionAnswer } from 'react-icons/md';
-import { FaCogs, FaTools } from 'react-icons/fa';
+import { FaCogs } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
+import { BsCart4 } from 'react-icons/bs';
 
 const COLOR = {
 	primary: '#9b111e',
@@ -30,7 +31,7 @@ const SideBar = ({
 	};
 
 	return (
-		<div className='flex h-screen'>
+		<div className='flex h-screen overflow-y-auto scrollbar-hide'>
 			<div className='bg-white border-r shadow-md p-2 transition-all duration-300 fixed top-0 left-0 h-screen z-40 flex flex-col items-center'>
 				<div className='flex justify-center items-center h-20'>
 					<img
@@ -55,7 +56,7 @@ const SideBar = ({
 					</button>
 				</div>
 
-				<nav className='flex flex-col gap-4 mt-4 w-full items-center'>
+				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'>
 					<SidebarLink
 						to='/'
 						icon={<FiHome />}
@@ -77,13 +78,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/spare-parts'
 						icon={<FaTools />}
 						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/bookings'
 						icon={<AiOutlineCalendar />}
@@ -130,6 +131,13 @@ const SideBar = ({
 						to='/faq'
 						icon={<MdQuestionAnswer />}
 						label='FAQs'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/order'
+						icon={<BsCart4 />}
+						label='orders'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
