@@ -336,7 +336,7 @@ const SpareParts: React.FC = () => {
         image: "https://img.freepik.com/free-vector/engine-pistons-system-composition-with-realistic-image-assembled-metal-engine-elements-isolated_1284-53969.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
         items: ["Cleaners", "Antifreeze", "Engine Oil", "Repair Kits", "Bodypaint"]
       },
-    ].map(({ title, image, items }, index) => (
+    ].map(({ title, image, items }) => (
     <div className="flex flex-col gap-4 p-6 border  rounded-xl shadow-md">
       <div className="flex justify-between items-center">
         <h2 className="text-md font-bold uppercase text-[#9b111e]">{title}</h2>

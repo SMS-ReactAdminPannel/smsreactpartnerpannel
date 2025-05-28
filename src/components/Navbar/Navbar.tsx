@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/constants';
-import { useAuth } from '../../pages/auth/authContext';
+import { useAuth } from '../../pages/auth/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTools } from 'react-icons/fa';
+// import { FaTools } from 'react-icons/fa';
 import carLogo from '../../assets/icons8-car-service-64.png';
 
 interface User {
@@ -32,7 +32,8 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const [isBellActive, setIsBellActive] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [showProfileDetails, setShowProfileDetails] = useState(false);
-	const [isEditing, setIsEditing] = useState(false);
+	// const [isEditing, setIsEditing] = useState(false);
+	const [isEditing, _setIsEditing] = useState(false);
 	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 	const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
@@ -41,7 +42,9 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
 	const { logout } = useAuth();
-	const [notifications, setNotifications] = useState<Notification[]>([
+	// const [notifications, setNotifications] = useState<Notification[]>([
+	const [notifications, _setNotifications] = useState<Notification[]>([
+
 		{
 			id: 1,
 			message: 'New task assigned to you: Project Review',
