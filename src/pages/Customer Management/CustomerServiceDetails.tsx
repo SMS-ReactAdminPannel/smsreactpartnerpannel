@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiSearch, FiFilter, FiClock, FiCheckCircle, FiRotateCw, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { COLORS, FONTS } from '../../constants/constants';
+import { FiX, FiSearch,  FiClock, FiCheckCircle, FiRotateCw, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import {  FONTS } from '../../constants/constants';
 
 interface Service {
   id: number;

@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../pages/auth/authContext';
+import { useAuth } from '../pages/auth/AuthContext';
 import MainLayout from '../layout/MainLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import NotificationsPage from '../pages/Notificationspages/NotificationsPage';
@@ -11,7 +11,7 @@ import SettingsPage from '../pages/SettingsPage/SettingsPage';
 import HelpCenter from '../pages/HelpCenter/HelpCenter';
 import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
-import ResetPassword from '../pages/auth/ResetPassword';
+// import ResetPassword from '../pages/auth/ResetPassword';
 import LoginPage1 from '../pages/auth/LoginPage1';
 import Service from '../pages/Service Management/Service';
 import Order from '../pages/Orders/order';
@@ -24,7 +24,7 @@ const AppRoutes = () => {
 	const AuthRoutes = () => (
 		<Routes>
 			<Route path='/login' element={<LoginPage1 />} />
-			<Route path='/reset-password' element={<ResetPassword />} />
+			{/* <Route path='/reset-password' element={<ResetPassword />} /> */}
 			<Route path='*' element={<Navigate to='/login' />} />
 		</Routes>
 	);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
-import { HiXMark } from "react-icons/hi2";
+// import { HiXMark } from "react-icons/hi2";
 import { FaRegAddressCard} from "react-icons/fa";
 
 
@@ -318,9 +318,17 @@ const removeFuelLevelImage = (index: number) => {
     { key: 'others', label: 'OTHERS' }
   ];
 
-  function handleFuelLevelChange(arg0: string): void {
-    throw new Error('Function not implemented.');
-  }
+  // function handleFuelLevelChange(arg0: string): void {
+  //   throw new Error('Function not implemented.');
+  // }
+
+  // Replace the incomplete function at the bottom of your file with this:
+const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'): void => {
+  setFormData(prev => ({
+    ...prev,
+    fuelLevel: level
+  }));
+};
 
   return (
     <div className=" bg-gradient-to-br from-gray-50 to-blue-50 p-2 ">
