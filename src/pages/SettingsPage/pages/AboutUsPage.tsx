@@ -64,7 +64,7 @@ const AboutPage: React.FC = () => {
             </h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
               Your trusted automotive service partner for over 15 years. We combine cutting-edge technology 
-              with old-school craftsmanship to keep your vehicle running at its best.
+              with old-school craftsmanship to  keep your vehicle running at its best.
             </p>
           </div>
         </div>
