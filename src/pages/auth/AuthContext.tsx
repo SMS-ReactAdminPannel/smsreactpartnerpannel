@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 
 type AuthContextType = {
     isAuthenticated: boolean;
-    login: () => void;
+    login: (data:string) => void;
     logout: () => void;
 };
 
@@ -16,8 +16,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(!!token);
     }, []);
 
-    const login = () => {
-        localStorage.setItem("authToken", "dummy-token");
+    const login = (data:string) => {
+        localStorage.setItem("authToken", data);
         setIsAuthenticated(true);
     };
 

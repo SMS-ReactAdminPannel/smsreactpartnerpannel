@@ -19,9 +19,8 @@ class HttpClient {
     return response;
   }
 
-  async post(url: string, data: any, params: string) {
+  async post(url: string, data: any,) {
     const response: unknown = await Axios.post(url, data, {
-      params: params,
       headers: {},
     });
     return response;
