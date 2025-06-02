@@ -68,6 +68,17 @@ const generateEndpoints = () => {
       updatePreference:`/api/admin/notification/preferences`,
       getPreference: `/api/admin/notification/preferences/:userId`,
     },
+    profile:{
+      getProfile: `/api/partner/auth/me`,
+      updateProfile:`/api/partner/auth/update`,
+      createNewProfile:`/api/partner/auth/register`,
+      loginUser:`/api/partner/auth/login`
+    },
+    auth:{
+      forgetPassword:`/api/partner/auth/forget-pass`,
+      verifyOtp:`/api/partner/auth/verify-otp`,
+      resetPassword:`/api/partner/auth/reset-pass/:id`
+    }
   };
 };
 
