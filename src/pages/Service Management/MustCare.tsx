@@ -52,7 +52,7 @@ const MustCare: React.FC = () => {
     let isResetting = false;
 
     const scroll = () => {
-      if (!slider) return;
+      if (!slider || isResetting) return; // Now properly using isResetting
 
       if (
         slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - scrollByAmount
@@ -85,8 +85,6 @@ const MustCare: React.FC = () => {
 
   return (
     <section className="w-full py-16 px-4 md:px-17 relative overflow-hidden">
-    
-
       <div
         ref={sliderRef}
         className="flex w-full overflow-x-auto space-x-6 px-2 scroll-smooth"
@@ -112,12 +110,8 @@ const MustCare: React.FC = () => {
           </div>
         ))}
       </div>
-
-    
     </section>
   );
 };
 
 export default MustCare;
-
-

@@ -75,7 +75,7 @@ export const deleteNotifications = async()=>{
 export const getAllNotifications = async(params:string)=>{
     try{
         const response = await Client.partner.notifications.getAll(params)
-        console.log(response)
+        return response;
     }catch(error){
         console.log("Error getting notifications:",error)
     }

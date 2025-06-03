@@ -21,6 +21,7 @@ export const getSparePartById = async (params: string) => {
 export const getAllSpareParts = async (params: string) => {
   try {
     const response = await Client.partner.spareparts.getAll(params);
+    return response;
     console.log(response);
   } catch (error) {
     console.log('Error getting all spare parts:', error);

@@ -40,6 +40,9 @@ const generateEndpoints = () => {
       updateStatus: `/api/partner/order-history/updatestatus/:id`,
       delete: `/api/partner/order-history/delete/:id`,
     },
+    service_requets:{
+      getAll : `/api/partner/service-req/all`
+    },
     service_history: {
       create: `/api/partner/services-history/create`,
       getById: `/api/partner/services-history/get/:id`,

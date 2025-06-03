@@ -1,59 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TiPin } from "react-icons/ti";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
+import Client from '../../api/index.ts'
 
 const categories = [
-  "All", "General", "Booking", "Payments",
+  "All", "general", "booking", "payments",
 ];
 
-const initialAnnouncements = [
-  {
-    id: 1,
-    title: "Welcome to Tiimi People",
-    content: "We're thrilled to share some exciting updates with you!",
-    author: "albert",
-    category: "General",
-    date: "May 19, 07:00 pm",
-    reactions: 12,
-    comments: 2,
-    shares: 1,
-    isPinned: true
-  },
-  {
-    id: 2,
-    title: "SOS Updates",
-    content: "We've been hard at work refining our SOPs to make them even more user-friendly!",
-    author: "suba reddy",
-    category: "SOS Updates",
-    date: "May 16, 09:00 pm",
-    reactions: 5,
-    comments: 1,
-    shares: 0,
-    isPinned: false
-  },
-  {
-    id: 3,
-    title: "More SOS Changes",
-    content: "Our latest SOP updates include feedback from the community.",
-    author: "suba reddy",
-    category: "SOS Updates",
-    date: "May 22, 06:00 pm",
-    reactions: 5,
-    comments: 1,
-    shares: 0,
-    isPinned: false
-  },
-];
+type annoucement = {
+   userId:{
+    firstName:string;
+    lastName:string;
+    image:string;
+   },
+   subject:string;
+   description:string;
+   title:string;
+   uuid:string;
+   _id:string;
+  category:string;
+  isPinned: boolean;
+  createdAt:string;
+}
+
+
 
 const AnnouncementPages = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [announcements, setAnnouncements] = useState(initialAnnouncements);
+  const [announcements, setAnnouncements] = useState<annoucement[]>([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    async function fetchdata() {
+      const response:any = await Client.partner.annoucement.getAll()
+      setAnnouncements(response.data.data)
+      console.log(response.data.data)
+    }
+    fetchdata()
+    return () => {
+      
+    };
+  }, []);
+
   const togglePin = (id: number) => {
-    const updated = announcements.map(a =>
-      a.id === id ? { ...a, isPinned: !a.isPinned } : a
+    const updated = announcements.map((a,index)=>
+      index === id ? { ...a, isPinned: !a.isPinned } : a
     );
     setAnnouncements(updated);
   };
@@ -61,6 +53,7 @@ const AnnouncementPages = () => {
   const filteredAnnouncements = selectedCategory === "All"
     ? announcements
     : announcements.filter(a => a.category === selectedCategory);
+
 
   const pinnedAnnouncements = announcements.filter(a => a.isPinned);
 
@@ -86,7 +79,7 @@ const AnnouncementPages = () => {
             {categories.map(cat => (
               <li
                 key={cat}
-                className={`cursor-pointer p-2 rounded ${selectedCategory === cat ? "bg-orange-100 font-bold" : ""}`}
+                className={`cursor-pointer p-2 rounded ${selectedCategory == cat ? "bg-orange-100 font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -97,25 +90,25 @@ const AnnouncementPages = () => {
 
       
         <div className="w-2/4 bg-white rounded-xl  shadow p-4 flex flex-col space-y-4">
-          {filteredAnnouncements.map(a => (
-            <div key={a.id} className="bg-gray-50 p-4 hover:bg-orange-100 rounded-xl shadow relative">
+          {filteredAnnouncements.map((a,index) => (
+            <div key={index} className="bg-gray-50 p-4 hover:bg-orange-100 rounded-xl shadow relative">
               <div
                 className="absolute top-2 right-2 cursor-pointer text-xl text-gray-500 hover:text-red-600"
-                onClick={() => togglePin(a.id)}
+                onClick={() => togglePin(index)}
                 title={a.isPinned ? "Unpin" : "Pin"}
               >
                 <TiPin className={a.isPinned ? "rotate-45 text-red-500" : "rotate-0"} />
               </div>
               <div className="flex items-center text-sm text-gray-500 space-x-2">
                 <img
-                  src={`https://i.pravatar.cc/32?u=${a.author}`}
-                  alt={a.author}
+                  src={`https://i.pravatar.cc/32?u=author`}
+                  alt={a.userId.firstName + a.userId.lastName}
                   className="w-6 h-6 rounded-full"
                 />
-                <span>{a.author} • {a.date}</span>
+                <span>{a.userId.firstName + a.userId.lastName} • {a.createdAt}</span>
               </div>
               <h3 className="text-lg font-semibold mt-1">{a.title}</h3>
-              <p className="text-gray-700 mt-2">{a.content}</p>
+              <p className="text-gray-700 mt-2">{a.description}</p>
             </div>
           ))}
         </div>
@@ -128,25 +121,25 @@ const AnnouncementPages = () => {
           {pinnedAnnouncements.length === 0 ? (
             <p className="text-gray-500  font-bold text-center p-10">No pinned announcements.</p>
           ) : (
-            pinnedAnnouncements.map(a => (
-              <div key={a.id} className="bg-gray-50 p-4 rounded-lg shadow mb-4 relative">
+            pinnedAnnouncements.map((a,index) => (
+              <div key={index} className="bg-gray-50 p-4 rounded-lg shadow mb-4 relative">
                 <div
                   className="absolute top-2 right-2 cursor-pointer text-xl text-gray-500 hover:text-red-600"
-                  onClick={() => togglePin(a.id)}
+                  onClick={() => togglePin(index)}
                   title="Unpin"
                 >
                   <TiPin className="rotate-45 text-red-500" />
                 </div>
                 <div className="flex items-center  text-sm text-gray-500 space-x-2 mb-1">
                   <img
-                    src={`https://i.pravatar.cc/32?u=${a.author}`}
-                    alt={a.author}
+                    src={`https://i.pravatar.cc/32?u=author`}
+                    alt={a.userId.firstName}
                     className="w-6 h-6 rounded-full"
                   />
-                  <span>{a.author} • {a.date}</span>
+                  <span>{a.userId.firstName + a.userId.lastName} • {a.createdAt}</span>
                 </div>
                 <h3 className="text-lg font-semibold">{a.title}</h3>
-                <p className="text-gray-700 mt-2">{a.content}</p>
+                <p className="text-gray-700 mt-2">{a.description}</p>
               </div>
             ))
           )}

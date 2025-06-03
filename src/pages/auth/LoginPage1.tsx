@@ -4,7 +4,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import carImage from '../../assets/login-pg-img/porshe.webp';
-import { useAuth } from './authContext';
+import { useAuth } from './AuthContext';
 import { FONTS } from '../../constants/constants';
 import { loginUser } from './Services';
 

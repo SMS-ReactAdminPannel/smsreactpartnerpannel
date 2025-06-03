@@ -290,7 +290,7 @@ const Order = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = () => {
         const updatedItems = [...newOrder.details.items];
         updatedItems[index] = { 
           ...updatedItems[index], 

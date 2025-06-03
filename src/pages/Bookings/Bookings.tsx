@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import { COLORS, FONTS } from "../../constants/constants";
 
 //getting file
@@ -11,6 +11,7 @@ import { MdCollectionsBookmark } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { GiIncomingRocket } from "react-icons/gi";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { getAllBookings } from "./services";
 
 
 // Dummy values
@@ -32,7 +33,20 @@ const bookingsss = [
 ];
 
 const Bookings = () => {
-  const [showHistory, setShowHistory] = useState(false);
+   const [showHistory, setShowHistory] = useState(false);
+  const [bookings, setBookings] = useState<any[]>([]); 
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response: any = await getAllBookings('');
+        console.log(response.data.data);
+      } catch (error) {
+        console.log("Error fetching bookings:", error);
+      }
+    };
+    fetchBookings();
+  }, []);
 
   return (
     <div>
