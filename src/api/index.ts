@@ -103,6 +103,12 @@ class Client {
         forgetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.forgetPassword,data),
         verifyOtp:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.verifyOtp,data),
         resetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.resetPassword,data)
+    },
+    annoucement:{
+       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll)
+    },
+    enquery:{
+      create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data)
     }
   };
 }

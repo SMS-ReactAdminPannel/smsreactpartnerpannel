@@ -10,6 +10,7 @@ import {
   MdPayment,
 } from 'react-icons/md';
 import { SiGooglecloudspanner } from "react-icons/si";
+import Client from '../../api/index.ts'
 
 const helpCards = [
   {
@@ -61,7 +62,7 @@ const HelpCenter: React.FC = () => {
     setResults(filtered);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
 
     if (!subject.trim() || !description.trim()) {
@@ -71,7 +72,8 @@ const HelpCenter: React.FC = () => {
 
     console.log('Subject:', subject);
     console.log('Description:', description);
-
+    const responce:any = await Client.partner.enquery.create({subject,description})
+    console.log(responce.data)
     setSubject('');
     setDescription('');
     setSubmitted(true);
