@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { getAllNotifications } from "./Services";
 
 type MailItem = {
   id: number;
@@ -45,6 +46,20 @@ const mails: MailItem[] = [
 ];
 
 export default function GmailStyleInbox() {
+
+  useEffect(()=>{
+    const fetchNotifications = async()=>{
+      try{
+        const response:any = await getAllNotifications('')
+        setSelectedMail(response.data.data)
+        console.log('Fetched notifications:', response.data.data);
+      }catch(error){
+        console.log('Error fetching notifications:',error)
+      }
+    };
+    fetchNotifications();
+  },[])
+
   const navigate = useNavigate();
   const [selectedMail, setSelectedMail] = useState<MailItem | null>(null);
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
