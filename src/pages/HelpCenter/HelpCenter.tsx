@@ -73,7 +73,9 @@ const HelpCenter: React.FC = () => {
     console.log('Subject:', subject);
     console.log('Description:', description);
     const responce:any = await Client.partner.enquery.create({subject,description})
-    console.log(responce.data)
+    if (responce.data.success) {
+      console.log("created")
+    }
     setSubject('');
     setDescription('');
     setSubmitted(true);
