@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getOrdersHistory } from './Services';
 
 
 const Order = () => {
@@ -21,6 +22,18 @@ const Order = () => {
       address: ''
     }
   });
+
+  useEffect(()=>{
+    const fetchOrders = async()=>{
+      try{
+        const response:any = await getOrdersHistory('')
+        console.log('Fetched orders:',response.data.data)
+      }catch(error){
+        console.log('Error fetching orders:',error)
+      }
+    };
+    fetchOrders()
+  },[])
 
   // Sample data - just 2 orders as requested
   const orders = [

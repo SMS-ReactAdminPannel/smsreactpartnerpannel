@@ -3,6 +3,18 @@ import { HTTP_END_POINTS } from "./httpEndpoints";
 
 class Client {
   partner = {
+    booking:{
+      create: (data: any) =>
+        HttpClient.post(HTTP_END_POINTS.booking.create, data),
+      getById: (params: string) =>
+        HttpClient.get(HTTP_END_POINTS.booking.getById, params),
+      getAll: (params: string) =>
+        HttpClient.get(HTTP_END_POINTS.booking.getAll, params),
+      update: (data: any, params: string) =>
+        HttpClient.update(HTTP_END_POINTS.booking.update, data, params),
+      cancel:()=>
+        HttpClient.delete(HTTP_END_POINTS.booking.cancel)
+    },
     spareparts: {
       create: (data: any) =>
         HttpClient.post(HTTP_END_POINTS.spareparts.create,data),
@@ -37,6 +49,10 @@ class Client {
         ),
       delete: () => HttpClient.delete(HTTP_END_POINTS.order_history.delete),
     },
+    service_requets: {
+      getAll: (params:string)=>
+        HttpClient.get(HTTP_END_POINTS.service_requets.getAll,params),
+    },
     service_history: {
       create: (data: any) =>
         HttpClient.post(HTTP_END_POINTS.service_history.create, data),
@@ -44,6 +60,16 @@ class Client {
         HttpClient.get(HTTP_END_POINTS.service_history.getById, params),
       getAll: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.service_history.getAll, params),
+    },
+    job_card:{
+      create : (data:any)=> 
+        HttpClient.post(HTTP_END_POINTS.job_card.create,data),
+      getAll : (params:string)=>
+        HttpClient.get(HTTP_END_POINTS.job_card.getAll),
+      getById : (params:string)=>
+        HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
+      update :(data:any, params:string)=>
+        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params)
     },
     services: {
       create: (data: any) =>

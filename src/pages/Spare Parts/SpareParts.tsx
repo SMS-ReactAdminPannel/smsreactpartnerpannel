@@ -1,116 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createSparePart, getAllSpareParts, updateSparePart } from './Services';
 
 interface SparePart {
   id: number;
-  name: string;
+  spareparts_name: string;
   price: number;
   inStock: boolean;
   images: string[];
-  type: string;
+  slug: string;
 }
 
-const initialPartsData: SparePart[] = [
-  {
-    id: 1,
-    name: 'AC Vent Grille Clip Slider Set',
-    price: 3500,
-    inStock: true,
-    images: ['https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi67ZT0gklmtrW2cnDI_610wn2Zns2BDH7kw&s',
-    ],
-    type: 'Slider',
-  },
-  {
-    id: 2,
-    name: 'Air Conditioning A/C Pressure ',
-    price: 1500,
-    inStock: false,
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi67ZT0gklmtrW2cnDI_610wn2Zns2BDH7kw&s',
-      'https://m.media-amazon.com/images/I/61qH3XvY-BL.jpg',
-    ],
-    type: 'Sensor',
-  },
-  {
-    id: 3,
-    name: 'Mercedes Engine Start Stop Button',
-    price: 1200,
-    inStock: true,
-    images: ['https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
-      'https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
-    ],
-    type: 'Switch & Buttons',
-  },
-  {
-    id: 4,
-    name: 'Front Grille Body Kit for MG 5/6/ZS',
-    price: 2000,
-    inStock: true,
-    images: ['https://www.shutterstock.com/image-illustration/car-brake-disk-red-caliper-600nw-2111526026.jpg',
-      'https://m.media-amazon.com/images/I/61VgEhafLlL._AC_UF1000,1000_QL80_.jpg',
-    ],
-    type: 'Grille',
-  },
-  {
-    id: 5,
-    name: 'Dashboard Switch Button',
-    price: 1200,
-    inStock: true,
-    images: ['https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
-      'https://image.made-in-china.com/202f0j00BpMoIvJnQHcS/All-Aftermarket-Spare-Auto-Part-Engine-Suspension-Electrical-Body-System-Car-Parts-with-Bom-One-Stop-Service.webp',
-    ],
-    type: 'Switch & Buttons',
-  },
-  {
-    id: 6,
-    name: 'Rearview Mirror for Toyota Corolla',
-    price: 2200,
-    inStock: false,
-    images: ['https://image.made-in-china.com/202f0j00BpMoIvJnQHcS/All-Aftermarket-Spare-Auto-Part-Engine-Suspension-Electrical-Body-System-Car-Parts-with-Bom-One-Stop-Service.webp',
-      'https://www.shutterstock.com/image-photo/car-headlight-switch-operating-vehicle-600nw-1782048353.jpg',
-    ],
-    type: 'Mirror',
-  },
-  {
-    id: 7,
-    name: 'Headlight Assembly for BMW X5',
-    price: 5500,
-    inStock: true,
-    images: ['https://image.made-in-china.com/2f0j00FJbVaGrlOtqE/Good-Price-Auto-Components-Car-Engine-Parts-Cooling-Water-Pump-OEM-1300A066-MD979395-for-Mitsubishi-Outlander-Galant-Saloon-Grandis.webp',
-      'https://image.made-in-china.com/202f0j00JhgkzEWKbUbB/Engine-Parts-371-Cylinder-Head-for-Chery-371-1003015mA.webp',
-    ],
-    type: 'Lighting',
-  },
-  {
-    id: 8,
-    name: 'Radiator Fan Motor Honda Civic',
-    price: 3000,
-    inStock: true,
-    images: ['https://image.made-in-china.com/202f0j00JhgkzEWKbUbB/Engine-Parts-371-Cylinder-Head-for-Chery-371-1003015mA.webp',
-      'https://image.made-in-china.com/2f0j00FJbVaGrlOtqE/Good-Price-Auto-Components-Car-Engine-Parts-Cooling-Water-Pump-OEM-1300A066-MD979395-for-Mitsubishi-Outlander-Galant-Saloon-Grandis.webp',
-    ],
-    type: 'Cooling',
-  },
-  {
-    id: 9,
-    name: 'Brake Pads for Hyundai i20',
-    price: 1800,
-    inStock: false,
-    images: ['https://www.wagnerbrake.com/content/loc-na/loc-us/fmmp-wagner/en_US/technical/parts-matter/driver-education-and-vehicle-safety/how-the-brake-system-works/_jcr_content/article/article-par/image_1776083492.img.jpg/car-brake-pad-rotor-1738009820082.jpg',
-      'https://thumbs.dreamstime.com/b/hybrid-electric-car-interior-element-metal-gas-accelerate-brake-pedal-sport-automatic-gearbox-controls-329261803.jpg',
-    ],
-    type: 'Brakes',
-  },
-  {
-    id: 10,
-    name: 'Spark Plug for Maruti Suzuki',
-    price: 400,
-    inStock: true,
-    images: ['https://thumbs.dreamstime.com/b/hybrid-electric-car-interior-element-metal-gas-accelerate-brake-pedal-sport-automatic-gearbox-controls-329261803.jpg',
-      'https://www.wagnerbrake.com/content/loc-na/loc-us/fmmp-wagner/en_US/technical/parts-matter/driver-education-and-vehicle-safety/how-the-brake-system-works/_jcr_content/article/article-par/image_1776083492.img.jpg/car-brake-pad-rotor-1738009820082.jpg',
-    ],
-    type: 'Engine',
-  },
-];
 
 const partTypes = [
   'Engine', 'Brakes', 'Lighting', 'Cooling', 'Sensor', 'Switch & Buttons', 
@@ -138,23 +37,50 @@ const ToggleSwitch: React.FC<{ enabled: boolean; onToggle: () => void }> = ({
 );
 
 const SpareParts: React.FC = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [partsData, setPartsData] = useState<SparePart[]>(initialPartsData);
-  const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newPart, setNewPart] = useState<Omit<SparePart, 'id'>>({
-    name: '',
-    price: 0,
-    inStock: true,
-    images: [''],
-    type: 'Engine',
-  });
 
-  const filteredParts = partsData.filter((part) =>
-    part.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+const [partsData, setPartsData] = useState<SparePart[]>([])
+const [selectedPart, setSelectedPart] = useState<SparePart | null>(null)
+const [searchTerm, setSearchTerm] = useState('')
+const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+const [showAddForm, setShowAddForm] = useState(false)
+const [newPart, setNewPart] = useState<Omit<SparePart, 'id'>>({
+  spareparts_name: '',
+  price: 0,
+  inStock: true,
+  images: [''],
+  slug: 'Engine',
+})
+
+useEffect(() => {
+  const fetchParts = async () => {
+    try {
+      const response: any = await getAllSpareParts('')
+      console.log('Fetched spare parts:', response.data.data)
+      setPartsData(response.data.data)
+    } catch (error) {
+      console.error('Error fetching spare parts:', error)
+    }
+  }
+
+  fetchParts()
+}, [])
+
+ const addNewParts = async()=>{
+  try{
+    const response:any =await createSparePart(newPart)
+    const createdPart= response.data.data;
+    setPartsData((prev)=> [...prev, createdPart]);
+    resetAddForm()
+  }catch(error){
+    console.error('Error creating spare part:',error)
+  }
+ }
+
+ const filteredParts = partsData.filter((part) =>
+  (part.spareparts_name
+ ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
+);
 
   const updatePart = (updatedPart: SparePart) => {
     setPartsData((prev) =>
@@ -169,7 +95,7 @@ const SpareParts: React.FC = () => {
   };
 
   const addNewPart = () => {
-    if (newPart.name.trim() && newPart.price > 0 && newPart.images[0].trim()) {
+    if (newPart.spareparts_name.trim() && newPart.price > 0 && newPart.images[0].trim()) {
       const id = Math.max(...partsData.map(p => p.id), 0) + 1;
       const partToAdd: SparePart = {
         ...newPart,
@@ -177,11 +103,11 @@ const SpareParts: React.FC = () => {
       };
       setPartsData((prev) => [...prev, partToAdd]);
       setNewPart({
-        name: '',
+        spareparts_name: '',
         price: 0,
         inStock: true,
         images: [''],
-        type: 'Engine',
+        slug: 'Engine',
       });
       setShowAddForm(false);
     }
@@ -189,11 +115,11 @@ const SpareParts: React.FC = () => {
 
   const resetAddForm = () => {
     setNewPart({
-      name: '',
+      spareparts_name: '',
       price: 0,
       inStock: true,
       images: [''],
-      type: 'Engine',
+      slug: 'Engine',
     });
     setShowAddForm(false);
   };
@@ -282,17 +208,16 @@ const SpareParts: React.FC = () => {
       style={{ minHeight: '260px' }} // ensures min height but allows vertical flexibility
     >
       <div className="h-[180px] flex justify-center items-center overflow-hidden">
-        <img
-          src={hoveredIndex === index && part.images[1] ? part.images[1] : part.images[0]}
-          alt={part.name}
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+          alt={part.spareparts_name}
           className="max-w-[160px] max-h-[160px] w-auto h-auto object-cover transition-all duration-300 ease-in-out rounded-md"
         />
       </div>
       <div className="p-3">
-        <div className="text-xs font-semibold line-clamp-2 mb-1">{part.name}</div>
-        <div className="text-xs text-gray-600 mb-1">{part.type}</div>
+        <div className="text-xs font-semibold line-clamp-2 mb-1">{part.spareparts_name}</div>
+        <div className="text-xs text-gray-600 mb-1">{part.slug}</div>
         <div className="text-sm font-bold text-[#9b111e]">
-          ₹{part.price.toLocaleString()}
+          ₹{part.price?.toLocaleString() ?? "0"}
         </div>
         <div
           className={`mt-1 text-xs font-semibold ${
@@ -421,8 +346,8 @@ const SpareParts: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  value={newPart.name}
-                  onChange={(e) => setNewPart({...newPart, name: e.target.value})}
+                  value={newPart.spareparts_name}
+                  onChange={(e) => setNewPart({...newPart, spareparts_name: e.target.value})}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                   placeholder="Enter product name"
                 />
@@ -434,8 +359,8 @@ const SpareParts: React.FC = () => {
                   Product Type *
                 </label>
                 <select
-                  value={newPart.type}
-                  onChange={(e) => setNewPart({...newPart, type: e.target.value})}
+                  value={newPart.slug}
+                  onChange={(e) => setNewPart({...newPart, slug: e.target.value})}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                 >
                   {partTypes.map((type) => (
@@ -506,7 +431,7 @@ const SpareParts: React.FC = () => {
               </button>
               <button
                 onClick={addNewPart}
-                disabled={!newPart.name.trim() || newPart.price <= 0 || !newPart.images[0].trim()}
+                disabled={!newPart.spareparts_name.trim() || newPart.price <= 0 || !newPart.images[0].trim()}
                 className="px-6 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Add Product
@@ -538,13 +463,13 @@ const SpareParts: React.FC = () => {
             <div className="mb-4 flex justify-center">
               <img
                 src={selectedPart.images[0]}
-                alt={selectedPart.name}
+                alt={selectedPart.spareparts_name}
                 className="w-48 h-48 object-cover rounded-lg shadow-md"
               />
             </div>
 
-            <h2 className="text-lg font-bold mb-2">{selectedPart.name}</h2>
-            <p className="text-sm text-gray-600 mb-1">Type: {selectedPart.type}</p>
+            <h2 className="text-lg font-bold mb-2">{selectedPart.spareparts_name}</h2>
+            <p className="text-sm text-gray-600 mb-1">Type: {selectedPart.slug}</p>
             
 
             {/* Editable price */}
@@ -618,7 +543,7 @@ const SpareParts: React.FC = () => {
               <h3 className="text-lg font-semibold text-gray-900">Delete Product</h3>
             </div>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete "<span className="font-medium">{selectedPart.name}</span>"? This action cannot be undone.
+              Are you sure you want to delete "<span className="font-medium">{selectedPart.spareparts_name}</span>"? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
