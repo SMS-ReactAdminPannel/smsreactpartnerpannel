@@ -59,6 +59,7 @@ const AccountSettingsPage: React.FC = () => {
                 type="text"
                 id="firstName"
                 value={profile?.firstName || ""}
+                onChange={(e)=> setProfile({ ...profile, firstName: e.target.value})}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
@@ -74,6 +75,7 @@ const AccountSettingsPage: React.FC = () => {
                 type="text"
                 id="lastName"
                 value={profile?.lastName || ""}
+                onChange={(e)=> setProfile({ ...profile, lastName: e.target.value})}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
@@ -175,6 +177,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="email"
                 id="email"
+                onChange={(e)=> setProfile({ ...profile, email: e.target.value})}
                 value={profile?.email || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
@@ -191,6 +194,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="tel"
                 id="phone"
+                onChange={(e)=> setProfile({ ...profile, contact_info: { ...profile.contact_info, phoneNumber: e.target.value}})}
                 value={profile?.contact_info.phoneNumber || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
@@ -206,6 +210,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="text"
                 id="address"
+                onChange={(e)=> setProfile({ ...profile, contact_info: { ...profile.contact_info, address1: e.target.value}})}
                 value={profile?.contact_info.address1 || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
