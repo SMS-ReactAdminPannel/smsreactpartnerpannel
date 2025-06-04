@@ -43,11 +43,20 @@ const generateEndpoints = () => {
     service_requets:{
       getAll : `/api/partner/service-req/all`
     },
+
     service_history: {
       create: `/api/partner/services-history/create`,
       getById: `/api/partner/services-history/get/:id`,
       getAll: `/api/partner/services-history/getall`,
     },
+
+    job_card:{
+      create :`/api/jobcards/`,
+      getAll :`/api/jobcards/`,
+      getById:`/api/jobcards/:id`,
+      update:`/api/jobcards/:id`
+    },
+
     services: {
       create: `/api/admin/service/`,
       getAll: `/api/admin/service/`,

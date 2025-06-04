@@ -9,3 +9,14 @@ export const getAllServiceRequests = async (params: string) => {
         console.error('Error fetching service by ID:',error)
     }
 }
+
+export const getAllJobCards = async (params: string) =>{
+    try{
+        const response = await Client.partner.job_card.getAll(params);
+        console.log(response);
+        return response;
+    }
+    catch(error){
+        console.error("Error fetching job cards:", error);
+    }
+}

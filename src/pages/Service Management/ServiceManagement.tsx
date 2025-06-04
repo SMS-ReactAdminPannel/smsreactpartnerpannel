@@ -20,7 +20,7 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { getAllServiceRequests } from "./Services";
+import { getAllJobCards, getAllServiceRequests } from "./Services";
 
 // Mock MustCare component
 const MustCare = () => (
@@ -67,6 +67,7 @@ interface ServiceManagementProps {
 }
 
 const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
+  const [jobCards, setJobCards] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [serviceRequests, setServiceRequests] = useState<any[]>([]);
   const [selectedJobCard, setSelectedJobCard] = useState<JobCard | null>(null);
@@ -88,165 +89,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     fetchServiceRequests();
   }, []);
 
-  // Sample job cards data
-  const [jobCards, setJobCards] = useState<JobCard[]>([
-    {
-      id: "JC-001",
-      customerName: "Rajesh Kumar",
-      phone: "+91 98765 43210",
-      vehicleInfo: "2020 Maruti Swift",
-      jobNumber: "JOB-2024-001",
-      isEditing: false,
-      address: "123 MG Road, Bangalore, Karnataka 560001",
-      email: "rajesh.kumar@email.com",
-      dob: "1985-03-15",
-      vehicleNumber: "KA-01-AB-1234",
-      engineNumber: "K12M-1234567",
-      chassisNumber: "MA3ERLF1S00123456",
-      makeModel: "Maruti Suzuki Swift VXI",
-      color: "Pearl White",
-      fuelLevel: "3/4 Full",
-      complaint:
-        "Engine making unusual noise during acceleration. AC not cooling properly. Brake pedal feels spongy.",
-      estimateLabour: "₹2,500",
-      estimateParts: "₹8,500",
-      totalEstimate: "₹11,000",
-      technicianName: "Suresh Mechanic",
-      serviceAdvisor: "Priya Sharma",
-      promisedDeliveryDate: "2024-01-18",
-      createdDate: "2024-01-15",
-    },
-    {
-      id: "JC-002",
-      customerName: "Anita Desai",
-      phone: "+91 87654 32109",
-      vehicleInfo: "2019 Hyundai i20",
-      jobNumber: "JOB-2024-002",
-      isEditing: false,
-      address: "456 Park Street, Mumbai, Maharashtra 400001",
-      email: "anita.desai@email.com",
-      dob: "1990-07-22",
-      vehicleNumber: "MH-02-CD-5678",
-      engineNumber: "G4FA-2345678",
-      chassisNumber: "KMHCT41BAPU123456",
-      makeModel: "Hyundai i20 Sportz",
-      color: "Fiery Red",
-      fuelLevel: "1/2 Full",
-      complaint:
-        "Steering wheel vibration at high speeds. Front brake pads need replacement. Oil change due.",
-      estimateLabour: "₹1,800",
-      estimateParts: "₹4,200",
-      totalEstimate: "₹6,000",
-      technicianName: "Ramesh Technician",
-      serviceAdvisor: "Amit Patel",
-      promisedDeliveryDate: "2024-01-17",
-      createdDate: "2024-01-14",
-    },
-    {
-      id: "JC-003",
-      customerName: "Mohammed Ali",
-      phone: "+91 76543 21098",
-      vehicleInfo: "2021 Tata Nexon",
-      jobNumber: "JOB-2024-003",
-      isEditing: false,
-      address: "789 Commercial Street, Chennai, Tamil Nadu 600001",
-      email: "mohammed.ali@email.com",
-      dob: "1988-11-10",
-      vehicleNumber: "TN-09-EF-9012",
-      engineNumber: "REVOTRON-3456789",
-      chassisNumber: "MAT622DPXM1123456",
-      makeModel: "Tata Nexon XZ Plus",
-      color: "Flame Orange",
-      fuelLevel: "Full",
-      complaint:
-        "Transmission jerking during gear shifts. Dashboard warning lights intermittent. Tire rotation needed.",
-      estimateLabour: "₹3,200",
-      estimateParts: "₹12,800",
-      totalEstimate: "₹16,000",
-      technicianName: "Venkat Specialist",
-      serviceAdvisor: "Lakshmi Iyer",
-      promisedDeliveryDate: "2024-01-20",
-      createdDate: "2024-01-16",
-    },
-    {
-      id: "JC-004",
-      customerName: "Priya Nair",
-      phone: "+91 65432 10987",
-      vehicleInfo: "2018 Honda City",
-      jobNumber: "JOB-2024-004",
-      isEditing: false,
-      address: "321 Brigade Road, Kochi, Kerala 682001",
-      email: "priya.nair@email.com",
-      dob: "1992-05-18",
-      vehicleNumber: "KL-07-GH-3456",
-      engineNumber: "i-VTEC-4567890",
-      chassisNumber: "MRHFB16518S123456",
-      makeModel: "Honda City VX CVT",
-      color: "Platinum White Pearl",
-      fuelLevel: "1/4 Full",
-      complaint:
-        "CVT transmission slipping. Headlight alignment required. General service and oil change.",
-      estimateLabour: "₹2,000",
-      estimateParts: "₹6,500",
-      totalEstimate: "₹8,500",
-      technicianName: "Krishnan Expert",
-      serviceAdvisor: "Deepak Kumar",
-      promisedDeliveryDate: "2024-01-19",
-      createdDate: "2024-01-15",
-    },
-    {
-      id: "JC-005",
-      customerName: "Vikram Singh",
-      phone: "+91 54321 09876",
-      vehicleInfo: "2022 Mahindra XUV700",
-      jobNumber: "JOB-2024-005",
-      isEditing: false,
-      address: "654 Sector 15, Gurgaon, Haryana 122001",
-      email: "vikram.singh@email.com",
-      dob: "1986-09-25",
-      vehicleNumber: "HR-26-IJ-7890",
-      engineNumber: "mStallion-5678901",
-      chassisNumber: "MA1TA2MKXN2123456",
-      makeModel: "Mahindra XUV700 AX7",
-      color: "Dazzling Silver",
-      fuelLevel: "Nearly Empty",
-      complaint:
-        "Suspension noise from rear. Infotainment system freezing. First free service due.",
-      estimateLabour: "₹1,500",
-      estimateParts: "₹3,000",
-      totalEstimate: "₹4,500",
-      technicianName: "Harpreet Mechanic",
-      serviceAdvisor: "Neha Gupta",
-      promisedDeliveryDate: "2024-01-17",
-      createdDate: "2024-01-16",
-    },
-    {
-      id: "JC-006",
-      customerName: "Sunita Reddy",
-      phone: "+91 43210 98765",
-      vehicleInfo: "2020 Kia Seltos",
-      jobNumber: "JOB-2024-006",
-      isEditing: false,
-      address: "987 Jubilee Hills, Hyderabad, Telangana 500033",
-      email: "sunita.reddy@email.com",
-      dob: "1989-12-03",
-      vehicleNumber: "TS-08-KL-2345",
-      engineNumber: "SMARTSTREAM-6789012",
-      chassisNumber: "KNAP341GBLK123456",
-      makeModel: "Kia Seltos HTX Plus",
-      color: "Gravity Grey",
-      fuelLevel: "3/4 Full",
-      complaint:
-        "Clutch pedal hard to press. Air filter replacement needed. Wheel alignment and balancing required.",
-      estimateLabour: "₹2,800",
-      estimateParts: "₹7,200",
-      totalEstimate: "₹10,000",
-      technicianName: "Ravi Technician",
-      serviceAdvisor: "Sanjay Reddy",
-      promisedDeliveryDate: "2024-01-21",
-      createdDate: "2024-01-17",
-    },
-  ]);
+  useEffect(() => {
+    const fetchJobCards = async () => {
+      try {
+        const response: any = await getAllJobCards("");
+        console.log("Fetched job cards:", response.data.data);
+        setJobCards(response.data.data);
+      } catch (error) {
+        console.error("Error fetching job cards:", error);
+      }
+    };
+    fetchJobCards();
+  }, []);
 
   const stats = [
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
@@ -394,13 +248,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     <tr key={request.id} className="hover:bg-gray-50">
                       <td className="py-4 px-6">
                         <span className="font-medium text-blue-600">
-                          {request._id}
+                          {request.requestId}
                         </span>
                       </td>
                       <td className="py-4 px-6">
                         <div>
                           <p className="font-medium text-gray-900">
-                            {request.customerName}
+                            {request.customerId.contact_info.phoneNumber}
                           </p>
                           <p className="text-sm text-gray-600 flex items-center mt-1">
                             <Phone className="w-3 h-3 mr-1" />
@@ -412,8 +266,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <div className="flex items-center space-x-2">
                           <Car className="w-4 h-4 text-gray-500" />
                           <span className="text-gray-900">
-                            {request.vechicle_info.name
-                            }
+                            {request.vechicle_info.name}
                           </span>
                         </div>
                       </td>
@@ -486,7 +339,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobCards
               .filter((card) =>
-                [card.customerName, card.vehicleNumber, card.jobNumber]
+                [
+                  card.jobInfo?.customerName,
+                  card.jobInfo?.ContactNo,
+                  card.jobInfo?.jobId,
+                  card.jobInfo?.VehicleNo,
+                ]
                   .join(" ")
                   .toLowerCase()
                   .includes(searchTerm.toLowerCase())
@@ -520,22 +378,26 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   </div>
 
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    {card.customerName}
+                    {card.jobInfo?.customerName}
                   </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Vehicle:</span>
                       <span className="font-medium text-blue-600">
-                        {card.vehicleInfo}
+                        {card.jobInfo?.VehicleNo}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Job No:</span>
-                      <span className="text-gray-900">{card.jobNumber}</span>
+                      <span className="text-gray-900">
+                        {card.jobInfo?.jobId}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Phone:</span>
-                      <span className="text-gray-900">{card.phone}</span>
+                      <span className="text-gray-900">
+                        {card.jobInfo?.ContactNo}
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllSpareParts } from './Services';
+import { createSparePart, getAllSpareParts, updateSparePart } from './Services';
 
 interface SparePart {
   id: number;
@@ -66,6 +66,16 @@ useEffect(() => {
   fetchParts()
 }, [])
 
+ const addNewParts = async()=>{
+  try{
+    const response:any =await createSparePart(newPart)
+    const createdPart= response.data.data;
+    setPartsData((prev)=> [...prev, createdPart]);
+    resetAddForm()
+  }catch(error){
+    console.error('Error creating spare part:',error)
+  }
+ }
 
  const filteredParts = partsData.filter((part) =>
   (part.spareparts_name
@@ -105,11 +115,11 @@ useEffect(() => {
 
   const resetAddForm = () => {
     setNewPart({
-      name: '',
+      spareparts_name: '',
       price: 0,
       inStock: true,
       images: [''],
-      type: 'Engine',
+      slug: 'Engine',
     });
     setShowAddForm(false);
   };
@@ -198,7 +208,7 @@ useEffect(() => {
       style={{ minHeight: '260px' }} // ensures min height but allows vertical flexibility
     >
       <div className="h-[180px] flex justify-center items-center overflow-hidden">
-        <img
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
           alt={part.spareparts_name}
           className="max-w-[160px] max-h-[160px] w-auto h-auto object-cover transition-all duration-300 ease-in-out rounded-md"
         />
