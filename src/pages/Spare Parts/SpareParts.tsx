@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { createSparePart, getAllSpareParts, updateSparePart } from './Services';
 
 interface SparePart {
-  id: number;
-  spareparts_name: string;
-  price: number;
-  inStock: boolean;
-  images: string[];
-  slug: string;
+  id:number
+  price: string;
+  productName:string;
+  brand: string;
+  image:string[];
+  stock:string;
+  inStock:boolean,
+  category:string;
+  slug:string;
 }
 
 
@@ -44,12 +47,15 @@ const [selectedPart, setSelectedPart] = useState<SparePart | null>(null)
 const [searchTerm, setSearchTerm] = useState('')
 const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 const [showAddForm, setShowAddForm] = useState(false)
-const [newPart, setNewPart] = useState<Omit<SparePart, 'id'>>({
-  spareparts_name: '',
+const [newPart, setNewPart] = useState<Omit<SparePart,'id'>>({
+  productName: '',
   price: 0,
   inStock: true,
-  images: [''],
+  image: [''],
+  stock:'12',
   slug: 'Engine',
+  category:'spare',
+  brand:"new",
 })
 
 useEffect(() => {
@@ -66,19 +72,39 @@ useEffect(() => {
   fetchParts()
 }, [])
 
- const addNewParts = async()=>{
+ const addNewPart = async()=>{
   try{
     const response:any =await createSparePart(newPart)
     const createdPart= response.data.data;
     setPartsData((prev)=> [...prev, createdPart]);
     resetAddForm()
+    if (newPart.productName.trim() && newPart.image[0].trim()) {
+      const id = Math.max(...partsData.map(p => p.id), 0) + 1;
+      const partToAdd: SparePart = {
+        ...newPart,
+        id,
+      };
+      setPartsData((prev) => [...prev, partToAdd]);
+      setNewPart({
+        productName: '',
+        price: '0',
+        inStock: true,
+        image: [''],
+        slug: 'Engine',
+        brand:"new",
+        category:"engin",
+        stock:'12'
+      });
+    }
+    setShowAddForm(false);
   }catch(error){
     console.error('Error creating spare part:',error)
   }
+   setShowAddForm(false);
  }
 
  const filteredParts = partsData.filter((part) =>
-  (part.spareparts_name
+  (part.productName
  ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
 );
 
@@ -94,32 +120,20 @@ useEffect(() => {
     setShowDeleteConfirm(false);
   };
 
-  const addNewPart = () => {
-    if (newPart.spareparts_name.trim() && newPart.price > 0 && newPart.images[0].trim()) {
-      const id = Math.max(...partsData.map(p => p.id), 0) + 1;
-      const partToAdd: SparePart = {
-        ...newPart,
-        id,
-      };
-      setPartsData((prev) => [...prev, partToAdd]);
-      setNewPart({
-        spareparts_name: '',
-        price: 0,
-        inStock: true,
-        images: [''],
-        slug: 'Engine',
-      });
-      setShowAddForm(false);
-    }
-  };
+  // const addNewPart = () => {
+    
+  // };
 
   const resetAddForm = () => {
     setNewPart({
-      spareparts_name: '',
-      price: 0,
+      productName: '',
+      price: '0',
       inStock: true,
-      images: [''],
+      image: [''],
       slug: 'Engine',
+      brand:'new',
+      category:"Engine",
+      stock:'12'
     });
     setShowAddForm(false);
   };
@@ -346,8 +360,8 @@ useEffect(() => {
                 </label>
                 <input
                   type="text"
-                  value={newPart.spareparts_name}
-                  onChange={(e) => setNewPart({...newPart, spareparts_name: e.target.value})}
+                  value={newPart.productName}
+                  onChange={(e) => setNewPart({...newPart, productName: e.target.value})}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                   placeholder="Enter product name"
                 />
@@ -375,10 +389,10 @@ useEffect(() => {
                   Price (₹) *
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   min="0"
                   value={newPart.price}
-                  onChange={(e) => setNewPart({...newPart, price: Number(e.target.value)})}
+                  onChange={(e) => setNewPart({...newPart, price:e.target.value})}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                   placeholder="Enter price"
                 />
@@ -397,16 +411,16 @@ useEffect(() => {
       const file = e.target.files?.[0];
       if (file) {
         const imageUrl = URL.createObjectURL(file);
-        setNewPart({ ...newPart, images: [imageUrl] });
+        setNewPart({ ...newPart, image: [imageUrl] });
       }
     }}
     className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
   />
 
-  {newPart.images[0] && (
+  {newPart.image[0] && (
     <div className="mt-2 flex justify-center">
       <img
-        src={newPart.images[0]}
+        src={newPart.image[0]}
         alt="Preview"
         className="w-32 h-32 object-cover rounded border"
         onError={(e) => {
@@ -431,7 +445,7 @@ useEffect(() => {
               </button>
               <button
                 onClick={addNewPart}
-                disabled={!newPart.spareparts_name.trim() || newPart.price <= 0 || !newPart.images[0].trim()}
+                disabled={!newPart.productName.trim() || !newPart.image[0].trim()}
                 className="px-6 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Add Product
@@ -462,13 +476,13 @@ useEffect(() => {
             {/* Product Image */}
             <div className="mb-4 flex justify-center">
               <img
-                src={selectedPart.images[0]}
-                alt={selectedPart.spareparts_name}
+                src={selectedPart.image[0]}
+                alt={selectedPart.productName}
                 className="w-48 h-48 object-cover rounded-lg shadow-md"
               />
             </div>
 
-            <h2 className="text-lg font-bold mb-2">{selectedPart.spareparts_name}</h2>
+            <h2 className="text-lg font-bold mb-2">{selectedPart.productName}</h2>
             <p className="text-sm text-gray-600 mb-1">Type: {selectedPart.slug}</p>
             
 
@@ -487,7 +501,7 @@ useEffect(() => {
               onChange={(e) =>
                 setSelectedPart({
                   ...selectedPart,
-                  price: Number(e.target.value),
+                  price: e.target.value,
                 })
               }
               className="w-full border border-gray-300 rounded p-2 mb-4"
@@ -543,7 +557,7 @@ useEffect(() => {
               <h3 className="text-lg font-semibold text-gray-900">Delete Product</h3>
             </div>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete "<span className="font-medium">{selectedPart.spareparts_name}</span>"? This action cannot be undone.
+              Are you sure you want to delete "<span className="font-medium">{selectedPart.productName}</span>"? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
