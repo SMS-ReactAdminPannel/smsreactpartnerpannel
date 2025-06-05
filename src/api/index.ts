@@ -125,6 +125,9 @@ class Client {
         createNewProfile:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.createNewProfile,data),
         loginUser:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.loginUser,data)
     },
+    customer_management:{
+      getallCustomer:(data:any)=>HttpClient.get(HTTP_END_POINTS.customer_management.getAll,data),
+    },
     auth:{
         forgetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.forgetPassword,data),
         verifyOtp:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.verifyOtp,data),

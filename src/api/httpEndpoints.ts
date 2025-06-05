@@ -15,6 +15,9 @@ const generateEndpoints = () => {
       update: `/api/booking/:id`,
       cancel: `/api/booking/:id/cancel`,
     },
+    customer_management: {
+      getAll :`/api/partner/customermanage`,
+    },
     announcement: {
       create: `/api/announcement/create`,
       getAll: `/api/announcement/all`,

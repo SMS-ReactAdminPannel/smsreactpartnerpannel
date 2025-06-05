@@ -20,3 +20,14 @@ export const getAllJobCards = async (params: string) =>{
         console.error("Error fetching job cards:", error);
     }
 }
+
+export const createJobCards = async(data:any)=>{
+    try{
+        const response = await Client.partner.job_card.create(data);
+        console.log(response);
+        return response;
+    }
+    catch(error){
+        console.error("Error fetching job Cards:", error)
+    }
+}
