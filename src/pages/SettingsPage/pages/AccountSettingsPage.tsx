@@ -13,7 +13,7 @@ import { FaRegAddressCard, FaFacebook, FaYoutube } from "react-icons/fa";
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { IoIosLink } from "react-icons/io";
 import { IoShareSocial } from "react-icons/io5";
-import { getProfile } from "../services";
+import { getProfile, updateProfile } from "../services";
 
 const AccountSettingsPage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -30,6 +30,24 @@ const AccountSettingsPage: React.FC = () => {
     };
     fetchProfile();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response: any = await updateProfile(profile, profile.id);
+
+      if (response && response.data) {
+        console.log("Updated Profile:", response.data.data);
+        setProfile(response.data.data);
+      } else {
+        throw new Error("Invalid response format or no response");
+      }
+    } catch (error) {
+      console.error("Error updating profile", error);
+    }
+  };
+
   return (
     <div className="p-6 mx-auto bg-white shadow-lg rounded-lg">
       <header className="mb-8">
@@ -39,7 +57,7 @@ const AccountSettingsPage: React.FC = () => {
         </p>
       </header>
 
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSubmit}>
         {/* Personal Information Section */}
         <section className="space-y-6">
           <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
@@ -59,7 +77,9 @@ const AccountSettingsPage: React.FC = () => {
                 type="text"
                 id="firstName"
                 value={profile?.firstName || ""}
-                onChange={(e)=> setProfile({ ...profile, firstName: e.target.value})}
+                onChange={(e) =>
+                  setProfile({ ...profile, firstName: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
@@ -75,7 +95,9 @@ const AccountSettingsPage: React.FC = () => {
                 type="text"
                 id="lastName"
                 value={profile?.lastName || ""}
-                onChange={(e)=> setProfile({ ...profile, lastName: e.target.value})}
+                onChange={(e) =>
+                  setProfile({ ...profile, lastName: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
@@ -177,7 +199,9 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                onChange={(e)=> setProfile({ ...profile, email: e.target.value})}
+                onChange={(e) =>
+                  setProfile({ ...profile, email: e.target.value })
+                }
                 value={profile?.email || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
@@ -194,7 +218,15 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="tel"
                 id="phone"
-                onChange={(e)=> setProfile({ ...profile, contact_info: { ...profile.contact_info, phoneNumber: e.target.value}})}
+                onChange={(e) =>
+                  setProfile({
+                    ...profile,
+                    contact_info: {
+                      ...profile.contact_info,
+                      phoneNumber: e.target.value,
+                    },
+                  })
+                }
                 value={profile?.contact_info.phoneNumber || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
@@ -210,7 +242,15 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="text"
                 id="address"
-                onChange={(e)=> setProfile({ ...profile, contact_info: { ...profile.contact_info, address1: e.target.value}})}
+                onChange={(e) =>
+                  setProfile({
+                    ...profile,
+                    contact_info: {
+                      ...profile.contact_info,
+                      address1: e.target.value,
+                    },
+                  })
+                }
                 value={profile?.contact_info.address1 || ""}
                 className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />

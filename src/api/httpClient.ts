@@ -36,7 +36,7 @@ class HttpClient {
     return response;
   }
 
-  async update(url: string, params: string, data: string) {
+  async update(url: string, params: string, data: string,) {
     const response = await Axios.put(url, data, {
       params: params,
       headers: {},

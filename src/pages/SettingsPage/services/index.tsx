@@ -10,14 +10,15 @@ export const getProfile = async(params: string)=>{
     }
 }
 
-export const updateProfile = async(data:any, params: string)=>{
-    try{
-        const response = await Client.partner.profile.updateProfile(data, params);
-        console.log(response);
-        return response;
-    }catch(error){
-        console.log("Error updating Profile:",error)
-    }
-}
+export const updateProfile = async (data: any, params: string) => {
+  try {
+    const response = await Client.partner.profile.updateProfile(data, params);
+    return response;
+  } catch (error) {
+    console.error("Error updating Profile:", error)
+    throw error;
+  }
+};
+
 
 

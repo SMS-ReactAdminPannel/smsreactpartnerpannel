@@ -5,6 +5,7 @@ import { getOrdersHistory } from './Services';
 
 const Order = () => {
   // State management
+  const [orders, setOrders] = useState<any[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +29,7 @@ const Order = () => {
       try{
         const response:any = await getOrdersHistory('')
         console.log('Fetched orders:',response.data.data)
+        setOrders(response.data.data)
       }catch(error){
         console.log('Error fetching orders:',error)
       }
@@ -36,209 +38,215 @@ const Order = () => {
   },[])
 
   // Sample data - just 2 orders as requested
-  const orders = [
-    {
-      id: '#ORD1001',
-      customer: 'John Smith',
-      email: 'john.smith@example.com',
-      date: '15/05/2024',
-      total: '₹12,500',
-      status: 'Completed',
-      details: {
-        items: [
-          { 
-            name: 'Car Battery', 
-            quantity: 1, 
-            price: '₹8,500',
-            image: 'https://via.placeholder.com/80?text=Battery'
-          },
-          { 
-            name: 'Engine Oil', 
-            quantity: 2, 
-            price: '₹2,000',
-            image: 'https://via.placeholder.com/80?text=Oil'
-          },
-          { 
-            name: 'Air Filter', 
-            quantity: 1, 
-            price: '₹2,000',
-            image: 'https://via.placeholder.com/80?text=Filter'
-          }
-        ],
-        shipping: 'Express Delivery',
-        address: '123 Main St, Bangalore, Karnataka'
-      }
-    },
-    {
-      id: '#ORD1002',
-      customer: 'Sarah Johnson',
-      email: 'sarah.j@example.com',
-      date: '18/05/2024',
-      total: '₹7,800',
-      status: 'Processing',
-      details: {
-        items: [
-          { 
-            name: 'Brake Pads', 
-            quantity: 1, 
-            price: '₹4,500',
-            image: 'https://via.placeholder.com/80?text=Brake'
-          },
-          { 
-            name: 'Windshield Wipers', 
-            quantity: 2, 
-            price: '₹1,800',
-            image: 'https://via.placeholder.com/80?text=Wipers'
-          },
-          { 
-            name: 'Spark Plugs', 
-            quantity: 4, 
-            price: '₹1,500',
-            image: 'https://via.placeholder.com/80?text=Plugs'
-          }
-        ],
-        shipping: 'Standard Delivery',
-        address: '456 Oak Ave, Mumbai, Maharashtra'
-      }
-    },
-    {
-      id: '#ORD1002',
-      customer: 'Sarah Johnson',
-      email: 'sarah.j@example.com',
-      date: '18/05/2024',
-      total: '₹7,800',
-      status: 'Processing',
-      details: {
-        items: [
-          { 
-            name: 'Brake Pads', 
-            quantity: 1, 
-            price: '₹4,500',
-            image: 'https://via.placeholder.com/80?text=Brake'
-          },
-          { 
-            name: 'Windshield Wipers', 
-            quantity: 2, 
-            price: '₹1,800',
-            image: 'https://via.placeholder.com/80?text=Wipers'
-          },
-          { 
-            name: 'Spark Plugs', 
-            quantity: 4, 
-            price: '₹1,500',
-            image: 'https://via.placeholder.com/80?text=Plugs'
-          }
-        ],
-        shipping: 'Standard Delivery',
-        address: '456 Oak Ave, Mumbai, Maharashtra'
-      }
-    },
-    {
-      id: '#ORD1002',
-      customer: 'Sarah Johnson',
-      email: 'sarah.j@example.com',
-      date: '18/05/2024',
-      total: '₹7,800',
-      status: 'Processing',
-      details: {
-        items: [
-          { 
-            name: 'Brake Pads', 
-            quantity: 1, 
-            price: '₹4,500',
-            image: 'https://via.placeholder.com/80?text=Brake'
-          },
-          { 
-            name: 'Windshield Wipers', 
-            quantity: 2, 
-            price: '₹1,800',
-            image: 'https://via.placeholder.com/80?text=Wipers'
-          },
-          { 
-            name: 'Spark Plugs', 
-            quantity: 4, 
-            price: '₹1,500',
-            image: 'https://via.placeholder.com/80?text=Plugs'
-          }
-        ],
-        shipping: 'Standard Delivery',
-        address: '456 Oak Ave, Mumbai, Maharashtra'
-      }
-    },
-    {
-      id: '#ORD1002',
-      customer: 'Sarah Johnson',
-      email: 'sarah.j@example.com',
-      date: '18/05/2024',
-      total: '₹7,800',
-      status: 'Processing',
-      details: {
-        items: [
-          { 
-            name: 'Brake Pads', 
-            quantity: 1, 
-            price: '₹4,500',
-            image: 'https://www.shutterstock.com/image-vector/tyres-stack-realistic-tires-pile-260nw-2455484439.jpg'
-          },
-          { 
-            name: 'Windshield Wipers', 
-            quantity: 2, 
-            price: '₹1,800',
-            image: 'https://via.placeholder.com/80?text=Wipers'
-          },
-          { 
-            name: 'Spark Plugs', 
-            quantity: 4, 
-            price: '₹1,500',
-            image: 'https://via.placeholder.com/80?text=Plugs'
-          }
-        ],
-        shipping: 'Standard Delivery',
-        address: '456 Oak Ave, Mumbai, Maharashtra'
-      }
-    },
-    {
-      id: '#ORD1002',
-      customer: 'Sarah Johnson',
-      email: 'sarah.j@example.com',
-      date: '18/05/2024',
-      total: '₹7,800',
-      status: 'Processing',
-      details: {
-        items: [
-          { 
-            name: 'Brake Pads', 
-            quantity: 1, 
-            price: '₹4,500',
-            image: 'https://via.placeholder.com/80?text=Brake'
-          },
-          { 
-            name: 'Windshield Wipers', 
-            quantity: 2, 
-            price: '₹1,800',
-            image: 'https://via.placeholder.com/80?text=Wipers'
-          },
-          { 
-            name: 'Spark Plugs', 
-            quantity: 4, 
-            price: '₹1,500',
-            image: 'https://via.placeholder.com/80?text=Plugs'
-          }
-        ],
-        shipping: 'Standard Delivery',
-        address: '456 Oak Ave, Mumbai, Maharashtra'
-      }
-    }
-  ];
+  // const orders = [
+  //   {
+  //     id: '#ORD1001',
+  //     customer: 'John Smith',
+  //     email: 'john.smith@example.com',
+  //     date: '15/05/2024',
+  //     total: '₹12,500',
+  //     status: 'Completed',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Car Battery', 
+  //           quantity: 1, 
+  //           price: '₹8,500',
+  //           image: 'https://via.placeholder.com/80?text=Battery'
+  //         },
+  //         { 
+  //           name: 'Engine Oil', 
+  //           quantity: 2, 
+  //           price: '₹2,000',
+  //           image: 'https://via.placeholder.com/80?text=Oil'
+  //         },
+  //         { 
+  //           name: 'Air Filter', 
+  //           quantity: 1, 
+  //           price: '₹2,000',
+  //           image: 'https://via.placeholder.com/80?text=Filter'
+  //         }
+  //       ],
+  //       shipping: 'Express Delivery',
+  //       address: '123 Main St, Bangalore, Karnataka'
+  //     }
+  //   },
+  //   {
+  //     id: '#ORD1002',
+  //     customer: 'Sarah Johnson',
+  //     email: 'sarah.j@example.com',
+  //     date: '18/05/2024',
+  //     total: '₹7,800',
+  //     status: 'Processing',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Brake Pads', 
+  //           quantity: 1, 
+  //           price: '₹4,500',
+  //           image: 'https://via.placeholder.com/80?text=Brake'
+  //         },
+  //         { 
+  //           name: 'Windshield Wipers', 
+  //           quantity: 2, 
+  //           price: '₹1,800',
+  //           image: 'https://via.placeholder.com/80?text=Wipers'
+  //         },
+  //         { 
+  //           name: 'Spark Plugs', 
+  //           quantity: 4, 
+  //           price: '₹1,500',
+  //           image: 'https://via.placeholder.com/80?text=Plugs'
+  //         }
+  //       ],
+  //       shipping: 'Standard Delivery',
+  //       address: '456 Oak Ave, Mumbai, Maharashtra'
+  //     }
+  //   },
+  //   {
+  //     id: '#ORD1002',
+  //     customer: 'Sarah Johnson',
+  //     email: 'sarah.j@example.com',
+  //     date: '18/05/2024',
+  //     total: '₹7,800',
+  //     status: 'Processing',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Brake Pads', 
+  //           quantity: 1, 
+  //           price: '₹4,500',
+  //           image: 'https://via.placeholder.com/80?text=Brake'
+  //         },
+  //         { 
+  //           name: 'Windshield Wipers', 
+  //           quantity: 2, 
+  //           price: '₹1,800',
+  //           image: 'https://via.placeholder.com/80?text=Wipers'
+  //         },
+  //         { 
+  //           name: 'Spark Plugs', 
+  //           quantity: 4, 
+  //           price: '₹1,500',
+  //           image: 'https://via.placeholder.com/80?text=Plugs'
+  //         }
+  //       ],
+  //       shipping: 'Standard Delivery',
+  //       address: '456 Oak Ave, Mumbai, Maharashtra'
+  //     }
+  //   },
+  //   {
+  //     id: '#ORD1002',
+  //     customer: 'Sarah Johnson',
+  //     email: 'sarah.j@example.com',
+  //     date: '18/05/2024',
+  //     total: '₹7,800',
+  //     status: 'Processing',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Brake Pads', 
+  //           quantity: 1, 
+  //           price: '₹4,500',
+  //           image: 'https://via.placeholder.com/80?text=Brake'
+  //         },
+  //         { 
+  //           name: 'Windshield Wipers', 
+  //           quantity: 2, 
+  //           price: '₹1,800',
+  //           image: 'https://via.placeholder.com/80?text=Wipers'
+  //         },
+  //         { 
+  //           name: 'Spark Plugs', 
+  //           quantity: 4, 
+  //           price: '₹1,500',
+  //           image: 'https://via.placeholder.com/80?text=Plugs'
+  //         }
+  //       ],
+  //       shipping: 'Standard Delivery',
+  //       address: '456 Oak Ave, Mumbai, Maharashtra'
+  //     }
+  //   },
+  //   {
+  //     id: '#ORD1002',
+  //     customer: 'Sarah Johnson',
+  //     email: 'sarah.j@example.com',
+  //     date: '18/05/2024',
+  //     total: '₹7,800',
+  //     status: 'Processing',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Brake Pads', 
+  //           quantity: 1, 
+  //           price: '₹4,500',
+  //           image: 'https://www.shutterstock.com/image-vector/tyres-stack-realistic-tires-pile-260nw-2455484439.jpg'
+  //         },
+  //         { 
+  //           name: 'Windshield Wipers', 
+  //           quantity: 2, 
+  //           price: '₹1,800',
+  //           image: 'https://via.placeholder.com/80?text=Wipers'
+  //         },
+  //         { 
+  //           name: 'Spark Plugs', 
+  //           quantity: 4, 
+  //           price: '₹1,500',
+  //           image: 'https://via.placeholder.com/80?text=Plugs'
+  //         }
+  //       ],
+  //       shipping: 'Standard Delivery',
+  //       address: '456 Oak Ave, Mumbai, Maharashtra'
+  //     }
+  //   },
+  //   {
+  //     id: '#ORD1002',
+  //     customer: 'Sarah Johnson',
+  //     email: 'sarah.j@example.com',
+  //     date: '18/05/2024',
+  //     total: '₹7,800',
+  //     status: 'Processing',
+  //     details: {
+  //       items: [
+  //         { 
+  //           name: 'Brake Pads', 
+  //           quantity: 1, 
+  //           price: '₹4,500',
+  //           image: 'https://via.placeholder.com/80?text=Brake'
+  //         },
+  //         { 
+  //           name: 'Windshield Wipers', 
+  //           quantity: 2, 
+  //           price: '₹1,800',
+  //           image: 'https://via.placeholder.com/80?text=Wipers'
+  //         },
+  //         { 
+  //           name: 'Spark Plugs', 
+  //           quantity: 4, 
+  //           price: '₹1,500',
+  //           image: 'https://via.placeholder.com/80?text=Plugs'
+  //         }
+  //       ],
+  //       shipping: 'Standard Delivery',
+  //       address: '456 Oak Ave, Mumbai, Maharashtra'
+  //     }
+  //   }
+  // ];
 
   // Filter and pagination
   const ordersPerPage = 10;
   const filteredOrders = orders.filter(order => {
-    const matchesSearch = order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         order.customer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDate = dateFilter ? order.date === dateFilter : true;
-    return matchesSearch && matchesDate;
-  });
+  const matchesSearch =
+    (order?.order_id?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+    (order?.customer_name?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+
+  const matchesDate = dateFilter
+    ? new Date(parseInt(order.date)).toISOString().split('T')[0] === dateFilter
+    : true;
+
+  return matchesSearch && matchesDate;
+});
+
 
   const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
   const currentOrders = filteredOrders.slice(
@@ -337,6 +345,12 @@ const Order = () => {
     hidden: { y: 50, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.3 } }
   };
+
+  const formatDate = (timestamp: string) => {
+  const date = new Date(parseInt(timestamp));
+  return date.toLocaleDateString("en-IN");
+};
+
 
   return (
     <div className="p-4 md:p-6">
@@ -445,28 +459,28 @@ const Order = () => {
               {currentOrders.length > 0 ? (
                 currentOrders.map((order, index) => (
                   <motion.tr
-                    key={order.id}
+                    key={index}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: index * 0.05 }}
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {order.id}
+                      {order.order_id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
-                          {order.customer.charAt(0)}
+                          {order.customer_name?.charAt(0) || "?"}
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{order.customer}</div>
+                          <div className="text-sm font-medium text-gray-900">{order.customer_name}</div>
                           <div className="text-sm text-gray-500">{order.email}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {order.date}
+                      <td>{formatDate(order.date)}</td>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
