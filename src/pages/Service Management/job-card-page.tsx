@@ -3,8 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { IoCreateSharp } from "react-icons/io5"
-import { ArrowLeft } from "lucide-react"
-import { createJobCards } from "./Services"
+import { ArrowLeft } from "lucide-react";
 
 interface JobCard {
   id: string
@@ -100,8 +99,9 @@ const JobCardPage: React.FC<JobCardPageProps> = ({ setstate, jobCards, setJobCar
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
    
     const newJobCard: JobCard = {
       id: Date.now().toString(),
@@ -131,20 +131,11 @@ const JobCardPage: React.FC<JobCardPageProps> = ({ setstate, jobCards, setJobCar
       createdDate: new Date().toISOString().split("T")[0],
     }
 
-        try {
-      const response: any = await createJobCards(newJobCard)
-      if (response?.data) {
-        console.log("Job Card Created Successfully:", response.data)
-        setJobCards((prev) => [...prev, response.data])
-        alert("Job Card Created Successfully!")
-        setstate(true)
-      } else {
-        throw new Error("No data received")
-      }
-    } catch (error) {
-      console.error("Error creating Job Card:", error)
-      alert("Failed to create job card.")
-    }
+    // Add to job cards list
+    setJobCards((prev) => [...prev, newJobCard])
+
+    console.log("Job Card Created:", newJobCard)
+    alert("Job Card Created Successfully!")
 
     // Reset form
     setFormData({

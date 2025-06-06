@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 // import { HiXMark } from "react-icons/hi2";
 import { FaRegAddressCard} from "react-icons/fa";
+import { createJobCards } from './Services';
 
-
-// Type definitions
 interface ApiData {
   jobId: string;
   customerName: string;
@@ -60,7 +59,7 @@ interface FormData {
   workDone: 'pending' | 'in-progress' | 'completed';
   serviceItems: ServiceItem[];
   totalAmount: string;
-
+  
   name: string;
   address: string;
   officeaddress: string;
@@ -292,13 +291,65 @@ const removeFuelLevelImage = (index: number) => {
     }
   };
 
-  const handleSave = (): void => {
-    console.log('Form Data:', formData);
-    // In real app, you would send this data to your API
-    if (onClose) {
-      onClose();
+  const handleSave = async (): Promise<void> => {
+  try {
+    const payload = {
+      jobInfo: {
+        customerName: formData.name,
+        ContactNo: formData.contactno,
+        jobId: apiData.jobId,
+        VehicleNo: formData.registrationNo,
+        Schedule: apiData.schedule,
+        priority: apiData.priority,
+      },
+      customerInfo: {
+        name: formData.name,
+        address: formData.address,
+        officeAddress: formData.officeaddress,
+        contactNo: formData.contactno,
+        email: formData.email,
+      },
+      vehicleInfo: {
+        registrationNo: formData.registrationNo,
+        model: formData.model,
+        engineNo: formData.engineNo,
+        mileage: formData.mileage,
+        color: formData.color,
+        chassisNo: formData.chassisNo,
+        insuranceCompany: formData.insuranceCompany,
+        insuranceRenewalDate: formData.insuranceRenewalDate,
+      },
+      serviceInfo: {
+        customerComplaint: formData.customerComplaint,
+        actionToBeTaken: formData.actionToBeTaken,
+        amount: formData.totalAmount,
+        serviceItems: formData.serviceItems,
+      },
+      vehicleInventory: {
+        currentState: {
+          ...formData.inventory,
+        },
+        fuelLevel: formData.fuelLevel,
+        fuelLevelImages: formData.fuelLevelImages,
+        items: Object.entries(formData.inventory)
+          .filter(([key, value]) => key !== 'images' && value === true)
+          .map(([key]) => key),
+      },
+    };
+
+    const response:any = await createJobCards(payload);
+    if (response?.data) {
+      alert("Job Card Created Successfully!");
+      if (onClose) onClose();
+    } else {
+      throw new Error("No response from server.");
     }
-  };
+  } catch (err) {
+    console.error("Failed to create job card:", err);
+    alert("Failed to create job card. Please try again.");
+  }
+};
+
 
   const inventoryItems: InventoryItem[] = [
     { key: 'jackAndTommy', label: 'JACK & TOMMY' },
