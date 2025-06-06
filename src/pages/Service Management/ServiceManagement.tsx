@@ -349,9 +349,9 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   .toLowerCase()
                   .includes(searchTerm.toLowerCase())
               )
-              .map((card) => (
+              .map((card,index) => (
                 <div
-                  key={card.id}
+                  key={index}
                   className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start justify-between mb-3">
