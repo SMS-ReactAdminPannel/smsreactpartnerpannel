@@ -75,30 +75,29 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
 
-  useEffect(() => {
-    const fetchServiceRequests = async () => {
-      try {
-        const response: any = await getAllServiceRequests("");
-        console.log("Fetched service requests:", response.data.data);
-        setServiceRequests(response.data.data);
-      } catch (error) {
-        console.error("Error fetching service requests:", error);
-      }
-    };
 
+  const fetchServiceRequests = async () => {
+    try {
+      const response: any = await getAllServiceRequests("");
+      console.log("Fetched service requests:", response.data.data);
+      setServiceRequests(response.data.data);
+    } catch (error) {
+      console.error("Error fetching service requests:", error);
+    }
+  };
+
+  const fetchJobCards = async () => {
+    try {
+      const response: any = await getAllJobCards("");
+      console.log("Fetched job cards:", response.data.data);
+      setJobCards(response.data.data);
+    } catch (error) {
+      console.error("Error fetching job cards:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchServiceRequests();
-  }, []);
-
-  useEffect(() => {
-    const fetchJobCards = async () => {
-      try {
-        const response: any = await getAllJobCards("");
-        console.log("Fetched job cards:", response.data.data);
-        setJobCards(response.data.data);
-      } catch (error) {
-        console.error("Error fetching job cards:", error);
-      }
-    };
     fetchJobCards();
   }, []);
 
