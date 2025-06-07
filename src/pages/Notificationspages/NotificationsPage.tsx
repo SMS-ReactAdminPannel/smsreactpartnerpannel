@@ -9,7 +9,7 @@ type MailItem = {
   preview: string;
   message: string;
   updated_at: string;
-  unread: boolean;
+  is_read: boolean;
 };
 
 export default function GmailStyleInbox() {
@@ -25,7 +25,6 @@ export default function GmailStyleInbox() {
       try{
         const response:any = await getAllNotifications('')
         setMails(response.data.data)
-        console.log('Fetched notifications:', response.data.data);
       }catch(error){
         console.log('Error fetching notifications:',error)
       }
@@ -33,10 +32,15 @@ export default function GmailStyleInbox() {
     fetchNotifications();
   },[])
 
+  let filteredMails:any;
 
-  const filteredMails = mails.filter((m) =>
-    filter === "all" ? true : filter === "unread" ? m.unread : !m.unread
-  );
+  if (filter === "all") {
+    filteredMails = mails
+  } else if (filter === "unread") {
+     filteredMails = mails.filter(m=>m.is_read === false)
+  }else{
+    filteredMails = mails.filter(m=>m.is_read === true)
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF3EB] p-2 font-[Poppins]">
@@ -73,7 +77,7 @@ export default function GmailStyleInbox() {
         {/* Main content */}
         <main className="flex-1 flex">
           <section className="w-1/2 overflow-y-auto border-r custom-scroll px-4 py-4 space-y-4">
-            {filteredMails.map((mail,index) => (
+            {filteredMails.map((mail:any,index:number) => (
               <div
                 key={index}
                 onClick={() => setSelectedMail(mail)}

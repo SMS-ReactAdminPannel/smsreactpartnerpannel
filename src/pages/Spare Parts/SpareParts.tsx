@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createSparePart, getAllSpareParts, updateSparePart } from './Services';
+import { createSparePart, getAllSpareParts } from './Services';
 
 interface SparePart {
   id:number
@@ -49,7 +49,7 @@ const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 const [showAddForm, setShowAddForm] = useState(false)
 const [newPart, setNewPart] = useState<Omit<SparePart,'id'>>({
   productName: '',
-  price: 0,
+  price: '0',
   inStock: true,
   image: [''],
   stock:'12',
@@ -74,8 +74,10 @@ useEffect(() => {
 
  const addNewPart = async()=>{
   try{
+    console.log(newPart)
     const response:any =await createSparePart(newPart)
-    const createdPart= response.data.data;
+    console.log(response)
+    const createdPart= response.data;
     setPartsData((prev)=> [...prev, createdPart]);
     resetAddForm()
     if (newPart.productName.trim() && newPart.image[0].trim()) {
@@ -85,22 +87,13 @@ useEffect(() => {
         id,
       };
       setPartsData((prev) => [...prev, partToAdd]);
-      setNewPart({
-        productName: '',
-        price: '0',
-        inStock: true,
-        image: [''],
-        slug: 'Engine',
-        brand:"new",
-        category:"engin",
-        stock:'12'
-      });
+      setShowAddForm(false);
+      setNewPart(null);
     }
-    setShowAddForm(false);
   }catch(error){
     console.error('Error creating spare part:',error)
   }
-   setShowAddForm(false);
+  //  setShowAddForm(false);
  }
 
  const filteredParts = partsData.filter((part) =>
@@ -223,12 +216,12 @@ useEffect(() => {
     >
       <div className="h-[180px] flex justify-center items-center overflow-hidden">
         <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          alt={part.spareparts_name}
+          alt={part.productName}
           className="max-w-[160px] max-h-[160px] w-auto h-auto object-cover transition-all duration-300 ease-in-out rounded-md"
         />
       </div>
       <div className="p-3">
-        <div className="text-xs font-semibold line-clamp-2 mb-1">{part.spareparts_name}</div>
+        <div className="text-xs font-semibold line-clamp-2 mb-1">{part.productName}</div>
         <div className="text-xs text-gray-600 mb-1">{part.slug}</div>
         <div className="text-sm font-bold text-[#9b111e]">
           ₹{part.price?.toLocaleString() ?? "0"}

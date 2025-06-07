@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getOrdersHistory } from './Services';
+import { CreateOderHistory, getOrdersHistory } from './Services';
 
 
 const Order = () => {
@@ -13,7 +13,7 @@ const Order = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [newOrder, setNewOrder] = useState({
-    customer: '',
+    customer_name: '',
     email: '',
     date: '',
     total: '',
@@ -237,7 +237,7 @@ const Order = () => {
   const ordersPerPage = 10;
   const filteredOrders = orders.filter(order => {
   const matchesSearch =
-    (order?.order_id?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+    (order?.orderId?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
     (order?.customer_name?.toLowerCase() || '').includes(searchTerm.toLowerCase());
 
   const matchesDate = dateFilter
@@ -260,11 +260,20 @@ const Order = () => {
     setShowViewModal(true);
   };
 
+  const handleNewOrder = async()=>{
+    try {
+      await CreateOderHistory(newOrder)
+        setShowAddModal(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const closeModal = () => {
     setShowAddModal(false);
     setShowViewModal(false);
     setNewOrder({
-      customer: '',
+      customer_name: '',
       email: '',
       date: '',
       total: '',
@@ -466,7 +475,7 @@ const Order = () => {
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {order.order_id}
+                      {order.orderId}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex items-center">
@@ -589,8 +598,8 @@ const Order = () => {
                       type="text"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       placeholder="Enter customer name"
-                      value={newOrder.customer}
-                      onChange={(e) => setNewOrder({...newOrder, customer: e.target.value})}
+                      value={newOrder.customer_name}
+                      onChange={(e) => setNewOrder({...newOrder, customer_name: e.target.value})}
                     />
                   </div>
                   <div>
@@ -741,6 +750,7 @@ const Order = () => {
                 </button>
                 <button
                   className="px-4 py-2 bg-[#9b111e] text-white rounded-md hover:bg-[#7a0d19] transition-colors"
+                  onClick={handleNewOrder}
                 >
                   Save Order
                 </button>
@@ -783,7 +793,7 @@ const Order = () => {
                     <h4 className="text-lg font-medium text-gray-900 mb-3">Customer Information</h4>
                     <div className="space-y-2">
                       <p className="text-gray-600">
-                        <span className="font-medium">Name:</span> {selectedOrder.customer}
+                        <span className="font-medium">Name:</span> {selectedOrder.customer_name}
                       </p>
                       <p className="text-gray-600">
                         <span className="font-medium">Email:</span> {selectedOrder.email}
@@ -834,7 +844,7 @@ const Order = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                       {selectedOrder.details.items.map((item: any, index: number) => {
-                        const price = parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+                        const price = parseInt(item.price);
                         return (
                           <tr key={index}>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

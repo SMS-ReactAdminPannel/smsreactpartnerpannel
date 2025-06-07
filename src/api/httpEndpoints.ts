@@ -54,7 +54,7 @@ const generateEndpoints = () => {
     },
 
     job_card:{
-      create :`/api/jobcards/`,
+      create :`/api/jobcards/createCard`,
       getAll :`/api/jobcards/getall`,
       getById:`/api/jobcards/:id`,
       update:`/api/jobcards/:id`

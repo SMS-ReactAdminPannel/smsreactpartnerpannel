@@ -344,6 +344,7 @@ const removeFuelLevelImage = (index: number) => {
     } else {
       throw new Error("No response from server.");
     }
+    handleBack()
   } catch (err) {
     console.error("Failed to create job card:", err);
     alert("Failed to create job card. Please try again.");
