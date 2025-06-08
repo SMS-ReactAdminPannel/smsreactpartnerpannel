@@ -20,6 +20,15 @@ Axios.interceptors.request.use((config) => {
   return config;
 });
 
+Axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("authToken");
+
+  if (token) {
+    config.headers["Authorization"] = `${token ? token : ""}`;
+  }
+  return config;
+});
+
 class HttpClient {
   async get(url: string, params: string = '') {
     const response: unknown = await Axios.get(url, {

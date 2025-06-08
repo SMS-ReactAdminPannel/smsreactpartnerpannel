@@ -38,7 +38,25 @@ interface JobCard {
   id: string;
   customerName: string;
   phone: string;
-  vehicleInfo: string;
+  vehicleInfo: {
+    chassisNo:string;
+    color:string;
+    engineNo:string;
+    model:string;
+    registrationNo:string;
+  },
+  jobInfo:{
+    ContactNo:string;
+    VehicleNo:string;
+    jobId:string;
+    customerName:string;
+  },
+  customerInfo:{
+    email:string;
+    name:string;
+    address:string;
+    contactNo:string;
+  },
   jobNumber: string;
   isEditing: boolean;
   address?: string;
@@ -121,7 +139,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     }
   };
 
-  const handleView = (jobCard: JobCard) => {
+  const handleView = (jobCard: any) => {
+    console.log(jobCard)
     setSelectedJobCard(jobCard);
     setShowJobCardModal(true);
   };
@@ -415,7 +434,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   Job Card Details
                 </h2>
                 <p className="text-gray-600">
-                  Job Number: {selectedJobCard.jobNumber}
+                  Job Number: {selectedJobCard?.jobInfo?.jobId}
                 </p>
               </div>
               <div className="flex items-center space-x-2">
@@ -457,7 +476,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Customer Information */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">
                   Customer Information
@@ -468,7 +486,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.customerName || ""}
+                        value={editFormData?.jobInfo?.customerName || ""}
                         onChange={(e) =>
                           handleEditInputChange("customerName", e.target.value)
                         }
@@ -476,7 +494,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.customerName}
+                        {selectedJobCard?.jobInfo?.customerName}
                       </p>
                     )}
                   </div>
@@ -492,7 +510,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.phone}</p>
+                      <p className="font-medium">{selectedJobCard.jobInfo?.ContactNo}</p>
                     )}
                   </div>
                   <div>
@@ -508,7 +526,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.email || "N/A"}
+                        {selectedJobCard?.customerInfo?.email || "N/A"}
                       </p>
                     )}
                   </div>
@@ -525,14 +543,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.address || "N/A"}
+                        {selectedJobCard.cutomerInfo?.address || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Vehicle Information */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">
                   Vehicle Information
@@ -543,7 +560,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.vehicleNumber || ""}
+                        value={editFormData?.jobInfo?.VehicleNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("vehicleNumber", e.target.value)
                         }
@@ -551,7 +568,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.vehicleNumber || "N/A"}
+                        {selectedJobCard.jobInfo?.VehicleNo || "N/A"}
                       </p>
                     )}
                   </div>
@@ -560,7 +577,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.makeModel || ""}
+                        value={editFormData?.vehicleInfo?.model || ""}
                         onChange={(e) =>
                           handleEditInputChange("makeModel", e.target.value)
                         }
@@ -568,8 +585,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.makeModel ||
-                          selectedJobCard.vehicleInfo}
+                        {selectedJobCard?.vehicleInfo?.model ||
+                          selectedJobCard.vehicleInfo.model}
                       </p>
                     )}
                   </div>
@@ -578,7 +595,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.engineNumber || ""}
+                        value={editFormData?.vehicleInfo?.engineNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("engineNumber", e.target.value)
                         }
@@ -586,7 +603,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.engineNumber || "N/A"}
+                        {selectedJobCard?.vehicleInfo?.engineNo || "N/A"}
                       </p>
                     )}
                   </div>
@@ -595,7 +612,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.chassisNumber || ""}
+                        value={editFormData?.vehicleInfo?.chassisNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("chassisNumber", e.target.value)
                         }
@@ -603,7 +620,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.chassisNumber || "N/A"}
+                        {selectedJobCard.vehicleInfo?.chassisNo || "N/A"}
                       </p>
                     )}
                   </div>
@@ -612,7 +629,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.color || ""}
+                        value={editFormData?.vehicleInfo?.color || ""}
                         onChange={(e) =>
                           handleEditInputChange("color", e.target.value)
                         }
@@ -620,7 +637,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.color || "N/A"}
+                        {selectedJobCard.vehicleInfo?.color || "N/A"}
                       </p>
                     )}
                   </div>
@@ -629,7 +646,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.fuelLevel || ""}
+                        value={editFormData?.vehicleInventory?.fuelLevel || ""}
                         onChange={(e) =>
                           handleEditInputChange("fuelLevel", e.target.value)
                         }
@@ -637,14 +654,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.fuelLevel || "N/A"}
+                        {selectedJobCard?.vehicleInventory?.fuelLevel || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Complaint & Diagnosis */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">
                   Complaint & Diagnosis
@@ -660,12 +676,11 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   />
                 ) : (
                   <p className="text-sm">
-                    {selectedJobCard.complaint || "No complaint specified"}
+                    {selectedJobCard?.complaint || "No complaint specified"}
                   </p>
                 )}
               </div>
 
-              {/* Estimate */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">Estimate</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -685,7 +700,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.estimateLabour || "N/A"}
+                        {selectedJobCard?.estimateLabour || "N/A"}
                       </p>
                     )}
                   </div>
@@ -702,7 +717,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.estimateParts || "N/A"}
+                        {selectedJobCard?.estimateParts || "N/A"}
                       </p>
                     )}
                   </div>
@@ -719,14 +734,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium text-[#9b111e]">
-                        {selectedJobCard.totalEstimate || "N/A"}
+                        {selectedJobCard?.totalEstimate || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Service Details */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">
                   Service Details
@@ -748,7 +762,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.technicianName || "N/A"}
+                        {selectedJobCard?.technicianName || "N/A"}
                       </p>
                     )}
                   </div>
@@ -768,7 +782,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.serviceAdvisor || "N/A"}
+                        {selectedJobCard?.serviceAdvisor || "N/A"}
                       </p>
                     )}
                   </div>
@@ -788,7 +802,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.promisedDeliveryDate || "N/A"}
+                        {selectedJobCard?.promisedDeliveryDate || "N/A"}
                       </p>
                     )}
                   </div>
@@ -805,7 +819,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.createdDate || "N/A"}
+                        {selectedJobCard?.createdDate || "N/A"}
                       </p>
                     )}
                   </div>
@@ -816,7 +830,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
         </div>
       )}
 
-      {/* Footer Section */}
       <div className="mt-16">
         <h2 className="text-3xl font-bold text-center">
           Customised Care For All Your Needs
