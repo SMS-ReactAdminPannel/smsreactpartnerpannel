@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { IoCreateSharp } from "react-icons/io5"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft } from "lucide-react";
 
 interface JobCard {
   id: string
