@@ -18,6 +18,9 @@ const generateEndpoints = () => {
     customer_management: {
       getAll :`/api/partner/customermanage`,
     },
+    customermanagement_history:{
+      getAll: `/api/partner/CustomerManagement/service-history`
+    },
     announcement: {
       create: `/api/announcement/create`,
       getAll: `/api/announcement/all`,

@@ -128,6 +128,9 @@ class Client {
     customer_management:{
       getallCustomer:(data:any)=>HttpClient.get(HTTP_END_POINTS.customer_management.getAll,data),
     },
+    customermanagement_history:{
+      getallHistory:(data:any)=>HttpClient.get(HTTP_END_POINTS.customermanagement_history.getAll,data)
+    },
     auth:{
         forgetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.forgetPassword,data),
         verifyOtp:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.verifyOtp,data),
