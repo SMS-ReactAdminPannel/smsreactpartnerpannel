@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import carImage from '../../assets/login-pg-img/porshe.webp';
 import { useAuth } from './AuthContext';
 import { FONTS } from '../../constants/constants';
+import { loginUser } from './Services';
 
 type LoginData = {
 	email: string;
@@ -13,6 +14,7 @@ type LoginData = {
 };
 
 const LoginPage1 = () => {
+
 	const {
 		register,
 		handleSubmit,
@@ -22,12 +24,28 @@ const LoginPage1 = () => {
 	const navigate = useNavigate();
 	const { login } = useAuth();
 
-	const onSubmit = (data: LoginData) => {
-		if (data?.email && data?.password) {
-			login();
-			navigate('/');
-		}
-	};
+	const onSubmit = async (data: LoginData) => {
+    try {
+        const User: any = await loginUser(data);
+
+        if (User?.data?.data) {
+            login(User.data.data);
+            navigate('/');
+            console.log(User);
+        } else {
+            console.error('Invalid login response:', User);
+        }
+    } catch (error) {
+        console.log('error', error);
+    }
+};
+
+	// const onSubmit = (data: LoginData) => {
+	// 	if (data?.email && data?.password) {
+	// 		login();
+	// 		navigate('/');
+	// 	}
+	// };
 
 	const text = 'YM PARTNER';
 
