@@ -20,7 +20,7 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { getAllJobCards, getAllServiceRequests } from "./Services";
+import { deleteJobCards, getAllJobCards, getAllServiceRequests } from "./Services";
 
 // Mock MustCare component
 const MustCare = () => (
@@ -175,6 +175,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
       });
     }
   };
+
+  const deleteJob = async (param:string) =>{
+    try {
+      const deleteCard = await deleteJobCards(param);
+      console.log(deleteCard)
+      setJobCards(jobCards.filter((c) => c.uuid !== param))
+    } catch (error) {
+      console.log("Job Cards Deleted ",error)
+    }
+  }
 
   return (
     <div className="p-4" style={{ background: COLORS.bgColor }}>
@@ -388,9 +398,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() =>
-                          setJobCards(jobCards.filter((c) => c.id !== card.id))
-                        }
+                        onClick={() =>deleteJob(card.uuid)}
                         className="p-1 text-red-600 hover:bg-red-50 rounded"
                       >
                         <Trash2 className="w-4 h-4" />
