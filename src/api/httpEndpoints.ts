@@ -24,6 +24,7 @@ const generateEndpoints = () => {
     announcement: {
       create: `/api/announcement/create`,
       getAll: `/api/announcement/all`,
+      
     },
     enquiry: {
       create: `/api/enquiry/create`,

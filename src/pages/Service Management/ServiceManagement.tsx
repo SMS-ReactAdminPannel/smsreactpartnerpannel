@@ -224,19 +224,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                   <input
                     type="search"
-                    placeholder="Search requests..."
+                    placeholder="Search request..."
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                
+                {/* <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                   <Filter className="w-4 h-4" />
                   <span>Filter</span>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
 
           <div className="overflow-x-auto">
+            <div className="max-h-96 overflow-y-auto"> 
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
@@ -322,6 +324,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   ))}
               </tbody>
             </table>
+              </div>
           </div>
         </div>
       </div>
