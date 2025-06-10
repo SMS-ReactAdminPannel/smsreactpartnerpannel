@@ -31,7 +31,7 @@ const generateEndpoints = () => {
       create: `/api/admin/spareparts/create`,
       getById: `/api/admin/spareparts/get/:id`,
       getAll: `/api/admin/spareparts/getall`,
-      update: `/api/admin/spareparts/update/:id`,
+      update: `/api/admin/spareparts/update/:uuid`,
       updateStatus: `/api/admin/spareparts/updatestatus/:id`,
       delete: `/api/admin/spareparts/delete/:id`,
     },
@@ -67,6 +67,7 @@ const generateEndpoints = () => {
       update: `/api/admin/service/uuid`,
       updateStatus: `/api/admin/service/toggle-status/:uuid`,
     },
+    
     notifications: {
       create: `/api/notifications/`,
       createBulk: `/api/notifications/bulk`,
@@ -78,7 +79,7 @@ const generateEndpoints = () => {
       delete: `/api/notifications/:uuid`,
       getAll: `/api/notifications/`,
       getById: `/api/notifications/:uuid`,
-      update: `/api/notifications/:uuid`,
+      patch: `/api/notifications/read/:id`,
       createPreference: `/api/notifications/preferences`,
       updatePreference:`/api/notifications/preferences`,
       getPreference: `/api/notifications/preferences/:userId`,

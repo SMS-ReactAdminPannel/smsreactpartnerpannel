@@ -3,6 +3,7 @@ import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 // import { HiXMark } from "react-icons/hi2";
 import { FaRegAddressCard} from "react-icons/fa";
 import { createJobCards } from './Services';
+import { describe } from 'node:test';
 
 interface ApiData {
   jobId: string;
@@ -42,6 +43,13 @@ interface ServiceItem {
   amount: string;
 }
 
+interface servicesmain {
+  id:string;
+  descriptions:string;
+  rates:string;
+  amounts:string;
+}
+
 interface FormData {
   inventory: VehicleInventory;
   fuelLevel: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full';
@@ -58,6 +66,7 @@ interface FormData {
   actionToBeTaken: string;
   workDone: 'pending' | 'in-progress' | 'completed';
   serviceItems: ServiceItem[];
+  servicesmain:servicesmain[]
   totalAmount: string;
   
   name: string;
@@ -138,7 +147,12 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
     serviceItems: [
       { id: '1', description: '', quantity: '', rate: '', amount: '' }
     ],
-    totalAmount: '0'
+    totalAmount: '0',
+    servicesmain:[
+      {id:'1',descriptions:'',rates:'',amounts:''}
+    ]
+    // servicesmain
+
   });
 
   const handleInputChange = <K extends keyof FormData>(
@@ -230,6 +244,7 @@ const removeFuelLevelImage = (index: number) => {
     }));
   };
 
+
   const removeServiceItem = (id: string): void => {
     if (formData.serviceItems.length > 1) {
       setFormData(prev => ({
@@ -282,6 +297,75 @@ const removeFuelLevelImage = (index: number) => {
     }));
   };
 
+
+const addServices = (): void => {
+  const newItems: servicesmain = {
+    id: Date.now().toString(),
+    descriptions: '',
+    rates: '',
+    amounts: ''
+  };
+  setFormData(prev => ({
+    ...prev,
+    servicesmain: [...prev.servicesmain, newItems]
+  }));
+};
+
+const removeServiceItems = (id: string): void => {
+  if (formData.servicesmain.length > 1) {
+    setFormData(prev => {
+      const updatedItems = prev.servicesmain.filter(items => items.id !== id);
+      const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amounts) || 0), 0);
+      return {
+        ...prev,
+        servicesmain: updatedItems,
+        totalAmount: total.toFixed(2)
+      };
+    });
+  }
+};
+
+
+
+const updateServiceItems = (id: string, field: keyof servicesmain, value: string): void => {
+  setFormData(prev => {
+    const updatedItems = prev.servicesmain.map(items => {
+      if (items.id === id) {
+        const updatedItem = { ...items, [field]: value };
+
+        // Auto calculate amount if rate is changed
+        if (field === 'rates') {
+          const rate = parseFloat(value) || 0;
+          updatedItem.amounts = rate.toFixed(2);
+        }
+
+        return updatedItem;
+      }
+      return items;
+    });
+
+    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amount) || 0), 0);
+
+    return {
+      ...prev,
+      servicesmain: updatedItems,
+      totalAmount: total.toFixed(2)
+    };
+  });
+};
+
+const calculateTotalAmounts = (): void => {
+  const total = formData.servicesmain.reduce((sum, items) => {
+    return sum + (parseFloat(items.amounts) || 0);
+  }, 0);
+
+  setFormData(prev => ({
+    ...prev,
+    totalAmounts: total.toFixed(2)
+  }));
+};
+
+
   const getPriorityColor = (priority: ApiData['priority']): string => {
     switch(priority) {
       case 'high': return 'bg-red-500';
@@ -323,6 +407,7 @@ const removeFuelLevelImage = (index: number) => {
         customerComplaint: formData.customerComplaint,
         actionToBeTaken: formData.actionToBeTaken,
         amount: formData.totalAmount,
+        amounts:formData.totalAmounts,
         serviceItems: formData.serviceItems,
       },
       vehicleInventory: {
@@ -782,6 +867,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                             onClick={() => removeServiceItem(item.id)}
                             className="text-red-600 hover:text-red-800 p-1 hover:bg-red-100 rounded transition-all"
                           >
+
                             <Trash2 className="w-4 h-4" />
                           </button>
                         )}
@@ -826,6 +912,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   ))}
                 </div>
                 
+                
                 {/* Total Amount */}
                 <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
                   <div className="flex justify-between items-center">
@@ -834,6 +921,104 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   </div>
                 </div>
               </div>
+
+
+
+
+{/* Service Items Section */} 2
+<div className="space-y-4">
+  {/* Header and Add Button */}
+  <div className="flex items-center justify-between">
+    <label className="text-sm font-medium text-gray-700">Service Items</label>
+    <button
+      type="button"
+      onClick={addServices}
+      className="bg-gradient-to-r from-red-600 to-red-800 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+    >
+      <Plus className="w-4 h-4" />
+      Add services
+    </button>
+  </div>
+
+  {/* List of Service Inputs */}
+  <div className="space-y-3">
+    {formData.servicesmain.map((items, index) => (
+      <div
+        key={items.id}
+        className="bg-gray-50 p-4 rounded-lg border-2 border-gray-200"
+      >
+        {/* Header with Item Number and Remove Button */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-medium text-gray-700">
+            Item {index + 1}
+          </span>
+          {formData.servicesmain.length > 1 && (
+            <button
+              type="button"
+              onClick={() => removeServiceItems(items.id)}
+              className="text-red-600 hover:text-red-800 p-1 hover:bg-red-100 rounded transition-all"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+
+        {/* Inputs */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-2">
+            <label className="block text-xs font-medium text-gray-600 mb-1">
+              Description
+            </label>
+            <input
+              type="text"
+              value={items.descriptions}
+              onChange={(e) =>
+                updateServiceItems(items.id, "descriptions", e.target.value)
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+              placeholder="Service description"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1 ml-50">
+              Rate (₹)
+            </label>
+            <input
+              type="number"
+              value={items.rates}
+              onChange={(e) =>
+                updateServiceItems(items.id, "rates", e.target.value)
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+              placeholder="Rate"
+            />
+          </div>
+        </div>
+
+        {/* Calculated Amount */}
+        <div className="mt-3 text-right">
+          <span className="text-sm font-medium text-gray-600">Amount: </span>
+          <span className="text-lg font-bold text-[#9b111e]">
+            ₹{items.amounts || "0.00"}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Total Amount Summary */}
+  <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+    <div className="flex justify-between items-center">
+      <span className="text-lg font-semibold text-[#9b111e]">
+        Total Amount:
+      </span>
+      <span className="text-2xl font-bold text-[#9b111e]">
+        ₹{formData.totalAmount}
+      </span>
+    </div>
+  </div>
+</div>
 
               {/* <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Work Status</label>

@@ -93,7 +93,7 @@ class Client {
       getUnreadCount: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.getUnreadCount, params),
       markAsRead: (params: string) =>
-        HttpClient.get(HTTP_END_POINTS.notifications.markAsRead, params),
+        HttpClient.patch(HTTP_END_POINTS.notifications.markAsRead.replace(':uuid',params), ''),
       MarkAllAsRead: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.markAllAsRead, params),
       stats: (params: string) =>
@@ -103,8 +103,8 @@ class Client {
         HttpClient.get(HTTP_END_POINTS.notifications.getAll, params),
       getById: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.getById, params),
-      update: (data: any, params: string) =>
-        HttpClient.update(HTTP_END_POINTS.notifications.update, data, params),
+      patch: (data: any, uuid: string) =>
+        HttpClient.patch(HTTP_END_POINTS.notifications.patch, data, uuid),
       createPreference: (data: any,) =>
         HttpClient.post(
           HTTP_END_POINTS.notifications.createPreference,
