@@ -45,9 +45,9 @@ export const updateSparePartStatus = async (data: any, params: string) => {
   }
 };
 
-export const deleteSpareParts = async () => {
+export const deleteSpareParts = async (id:string ) => {
   try {
-    const response = await Client.partner.spareparts.delete();
+    const response = await Client.partner.spareparts.delete(id);
     return response
   } catch (error) {
     console.log('Error deleting spare parts:', error);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createSparePart, getAllSpareParts } from './Services';
+import { createSparePart, deleteSpareParts, getAllSpareParts } from './Services';
 
 interface SparePart {
   id:number
@@ -96,6 +96,20 @@ useEffect(() => {
   //  setShowAddForm(false);
  }
 
+ const deletePart = async (partId: string) => {
+  try {
+    const response: any = await deleteSpareParts(partId);
+    if (response?.status === 200) {
+      setPartsData((prev) => prev.filter((part) => part._id !== partId));
+      setSelectedPart(null);
+      setShowDeleteConfirm(false);
+    }
+  } catch (error) {
+    console.error('Error deleting spare part:', error);
+  }
+};
+
+
  const filteredParts = partsData.filter((part) =>
   (part.productName
  ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
@@ -107,11 +121,7 @@ useEffect(() => {
     );
   };
 
-  const deletePart = (partId: number) => {
-    setPartsData((prev) => prev.filter((part) => part.id !== partId));
-    setSelectedPart(null);
-    setShowDeleteConfirm(false);
-  };
+  
 
   // const addNewPart = () => {
     
@@ -191,12 +201,12 @@ useEffect(() => {
   <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
     Products
   </h2>
-  <button
+  {/* <button
     className="bg-[#9b111e] text-white px-5 py-2 rounded-full text-sm hover:bg-red-700 transition"
     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
   >
     View All Products
-  </button>
+  </button> */}
 </div>
 
 
@@ -312,9 +322,9 @@ useEffect(() => {
         ✓ 24/7 Support
       </div>
     </div>
-    <button className="bg-[#9b111e] text-white px-8 py-4 rounded-lg hover:bg-red-700 transition font-medium text-lg">
+    {/* <button className="bg-[#9b111e] text-white px-8 py-4 rounded-lg hover:bg-red-700 transition font-medium text-lg">
       Book Service
-    </button>
+    </button> */}
   </div>
   <div className="flex-1 lg:order-2">
     <img
@@ -475,8 +485,33 @@ useEffect(() => {
               />
             </div>
 
-            <h2 className="text-lg font-bold mb-2">{selectedPart.productName}</h2>
-            <p className="text-sm text-gray-600 mb-1">Type: {selectedPart.slug}</p>
+            <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700">Product Name
+              <input
+              type="text"
+              value={selectedPart.productName}
+              onChange={(e) =>
+                setSelectedPart({
+                  ...selectedPart,
+                  productName: e.target.value,
+                })
+              }
+              className="w-full border border-gray-300 rounded p-2 mb-4 mt-2"
+            />
+            </label>
+
+            <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700">Product Type
+              <input
+              type="text"
+              value={selectedPart.slug}
+              onChange={(e) =>
+                setSelectedPart({
+                  ...selectedPart,
+                  slug: e.target.value,
+                })
+              }
+              className="w-full border border-gray-300 rounded p-2 mb-4 mt-2"
+            />
+            </label>
             
 
             {/* Editable price */}
@@ -561,7 +596,7 @@ useEffect(() => {
               </button>
               <button
                 onClick={() => {
-                  if (selectedPart) deletePart(selectedPart.id);
+                  if (selectedPart) deletePart(selectedPart._id);
                 }}
                 className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm"
               >

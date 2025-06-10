@@ -37,7 +37,7 @@ const generateEndpoints = () => {
       getAll: `/api/admin/spareparts/getall`,
       update: `/api/admin/spareparts/update/:id`,
       updateStatus: `/api/admin/spareparts/updatestatus/:id`,
-      delete: `/api/admin/spareparts/delete/:id`,
+      delete: `/api/admin/spareparts/delete`,
     },
     order_history: {
       create: `/api/partner/order-history/create`,

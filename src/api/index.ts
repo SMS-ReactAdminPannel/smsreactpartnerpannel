@@ -30,7 +30,7 @@ class Client {
           data,
           params
         ),
-      delete: () => HttpClient.delete(HTTP_END_POINTS.spareparts.delete),
+      delete: (id: string) => HttpClient.delete(`${HTTP_END_POINTS.spareparts.delete}/${id}`),
     },
     order_history: {
       create: (data: any) =>
