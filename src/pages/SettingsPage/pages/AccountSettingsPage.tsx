@@ -35,7 +35,7 @@ const AccountSettingsPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response: any = await updateProfile(profile,'');
+      const response: any = await updateProfile(profile);
 
       if (response) {
         setProfile(response);

@@ -64,7 +64,7 @@ class Client {
     job_card:{
       create : (data:any)=> 
         HttpClient.post(HTTP_END_POINTS.job_card.create,data),
-      getAll : (params:string)=>
+      getAll : ()=>
         HttpClient.get(HTTP_END_POINTS.job_card.getAll),
       getById : (params:string)=>
         HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
@@ -123,7 +123,7 @@ class Client {
     },
     profile:{
         getProfile:(data:any)=>HttpClient.get(HTTP_END_POINTS.profile.getProfile,data),
-        updateProfile:(data:any, params:string)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,'',data),
+        updateProfile:(data:any)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,'',data),
         createNewProfile:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.createNewProfile,data),
         loginUser:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.loginUser,data)
     },
