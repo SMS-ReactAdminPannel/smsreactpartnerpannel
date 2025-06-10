@@ -121,7 +121,7 @@ class Client {
     },
     profile:{
         getProfile:(data:any)=>HttpClient.get(HTTP_END_POINTS.profile.getProfile,data),
-        updateProfile:(data:any, params:string)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,data,params),
+        updateProfile:(data:any, params:string)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,'',data),
         createNewProfile:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.createNewProfile,data),
         loginUser:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.loginUser,data)
     },
