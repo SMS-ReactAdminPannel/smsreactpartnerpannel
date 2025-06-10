@@ -8,23 +8,24 @@ import { motion } from 'framer-motion';
 import CustomerServiceDetails from "./CustomerServiceDetails";
 import { getAllHistory } from "./Services";
 
-type handle = {
+interface handle {
   handleBack: () => void;
 }
 
-const CustomerProfileDetails: React.FC<handle> = ({ handleBack }) => {
+const CustomerProfileDetails: React.FC<handle> = ({ handleBack}) => {
 
   useEffect(()=>{
     const fetchCustomerHistory = async()=>{
       try{
-        const response:any = await getAllHistory("");
+        const response:any = await getAllHistory('');
         console.log("Customer History Response:", response.data.data);
-      }catch (error) {
-        console.log("Error fetching customer history", error);
+      }catch(error){
+        console.error("Error fetching customer history:", error);
       }
     }
     fetchCustomerHistory();
   },[])
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Profile Section - Left Side */}
