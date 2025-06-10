@@ -426,12 +426,12 @@ const Order = () => {
             onChange={(e) => setDateFilter(e.target.value)}
           />
           
-          <button
+          {/* <button
             onClick={() => setShowAddModal(true)}
             className="bg-[#9b111e] hover:bg-[#7a0d19] text-white font-medium py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105 whitespace-nowrap"
           >
             + Add Order
-          </button>
+          </button> */}
         </div>
       </motion.div>
 
