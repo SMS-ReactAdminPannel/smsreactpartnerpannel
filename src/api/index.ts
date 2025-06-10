@@ -69,7 +69,9 @@ class Client {
       getById : (params:string)=>
         HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
       update :(data:any, params:string)=>
-        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params)
+        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params),
+      delete : (params:string)=>
+        HttpClient.delete(HTTP_END_POINTS.job_card.delete.replace(':uuid',params))
     },
     services: {
       create: (data: any) =>

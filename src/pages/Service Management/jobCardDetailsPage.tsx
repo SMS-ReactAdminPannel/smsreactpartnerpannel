@@ -435,8 +435,6 @@ const calculateTotalAmounts = (): void => {
     alert("Failed to create job card. Please try again.");
   }
 };
-
-
   const inventoryItems: InventoryItem[] = [
     { key: 'jackAndTommy', label: 'JACK & TOMMY' },
     { key: 'mirrors', label: 'MIRRORS' },
