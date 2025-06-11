@@ -139,7 +139,9 @@ class Client {
         resetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.resetPassword,data)
     },
     annoucement:{
-       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll)
+       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll),
+       update:(data:any)=>HttpClient.update(HTTP_END_POINTS.announcement.update,data),
+       get:(data:any)=>HttpClient.get(HTTP_END_POINTS.announcement.get,data)
     },
     enquery:{
       create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data)
