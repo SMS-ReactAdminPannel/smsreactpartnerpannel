@@ -3,6 +3,12 @@ import { HTTP_END_POINTS } from "./httpEndpoints";
 
 class Client {
   partner = {
+    dashboard:{
+      get: (params: string)=>
+        HttpClient.get(HTTP_END_POINTS.dashboard.get, params),
+      getTransactions: (params: string)=>
+        HttpClient.get(HTTP_END_POINTS.dashboard.getTransactions, params),
+    },
     booking:{
       create: (data: any) =>
         HttpClient.post(HTTP_END_POINTS.booking.create, data),

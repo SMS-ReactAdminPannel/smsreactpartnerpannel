@@ -2,6 +2,7 @@ const generateEndpoints = () => {
   return {
     dashboard: {
       get: `/api/partner/dashboard/`,
+      getTransactions: `/api/partner/dashboard/transaction`,
       postProduct: `/api/products/`,
       getAllProducts: `/api/products/`,
       getProductById: `/api/products/:id`,
