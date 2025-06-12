@@ -20,7 +20,7 @@ const handleBack = () => {
           <CustomerDetails onProfileView={() => setActiveStep(1)} />
         )}
         {activeStep === 1 && (
-          <CustomerProfileDetails handleBack={handleBack}/>
+          <CustomerProfileDetails  handleBack={handleBack}/>
         )}
 	</div>;
 };
