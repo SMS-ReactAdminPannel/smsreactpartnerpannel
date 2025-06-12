@@ -42,3 +42,19 @@ export const deleteJobCards = async( params:string)=>{
     }
     
 }
+
+
+export const updateJobCards = async (params:any,data:any)=>{
+    try{
+
+     const response = await Client.partner.job_card.update(params,data)
+      return response;
+      
+    }
+    catch(error){
+
+       console.log("updating error ",error)
+
+    }
+}
+

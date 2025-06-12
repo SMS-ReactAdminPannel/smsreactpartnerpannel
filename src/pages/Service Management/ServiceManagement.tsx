@@ -20,7 +20,8 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { deleteJobCards, getAllJobCards, getAllServiceRequests } from "./Services";
+import { deleteJobCards, getAllJobCards, getAllServiceRequests, updateJobCards } from "./Services";
+import { data, useParams } from "react-router-dom";
 
 // Mock MustCare component
 const MustCare = () => (
@@ -92,7 +93,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
+  const [updatedJobcards,setupdatedJobcards]= useState<JobCard | null>(null);
 
+  const fetchupdatejobcards = async (params:any,data:any)=>{
+    try {
+    const response = await updateJobCards(params, data);
+
+    if (response && response.data) {
+      setupdatedJobcards(response.data); 
+      console.log("Job card updated successfully:", response.data);
+    }
+  } catch (error) {
+    console.error("Failed to update job card:", error);
+    
+  }
+  }
 
   const fetchServiceRequests = async () => {
     try {
@@ -160,6 +175,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
       setSelectedJobCard(editFormData);
       setIsEditingModal(false);
     }
+    
+    fetchupdatejobcards('',data);
   };
 
   const handleCancelEdit = () => {
