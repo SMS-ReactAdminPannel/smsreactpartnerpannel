@@ -30,7 +30,7 @@ class Client {
           data,
           params
         ),
-      delete: () => HttpClient.delete(HTTP_END_POINTS.spareparts.delete),
+      delete: (id: string) => HttpClient.delete(`${HTTP_END_POINTS.spareparts.delete}/${id}`),
     },
     order_history: {
       create: (data: any) =>
@@ -64,12 +64,14 @@ class Client {
     job_card:{
       create : (data:any)=> 
         HttpClient.post(HTTP_END_POINTS.job_card.create,data),
-      getAll : (params:string)=>
+      getAll : ()=>
         HttpClient.get(HTTP_END_POINTS.job_card.getAll),
       getById : (params:string)=>
         HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
       update :(data:any, params:string)=>
-        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params)
+        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params),
+      delete : (params:string)=>
+        HttpClient.delete(HTTP_END_POINTS.job_card.delete.replace(':uuid',params))
     },
     services: {
       create: (data: any) =>
@@ -93,7 +95,7 @@ class Client {
       getUnreadCount: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.getUnreadCount, params),
       markAsRead: (params: string) =>
-        HttpClient.get(HTTP_END_POINTS.notifications.markAsRead, params),
+        HttpClient.patch(HTTP_END_POINTS.notifications.markAsRead.replace(':uuid',params), ''),
       MarkAllAsRead: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.markAllAsRead, params),
       stats: (params: string) =>
@@ -103,8 +105,8 @@ class Client {
         HttpClient.get(HTTP_END_POINTS.notifications.getAll, params),
       getById: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.notifications.getById, params),
-      update: (data: any, params: string) =>
-        HttpClient.update(HTTP_END_POINTS.notifications.update, data, params),
+      patch: (data: any, uuid: string) =>
+        HttpClient.patch(HTTP_END_POINTS.notifications.patch, data, uuid),
       createPreference: (data: any,) =>
         HttpClient.post(
           HTTP_END_POINTS.notifications.createPreference,
@@ -121,12 +123,15 @@ class Client {
     },
     profile:{
         getProfile:(data:any)=>HttpClient.get(HTTP_END_POINTS.profile.getProfile,data),
-        updateProfile:(data:any, params:string)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,data,params),
+        updateProfile:(data:any)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,'',data),
         createNewProfile:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.createNewProfile,data),
         loginUser:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.loginUser,data)
     },
     customer_management:{
       getallCustomer:(data:any)=>HttpClient.get(HTTP_END_POINTS.customer_management.getAll,data),
+    },
+    customermanagement_history:{
+      getallHistory:(data:any)=>HttpClient.get(HTTP_END_POINTS.customermanagement_history.getAll,data)
     },
     auth:{
         forgetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.forgetPassword,data),
@@ -134,7 +139,9 @@ class Client {
         resetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.resetPassword,data)
     },
     annoucement:{
-       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll)
+       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll),
+       update:(data:any)=>HttpClient.update(HTTP_END_POINTS.announcement.update,data),
+       get:(data:any)=>HttpClient.get(HTTP_END_POINTS.announcement.get,data)
     },
     enquery:{
       create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data)

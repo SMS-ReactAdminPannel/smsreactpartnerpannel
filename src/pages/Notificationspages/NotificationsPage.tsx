@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import { getAllNotifications } from "./Services";
+import { getAllNotifications, markNotificationsAsRead } from "./Services/index";
+
 
 type MailItem = {
+  uuid:string;
+  _id: string;
   sender: string;
   title: string;
   preview: string;
@@ -12,35 +15,44 @@ type MailItem = {
   is_read: boolean;
 };
 
-export default function GmailStyleInbox() {
 
+
+export default function GmailStyleInbox() {
   const navigate = useNavigate();
-  
+
   const [selectedMail, setSelectedMail] = useState<MailItem | null>(null);
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
   const [mails, setMails] = useState<MailItem[]>([]);
 
-  useEffect(()=>{
-    const fetchNotifications = async()=>{
-      try{
-        const response:any = await getAllNotifications('')
-        setMails(response.data.data)
-      }catch(error){
-        console.log('Error fetching notifications:',error)
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response: any = await getAllNotifications("");
+        setMails(response.data.data);
+      } catch (error) {
+        console.log("Error fetching notifications:", error);
       }
     };
     fetchNotifications();
-  },[])
+  }, []);
 
-  let filteredMails:any;
 
-  if (filter === "all") {
-    filteredMails = mails
-  } else if (filter === "unread") {
-     filteredMails = mails.filter(m=>m.is_read === false)
-  }else{
-    filteredMails = mails.filter(m=>m.is_read === true)
-  }
+const updated= async (uuid:string)=>{
+try{
+  console.log(uuid)
+const updatedresponse= await  markNotificationsAsRead(uuid);
+console.log(updatedresponse)
+}
+catch(error){
+console.log("error",error)
+}
+}
+
+  const filteredMails = mails.filter((m) => {
+    if (filter === "all") return true;
+    if (filter === "unread") return !m.is_read;
+    if (filter === "read") return m.is_read;
+  });
 
   return (
     <div className="min-h-screen bg-[#FAF3EB] p-2 font-[Poppins]">
@@ -49,10 +61,12 @@ export default function GmailStyleInbox() {
           onClick={() => navigate(-1)}
           className="flex items-center text-[#9b111e] hover:underline mr-4 pl-2"
         >
+          
           <FaArrowLeft className="mr-1" />
         </button>
         <h1 className="text-3xl font-bold text-[#9b111e]">Notification</h1>
       </div>
+
       <div className="flex h-[80vh] border rounded-2xl overflow-hidden shadow-lg bg-white">
         {/* Sidebar */}
         <aside className="w-64 border-r bg-[#fdefe9] p-6">
@@ -77,12 +91,21 @@ export default function GmailStyleInbox() {
         {/* Main content */}
         <main className="flex-1 flex">
           <section className="w-1/2 overflow-y-auto border-r custom-scroll px-4 py-4 space-y-4">
-            {filteredMails.map((mail:any,index:number) => (
-              <div
-                key={index}
-                onClick={() => setSelectedMail(mail)}
+            {filteredMails.map((mail, index) => (
+              <div key={index}
+                onClick={async()=>{
+                  setSelectedMail(mail);
+                  if (!mail.is_read) {
+                    await markNotificationsAsRead(mail.uuid);
+                    setMails((prev) =>
+                      prev.map((m) =>
+                        m._id === mail._id ? { ...m, is_read: true } : m
+                      )
+                    );
+                  }
+                }}
                 className={`cursor-pointer flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition duration-150 ${
-                  mail.unread
+                  !mail.is_read
                     ? "bg-gray-100 font-semibold"
                     : "border border-gray-200"
                 }`}
@@ -125,12 +148,13 @@ export default function GmailStyleInbox() {
                 </h2>
 
                 <div className="flex items-center text-lg text-gray-600 mb-4">
-                  
                   <div>
                     <p className="font-semibold text-gray-800 capitalize">
                       {selectedMail.sender}
                     </p>
-                    <p className="text-sm text-gray-500">{selectedMail.updated_at}</p>
+                    <p className="text-sm text-gray-500">
+                      {selectedMail.updated_at}
+                    </p>
                   </div>
                 </div>
 
@@ -151,3 +175,4 @@ export default function GmailStyleInbox() {
     </div>
   );
 }
+

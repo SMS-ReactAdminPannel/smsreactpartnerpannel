@@ -40,10 +40,12 @@ export const markNotificationsAsRead = async(params:string)=>{
     try{
         const response = await Client.partner.notifications.markAsRead(params)
         console.log(response)
+        return response
     }catch(error){
          console.log('Error getting unread notifications counts:',error)
     }
 }
+
 
 export const markAllNotificationsAsRead =  async(params:string)=>{
     try{
@@ -90,14 +92,14 @@ export const getNotificationsById = async(params:string)=>{
     }
 }
 
-export const updateNotifications = async(data:any,params:string)=>{
-    try{
-        const response = await Client.partner.notifications.update(data,params)
-        console.log(response)
-    }catch(error){
-        console.log("Error getting notifications:",error)
-    }
-}
+// export const updateNotifications = async(data:any,params:string)=>{
+//     try{
+//         const response = await Client.partner.notifications.update(data,params)
+//         console.log(response)
+//     }catch(error){
+//         console.log("Error getting notifications:",error)
+//     }
+// }
 
 export const createPreference = async(data:any)=>{
     try{
@@ -125,3 +127,35 @@ export const getPreference = async(params:string)=>{
         console.log("Error getting preference:",error)
     }
 }
+
+
+export const getAllNotificationss = async () => {
+  try {
+    const response = await  Client.partner.notifications.getAll();
+    return response;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    throw error;
+  }
+};
+
+export const markNotificationsAsReads = async (uuid: string) => {
+  try {
+    const response = await  Client.partner.notifications.markAsRead(uuid);
+    return response;
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+    throw error;
+  }
+};
+
+
+export const updateNotifications = async (data: any, uuid: string) => {
+  try {
+    const response = await Client.partner.notifications.update(data, uuid);
+    return response;
+  } catch (error) {
+    console.log("Error updating notification:", error);
+    throw error;
+  }
+};

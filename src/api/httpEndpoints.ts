@@ -18,9 +18,15 @@ const generateEndpoints = () => {
     customer_management: {
       getAll :`/api/partner/customermanage`,
     },
+    customermanagement_history:{
+      getAll: `/api/partner/CustomerManagement/service-history`
+    },
     announcement: {
       create: `/api/announcement/create`,
       getAll: `/api/announcement/all`,
+      update:'/api/announcement/pinned/update',
+      get:'/api/announcement/announcementget/:uuid'
+
     },
     enquiry: {
       create: `/api/enquiry/create`,
@@ -31,9 +37,9 @@ const generateEndpoints = () => {
       create: `/api/admin/spareparts/create`,
       getById: `/api/admin/spareparts/get/:id`,
       getAll: `/api/admin/spareparts/getall`,
-      update: `/api/admin/spareparts/update/:id`,
+      update: `/api/admin/spareparts/update/:uuid`,
       updateStatus: `/api/admin/spareparts/updatestatus/:id`,
-      delete: `/api/admin/spareparts/delete/:id`,
+      delete: `/api/admin/spareparts/delete`,
     },
     order_history: {
       create: `/api/partner/order-history/create`,
@@ -57,7 +63,8 @@ const generateEndpoints = () => {
       create :`/api/jobcards/createCard`,
       getAll :`/api/jobcards/getall`,
       getById:`/api/jobcards/:id`,
-      update:`/api/jobcards/:id`
+      update:`/api/jobcards/:id`,
+      delete:'/api/jobcards/delete/:uuid',
     },
 
     services: {
@@ -67,6 +74,7 @@ const generateEndpoints = () => {
       update: `/api/admin/service/uuid`,
       updateStatus: `/api/admin/service/toggle-status/:uuid`,
     },
+    
     notifications: {
       create: `/api/notifications/`,
       createBulk: `/api/notifications/bulk`,
@@ -78,7 +86,7 @@ const generateEndpoints = () => {
       delete: `/api/notifications/:uuid`,
       getAll: `/api/notifications/`,
       getById: `/api/notifications/:uuid`,
-      update: `/api/notifications/:uuid`,
+      patch: `/api/notifications/read/:id`,
       createPreference: `/api/notifications/preferences`,
       updatePreference:`/api/notifications/preferences`,
       getPreference: `/api/notifications/preferences/:userId`,

@@ -35,14 +35,11 @@ const AccountSettingsPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response: any = await updateProfile(profile, profile.id);
+      const response: any = await updateProfile(profile);
 
-      if (response && response.data) {
-        console.log("Updated Profile:", response.data.data);
-        setProfile(response.data.data);
-      } else {
-        throw new Error("Invalid response format or no response");
-      }
+      if (response) {
+        setProfile(response);
+      } 
     } catch (error) {
       console.error("Error updating profile", error);
     }
