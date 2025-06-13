@@ -44,7 +44,7 @@ export const deleteJobCards = async( params:string)=>{
 }
 
 
-export const updateJobCards = async (params:any,data:any)=>{
+export const updateJobCards = async (params:string,data:any)=>{
     try{
 
      const response = await Client.partner.job_card.update(params,data)

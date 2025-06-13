@@ -21,7 +21,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { deleteJobCards, getAllJobCards, getAllServiceRequests, updateJobCards } from "./Services";
-import { data, useParams } from "react-router-dom";
+
 
 // Mock MustCare component
 const MustCare = () => (
@@ -36,7 +36,7 @@ const COLORS = {
 };
 
 interface JobCard {
-  id: string;
+  _id: string;
   customerName: string;
   phone: string;
   vehicleInfo: {
@@ -95,7 +95,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
   const [updatedJobcards,setupdatedJobcards]= useState<JobCard | null>(null);
 
-  const fetchupdatejobcards = async (params:any,data:any)=>{
+  const fetchupdatejobcards = async (params:string,data:any)=>{
     try {
     const response = await updateJobCards(params, data);
 
@@ -167,16 +167,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const handleSaveEdit = () => {
     if (editFormData) {
+      console.log(editFormData,"edit")
       setJobCards(
         jobCards.map((card) =>
-          card.id === editFormData.id ? editFormData : card
+          card._id === editFormData._id ? editFormData : card
         )
       );
+      fetchupdatejobcards(editFormData._id,editFormData);
       setSelectedJobCard(editFormData);
       setIsEditingModal(false);
     }
-    
-    fetchupdatejobcards('',data);
   };
 
   const handleCancelEdit = () => {
@@ -292,7 +292,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
               <tbody className="divide-y divide-gray-200">
                 {Array.isArray(serviceRequests) &&
                   serviceRequests.map((request) => (
-                    <tr key={request.id} className="hover:bg-gray-50">
+                    <tr key={request._id} className="hover:bg-gray-50">
                       <td className="py-4 px-6">
                         <span className="font-medium text-blue-600">
                           {request.requestId}
