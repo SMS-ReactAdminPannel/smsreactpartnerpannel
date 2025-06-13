@@ -9,7 +9,7 @@ console.log('pinned error',error)
     }
 }
 
-export const announcementget=async (data:any ){
+export const announcementget=async (data:any )=>{
     try{
         const response = await Client.partner.annoucement.get(data)
         return response;
