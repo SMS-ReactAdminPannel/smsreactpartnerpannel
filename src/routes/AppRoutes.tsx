@@ -15,6 +15,8 @@ import AnnouncementPage from '../pages//Announcements/Announcementspages';
 import LoginPage1 from '../pages/auth/LoginPage1';
 import Service from '../pages/Service Management/Service';
 import Order from '../pages/Orders/order';
+import CategoryPage from '../components/spareParts/browse/CategoryPage';
+import ProductPage from '../components/spareParts/browse/ProductPage';
 
 
 
@@ -45,6 +47,8 @@ const AppRoutes = () => {
 				<Route path='announcement' element={<AnnouncementPage />} />
 				<Route path='*' element={<Navigate to='/' />} />
 				<Route path='order' element={<Order />} />
+				<Route path="spare-parts/category/:categoryId" element={<CategoryPage />} />
+       			<Route path="spare-parts/product/:productId" element={<ProductPage />} />
 			</Route>
 		</Routes>
 	);

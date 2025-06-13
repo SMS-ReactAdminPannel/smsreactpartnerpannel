@@ -5,6 +5,9 @@ import {
   getAllSpareParts,
 } from "./Services";
 
+import { Link } from 'react-router-dom';
+import { categories } from '../../components/spareParts/data/Product'
+
 interface SparePart {
   id: string;
   price: string;
@@ -265,81 +268,28 @@ const SpareParts: React.FC = () => {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Category Card */}
-          {[
-            {
-              title: "Wheels and Tires",
-              image:
-                "https://img.freepik.com/free-vector/realistic-complete-set-car-wheels_1284-29765.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
-              items: [
-                "Bearings & Hubs",
-                "Chrome Rims",
-                "Hybrid Tyres",
-                "Seasonal Tyres",
-                "Wheel Bolts",
-              ],
-            },
-            {
-              title: "Body Parts",
-              image:
-                "https://img.freepik.com/premium-photo/two-metal-pistons-white_241146-682.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
-              items: [
-                "Headlights",
-                "Accelerator",
-                "Bumpers",
-                "Clutch",
-                "Washers",
-              ],
-            },
-            {
-              title: "Performance Parts",
-              image:
-                "https://img.freepik.com/free-psd/3d-style-mechanical-item-isolated-transparent-background_191095-13746.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
-              items: [
-                "Drive Belts",
-                "Engine Gasket",
-                "Fuel Pumps",
-                "Head Bolts",
-                "Piston Rings",
-              ],
-            },
-            {
-              title: "Maintenance",
-              image:
-                "https://img.freepik.com/free-vector/engine-pistons-system-composition-with-realistic-image-assembled-metal-engine-elements-isolated_1284-53969.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
-              items: [
-                "Cleaners",
-                "Antifreeze",
-                "Engine Oil",
-                "Repair Kits",
-                "Bodypaint",
-              ],
-            },
-          ].map(({ title, image, items }) => (
-            <div className="flex flex-col gap-4 p-6 border  rounded-xl shadow-md">
-              <div className="flex justify-between items-center">
-                <h2 className="text-md font-bold uppercase text-[#9b111e]">
-                  {title}
-                </h2>
-                <img
-                  src={image}
-                  alt={title}
-                  className="w-16 h-16 object-contain"
-                />
-              </div>
-              <ul className="space-y-1 text-sm">
-                {items.map((item, idx) => (
-                  <li key={idx} className="hover:underline cursor-pointer">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <span className="text-sm font-semibold text-red-700 cursor-pointer hover:underline mt-1">
-                ALL CATEGORIES →
-              </span>
-            </div>
-          ))}
+      {categories.map(({ id, title, image, items }) => (
+        <div key={id} className="flex flex-col gap-4 p-6 border rounded-xl shadow-md">
+          <div className="flex justify-between items-center">
+            <h2 className="text-md font-bold uppercase text-[#9b111e]">{title}</h2>
+            <img src={image} alt={title} className="w-16 h-16 object-contain" />
+          </div>
+          <ul className="space-y-1 text-sm">
+            {items.slice(0, 5).map((item) => (
+              <li key={item.id} className="hover:underline cursor-pointer">
+                {item.name}
+              </li>
+            ))}
+          </ul>
+          <Link 
+            to={`/spare-parts/category/${id}`}
+            className="text-sm font-semibold text-red-700 cursor-pointer hover:underline mt-1"
+          >
+            ALL CATEGORIES →
+          </Link>
         </div>
+      ))}
+    </div>
       </div>
 
       {/* Bottom Full Width Section */}
