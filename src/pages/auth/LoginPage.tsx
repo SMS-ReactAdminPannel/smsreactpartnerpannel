@@ -26,7 +26,7 @@ const LoginPage = () => {
 	const onSubmit = (data: FormData) => {
 		console.log('Login data:', data);
 		if (data.email && data.password) {
-			login();
+			login(data.email);
 			navigate('/');
 		}
 	};

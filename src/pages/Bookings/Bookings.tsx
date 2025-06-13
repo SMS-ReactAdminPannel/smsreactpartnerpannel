@@ -1,46 +1,29 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS, FONTS } from "../../constants/constants";
 
-//getting file
+// Getting components
 import ServiceBookingPanel from "../../components/Booking/BookingCom";
 import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
 import History from "../../components/Booking/BookingHistroy/BookingHistroy";
 
-//icons
+// Icons
 import { MdCollectionsBookmark } from "react-icons/md";
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { GiIncomingRocket } from "react-icons/gi";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+
+// API call
 import { getAllBookings } from "./services";
 
-
-// Dummy values
-const bookingsss = [
-  {
-    id: 1,
-    customerName: "Abishek",
-    carModel: "Maruti Suzuki",
-    servicePurpose: ["Oil Change", "Brake Check"],
-    status: "Solved" as const,
-  },
-  {
-    id: 2,
-    customerName: "John",
-    carModel: "Hyundai i20",
-    servicePurpose: ["Engine Repair"],
-    status: "Pending" as const,
-  },
-];
-
 const Bookings = () => {
-   const [showHistory, setShowHistory] = useState(false);
-  const [bookings, setBookings] = useState<any[]>([]); 
+  const [showHistory, setShowHistory] = useState(false);
+  const [bookings, setBookings] = useState<any[]>([]); // You can define a type instead of any for better safety
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response: any = await getAllBookings('');
-        setBookings(response.data.data)
+        setBookings(response.data.data);
         console.log(response.data.data);
       } catch (error) {
         console.log("Error fetching bookings:", error);
@@ -62,7 +45,7 @@ const Bookings = () => {
 
         {/* Toggle History View */}
         <button
-          className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0 "
+          className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0"
           onClick={() => setShowHistory(!showHistory)}
         >
           {showHistory ? "Back" : "Completed Booking"}
@@ -70,12 +53,10 @@ const Bookings = () => {
       </div>
 
       {showHistory ? (
-        <History bkings={bookingsss}  />
-
-
+        <History bkings={bookings} />
       ) : (
-        <div className="w-full flex justify-center m-3  ">
-          <div className="w-full max-w-7xl px-4 py-2 ml-3  ">
+        <div className="w-full flex justify-center m-3">
+          <div className="w-full max-w-7xl px-4 py-2 ml-3">
             {/* Dashboard Section */}
             <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10">
@@ -112,7 +93,7 @@ const Bookings = () => {
                 <DashboardCard
                   icon={<MdCollectionsBookmark />}
                   title="Total-Booking"
-                  value={22}
+                  value={bookings.length}
                   per={15}
                   perColor="#10b981"
                   borderColor="rgba(16,185,129,0.8)"
