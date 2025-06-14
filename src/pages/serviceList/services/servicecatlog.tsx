@@ -1,5 +1,5 @@
 
-import Client from '../../../api/'
+import Client from '../../../api'
 export const updateServices = async (params:string , data:string)=>{
     try{
 const response =await Client.partner.services.update(params,data) 
@@ -20,9 +20,9 @@ export const createService = async (data:any)=>{
     }
 }
 
-export const deleteService =async ()=>{
+export const deleteService =async (params:string)=>{
     try{
-        const response = await Client.partner.services.deleteservice()
+        const response = await Client.partner.services.deleteservice(params)
         return response;
     }
     catch(error){
