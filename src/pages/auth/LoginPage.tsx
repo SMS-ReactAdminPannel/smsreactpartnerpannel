@@ -4,7 +4,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginImage from '../../../src/assets/login-pg-img/login-video.mp4';
 import { FONTS } from '../../constants/constants';
-import { useAuth } from './authContext';
+import { useAuth } from './AuthContext';
 
 type FormData = {
 	email: string;

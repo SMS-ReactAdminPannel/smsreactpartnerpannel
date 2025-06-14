@@ -17,7 +17,7 @@ const PrivacyPolicySettings = () => {
         <p style={{fontFamily:FONTS.header.fontFamily}}>Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of lorem ipsum.</p>
         </div>
          <div className="pt-5">   
-        <p className="pb-4 text-lg font-semibold text-[#d35028]">Desktop, Email, Chat, Purchase Notifications:</p>
+        <p className="pb-4 text-lg font-semibold text-[#d35028]">Desktop,  Email, Chat, Purchase Notifications:</p>
         <p style={{fontFamily:FONTS.header.fontFamily}}>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</p>
         </div>
          <div className="pt-5">   

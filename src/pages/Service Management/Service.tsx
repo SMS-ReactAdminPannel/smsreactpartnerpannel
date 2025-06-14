@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ServiceManagement from './ServiceManagement';
+import JobCardDetailsPage from './jobCardDetailsPage';
 import { useNavigate } from 'react-router-dom';
-import JobCardDetailsPage from './JobCardDetailsPages';
 
 const Service = () => {
   const [activeStep, setActiveStep] = useState<number>(0);

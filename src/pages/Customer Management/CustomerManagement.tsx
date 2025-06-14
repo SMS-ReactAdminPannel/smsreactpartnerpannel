@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import CustomerProfileDetails from './CustomerProfileDetails';
 import CustomerDetails from './CustomerDetails';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const handleBack = () => {
           <CustomerDetails onProfileView={() => setActiveStep(1)} />
         )}
         {activeStep === 1 && (
-          <CustomerProfileDetails handleBack={handleBack}/>
+          <CustomerProfileDetails  handleBack={handleBack}/>
         )}
 	</div>;
 };

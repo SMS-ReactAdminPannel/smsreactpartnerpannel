@@ -1,5 +1,5 @@
-import type React from "react"
-import { useState } from "react"
+import type React from "react";
+import { useState, useEffect } from "react";
 import {
   Car,
   Wrench,
@@ -15,40 +15,69 @@ import {
   Eye,
   X,
   CheckCircle,
-} from "lucide-react"
-import { MdHomeFilled } from "react-icons/md"
-import { FaLocationDot } from "react-icons/fa6"
-import { TbCertificate } from "react-icons/tb"
-import { RiCustomerService2Fill } from "react-icons/ri"
-import MustCare from "./MustCare"
-import { COLORS } from "../../constants/constants"
+} from "lucide-react";
+import { MdHomeFilled } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
+import { TbCertificate } from "react-icons/tb";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { deleteJobCards, getAllJobCards, getAllServiceRequests } from "./Services";
+
+// Mock MustCare component
+const MustCare = () => (
+  <div className="mt-8 p-4 bg-gray-100 rounded-lg text-center">
+    MustCare Component
+  </div>
+);
+
+// Mock COLORS constant
+const COLORS = {
+  bgColor: "#f8fafc",
+};
 
 interface JobCard {
-  id: string
-  customerName: string
-  phone: string
-  vehicleInfo: string
-  jobNumber: string
-  isEditing: boolean
-  address?: string
-  officeAddress?: string
-  email?: string
-  dob?: string
-  vehicleNumber?: string
-  engineNumber?: string
-  chassisNumber?: string
-  makeModel?: string
-  color?: string
-  fuelLevel?: string
-  complaint?: string
-  estimateLabour?: string
-  estimateParts?: string
-  totalEstimate?: string
-  technicianName?: string
-  serviceAdvisor?: string
-  promisedDeliveryDate?: string
-  contactNumber?: string
-  createdDate?: string
+  id: string;
+  customerName: string;
+  phone: string;
+  vehicleInfo: {
+    chassisNo:string;
+    color:string;
+    engineNo:string;
+    model:string;
+    registrationNo:string;
+  },
+  jobInfo:{
+    ContactNo:string;
+    VehicleNo:string;
+    jobId:string;
+    customerName:string;
+  },
+  customerInfo:{
+    email:string;
+    name:string;
+    address:string;
+    contactNo:string;
+  },
+  jobNumber: string;
+  isEditing: boolean;
+  address?: string;
+  officeAddress?: string;
+  email?: string;
+  dob?: string;
+  vehicleNumber?: string;
+  engineNumber?: string;
+  chassisNumber?: string;
+  makeModel?: string;
+  color?: string;
+  fuelLevel?: string;
+  complaint?: string;
+  estimateLabour?: string;
+  estimateParts?: string;
+  totalEstimate?: string;
+  technicianName?: string;
+  serviceAdvisor?: string;
+  promisedDeliveryDate?: string;
+  contactNumber?: string;
+  createdDate?: string;
 }
 
 interface ServiceManagementProps {
@@ -56,149 +85,104 @@ interface ServiceManagementProps {
 }
 
 const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedJobCard, setSelectedJobCard] = useState<JobCard | null>(null)
-  const [showJobCardModal, setShowJobCardModal] = useState(false)
-  const [isEditingModal, setIsEditingModal] = useState(false)
-  const [editFormData, setEditFormData] = useState<JobCard | null>(null)
-  const [jobCards, setJobCards] = useState<JobCard[]>([])
+  const [jobCards, setJobCards] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [serviceRequests, setServiceRequests] = useState<any[]>([]);
+  const [selectedJobCard, setSelectedJobCard] = useState<JobCard | null>(null);
+  const [showJobCardModal, setShowJobCardModal] = useState(false);
+  const [isEditingModal, setIsEditingModal] = useState(false);
+  const [editFormData, setEditFormData] = useState<JobCard | null>(null);
 
-  const serviceRequests = [
-    {
-      id: "SR-001",
-      customerName: "John Smith",
-      phone: "+1 234-567-8900",
-      vehicleInfo: "2020 Honda Civic",
-      serviceType: "Oil Change",
-      scheduledDate: "2024-01-15",
-      scheduledTime: "10:00 AM",
-      status: "pending",
-      priority: "medium",
-      location: "123 Main St, Downtown",
-      estimatedCost: " ₹89",
-      notes: "Customer prefers synthetic oil",
-    },
-    {
-      id: "SR-002",
-      customerName: "Sarah Johnson",
-      phone: "+1 234-567-8901",
-      vehicleInfo: "2019 Toyota Camry",
-      serviceType: "Brake Inspection",
-      scheduledDate: "2024-01-15",
-      scheduledTime: "2:00 PM",
-      status: "confirmed",
-      priority: "high",
-      location: "456 Oak Ave, Uptown",
-      estimatedCost: " ₹150",
-      notes: "Customer reported squeaking sounds",
-    },
-    {
-      id: "SR-003",
-      customerName: "Mike Wilson",
-      phone: "+1 234-567-8902",
-      vehicleInfo: "2021 Ford F-150",
-      serviceType: "Tire Replacement",
-      scheduledDate: "2024-01-16",
-      scheduledTime: "9:00 AM",
-      status: "in-progress",
-      priority: "medium",
-      location: "789 Pine St, Suburb",
-      estimatedCost: " ₹320",
-      notes: "All four tires need replacement",
-    },
-    {
-      id: "SR-004",
-      customerName: "Mike Wilson",
-      phone: "+1 234-567-8902",
-      vehicleInfo: "2021 Ford F-150",
-      serviceType: "Tire Replacement",
-      scheduledDate: "2024-01-16",
-      scheduledTime: "9:00 AM",
-      status: "in-progress",
-      priority: "medium",
-      location: "789 Pine St, Suburb",
-      estimatedCost: " ₹320",
-      notes: "All four tires need replacement",
-    },
-    {
-      id: "SR-005",
-      customerName: "Sarah Johnson",
-      phone: "+1 234-567-8901",
-      vehicleInfo: "2019 Toyota Camry",
-      serviceType: "Brake Inspection",
-      scheduledDate: "2024-01-15",
-      scheduledTime: "2:00 PM",
-      status: "confirmed",
-      priority: "high",
-      location: "456 Oak Ave, Uptown",
-      estimatedCost: " ₹150",
-      notes: "Customer reported squeaking sounds",
-    },
-    {
-      id: "SR-001",
-      customerName: "John Smith",
-      phone: "+1 234-567-8900",
-      vehicleInfo: "2020 Honda Civic",
-      serviceType: "Oil Change",
-      scheduledDate: "2024-01-15",
-      scheduledTime: "10:00 AM",
-      status: "pending",
-      priority: "medium",
-      location: "123 Main St, Downtown",
-      estimatedCost: " ₹89",
-      notes: "Customer prefers synthetic oil",
-    },
-  ]
+
+  const fetchServiceRequests = async () => {
+    try {
+      const response: any = await getAllServiceRequests("");
+      console.log("Fetched service requests:", response.data.data);
+      setServiceRequests(response.data.data);
+    } catch (error) {
+      console.error("Error fetching service requests:", error);
+    }
+  };
+
+  const fetchJobCards = async () => {
+    try {
+      const response: any = await getAllJobCards("");
+      console.log("Fetched job cards:", response.data.data);
+      setJobCards(response.data.data);
+    } catch (error) {
+      console.error("Error fetching job cards:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchServiceRequests();
+    fetchJobCards();
+  }, []);
 
   const stats = [
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
     { label: "Completed Today", value: "23", change: "+8%", color: "green" },
     { label: "Pending", value: "15", change: "-5%", color: "yellow" },
     { label: "Revenue", value: " ₹12,450", change: "+15%", color: "purple" },
-  ]
+  ];
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
+  const getPriorityColor = (Priority: string) => {
+    switch (Priority) {
       case "high":
-        return "text-red-600"
+        return "text-red-600";
       case "medium":
-        return "text-yellow-600"
+        return "text-yellow-600";
       case "low":
-        return "text-green-600"
+        return "text-green-600";
       default:
-        return "text-gray-600"
+        return "text-gray-600";
     }
-  }
+  };
 
-  const handleView = (jobCard: JobCard) => {
-    setSelectedJobCard(jobCard)
-    setShowJobCardModal(true)
-  }
+  const handleView = (jobCard: any) => {
+    console.log(jobCard)
+    setSelectedJobCard(jobCard);
+    setShowJobCardModal(true);
+  };
 
   const handleEditModal = () => {
-    setIsEditingModal(true)
-    setEditFormData(selectedJobCard)
-  }
+    setIsEditingModal(true);
+    setEditFormData(selectedJobCard);
+  };
 
   const handleSaveEdit = () => {
     if (editFormData) {
-      setJobCards(jobCards.map((card) => (card.id === editFormData.id ? editFormData : card)))
-      setSelectedJobCard(editFormData)
-      setIsEditingModal(false)
+      setJobCards(
+        jobCards.map((card) =>
+          card.id === editFormData.id ? editFormData : card
+        )
+      );
+      setSelectedJobCard(editFormData);
+      setIsEditingModal(false);
     }
-  }
+  };
 
   const handleCancelEdit = () => {
-    setIsEditingModal(false)
-    setEditFormData(selectedJobCard)
-  }
+    setIsEditingModal(false);
+    setEditFormData(selectedJobCard);
+  };
 
   const handleEditInputChange = (field: keyof JobCard, value: string) => {
     if (editFormData) {
       setEditFormData({
         ...editFormData,
         [field]: value,
-      })
+      });
+    }
+  };
+
+  const deleteJob = async (param:string) =>{
+    try {
+      const deleteCard = await deleteJobCards(param);
+      console.log(deleteCard)
+      setJobCards(jobCards.filter((c) => c.uuid !== param))
+    } catch (error) {
+      console.log("Job Cards Deleted ",error)
     }
   }
 
@@ -207,12 +191,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
       {/* Stats Section */}
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
                 <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                <p className={`text-sm ${stat.change.startsWith("+") ? "text-green-600" : "text-red-600"}`}>
+                <p
+                  className={`text-sm ${
+                    stat.change.startsWith("+")
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
                   {stat.change} from last week
                 </p>
               </div>
@@ -229,89 +222,119 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Service Requests</h2>
-                <p className="text-gray-600 mt-1">Manage incoming service appointments</p>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Service Requests
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Manage incoming service appointments
+                </p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="relative">
                   <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                   <input
                     type="search"
-                    placeholder="Search requests..."
+                    placeholder="Search request..."
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                
+                {/* <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                   <Filter className="w-4 h-4" />
                   <span>Filter</span>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
 
           <div className="overflow-x-auto">
+            <div className="max-h-96 overflow-y-auto"> 
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Request ID</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Customer</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Vehicle</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Schedule</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Priority</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">Jobcard</th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Request ID
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Customer
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Vehicle
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Schedule
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Priority
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                    Jobcard
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {serviceRequests.map((request) => (
-                  <tr key={request.id} className="hover:bg-gray-50">
-                    <td className="py-4 px-6">
-                      <span className="font-medium text-blue-600">{request.id}</span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div>
-                        <p className="font-medium text-gray-900">{request.customerName}</p>
-                        <p className="text-sm text-gray-600 flex items-center mt-1">
-                          <Phone className="w-3 h-3 mr-1" />
-                          {request.phone}
-                        </p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center space-x-2">
-                        <Car className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-900">{request.vehicleInfo}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="text-sm">
-                        <p className="text-gray-900 flex items-center">
-                          <Calendar className="w-3 h-3 mr-1" />
-                          {request.scheduledDate}
-                        </p>
-                        <p className="text-gray-600 flex items-center mt-1">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {request.scheduledTime}
-                        </p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className={`text-sm font-medium capitalize ${getPriorityColor(request.priority)}`}>
-                        {request.priority}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <button
-                        onClick={onView}
-                        className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
-                      >
-                        <Plus className="w-4 h-4" />
-                        <span>Create</span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {Array.isArray(serviceRequests) &&
+                  serviceRequests.map((request) => (
+                    <tr key={request.id} className="hover:bg-gray-50">
+                      <td className="py-4 px-6">
+                        <span className="font-medium text-blue-600">
+                          {request.requestId}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {request.customerId.contact_info.phoneNumber}
+                          </p>
+                          <p className="text-sm text-gray-600 flex items-center mt-1">
+                            <Phone className="w-3 h-3 mr-1" />
+                            {request.phone}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center space-x-2">
+                          <Car className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-900">
+                            {request.vechicle_info.name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="text-sm">
+                          <p className="text-gray-900 flex items-center">
+                            <Calendar className="w-3 h-3 mr-1" />
+                            {request.schedule_date}
+                          </p>
+                          <p className="text-gray-600 flex items-center mt-1">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {request.scheduledTime}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span
+                          className={`text-sm font-medium capitalize ${getPriorityColor(
+                            request.priority
+                          )}`}
+                        >
+                          {request.priority}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <button
+                          onClick={onView}
+                          className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
+                        >
+                          <Plus className="w-4 h-4" />
+                          <span>Create</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
+              </div>
           </div>
         </div>
       </div>
@@ -322,8 +345,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Job Card Register</h2>
-                <p className="text-gray-600 mt-1">Track and manage job card details</p>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Job Card Register
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Track and manage job card details
+                </p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="relative">
@@ -343,13 +370,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobCards
               .filter((card) =>
-                [card.customerName, card.vehicleNumber, card.jobNumber]
+                [
+                  card.jobInfo?.customerName,
+                  card.jobInfo?.ContactNo,
+                  card.jobInfo?.jobId,
+                  card.jobInfo?.VehicleNo,
+                ]
                   .join(" ")
                   .toLowerCase()
-                  .includes(searchTerm.toLowerCase()),
+                  .includes(searchTerm.toLowerCase())
               )
-              .map((card) => (
-                <div key={card.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              .map((card,index) => (
+                <div
+                  key={index}
+                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                >
                   <div className="flex items-start justify-between mb-3">
                     <div className="p-2 bg-blue-100 rounded-lg">
                       <Wrench className="w-5 h-5 text-blue-600" />
@@ -363,7 +398,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => setJobCards(jobCards.filter((c) => c.id !== card.id))}
+                        onClick={() =>deleteJob(card.uuid)}
                         className="p-1 text-red-600 hover:bg-red-50 rounded"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -371,19 +406,27 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     </div>
                   </div>
 
-                  <h3 className="font-semibold text-gray-900 mb-2">{card.customerName}</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    {card.jobInfo?.customerName}
+                  </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Vehicle:</span>
-                      <span className="font-medium text-blue-600">{card.vehicleInfo}</span>
+                      <span className="font-medium text-blue-600">
+                        {card.jobInfo?.VehicleNo}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Job No:</span>
-                      <span className="text-gray-900">{card.jobNumber}</span>
+                      <span className="text-gray-900">
+                        {card.jobInfo?.jobId}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Phone:</span>
-                      <span className="text-gray-900">{card.phone}</span>
+                      <span className="text-gray-900">
+                        {card.jobInfo?.ContactNo}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -398,8 +441,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-[#9b111e]">Job Card Details</h2>
-                <p className="text-gray-600">Job Number: {selectedJobCard.jobNumber}</p>
+                <h2 className="text-2xl font-bold text-[#9b111e]">
+                  Job Card Details
+                </h2>
+                <p className="text-gray-600">
+                  Job Number: {selectedJobCard?.jobInfo?.jobId}
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 {!isEditingModal ? (
@@ -440,21 +487,26 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Customer Information */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">Customer Information</h3>
+                <h3 className="font-semibold text-[#9b111e] mb-4">
+                  Customer Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-600">Name:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.customerName || ""}
-                        onChange={(e) => handleEditInputChange("customerName", e.target.value)}
+                        value={editFormData?.jobInfo?.customerName || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("customerName", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.customerName}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.jobInfo?.customerName}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -463,11 +515,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.phone || ""}
-                        onChange={(e) => handleEditInputChange("phone", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("phone", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.phone}</p>
+                      <p className="font-medium">{selectedJobCard.jobInfo?.ContactNo}</p>
                     )}
                   </div>
                   <div>
@@ -476,11 +530,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="email"
                         value={editFormData?.email || ""}
-                        onChange={(e) => handleEditInputChange("email", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("email", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.email || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.customerInfo?.email || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -489,31 +547,40 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.address || ""}
-                        onChange={(e) => handleEditInputChange("address", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("address", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.address || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard.cutomerInfo?.address || "N/A"}
+                      </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Vehicle Information */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">Vehicle Information</h3>
+                <h3 className="font-semibold text-[#9b111e] mb-4">
+                  Vehicle Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-600">Vehicle Number:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.vehicleNumber || ""}
-                        onChange={(e) => handleEditInputChange("vehicleNumber", e.target.value)}
+                        value={editFormData?.jobInfo?.VehicleNo || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("vehicleNumber", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.vehicleNumber || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard.jobInfo?.VehicleNo || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -521,12 +588,17 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.makeModel || ""}
-                        onChange={(e) => handleEditInputChange("makeModel", e.target.value)}
+                        value={editFormData?.vehicleInfo?.model || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("makeModel", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.makeModel || selectedJobCard.vehicleInfo}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.vehicleInfo?.model ||
+                          selectedJobCard.vehicleInfo.model}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -534,12 +606,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.engineNumber || ""}
-                        onChange={(e) => handleEditInputChange("engineNumber", e.target.value)}
+                        value={editFormData?.vehicleInfo?.engineNo || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("engineNumber", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.engineNumber || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.vehicleInfo?.engineNo || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -547,12 +623,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.chassisNumber || ""}
-                        onChange={(e) => handleEditInputChange("chassisNumber", e.target.value)}
+                        value={editFormData?.vehicleInfo?.chassisNo || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("chassisNumber", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.chassisNumber || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard.vehicleInfo?.chassisNo || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -560,12 +640,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.color || ""}
-                        onChange={(e) => handleEditInputChange("color", e.target.value)}
+                        value={editFormData?.vehicleInfo?.color || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("color", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.color || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard.vehicleInfo?.color || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -573,33 +657,41 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.fuelLevel || ""}
-                        onChange={(e) => handleEditInputChange("fuelLevel", e.target.value)}
+                        value={editFormData?.vehicleInventory?.fuelLevel || ""}
+                        onChange={(e) =>
+                          handleEditInputChange("fuelLevel", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.fuelLevel || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.vehicleInventory?.fuelLevel || "N/A"}
+                      </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Complaint & Diagnosis */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">Complaint & Diagnosis</h3>
+                <h3 className="font-semibold text-[#9b111e] mb-4">
+                  Complaint & Diagnosis
+                </h3>
                 {isEditingModal ? (
                   <textarea
                     value={editFormData?.complaint || ""}
-                    onChange={(e) => handleEditInputChange("complaint", e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange("complaint", e.target.value)
+                    }
                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e] h-24"
                     placeholder="Enter complaint details..."
                   />
                 ) : (
-                  <p className="text-sm">{selectedJobCard.complaint || "No complaint specified"}</p>
+                  <p className="text-sm">
+                    {selectedJobCard?.complaint || "No complaint specified"}
+                  </p>
                 )}
               </div>
 
-              {/* Estimate */}
               <div className="border rounded-lg p-4">
                 <h3 className="font-semibold text-[#9b111e] mb-4">Estimate</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -609,11 +701,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.estimateLabour || ""}
-                        onChange={(e) => handleEditInputChange("estimateLabour", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange(
+                            "estimateLabour",
+                            e.target.value
+                          )
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.estimateLabour || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.estimateLabour || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -622,11 +721,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.estimateParts || ""}
-                        onChange={(e) => handleEditInputChange("estimateParts", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("estimateParts", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.estimateParts || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.estimateParts || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -635,19 +738,24 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.totalEstimate || ""}
-                        onChange={(e) => handleEditInputChange("totalEstimate", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("totalEstimate", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium text-[#9b111e]">{selectedJobCard.totalEstimate || "N/A"}</p>
+                      <p className="font-medium text-[#9b111e]">
+                        {selectedJobCard?.totalEstimate || "N/A"}
+                      </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Service Details */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">Service Details</h3>
+                <h3 className="font-semibold text-[#9b111e] mb-4">
+                  Service Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-600">Technician:</span>
@@ -655,11 +763,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.technicianName || ""}
-                        onChange={(e) => handleEditInputChange("technicianName", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange(
+                            "technicianName",
+                            e.target.value
+                          )
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.technicianName || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.technicianName || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -668,11 +783,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.serviceAdvisor || ""}
-                        onChange={(e) => handleEditInputChange("serviceAdvisor", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange(
+                            "serviceAdvisor",
+                            e.target.value
+                          )
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.serviceAdvisor || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.serviceAdvisor || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -681,11 +803,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.promisedDeliveryDate || ""}
-                        onChange={(e) => handleEditInputChange("promisedDeliveryDate", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange(
+                            "promisedDeliveryDate",
+                            e.target.value
+                          )
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.promisedDeliveryDate || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.promisedDeliveryDate || "N/A"}
+                      </p>
                     )}
                   </div>
                   <div>
@@ -694,11 +823,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       <input
                         type="text"
                         value={editFormData?.createdDate || ""}
-                        onChange={(e) => handleEditInputChange("createdDate", e.target.value)}
+                        onChange={(e) =>
+                          handleEditInputChange("createdDate", e.target.value)
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.createdDate || "N/A"}</p>
+                      <p className="font-medium">
+                        {selectedJobCard?.createdDate || "N/A"}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -708,9 +841,10 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
         </div>
       )}
 
-      {/* Footer Section */}
       <div className="mt-16">
-        <h2 className="text-3xl font-bold text-center">Customised Care For All Your Needs</h2>
+        <h2 className="text-3xl font-bold text-center">
+          Customised Care For All Your Needs
+        </h2>
         <div className="flex justify-center mt-8 space-x-8">
           <div className="text-center">
             <div className="flex justify-center mb-2">
@@ -744,7 +878,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
         <MustCare />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceManagement
+export default ServiceManagement;
