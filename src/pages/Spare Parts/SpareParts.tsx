@@ -199,7 +199,7 @@ const SpareParts: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-2">
   <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
     <h1 className="text-4xl font-bold text-[#9b111e] text-left">
       Spare Parts
@@ -309,7 +309,7 @@ const SpareParts: React.FC = () => {
 
 
 <div className="max-w-full px-4 md:px-6 lg:px-8">
-  <h1 className="text-2xl font-bold text-[#9b111e] mb-8 text-center md:text-left">BY CATEGORIES</h1>
+  <h1 className="text-2xl font-bold text-[#9b111e] mb-8 text-center md:text-left ml-7">BY CATEGORIES</h1>
 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     
@@ -336,7 +336,7 @@ const SpareParts: React.FC = () => {
         image: "https://img.freepik.com/free-vector/engine-pistons-system-composition-with-realistic-image-assembled-metal-engine-elements-isolated_1284-53969.jpg?ga=GA1.1.1244886688.1725532511&semt=ais_hybrid&w=740",
         items: ["Cleaners", "Antifreeze", "Engine Oil", "Repair Kits", "Bodypaint"]
       },
-    ].map(({ title, image, items }, index) => (
+    ].map(({ title, image, items }) => (
     <div className="flex flex-col gap-4 p-6 border  rounded-xl shadow-md">
       <div className="flex justify-between items-center">
         <h2 className="text-md font-bold uppercase text-[#9b111e]">{title}</h2>
