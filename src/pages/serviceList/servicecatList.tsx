@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { MdModeEdit } from "react-icons/md";
 
 type Category = { name: string; count: number };
 type Service = {
@@ -62,6 +63,8 @@ const ServiceCatalog: React.FC = () => {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+  const [editingCategoryIndex, setEditingCategoryIndex] = useState<number | null>(null);
+  const [editedCategory, setEditedCategory] = useState<Category | null>(null);
 
   const [newService, setNewService] = useState<Service>({
     id: "",
@@ -130,6 +133,16 @@ const ServiceCatalog: React.FC = () => {
     setShowCategoryForm(false);
   };
 
+  const handleEditCategory = () => {
+    if (editedCategory && editingCategoryIndex !== null) {
+      const updated = [...categories];
+      updated[editingCategoryIndex] = editedCategory;
+      setCategories(updated);
+      setEditedCategory(null);
+      setEditingCategoryIndex(null);
+    }
+  };
+
   const handleDeleteService = (id: string) => {
     const confirmed = window.confirm("Are you sure you want to delete this service?");
     if (confirmed) {
@@ -155,15 +168,8 @@ const ServiceCatalog: React.FC = () => {
               <p className="text-sm text-gray-500">{filteredServices.length} services found</p>
             </div>
             <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Search services..."
-                className="border px-3 py-2 rounded"
-              />
-              <button
-                onClick={handleAddServiceClick}
-                className="bg-red-700 text-white px-4 py-2 rounded"
-              >
+              <input type="text" placeholder="Search services..." className="border px-3 py-2 rounded" />
+              <button onClick={handleAddServiceClick} className="bg-red-700 text-white px-4 py-2 rounded">
                 + Add Service
               </button>
             </div>
@@ -174,16 +180,10 @@ const ServiceCatalog: React.FC = () => {
               <div key={s.id} className="relative bg-white rounded-lg shadow-md overflow-hidden">
                 <img src={s.imageUrl} className="w-full h-40 object-cover" />
                 <div className="absolute top-2 right-2 flex gap-2">
-                  <button
-                    className="bg-black text-white p-1 rounded-full"
-                    onClick={() => handleEditService(s)}
-                  >
+                  <button className="bg-black text-white p-1 rounded-full" onClick={() => handleEditService(s)}>
                     <FaEdit size={14} />
                   </button>
-                  <button
-                    className="bg-red-600 text-white p-1 rounded-full"
-                    onClick={() => handleDeleteService(s.id)}
-                  >
+                  <button className="bg-red-600 text-white p-1 rounded-full" onClick={() => handleDeleteService(s.id)}>
                     <FaTrash size={14} />
                   </button>
                 </div>
@@ -203,7 +203,6 @@ const ServiceCatalog: React.FC = () => {
         </main>
 
         <aside className="w-64 bg-white p-4 border-r">
-         
           <button
             className="bg-red-700 text-white w-full py-2 rounded mb-4"
             onClick={() => setShowCategoryForm(true)}
@@ -211,23 +210,29 @@ const ServiceCatalog: React.FC = () => {
             + Add Category
           </button>
           <h3 className="text-xl text-black font-bold mb-2">CATEGORIES</h3>
-          {categories.map((cat) => (
+          {categories.map((cat, index) => (
             <div
               key={cat.name}
-              onClick={() => setSelectedCategory(cat.name)}
-              className={`cursor-pointer px-3 py-2 rounded mb-1 ${
-                selectedCategory === cat.name
-                  ? "bg-red-100 text-red-700"
-                  : "hover:bg-gray-100"
+              className={`group relative flex items-center justify-between cursor-pointer px-3 py-2 rounded mb-1 ${
+                selectedCategory === cat.name ? "bg-red-100 text-red-700" : "hover:bg-gray-100"
               }`}
+              onClick={() => setSelectedCategory(cat.name)}
             >
-              {cat.name} ({cat.count})
+              <span>{cat.name} ({cat.count})</span>
+              <MdModeEdit
+                className="invisible group-hover:visible text-gray-500 hover:text-red-700 ml-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditingCategoryIndex(index);
+                  setEditedCategory({ ...cat });
+                }}
+              />
             </div>
           ))}
         </aside>
       </div>
 
-      {/* Add/Edit Service Modal */}
+      
       {showAddForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="p-6 bg-white rounded shadow w-full max-w-xl">
@@ -310,9 +315,7 @@ const ServiceCatalog: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Add Category Modal */}
-      {showCategoryForm && (
+        {showCategoryForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
             <h2 className="text-xl font-bold mb-4 text-center">Add New Category</h2>
@@ -332,6 +335,46 @@ const ServiceCatalog: React.FC = () => {
               </button>
               <button
                 onClick={() => setShowCategoryForm(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+     
+      {editedCategory && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4 text-center">Edit Category</h2>
+            <input
+              type="text"
+              placeholder="Category Name"
+              value={editedCategory.name}
+              onChange={(e) => setEditedCategory({ ...editedCategory, name: e.target.value })}
+              className="border w-full p-2 rounded mb-4"
+            />
+            <input
+              type="number"
+              placeholder="Service Count"
+              value={editedCategory.count}
+              onChange={(e) => setEditedCategory({ ...editedCategory, count: parseInt(e.target.value) })}
+              className="border w-full p-2 rounded mb-4"
+            />
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleEditCategory}
+                className="bg-red-600 text-white px-4 py-2 rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => {
+                  setEditedCategory(null);
+                  setEditingCategoryIndex(null);
+                }}
                 className="bg-gray-400 text-white px-4 py-2 rounded"
               >
                 Cancel

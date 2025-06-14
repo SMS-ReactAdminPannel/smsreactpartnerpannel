@@ -84,6 +84,7 @@ class Client {
         HttpClient.update(HTTP_END_POINTS.services.update, data, params),
       updateStatus: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.services.updateStatus, data, params),
+      deleteservice:()=>HttpClient.delete(HTTP_END_POINTS.services.delete)
     },
     notifications: {
       create: (data: any) =>
