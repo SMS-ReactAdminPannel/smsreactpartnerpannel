@@ -37,9 +37,8 @@ export default function GmailStyleInbox() {
   }, []);
 
 
-const updated= async (uuid:string)=>{
+const updated = async (uuid:string)=>{
 try{
-  console.log(uuid)
 const updatedresponse= await  markNotificationsAsRead(uuid);
 console.log(updatedresponse)
 }
@@ -103,6 +102,7 @@ console.log("error",error)
                       )
                     );
                   }
+                  updated(mail.uuid)
                 }}
                 className={`cursor-pointer flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition duration-150 ${
                   !mail.is_read

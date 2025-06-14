@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Client from '../../../api'
 export const updateServices = async (params:string , data:string)=>{
@@ -20,9 +21,9 @@ export const createService = async (data:any)=>{
     }
 }
 
-export const deleteService =async (params:string)=>{
+export const deleteService =async ()=>{
     try{
-        const response = await Client.partner.services.deleteservice(params)
+        const response = await Client.partner.services.deleteservice()
         return response;
     }
     catch(error){

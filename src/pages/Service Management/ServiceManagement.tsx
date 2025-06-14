@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -7,7 +8,6 @@ import {
   Clock,
   Phone,
   Plus,
-  Filter,
   Search,
   Edit,
   Trash2,
@@ -36,6 +36,8 @@ const COLORS = {
 };
 
 interface JobCard {
+  cutomerInfo: any;
+  vehicleInventory: any;
   _id: string;
   customerName: string;
   phone: string;
@@ -93,14 +95,14 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
-  const [updatedJobcards,setupdatedJobcards]= useState<JobCard | null>(null);
+  // const [setupdatedJobcards]= useState<JobCard | null>(null);
 
   const fetchupdatejobcards = async (params:string,data:any)=>{
     try {
     const response = await updateJobCards(params, data);
 
     if (response && response.data) {
-      setupdatedJobcards(response.data); 
+      // setupdatedJobcards(response.data); 
       console.log("Job card updated successfully:", response.data);
     }
   } catch (error) {
@@ -121,7 +123,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const fetchJobCards = async () => {
     try {
-      const response: any = await getAllJobCards("");
+      const response: any = await getAllJobCards();
       console.log("Fetched job cards:", response.data.data);
       setJobCards(response.data.data);
     } catch (error) {

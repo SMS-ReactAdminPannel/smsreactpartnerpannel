@@ -6,6 +6,7 @@ import {
 } from "./Services";
 
 interface SparePart {
+  _id: string;
   id: string;
   price: string;
   productName: string;
@@ -54,13 +55,14 @@ const ToggleSwitch: React.FC<{ enabled: boolean; onToggle: () => void }> = ({
 );
 
 const SpareParts: React.FC = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [partsData, setPartsData] = useState<SparePart[]>([]);
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPart, setNewPart] = useState<Omit<SparePart, "id">>({
+    _id:"",
     productName: "",
     price: "0",
     inStock: true,
@@ -110,7 +112,7 @@ const SpareParts: React.FC = () => {
 
   const deletePart = async (partId: string) => {
     try {
-      const response = await deleteSpareParts(partId);
+      await deleteSpareParts(partId);
       setPartsData((prev) => prev.filter((part) => part._id !== partId));
       setShowDeleteConfirm(false);
     } catch (error) {
@@ -132,6 +134,7 @@ const SpareParts: React.FC = () => {
 
   const resetAddForm = () => {
     setNewPart({
+      _id:'',
       productName: "",
       price: "0",
       inStock: true,
@@ -228,8 +231,8 @@ const SpareParts: React.FC = () => {
             key={index}
             className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#efe7d0] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
             onClick={() => setSelectedPart(part)}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            // onMouseEnter={() => setHoveredIndex(index)}
+            // onMouseLeave={() => setHoveredIndex(null)}
             style={{ minHeight: "260px" }} // ensures min height but allows vertical flexibility
           >
             <div className="h-[180px] flex justify-center items-center overflow-hidden">

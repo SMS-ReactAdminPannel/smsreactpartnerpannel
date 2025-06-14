@@ -4,18 +4,24 @@ import { COLORS } from "../../constants/constants";
 
 type BookingStatus = "Pending" | "Viewed" | "Solved";
 
-interface ServiceBooking {
-  _id: number;
-  firstName: string;
-  lastName: string;
-  serviceItems: string[];
-  serviceDateTime: string;
-  status: BookingStatus;
-}
+// interface ServiceBooking {
+//   _id: number;
+//   firstName: string;
+//   lastName: string;
+//   serviceItems: string[];
+//   serviceDateTime: string;
+//   status: BookingStatus;
+// }
 
 interface ServiceBooking{
-
+  id: number,
+  customerName: string,
+  carModel: string,
+  servicePurpose: string[],
+  serviceDateTime: string,
+  status: BookingStatus,
 }
+
 
 const initialBookings: ServiceBooking[] = [
   {
