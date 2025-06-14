@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
-
+import { IoArrowBackOutline } from "react-icons/io5";
 type Category = { name: string; count: number };
 type Service = {
   id: string;
@@ -54,7 +54,7 @@ const initialServices: Service[] = [
   },
 ];
 
-const ServiceCatalog: React.FC = () => {
+const ServiceCatList: React.FC = () => {
   const [services, setServices] = useState<Service[]>(initialServices);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState("All Services");
@@ -143,12 +143,15 @@ const ServiceCatalog: React.FC = () => {
     }
   };
 
+
+
   const handleDeleteService = (id: string) => {
     const confirmed = window.confirm("Are you sure you want to delete this service?");
     if (confirmed) {
       setServices(services.filter((service) => service.id !== id));
-    }
-  };
+ }
+    
+ };
 
   const handleEditService = (service: Service) => {
     setNewService(service);
@@ -159,7 +162,7 @@ const ServiceCatalog: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-3xl text-[#9b111e] font-bold mb-1">Service Catalog</h2>
+     <h2 className="text-3xl text-[#9b111e] font-bold mb-1">  <IoArrowBackOutline />Service Catalog</h2>
       <div className="flex min-h-screen bg-gray-100">
         <main className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">
@@ -177,8 +180,8 @@ const ServiceCatalog: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredServices.map((s) => (
-              <div key={s.id} className="relative bg-white rounded-lg shadow-md overflow-hidden">
-                <img src={s.imageUrl} className="w-full h-40 object-cover" />
+              <div key={s.id} className="group relative bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 hover:bg-red-100">
+                  <img src={s.imageUrl} className="w-full h-40 object-cover" />
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button className="bg-black text-white p-1 rounded-full" onClick={() => handleEditService(s)}>
                     <FaEdit size={14} />
@@ -295,9 +298,9 @@ const ServiceCatalog: React.FC = () => {
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-center gap-2">
                 <button type="submit" className="bg-red-600 text-white py-2 px-4 rounded">
-                  {isEditing ? "Update Service" : "Save Service"}
+                  {isEditing ? "Update Service" : "Add Service"}
                 </button>
                 <button
                   type="button"
@@ -306,7 +309,7 @@ const ServiceCatalog: React.FC = () => {
                     setIsEditing(false);
                     setEditingServiceId(null);
                   }}
-                  className="bg-gray-400 text-white py-2 px-4 rounded"
+                  className="bg-red-600 text-white py-2 px-4 rounded"
                 >
                   Cancel
                 </button>
@@ -335,7 +338,7 @@ const ServiceCatalog: React.FC = () => {
               </button>
               <button
                 onClick={() => setShowCategoryForm(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded"
+                className="bg-red-600 text-white px-4 py-2 rounded"
               >
                 Cancel
               </button>
@@ -387,4 +390,4 @@ const ServiceCatalog: React.FC = () => {
   );
 };
 
-export default ServiceCatalog;
+export default ServiceCatList;

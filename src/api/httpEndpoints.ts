@@ -73,7 +73,7 @@ const generateEndpoints = () => {
       getById: `/api/admin/service/:uuid`,
       update: `/api/admin/service/uuid`,
       updateStatus: `/api/admin/service/toggle-status/:uuid`,
-      delete:'/api/admin/service/delete/:id'
+      delete:'/api/admin/service/remove/:id'
     },
     
     notifications: {
