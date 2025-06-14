@@ -75,7 +75,7 @@ const SideBar = ({
 					<SidebarLink
 						to='/spare-parts'
 						icon={<FaCogs />}
-						label='Spare Parts Management'
+						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -96,7 +96,7 @@ const SideBar = ({
 					<SidebarLink
 						to='/service'
 						icon={<MdBuild />}
-						label='Service Management'
+						label='Service'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -115,13 +115,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/customer'
 						icon={<RiCustomerService2Fill />}
-						label='Customer Management'
+						label='Customer '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/announcement'
 						icon={<Megaphone />}
@@ -145,13 +145,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/order'
 						icon={<BsCart4 />}
 						label='orders'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 				</nav>
 			</div>
 			<div
