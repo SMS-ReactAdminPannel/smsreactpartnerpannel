@@ -12,6 +12,7 @@ import { FaCogs } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 import { BsCart4 } from 'react-icons/bs';
+import { FaServicestack } from "react-icons/fa6";
 
 const COLOR = {
 	primary: '#9b111e',
@@ -100,6 +101,14 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
+					to='/servicecatList'
+					icon={<FaServicestack />}
+					label='Service Catlog'
+					isOpen={isOpen}
+					onClick={handleLinkClick}
+					/>
+
+					<SidebarLink
 						to='/settings'
 						icon={<FiSettings />}
 						label='Settings'
@@ -127,6 +136,8 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
+					
+					
 					<SidebarLink
 						to='/faq'
 						icon={<MdQuestionAnswer />}
