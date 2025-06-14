@@ -64,12 +64,12 @@ class Client {
     job_card:{
       create : (data:any)=> 
         HttpClient.post(HTTP_END_POINTS.job_card.create,data),
-      getAll : ()=>
+      getAll : ()=> 
         HttpClient.get(HTTP_END_POINTS.job_card.getAll),
       getById : (params:string)=>
         HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
-      update :(data:any, params:string)=>
-        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params),
+      update :( params:string,data:any)=>
+        HttpClient.update(HTTP_END_POINTS.job_card.update.replace(':id',data),params,data),
       delete : (params:string)=>
         HttpClient.delete(HTTP_END_POINTS.job_card.delete.replace(':uuid',params))
     },
@@ -84,6 +84,7 @@ class Client {
         HttpClient.update(HTTP_END_POINTS.services.update, data, params),
       updateStatus: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.services.updateStatus, data, params),
+      deleteservice:()=>HttpClient.delete(HTTP_END_POINTS.services.delete)
     },
     notifications: {
       create: (data: any) =>
