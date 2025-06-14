@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { TiPin } from "react-icons/ti";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
-import Client from '../../api/index.ts';
+import Client from '../../api/index.ts'
+import { pinnedAnnouncementsAPI } from './services/index.tsx';
 
 const categories = ["All", "general", "booking", "payments"];
 
@@ -42,22 +43,14 @@ const AnnouncementPages = () => {
     fetchData();
   }, []);
 
-  const togglePin = async (announcement: announcement) => {
-    try {
-      const updatedData = {
-        uuid: announcement._id,
-        isPinned: !announcement.isPinned,
-      };
-      await Client.partner.annoucement.update(updatedData);
-
-      const updated = announcements.map((a) =>
-        a._id === announcement._id ? { ...a, isPinned: !a.isPinned } : a
-      );
-      setAnnouncements(updated);
-      setPinnedAnnouncements(updated.filter((a) => a.isPinned));
-    } catch (error) {
-      console.error("Pin toggle failed:", error);
-    }
+  const togglePin = async(id: number) => {
+    const partnerId:string =localStorage.getItem('adminobjectid')
+    const responce =  await pinnedAnnouncementsAPI(partnerId)
+    console.log(responce)
+    const updated = announcements.map((a,index)=>
+      index === id ? { ...a, isPinned: !a.isPinned } : a
+    );
+    setAnnouncements(updated);
   };
 
   const handlePinnedClick = async (announcement: announcement) => {

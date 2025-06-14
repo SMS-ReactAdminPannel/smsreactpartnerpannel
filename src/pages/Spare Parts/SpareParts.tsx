@@ -213,12 +213,12 @@ const SpareParts: React.FC = () => {
         <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
           Products
         </h2>
-        {/* <button
+        <button
     className="bg-[#9b111e] text-white px-5 py-2 rounded-full text-sm hover:bg-red-700 transition"
     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
   >
     View All Products
-  </button> */}
+  </button>
       </div>
 
       {/* Product Grid */}

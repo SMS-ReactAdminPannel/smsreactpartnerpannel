@@ -13,14 +13,14 @@ type Service = {
   imageUrl: string;
 };
 
-const categories: Category[] = [
+const initialCategories: Category[] = [
   { name: "All Services", count: 4 },
   { name: "engin", count: 2 },
   { name: "Interior", count: 1 },
   { name: "Exterior", count: 1 },
 ];
 
-const services: Service[] = [
+const initialServices: Service[] = [
   {
     id: "1",
     name: "spark plug",
@@ -54,8 +54,25 @@ const services: Service[] = [
 ];
 
 const ServiceCatalog: React.FC = () => {
+  const [services, setServices] = useState<Service[]>(initialServices);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState("All Services");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+
+  const [newService, setNewService] = useState<Service>({
+    id: "",
+    name: "",
+    category: "",
+    description: "",
+    duration: "",
+    price: 0,
+    status: "Active",
+    imageUrl: "",
+  });
 
   const filteredServices =
     selectedCategory === "All Services"
@@ -63,6 +80,67 @@ const ServiceCatalog: React.FC = () => {
       : services.filter((s) => s.category === selectedCategory);
 
   const handleAddServiceClick = () => {
+    setShowAddForm(true);
+    setIsEditing(false);
+    setNewService({
+      id: "",
+      name: "",
+      category: "",
+      description: "",
+      duration: "",
+      price: 0,
+      status: "Active",
+      imageUrl: "",
+    });
+  };
+
+  const handleSaveService = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isEditing && editingServiceId) {
+      const updatedList = services.map((service) =>
+        service.id === editingServiceId ? { ...newService, id: editingServiceId } : service
+      );
+      setServices(updatedList);
+    } else {
+      const newId = (services.length + 1).toString();
+      const newEntry = { ...newService, id: newId };
+      setServices([...services, newEntry]);
+    }
+
+    setShowAddForm(false);
+    setIsEditing(false);
+    setEditingServiceId(null);
+    setNewService({
+      id: "",
+      name: "",
+      category: "",
+      description: "",
+      duration: "",
+      price: 0,
+      status: "Active",
+      imageUrl: "",
+    });
+  };
+
+  const handleAddCategory = () => {
+    if (newCategoryName.trim() !== "") {
+      setCategories([...categories, { name: newCategoryName, count: 0 }]);
+    }
+    setNewCategoryName("");
+    setShowCategoryForm(false);
+  };
+
+  const handleDeleteService = (id: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this service?");
+    if (confirmed) {
+      setServices(services.filter((service) => service.id !== id));
+    }
+  };
+
+  const handleEditService = (service: Service) => {
+    setNewService(service);
+    setEditingServiceId(service.id);
+    setIsEditing(true);
     setShowAddForm(true);
   };
 
@@ -91,17 +169,21 @@ const ServiceCatalog: React.FC = () => {
             </div>
           </div>
 
-          
-
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredServices.map((s) => (
               <div key={s.id} className="relative bg-white rounded-lg shadow-md overflow-hidden">
                 <img src={s.imageUrl} className="w-full h-40 object-cover" />
                 <div className="absolute top-2 right-2 flex gap-2">
-                  <button className="bg-black text-white p-1 rounded-full">
+                  <button
+                    className="bg-black text-white p-1 rounded-full"
+                    onClick={() => handleEditService(s)}
+                  >
                     <FaEdit size={14} />
                   </button>
-                  <button className="bg-red-600 text-white p-1 rounded-full">
+                  <button
+                    className="bg-red-600 text-white p-1 rounded-full"
+                    onClick={() => handleDeleteService(s.id)}
+                  >
                     <FaTrash size={14} />
                   </button>
                 </div>
@@ -119,33 +201,13 @@ const ServiceCatalog: React.FC = () => {
             ))}
           </div>
         </main>
-        {showAddForm && (
-            <div className="p-6 bg-white rounded shadow mb-6 ">
-              <h2 className="text-xl font-bold mb-4">Add New Service</h2>
-              <form className="grid gap-4">
-                <input type="text" placeholder="Service Name" className="border p-2 rounded" />
-                <input type="text" placeholder="Category" className="border p-2 rounded" />
-                <textarea placeholder="Description" className="border p-2 rounded" />
-                <input type="text" placeholder="Duration" className="border p-2 rounded" />
-                <input type="number" placeholder="Price" className="border p-2 rounded" />
-                <input type="text" placeholder="Image URL" className="border p-2 rounded" />
-                <select className="border p-2 rounded">
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-                <button type="submit" className="bg-red-600 text-white py-2 px-4 rounded">
-                  Save Service
-                </button>
-                 <button type="submit" className="bg-red-600 text-white py-2 px-4 rounded">
-                  Cancle
-                </button>
-              </form>
-            </div>
-          )}
 
         <aside className="w-64 bg-white p-4 border-r">
-          <p className="text-xl text-gray-500 mb-4">Manage services</p>
-          <button className="bg-red-700 text-white w-full py-2 rounded mb-4">
+         
+          <button
+            className="bg-red-700 text-white w-full py-2 rounded mb-4"
+            onClick={() => setShowCategoryForm(true)}
+          >
             + Add Category
           </button>
           <h3 className="text-xl text-black font-bold mb-2">CATEGORIES</h3>
@@ -164,6 +226,120 @@ const ServiceCatalog: React.FC = () => {
           ))}
         </aside>
       </div>
+
+      {/* Add/Edit Service Modal */}
+      {showAddForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="p-6 bg-white rounded shadow w-full max-w-xl">
+            <h2 className="text-xl font-bold mb-4">{isEditing ? "Edit Service" : "Add New Service"}</h2>
+            <form onSubmit={handleSaveService} className="grid gap-4">
+              <input
+                type="text"
+                placeholder="Service Name"
+                value={newService.name}
+                onChange={(e) => setNewService({ ...newService, name: e.target.value })}
+                className="border p-2 rounded"
+              />
+              <input
+                type="text"
+                placeholder="Category"
+                value={newService.category}
+                onChange={(e) => setNewService({ ...newService, category: e.target.value })}
+                className="border p-2 rounded"
+              />
+              <textarea
+                placeholder="Description"
+                value={newService.description}
+                onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+                className="border p-2 rounded"
+              />
+              <input
+                type="text"
+                placeholder="Duration"
+                value={newService.duration}
+                onChange={(e) => setNewService({ ...newService, duration: e.target.value })}
+                className="border p-2 rounded"
+              />
+              <input
+                type="number"
+                placeholder="Price"
+                value={newService.price}
+                onChange={(e) => setNewService({ ...newService, price: Number(e.target.value) })}
+                className="border p-2 rounded"
+              />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const imageUrl = URL.createObjectURL(file);
+                    setNewService({ ...newService, imageUrl });
+                  }
+                }}
+                className="border p-2 rounded"
+              />
+              {newService.imageUrl && (
+                <img src={newService.imageUrl} alt="Preview" className="h-32 object-cover rounded" />
+              )}
+              <select
+                value={newService.status}
+                onChange={(e) => setNewService({ ...newService, status: e.target.value })}
+                className="border p-2 rounded"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <div className="flex justify-end gap-2">
+                <button type="submit" className="bg-red-600 text-white py-2 px-4 rounded">
+                  {isEditing ? "Update Service" : "Save Service"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAddForm(false);
+                    setIsEditing(false);
+                    setEditingServiceId(null);
+                  }}
+                  className="bg-gray-400 text-white py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Add Category Modal */}
+      {showCategoryForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4 text-center">Add New Category</h2>
+            <input
+              type="text"
+              placeholder="Category Name"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="border w-full p-2 rounded mb-4"
+            />
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleAddCategory}
+                className="bg-red-600 text-white px-4 py-2 rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setShowCategoryForm(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

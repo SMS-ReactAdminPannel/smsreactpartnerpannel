@@ -141,7 +141,7 @@ class Client {
     annoucement:{
        getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll),
        update:(data:any)=>HttpClient.update(HTTP_END_POINTS.announcement.update,'',data),
-       get:(data:any)=>HttpClient.get(HTTP_END_POINTS.announcement.get,data)
+       get:(data:any)=>HttpClient.get(HTTP_END_POINTS.announcement.get.replace(':uuid',data))
     },
     enquery:{
       create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data)
