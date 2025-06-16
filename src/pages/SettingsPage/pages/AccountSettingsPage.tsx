@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
@@ -9,11 +10,12 @@ import { PiPhonePlusFill } from "react-icons/pi";
 import { RiContactsBook3Fill } from "react-icons/ri";
 import { MdAttachEmail } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { FaRegAddressCard, FaFacebook, FaYoutube } from "react-icons/fa";
+import { FaRegAddressCard} from "react-icons/fa";
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { IoIosLink } from "react-icons/io";
-import { IoShareSocial } from "react-icons/io5";
+// import { IoShareSocial } from "react-icons/io5";
 import { getProfile, updateProfile } from "../services";
+import { FONTS } from "../../../constants/constants";
 
 const AccountSettingsPage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -48,7 +50,7 @@ const AccountSettingsPage: React.FC = () => {
   return (
     <div className="p-6 mx-auto bg-white shadow-lg rounded-lg">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-[#9b111e] ">Profile Settings</h1>
+        <h1 className="text-3xl font-bold text-[#9b111e] " style={{...FONTS.header}}>Profile Settings</h1>
         <p className="text-gray-600 mt-2">
           Update your personal information, contact details, and preferences
         </p>
@@ -57,16 +59,17 @@ const AccountSettingsPage: React.FC = () => {
       <form className="space-y-8" onSubmit={handleSubmit}>
         {/* Personal Information Section */}
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
+          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <BsFillPersonPlusFill />
             <h2>Personal Information</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="firstName"
-                className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
+                className=" mb-2 font-medium !text-gray-700 flex items-center gap-2"
+                // style={{...FONTS.paragraph}}
               >
                 <MdOutlineDriveFileRenameOutline /> First Name
               </label>
@@ -77,11 +80,11 @@ const AccountSettingsPage: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, firstName: e.target.value })
                 }
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="lastName"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -95,11 +98,11 @@ const AccountSettingsPage: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, lastName: e.target.value })
                 }
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="dob"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -109,11 +112,11 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="date"
                 id="dob"
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="gender"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -122,7 +125,7 @@ const AccountSettingsPage: React.FC = () => {
               </label>
               <select
                 id="gender"
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition value={profile?.gender || ''}"
+                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition value={profile?.gender || ''}"
               >
                 <option value="">Select gender</option>
                 <option>Male</option>
@@ -133,7 +136,7 @@ const AccountSettingsPage: React.FC = () => {
             </div>
           </div>
 
-          <div>
+          <div style={{...FONTS.paragraph}}>
             <label
               htmlFor="bio"
               className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -142,13 +145,13 @@ const AccountSettingsPage: React.FC = () => {
             </label>
             <textarea
               id="bio"
-              className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+              className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               rows={4}
               placeholder="Tell us about yourself..."
             />
           </div>
 
-          <div>
+          <div style={{...FONTS.paragraph}}>
             <label
               htmlFor="photo"
               className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -180,16 +183,17 @@ const AccountSettingsPage: React.FC = () => {
         </section>
 
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
+          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <RiContactsBook3Fill />
             <h2>Contact Information</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="email"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
+              
               >
                 <MdAttachEmail /> Email Address
               </label>
@@ -200,11 +204,11 @@ const AccountSettingsPage: React.FC = () => {
                   setProfile({ ...profile, email: e.target.value })
                 }
                 value={profile?.email || ""}
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="phone"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -225,11 +229,11 @@ const AccountSettingsPage: React.FC = () => {
                   })
                 }
                 value={profile?.contact_info.phoneNumber || ""}
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 !text-gray-700 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="address"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -249,11 +253,11 @@ const AccountSettingsPage: React.FC = () => {
                   })
                 }
                 value={profile?.contact_info.address1 || ""}
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="State"
                 className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
@@ -263,7 +267,7 @@ const AccountSettingsPage: React.FC = () => {
               <select
                 id="State"
                 value={profile?.contact_info.state || ""}
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 !text-gray-700 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               >
                 <option value="">Select State</option>
                 <option>Tamil Nadu</option>
@@ -277,44 +281,44 @@ const AccountSettingsPage: React.FC = () => {
         </section>
 
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
+          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <FaRegAddressCard />
             <h2>Professional Information</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="companyName"
-                className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
+                className=" mb-2 font-medium !text-gray-700 flex items-center gap-2"
               >
                 <TbBuildingWarehouse /> Company Name
               </label>
               <input
                 type="text"
                 id="companyName"
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
               />
             </div>
 
-            <div>
+            <div style={{...FONTS.paragraph}}>
               <label
                 htmlFor="companyWebsite"
-                className=" mb-2 font-medium text-gray-700 flex items-center gap-2"
+                className=" mb-2 font-medium !text-gray-700 flex items-center gap-2"
               >
                 <IoIosLink /> Company Website
               </label>
               <input
                 type="url"
                 id="companyWebsite"
-                className="w-full px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
                 placeholder="https://"
               />
             </div>
           </div>
         </section>
 
-        <section className="space-y-6">
+        {/* <section className="space-y-6">
           <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2">
             <IoShareSocial />
             <h2>Social Media</h2>
@@ -351,18 +355,20 @@ const AccountSettingsPage: React.FC = () => {
               />
             </div>
           </div>
-        </section>
+        </section> */}
 
         <div className="flex justify-end gap-4 pt-4">
           <button
             type="button"
             className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition"
+            style={{...FONTS.paragraph}}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-[#9b111e] text-white rounded-lg font-medium hover:bg-[#9b111e]/90 transition focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:ring-offset-2"
+            className="px-6 py-2 bg-[#9b111e] !text-white rounded-lg font-medium hover:bg-[#9b111e]/90 transition focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:ring-offset-2"
+            style={{...FONTS.paragraph}}
           >
             Save Changes
           </button>
