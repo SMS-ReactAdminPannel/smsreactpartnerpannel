@@ -3,6 +3,7 @@ import AccountSettingsPage from './pages/AccountSettingsPage';
 import PrivacyPolicySettings from './pages/PrivacyPolicyPage';
 import TermsConditionsPage from './pages/TermsContionsPage';
 import AboutUsPage from './pages/AboutUsPage';
+import { FONTS } from '../../constants/constants';
 
 const SettingsPage: React.FC = () => {
   const [tab, setTab] = useState<string>('Account Settings');
@@ -25,7 +26,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className="flex flex-wrap align-center justify-center gap-4 mb-6">
+      <div className="flex flex-wrap align-center justify-center gap-4 mb-6" style={{...FONTS.paragraph}}>
         <button
           onClick={() => handleRenderComponent('Account Settings')}
           className={getButtonClassName('Account Settings')}
@@ -40,7 +41,7 @@ const SettingsPage: React.FC = () => {
           About us
         </button>
 
-        <button
+        {/* <button
           onClick={() => handleRenderComponent('Privacy Policy')}
           className={getButtonClassName('Privacy Policy')}
         >
@@ -52,13 +53,13 @@ const SettingsPage: React.FC = () => {
           className={getButtonClassName('Terms & Conditions')}
         >
           Terms & Conditions
-        </button>
+        </button> */}
       </div>
 
       <div>
         {tab === 'Account Settings' && <AccountSettingsPage />}
-        {tab === 'Privacy Policy' && <PrivacyPolicySettings />}
-        {tab === 'Terms & Conditions' && <TermsConditionsPage />}
+        {/* {tab === 'Privacy Policy' && <PrivacyPolicySettings />}
+        {tab === 'Terms & Conditions' && <TermsConditionsPage />} */}
         {tab === 'About us' && <AboutUsPage />}
       </div>
     </div>

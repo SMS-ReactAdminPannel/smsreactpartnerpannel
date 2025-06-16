@@ -16,6 +16,8 @@ import LoginPage1 from '../pages/auth/LoginPage1';
 import Order from '../pages/Orders/order';
 import Service from '../pages/Service Management/Service';
 import ServiceCatList from '../pages/serviceList/servicecatList';
+import PrivacyPolicySettings from '../pages/SettingsPage/pages/PrivacyPolicyPage';
+import TermsConditionsPage from '../pages/SettingsPage/pages/TermsContionsPage';
 
 
 
@@ -47,6 +49,8 @@ const AppRoutes = () => {
 				<Route path='announcement' element={<AnnouncementPage />} />
 				<Route path='*' element={<Navigate to='/' />} />
 				<Route path='order' element={<Order />} />
+				<Route path='privacy-policy' element={<PrivacyPolicySettings/>}/>
+				<Route path='terms-conditions' element={<TermsConditionsPage />}/>
 			</Route>
 		</Routes>
 	);
