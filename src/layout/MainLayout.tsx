@@ -11,7 +11,7 @@ const MainLayout = () => {
 			{/* Sidebar takes up 1/9 of the width */}
 			<div
 				className={`${
-					isSidebarOpen ? 'w-[255px]' : 'w-[68px]'
+					isSidebarOpen ? 'w-[200px]' : 'w-[68px]'
 				} transition-all duration-300`}
 			>
 				<SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />

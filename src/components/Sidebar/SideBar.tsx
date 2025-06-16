@@ -12,6 +12,7 @@ import { FaCogs } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/LOGO.jpg';
 import { BsCart4 } from 'react-icons/bs';
+import { FaServicestack } from "react-icons/fa6";
 
 const COLOR = {
 	primary: '#9b111e',
@@ -74,7 +75,7 @@ const SideBar = ({
 					<SidebarLink
 						to='/spare-parts'
 						icon={<FaCogs />}
-						label='Spare Parts Management'
+						label='Spare Parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -95,10 +96,18 @@ const SideBar = ({
 					<SidebarLink
 						to='/service'
 						icon={<MdBuild />}
-						label='Service Management'
+						label='Service'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
+					<SidebarLink
+					to='/servicecatList'
+					icon={<FaServicestack />}
+					label='Service Catlog'
+					isOpen={isOpen}
+					onClick={handleLinkClick}
+					/>
+
 					<SidebarLink
 						to='/settings'
 						icon={<FiSettings />}
@@ -106,13 +115,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/customer'
 						icon={<RiCustomerService2Fill />}
-						label='Customer Management'
+						label='Customer '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/announcement'
 						icon={<Megaphone />}
@@ -127,6 +136,8 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
+					
+					
 					<SidebarLink
 						to='/faq'
 						icon={<MdQuestionAnswer />}
@@ -134,13 +145,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/order'
 						icon={<BsCart4 />}
 						label='orders'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 				</nav>
 			</div>
 			<div

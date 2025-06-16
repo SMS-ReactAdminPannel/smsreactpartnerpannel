@@ -13,8 +13,9 @@ import FaqPage from '../pages/FAQpages/FaqPages';
 import AnnouncementPage from '../pages//Announcements/Announcementspages';
 // import ResetPassword from '../pages/auth/ResetPassword';
 import LoginPage1 from '../pages/auth/LoginPage1';
-import Service from '../pages/Service Management/Service';
 import Order from '../pages/Orders/order';
+import Service from '../pages/Service Management/Service';
+import ServiceCatList from '../pages/serviceList/servicecatList';
 
 
 
@@ -37,6 +38,7 @@ const AppRoutes = () => {
 				<Route path='service' element={<Service/>} />
 				<Route path='profile' element={<ProfileManagement />} />
 				<Route path='bookings' element={<Bookings />} />
+				<Route path='servicecatList' element={<ServiceCatList/>} />
 				<Route path='customer' element={<CustomerManagement />} />
 				<Route path='spare-parts' element={<SpareParts />} />
 				<Route path='settings' element={<SettingsPage />} />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -7,7 +8,6 @@ import {
   Clock,
   Phone,
   Plus,
-  Filter,
   Search,
   Edit,
   Trash2,
@@ -20,7 +20,8 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { deleteJobCards, getAllJobCards, getAllServiceRequests } from "./Services";
+import { deleteJobCards, getAllJobCards, getAllServiceRequests, updateJobCards } from "./Services";
+
 
 // Mock MustCare component
 const MustCare = () => (
@@ -35,27 +36,29 @@ const COLORS = {
 };
 
 interface JobCard {
-  id: string;
+  cutomerInfo: any;
+  vehicleInventory: any;
+  _id: string;
   customerName: string;
   phone: string;
   vehicleInfo: {
-    chassisNo:string;
-    color:string;
-    engineNo:string;
-    model:string;
-    registrationNo:string;
+    chassisNo: string;
+    color: string;
+    engineNo: string;
+    model: string;
+    registrationNo: string;
   },
-  jobInfo:{
-    ContactNo:string;
-    VehicleNo:string;
-    jobId:string;
-    customerName:string;
+  jobInfo: {
+    ContactNo: string;
+    VehicleNo: string;
+    jobId: string;
+    customerName: string;
   },
-  customerInfo:{
-    email:string;
-    name:string;
-    address:string;
-    contactNo:string;
+  customerInfo: {
+    email: string;
+    name: string;
+    address: string;
+    contactNo: string;
   },
   jobNumber: string;
   isEditing: boolean;
@@ -92,7 +95,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
+  const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
 
+  const fetchupdatejobcards = async (params: string, data: any) => {
+    try {
+      const response = await updateJobCards(params, data);
+
+      if (response && response.data) {
+        setupdatedJobcards(response.data);
+        console.log("Job card updated successfully:", response.data);
+      }
+    } catch (error) {
+      console.error("Failed to update job card:", error);
+
+    }
+  }
 
   const fetchServiceRequests = async () => {
     try {
@@ -106,7 +123,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const fetchJobCards = async () => {
     try {
-      const response: any = await getAllJobCards("");
+      const response: any = await getAllJobCards();
       console.log("Fetched job cards:", response.data.data);
       setJobCards(response.data.data);
     } catch (error) {
@@ -123,7 +140,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
     { label: "Completed Today", value: "23", change: "+8%", color: "green" },
     { label: "Pending", value: "15", change: "-5%", color: "yellow" },
-    { label: "Revenue", value: " ₹12,450", change: "+15%", color: "purple" },
+    
   ];
 
   const getPriorityColor = (Priority: string) => {
@@ -152,11 +169,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const handleSaveEdit = () => {
     if (editFormData) {
+      console.log(editFormData, "edit")
       setJobCards(
         jobCards.map((card) =>
-          card.id === editFormData.id ? editFormData : card
+          card._id === editFormData._id ? editFormData : card
         )
       );
+      fetchupdatejobcards(editFormData._id, editFormData);
       setSelectedJobCard(editFormData);
       setIsEditingModal(false);
     }
@@ -176,18 +195,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     }
   };
 
-  const deleteJob = async (param:string) =>{
+  const deleteJob = async (param: string) => {
     try {
       const deleteCard = await deleteJobCards(param);
       console.log(deleteCard)
       setJobCards(jobCards.filter((c) => c.uuid !== param))
     } catch (error) {
-      console.log("Job Cards Deleted ",error)
+      console.log("Job Cards Deleted ", error)
     }
   }
 
   return (
-    <div className="p-4" style={{ background: COLORS.bgColor }}>
+    <div className="p-4" >
       {/* Stats Section */}
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
@@ -200,11 +219,10 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                 <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
                 <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
                 <p
-                  className={`text-sm ${
-                    stat.change.startsWith("+")
+                  className={`text-sm ${stat.change.startsWith("+")
                       ? "text-green-600"
                       : "text-red-600"
-                  }`}
+                    }`}
                 >
                   {stat.change} from last week
                 </p>
@@ -238,7 +256,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                
+
                 {/* <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                   <Filter className="w-4 h-4" />
                   <span>Filter</span>
@@ -248,93 +266,93 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           </div>
 
           <div className="overflow-x-auto">
-            <div className="max-h-96 overflow-y-auto"> 
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Request ID
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Customer
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Vehicle
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Schedule
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Priority
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Jobcard
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {Array.isArray(serviceRequests) &&
-                  serviceRequests.map((request) => (
-                    <tr key={request.id} className="hover:bg-gray-50">
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-blue-600">
-                          {request.requestId}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            {request.customerId.contact_info.phoneNumber}
-                          </p>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <Phone className="w-3 h-3 mr-1" />
-                            {request.phone}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-2">
-                          <Car className="w-4 h-4 text-gray-500" />
-                          <span className="text-gray-900">
-                            {request.vechicle_info.name}
+            <div className="max-h-96 overflow-y-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Request ID
+                    </th>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Customer
+                    </th>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Vehicle
+                    </th>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Schedule
+                    </th>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Priority
+                    </th>
+                    <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
+                      Jobcard
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {Array.isArray(serviceRequests) &&
+                    serviceRequests.map((request) => (
+                      <tr key={request._id} className="hover:bg-gray-50">
+                        <td className="py-4 px-6">
+                          <span className="font-medium text-blue-600">
+                            {request.requestId}
                           </span>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm">
-                          <p className="text-gray-900 flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
-                            {request.schedule_date}
-                          </p>
-                          <p className="text-gray-600 flex items-center mt-1">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {request.scheduledTime}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span
-                          className={`text-sm font-medium capitalize ${getPriorityColor(
-                            request.priority
-                          )}`}
-                        >
-                          {request.priority}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <button
-                          onClick={onView}
-                          className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
-                        >
-                          <Plus className="w-4 h-4" />
-                          <span>Create</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-              </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div>
+                            <p className="font-medium text-gray-900">
+                              {request.customerId.contact_info.phoneNumber}
+                            </p>
+                            <p className="text-sm text-gray-600 flex items-center mt-1">
+                              <Phone className="w-3 h-3 mr-1" />
+                              {request.phone}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center space-x-2">
+                            <Car className="w-4 h-4 text-gray-500" />
+                            <span className="text-gray-900">
+                              {request.vechicle_info.name}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="text-sm">
+                            <p className="text-gray-900 flex items-center">
+                              <Calendar className="w-3 h-3 mr-1" />
+                              {request.schedule_date}
+                            </p>
+                            <p className="text-gray-600 flex items-center mt-1">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {request.scheduledTime}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span
+                            className={`text-sm font-medium capitalize ${getPriorityColor(
+                              request.priority
+                            )}`}
+                          >
+                            {request.priority}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <button
+                            onClick={onView}
+                            className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
+                          >
+                            <Plus className="w-4 h-4" />
+                            <span>Create</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -380,7 +398,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   .toLowerCase()
                   .includes(searchTerm.toLowerCase())
               )
-              .map((card,index) => (
+              .map((card, index) => (
                 <div
                   key={index}
                   className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -398,7 +416,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() =>deleteJob(card.uuid)}
+                        onClick={() => deleteJob(card.uuid)}
                         className="p-1 text-red-600 hover:bg-red-50 rounded"
                       >
                         <Trash2 className="w-4 h-4" />
