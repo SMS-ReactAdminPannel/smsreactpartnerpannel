@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 // import { HiXMark } from "react-icons/hi2";
 import { FaRegAddressCard} from "react-icons/fa";
 import { createJobCards } from './Services';
-import { describe } from 'node:test';
 
 interface ApiData {
   jobId: string;
@@ -44,6 +44,7 @@ interface ServiceItem {
 }
 
 interface servicesmain {
+  amount(amount: any): unknown;
   id:string;
   descriptions:string;
   rates:string;
@@ -51,6 +52,7 @@ interface servicesmain {
 }
 
 interface FormData {
+  totalAmounts: any;
   inventory: VehicleInventory;
   fuelLevel: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full';
   fuelLevelImages: File[];
@@ -354,16 +356,16 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
   });
 };
 
-const calculateTotalAmounts = (): void => {
-  const total = formData.servicesmain.reduce((sum, items) => {
-    return sum + (parseFloat(items.amounts) || 0);
-  }, 0);
+// const calculateTotalAmounts = (): void => {
+//   const total = formData.servicesmain.reduce((sum, items) => {
+//     return sum + (parseFloat(items.amounts) || 0);
+//   }, 0);
 
-  setFormData(prev => ({
-    ...prev,
-    totalAmounts: total.toFixed(2)
-  }));
-};
+//   setFormData(prev => ({
+//     ...prev,
+//     totalAmounts: total.toFixed(2)
+//   }));
+// };
 
 
   const getPriorityColor = (priority: ApiData['priority']): string => {

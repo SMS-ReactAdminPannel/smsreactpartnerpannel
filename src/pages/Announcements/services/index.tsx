@@ -1,7 +1,7 @@
 import Client from '../../../api';
-export const pinnedAnnouncements= async (data:any)=>{
+export const pinnedAnnouncementsAPI= async (data:any)=>{
     try{
-       const response = await Client.partner.annoucement.update(data)
+       const response = await Client.partner.annoucement.update({uuid:data})
        return response;
     }
     catch (error){
@@ -9,7 +9,7 @@ console.log('pinned error',error)
     }
 }
 
-export const announcementget=async (data:any)=>{
+export const announcementget=async (data:any )=>{
     try{
         const response = await Client.partner.annoucement.get(data)
         return response;
