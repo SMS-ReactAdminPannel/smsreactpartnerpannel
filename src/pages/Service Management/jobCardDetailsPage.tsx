@@ -45,7 +45,6 @@ interface ServiceItem {
 }
 
 interface servicesmain {
-  amount(amount: any): unknown;
   id:string;
   descriptions:string;
   rates:string;
@@ -151,6 +150,7 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
       { id: '1', description: '', quantity: '', rate: '', amount: '' }
     ],
     totalAmount: '0',
+    totalAmounts: '0',
     servicesmain:[
       {id:'1',descriptions:'',rates:'',amounts:''}
     ]
@@ -347,7 +347,7 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       return items;
     });
 
-    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amount) || 0), 0);
+    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amounts) || 0), 0);
 
     return {
       ...prev,
@@ -356,18 +356,6 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     };
   });
 };
-
-// const calculateTotalAmounts = (): void => {
-//   const total = formData.servicesmain.reduce((sum, items) => {
-//     return sum + (parseFloat(items.amounts) || 0);
-//   }, 0);
-
-//   setFormData(prev => ({
-//     ...prev,
-//     totalAmounts: total.toFixed(2)
-//   }));
-// };
-
 
   const getPriorityColor = (priority: ApiData['priority']): string => {
     switch(priority) {

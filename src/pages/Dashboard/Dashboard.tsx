@@ -132,7 +132,7 @@ const Dashboard = () => {
 					className='text-xl font-semibold pl-6 py-3 '
 					style={{ ...FONTS.header, color: COLORS.primary, fontWeight: 600 }}
 				>
-					Overview of our services
+					Dashboard
 				</p>
 				<p
 					className='text-gray-500 text-sm pb-5 pl-7'
