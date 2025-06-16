@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import carImage from '../../assets/login-pg-img/porshe.webp';
 import { useAuth } from './AuthContext';
 import { FONTS } from '../../constants/constants';
@@ -21,22 +22,30 @@ const LoginPage1 = () => {
 		formState: { errors },
 	} = useForm<LoginData>();
 	const [showPassword, setShowPassword] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 	const { login } = useAuth();
 
 	const onSubmit = async (data: LoginData) => {
+    setIsLoading(true);
     try {
         const User: any = await loginUser(data);
 
         if (User?.data?.data) {
             login(User.data.data);
+            toast.success('Login successful! Welcome back!');
             navigate('/');
             console.log(User);
         } else {
+            toast.error('Invalid login credentials. Please try again.');
             console.error('Invalid login response:', User);
         }
-    } catch (error) {
+    } catch (error: any) {
         console.log('error', error);
+        const errorMessage = error?.response?.data?.message || error?.message || 'Login failed. Please try again.';
+        toast.error(errorMessage);
+    } finally {
+        setIsLoading(false);
     }
 };
 
@@ -217,13 +226,28 @@ const LoginPage1 = () => {
 							{/* Submit */}
 							<button
 								type='submit'
-								className='w-full text-white font-semibold py-2 rounded-full transition duration-300 hover:brightness-110'
+								disabled={isLoading}
+								className={`w-full text-white font-semibold py-2 rounded-full transition duration-300 ${
+									isLoading 
+										? 'opacity-70 cursor-not-allowed' 
+										: 'hover:brightness-110'
+								}`}
 								style={{
 									backgroundImage:
 										'linear-gradient(44.99deg, #700808 11%, #d23c3c 102.34%)',
 								}}
 							>
-								Login
+								{isLoading ? (
+									<div className="flex items-center justify-center">
+										<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+											<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+											<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+										</svg>
+										Logging in...
+									</div>
+								) : (
+									'Login'
+								)}
 							</button>
 
 							<div className='text-right mt-1'>
