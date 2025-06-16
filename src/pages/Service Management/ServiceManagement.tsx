@@ -140,7 +140,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
     { label: "Completed Today", value: "23", change: "+8%", color: "green" },
     { label: "Pending", value: "15", change: "-5%", color: "yellow" },
-    // { label: "Revenue", value: " ₹12,450", change: "+15%", color: "purple" },
+    
   ];
 
   const getPriorityColor = (Priority: string) => {
@@ -208,7 +208,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   return (
     <div className="p-4" >
       {/* Stats Section */}
-      <div className="p-2 grid grid-cols-3 gap-6">
+      <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div
             key={index}
