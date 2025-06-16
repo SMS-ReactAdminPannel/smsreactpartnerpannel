@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import Client from '../../../api/'
+import Client from '../../../api'
 export const updateServices = async (params:string , data:string)=>{
     try{
 const response =await Client.partner.services.update(params,data) 

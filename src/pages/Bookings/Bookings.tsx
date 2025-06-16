@@ -1,12 +1,8 @@
 import  { useEffect, useState } from "react";
 import { COLORS, FONTS } from "../../constants/constants";
-
-//getting file
 import ServiceBookingPanel from "../../components/Booking/BookingCom";
 import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
 import History from "../../components/Booking/BookingHistroy/BookingHistroy";
-
-//icons
 import { MdCollectionsBookmark } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { GiIncomingRocket } from "react-icons/gi";
@@ -60,7 +56,8 @@ const Bookings = () => {
           Service Bookings
         </h2>
 
-        {/* Toggle History View */}
+    
+
         <button
           className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0 "
           onClick={() => setShowHistory(!showHistory)}

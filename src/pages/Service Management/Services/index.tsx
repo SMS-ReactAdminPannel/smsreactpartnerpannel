@@ -11,9 +11,9 @@ export const getAllServiceRequests = async (params: string) => {
     }
 }
 
-export const getAllJobCards = async (params: string) =>{
+export const getAllJobCards = async () =>{
     try{
-        const response = await Client.partner.job_card.getAll(params);
+        const response = await Client.partner.job_card.getAll();
         console.log(response);
         return response;
     }

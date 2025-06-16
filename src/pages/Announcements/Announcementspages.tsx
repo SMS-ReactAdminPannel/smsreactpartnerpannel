@@ -44,7 +44,7 @@ const AnnouncementPages = () => {
   }, []);
 
   const togglePin = async(id: number) => {
-    const partnerId:string =localStorage.getItem('adminobjectid')
+    const partnerId:string | null =localStorage.getItem('adminobjectid')
     const responce =  await pinnedAnnouncementsAPI(partnerId)
     console.log(responce)
     const updated = announcements.map((a,index)=>
@@ -100,14 +100,14 @@ const AnnouncementPages = () => {
 
        
         <div className="w-2/4 bg-white rounded-xl shadow p-4 flex flex-col space-y-4">
-          {filteredAnnouncements.map((a) => (
+          {filteredAnnouncements.map((a,index) => (
             <div
               key={a.uuid}
               className="bg-gray-50 p-4 hover:bg-orange-100 rounded-xl shadow relative"
             >
               <div
                 className="absolute top-2 right-2 cursor-pointer text-xl text-gray-500 hover:text-red-600"
-                onClick={() => togglePin(a)}
+                onClick={() => togglePin(index)}
                 title={a.isPinned ? "Unpin" : "Pin"}
               >
                 <TiPin className={a.isPinned ? "rotate-45 text-red-500" : "rotate-0"} />

@@ -54,13 +54,14 @@ const ToggleSwitch: React.FC<{ enabled: boolean; onToggle: () => void }> = ({
 );
 
 const SpareParts: React.FC = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [partsData, setPartsData] = useState<SparePart[]>([]);
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPart, setNewPart] = useState<Omit<SparePart, "id">>({
+    _id:"",
     productName: "",
     price: "0",
     inStock: true,
@@ -110,7 +111,7 @@ const SpareParts: React.FC = () => {
 
   const deletePart = async (partId: string) => {
     try {
-      const response = await deleteSpareParts(partId);
+      await deleteSpareParts(partId);
       setPartsData((prev) => prev.filter((part) => part._id !== partId));
       setShowDeleteConfirm(false);
     } catch (error) {
@@ -132,6 +133,7 @@ const SpareParts: React.FC = () => {
 
   const resetAddForm = () => {
     setNewPart({
+      _id:'',
       productName: "",
       price: "0",
       inStock: true,
@@ -213,53 +215,70 @@ const SpareParts: React.FC = () => {
         <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
           Products
         </h2>
-        <button
-    className="bg-[#9b111e] text-white px-5 py-2 rounded-full text-sm hover:bg-red-700 transition"
-    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  >
-    View All Products
-  </button>
+       
       </div>
 
       {/* Product Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8 px-2">
-        {filteredParts.map((part, index) => (
-          <div
-            key={index}
-            className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#efe7d0] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
-            onClick={() => setSelectedPart(part)}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            style={{ minHeight: "260px" }} // ensures min height but allows vertical flexibility
-          >
-            <div className="h-[180px] flex justify-center items-center overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                alt={part.productName}
-                className="max-w-[160px] max-h-[160px] w-auto h-auto object-cover transition-all duration-300 ease-in-out rounded-md"
-              />
-            </div>
-            <div className="p-3">
-              <div className="text-xs font-semibold line-clamp-2 mb-1">
-                {part.productName}
-              </div>
-              <div className="text-xs text-gray-600 mb-1">{part.slug}</div>
-              <div className="text-sm font-bold text-[#9b111e]">
-                ₹{part.price?.toLocaleString() ?? "0"}
-              </div>
-              <div
-                className={`mt-1 text-xs font-semibold ${
-                  part.inStock ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {part.inStock ? "In Stock" : "Out of Stock"}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+  {filteredParts.map((part, index) => {
+    const imageUrls = [
+      "https://carfromjapan.com/wp-content/uploads/2017/11/1-1.jpg", 
+      "https://www.autoeducation.com/images/engine2.jpg", 
+      "https://performancedrive.com.au/wp-content/uploads/2013/12/Volvo-S60-Polestar-V8-Supercar-engine-4.jpg", 
+      "https://performancedrive.com.au/wp-content/uploads/2013/12/Volvo-S60-Polestar-V8-Supercar-engine-2.jpg", 
+      "https://www.h2-view.com/wp-content/files/33423/engine-scaled.jpg" 
+    
+    ];
 
-      <div className="max-w-full px-4 md:px-6 lg:px-8">
+    const imageUrl = imageUrls[index % imageUrls.length];
+
+    return (
+      <div
+        key={index}
+        className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#fce4ec] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
+        onClick={() => setSelectedPart(part)}
+        onMouseEnter={() => setHoveredIndex(index)}
+        onMouseLeave={() => setHoveredIndex(null)}
+        style={{ minHeight: "260px" }}
+      >
+        {/* Image Section */}
+        <div className="h-[180px] flex justify-center items-center overflow-hidden rounded-md">
+          <img
+            src={part.imageUrl || imageUrl}
+            alt={part.productName}
+            className="w-full h-full object-cover transition-all duration-300 ease-in-out"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = imageUrl;
+            }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+            {part.productName}
+          </h3>
+          {part.brand && (
+            <p className="text-xs text-gray-500 mt-1">{part.brand}</p>
+          )}
+          <div className="flex justify-between items-center mt-2">
+            <span className="text-[#9b111e] font-bold">
+              ₹{part.price?.toLocaleString() ?? "0"}
+            </span>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+              part.inStock ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+            }`}>
+              {part.inStock ? "IN STOCK" : "OUT OF STOCK"}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+
+      <div className="max-w-full px-4 md:px-6 lg:px-8 mt-10">
         <h1 className="text-2xl font-bold text-[#9b111e] mb-8 text-center md:text-left">
           BY CATEGORIES
         </h1>
@@ -532,7 +551,7 @@ const SpareParts: React.FC = () => {
             {/* Product Image */}
             <div className="mb-4 flex justify-center">
               <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                src="https://carfromjapan.com/wp-content/uploads/2017/11/1-1.jpg"
                 alt={selectedPart.productName}
                 className="w-48 h-48 object-cover rounded-lg shadow-md"
               />
@@ -609,6 +628,39 @@ const SpareParts: React.FC = () => {
                 {selectedPart.inStock ? "In Stock" : "Out of Stock"}
               </span>
             </div>
+
+            {/* Image URL */}
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">
+                  Upload Image *
+                </label>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const imageUrl = URL.createObjectURL(file);
+                      setNewPart({ ...newPart, image: [imageUrl] });
+                    }
+                  }}
+                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
+                />
+
+                {newPart.image[0] && (
+                  <div className="mt-2 flex justify-center">
+                    <img
+                      src={newPart.image[0]}
+                      alt="Preview"
+                      className="w-32 h-32 object-cover rounded border"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
 
             <div className="flex justify-between gap-2 mt-6">
               <button
