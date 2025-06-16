@@ -7,7 +7,6 @@ import {
 
 interface SparePart {
   _id: string;
-  id: string;
   price: string;
   productName: string;
   brand: string;

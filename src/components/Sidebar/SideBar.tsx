@@ -13,6 +13,7 @@ import { FaCogs } from 'react-icons/fa';
 import Logo from '../../assets/LOGO.jpg';
 import { BsCart4 } from 'react-icons/bs';
 import { FaServicestack } from "react-icons/fa6";
+import { FONTS } from '../../constants/constants';
 
 const COLOR = {
 	primary: '#9b111e',
@@ -57,7 +58,7 @@ const SideBar = ({
 					</button>
 				</div>
 
-				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'>
+				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'style={{...FONTS.cardSubHeader}}>
 					<SidebarLink
 						to='/'
 						icon={<FiHome />}
