@@ -4,7 +4,7 @@ import {
   deleteSpareParts,
   getAllSpareParts,
 } from "./Services";
-
+import {FONTS} from '../../constants/constants'
 interface SparePart {
   _id: string;
   id: string;
@@ -150,7 +150,7 @@ const SpareParts: React.FC = () => {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
-        <h1 className="text-4xl font-bold text-[#9b111e] text-left">
+        <h1 className="text-3xl font-bold text-[#9b111e] text-left" style={{...FONTS.header}}>
           Spare Parts
         </h1>
         {/* Search Bar */}
@@ -175,18 +175,19 @@ const SpareParts: React.FC = () => {
       {/* Hero Card */}
       <div className="mb-8 w-full bg-gray-100 rounded-xl shadow p-6 flex flex-col lg:flex-row items-center gap-6 hover:shadow-lg hover:scale-[1.01] transition-transform duration-300 ease-in-out">
         <div className="flex-1">
-          <h2 className="text-3xl font-bold text-[#9b111e] mb-4">
+          <h2 className="text-2xl !font-bold text-[#9b111e] mb-4" style={{...FONTS.cardheader}}>
             Welcome to Auto Spare Hub
           </h2>
-          <p className="text-gray-700 mb-3">
+          <p className="!text-gray-700 mb-3" style={{...FONTS.description}}>
             Discover top-quality auto spare parts. We offer genuine and
             aftermarket components with fast delivery and customer satisfaction
             guaranteed.
           </p>
           <button
             onClick={() => setShowAddForm(true)}
-            className="mt-4 bg-[#9b111e] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
-          >
+            className="mt-4 bg-[#9b111e] !text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
+         style={{...FONTS.paragraph}}
+         >
             <svg
               className="w-5 h-5"
               fill="none"
@@ -212,8 +213,8 @@ const SpareParts: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex  justify-between mb-6">
-        <h2 className="text-3xl ml-6 font-bold text-[#9b111e] text-left">
+      <div className="flex  justify-between mb-6" style={{...FONTS.cardheader}}>
+        <h2 className=" !text-2xl ml-6 !font-bold text-[#9b111e] text-left" style={{...FONTS.cardheader}}>
           Products
         </h2>
        
@@ -255,8 +256,8 @@ const SpareParts: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+        <div className="p-4" style={{...FONTS.subParagraph}}>
+          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2" style={{...FONTS.paragraph}}>
             {part.productName}
           </h3>
           {part.brand && (
@@ -280,7 +281,7 @@ const SpareParts: React.FC = () => {
 
 
       <div className="max-w-full px-4 md:px-6 lg:px-8 mt-10">
-        <h1 className="text-2xl font-bold text-[#9b111e] mb-8 text-center md:text-left">
+        <h1 className="text-2xl !font-bold text-[#9b111e] mb-8 text-center md:text-left" style={{...FONTS.cardheader}}>
           BY CATEGORIES
         </h1>
 
@@ -336,8 +337,8 @@ const SpareParts: React.FC = () => {
               ],
             },
           ].map(({ title, image, items }) => (
-            <div className="flex flex-col gap-4 p-6 border  rounded-xl shadow-md">
-              <div className="flex justify-between items-center">
+            <div className="flex flex-col  gap-4 p-6 border  rounded-xl shadow-md">
+              <div className="flex justify-between items-center"  style={{...FONTS.paragraph}}>
                 <h2 className="text-md font-bold uppercase text-[#9b111e]">
                   {title}
                 </h2>
@@ -354,8 +355,8 @@ const SpareParts: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <span className="text-sm font-semibold text-red-700 cursor-pointer hover:underline mt-1">
-                ALL CATEGORIES →
+              <span className="text-sm font-semibold text-red-700 cursor-pointer hover:underline mt-1"  style={{...FONTS.paragraph}}>
+                ALL CATEGORIES 
               </span>
             </div>
           ))}
@@ -365,16 +366,16 @@ const SpareParts: React.FC = () => {
       {/* Bottom Full Width Section */}
       <div className="w-full py-12 px-6 flex flex-col lg:flex-row items-center gap-8">
         <div className="flex-1 max-w-2xl lg:order-1">
-          <h2 className="text-4xl font-bold text-[#9b111e] mb-6">
+          <h2 className="text-4xl font-bold text-[#9b111e] mb-6" style={{...FONTS.cardheader}}>
             Professional Auto Service & Support
           </h2>
-          <p className="text-gray-700 mb-6 text-lg leading-relaxed">
+          <p className="!text-gray-700 mb-6 text-lg leading-relaxed"  style={{...FONTS.paragraph}}>
             Need help installing your spare parts? Our certified technicians
             provide expert installation services and comprehensive support. We
             ensure your vehicle gets the best care with genuine parts and
             professional service.
           </p>
-          <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex flex-wrap gap-4 mb-8" style={{...FONTS.paragraph}}>
             <div className="bg-white px-4 py-2 rounded-full text-sm border shadow-sm">
               ✓ Expert Installation
             </div>
@@ -416,11 +417,11 @@ const SpareParts: React.FC = () => {
               &times;
             </button>
 
-            <h2 className="text-xl font-bold mb-6 text-[#9b111e]">
+            <h2 className="text-xl font-bold mb-6 text-[#9b111e]" style={{...FONTS.cardheader}}>
               Add New Product
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-4" style={{...FONTS.subParagraph}}>
               {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium mb-2 text-gray-700">
@@ -513,8 +514,8 @@ const SpareParts: React.FC = () => {
             <div className="flex justify-between gap-3 mt-8">
               <button
                 onClick={() => resetAddForm()}
-                className="px-6 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
-              >
+                className="px-6 py-2 !text-white-200 !bg-red-300 rounded-lg hover:bg-gray-200 transition"
+            style={{...FONTS.paragraph}}  >
                 Cancel
               </button>
               <button
@@ -522,8 +523,8 @@ const SpareParts: React.FC = () => {
                 disabled={
                   !newPart.productName.trim() || !newPart.image[0].trim()
                 }
-                className="px-6 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-              >
+                className="px-6 py-2 !bg-red-300 text-white rounded-lg hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+             style={{...FONTS.paragraph}} >
                 Add Product
               </button>
             </div>

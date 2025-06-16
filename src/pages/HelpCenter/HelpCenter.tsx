@@ -11,7 +11,7 @@ import {
 } from 'react-icons/md';
 import { SiGooglecloudspanner } from "react-icons/si";
 import Client from '../../api/index.ts'
-
+import {FONTS} from '../../constants/constants.ts'
 const helpCards = [
   {
     title: "My account",
@@ -87,8 +87,10 @@ const HelpCenter: React.FC = () => {
    
     <div className="h-screen bg-pink-50 flex flex-col items-center px-4 py-12">
 
-      <header className="w-full  text-center mb-8">
-        <h1 className="text-4xl font-bold text-[#9b111e] pt-10">How can we help</h1>
+      <header className="w-full  text-center mb-8" >
+        <h1 className="text-4xl font-bold text-[#9b111e] pt-10"
+        style={{...FONTS.header}}
+        >How can we help</h1>
         <div className="mt-4 flex items-center justify-center pt-8 pb-10 gap-2 max-w-md mx-auto">
           <input
             type="text"
@@ -99,9 +101,10 @@ const HelpCenter: React.FC = () => {
           />
           <button
             onClick={handleSearch}
-            className="bg-[#9b111e] text-white p-2 rounded-full hover:bg-orange-600 focus:outline-none"
+            className="bg-[#9b111e] !text-white p-2 rounded-full hover:bg-orange-600 focus:outline-none"
             aria-label="Search help topics"
-          >
+         style={{...FONTS.paragraph}}
+         >
             <FaSearch />
           </button>
         </div>
@@ -117,8 +120,8 @@ const HelpCenter: React.FC = () => {
               className="bg-white rounded-xl shadow hover:bg-orange-100 p-6 flex flex-col items-center text-center transition duration-300 h-[180px]"
             >
               <div className="mb-3">{card.icon}</div>
-              <h2 className="text-lg font-semibold text-gray-800">{card.title}</h2>
-              <p className="text-sm text-gray-600">{card.description}</p>
+              <h2 className="text-lg font-semibold text-gray-800" style={{...FONTS.cardheader}}>{card.title}</h2>
+              <p className="text-sm !text-gray-600" style={{...FONTS.paragraph}}>{card.description}</p>
             </div>
           ))}
         </section>
@@ -130,9 +133,9 @@ const HelpCenter: React.FC = () => {
         onSubmit={handleSubmit}
         className="mt-10 w-full bg-white shadow-md rounded-lg p-6"
       >
-        <h2 className="text-xl font-semibold text-[#9b111e] mb-6">Still need help?</h2>
+        <h2 className="!text-xl font-semibold text-[#9b111e] mb-6" style={{...FONTS.cardheader}}>Still need help?</h2>
 
-        <div className="flex flex-col md:flex-row gap-6 items-end">
+        <div className="flex flex-col md:flex-row gap-6 items-end" style={{...FONTS.paragraph}}>
         
           <div className="flex-1">
             <label htmlFor="subject" className="block text-black-700 mb-1">
@@ -169,8 +172,9 @@ const HelpCenter: React.FC = () => {
           <div className='mb-3 '>
             <button
               type="submit"
-              className="bg-[#9b111e] hover:bg-orange-600 text-white px-6 py-3 rounded-md w-full md:w-auto"
-            >
+              className="bg-[#9b111e] hover:bg-orange-600 !text-white px-6 py-3 rounded-md w-full md:w-auto"
+           style={{...FONTS.paragraph}}
+           >
               Submit
             </button>
           </div>
