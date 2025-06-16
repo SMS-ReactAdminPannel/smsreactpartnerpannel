@@ -3,7 +3,7 @@ import { TiPin } from "react-icons/ti";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 import Client from '../../api/index.ts';
-import { pinnedAnnouncementsAPI } from './services/index.tsx';
+// import { pinnedAnnouncementsAPI } from './services/index.tsx';
 
 const categories = ["All", "general", "booking", "payments"];
 

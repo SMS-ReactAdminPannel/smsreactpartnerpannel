@@ -359,7 +359,7 @@ const Dashboard = () => {
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color:'white'! }}
 												>
 													View
 												</button>
@@ -373,7 +373,7 @@ const Dashboard = () => {
 											<td>
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color: 'white'! }}
 													onClick={() => navigate('/service')}
 												>
 													View
@@ -389,7 +389,7 @@ const Dashboard = () => {
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color:'white'! }}
 												>
 													View
 												</button>

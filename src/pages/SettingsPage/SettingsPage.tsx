@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AccountSettingsPage from './pages/AccountSettingsPage';
-import PrivacyPolicySettings from './pages/PrivacyPolicyPage';
-import TermsConditionsPage from './pages/TermsContionsPage';
+// import PrivacyPolicySettings from './pages/PrivacyPolicyPage';
+// import TermsConditionsPage from './pages/TermsContionsPage';
 import AboutUsPage from './pages/AboutUsPage';
 import { FONTS } from '../../constants/constants';
 

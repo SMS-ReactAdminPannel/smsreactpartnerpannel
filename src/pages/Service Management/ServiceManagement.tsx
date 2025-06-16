@@ -32,9 +32,9 @@ const MustCare = () => (
 );
 
 // Mock COLORS constant
-const COLORS = {
-  bgColor: "#f8fafc",
-};
+// const COLORS = {
+//   bgColor: "#f8fafc",
+// };
 
 interface JobCard {
   cutomerInfo: any;
@@ -96,14 +96,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
-  const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
+  // const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
 
   const fetchupdatejobcards = async (params: string, data: any) => {
     try {
       const response = await updateJobCards(params, data);
 
       if (response && response.data) {
-        setupdatedJobcards(response.data);
+        // setupdatedJobcards(response.data);
+        setJobCards(prev =>[...prev,response.data])
         console.log("Job card updated successfully:", response.data);
       }
     } catch (error) {

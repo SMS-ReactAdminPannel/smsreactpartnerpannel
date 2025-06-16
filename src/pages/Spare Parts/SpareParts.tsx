@@ -123,7 +123,7 @@ const SpareParts: React.FC = () => {
 
   const updatePart = (updatedPart: SparePart) => {
     setPartsData((prev) =>
-      prev.map((part) => (part.id === updatedPart.id ? updatedPart : part))
+      prev.map((part) => (part._id === updatedPart._id ? updatedPart : part))
     );
   };
 
@@ -237,14 +237,14 @@ const SpareParts: React.FC = () => {
         key={index}
         className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#fce4ec] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
         onClick={() => setSelectedPart(part)}
-        onMouseEnter={() => setHoveredIndex(index)}
-        onMouseLeave={() => setHoveredIndex(null)}
+        // onMouseEnter={() => setHoveredIndex(index)}
+        // onMouseLeave={() => setHoveredIndex(null)}
         style={{ minHeight: "260px" }}
       >
         {/* Image Section */}
         <div className="h-[180px] flex justify-center items-center overflow-hidden rounded-md">
           <img
-            src={part.imageUrl || imageUrl}
+            src={part.image[0] || imageUrl}
             alt={part.productName}
             className="w-full h-full object-cover transition-all duration-300 ease-in-out"
             onError={(e) => {

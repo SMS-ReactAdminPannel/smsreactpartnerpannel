@@ -72,6 +72,7 @@ const HelpCenter: React.FC = () => {
 
     console.log('Subject:', subject);
     console.log('Description:', description);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const responce:any = await Client.partner.enquery.create({subject,description})
     if (responce.data.success) {
       console.log("created")

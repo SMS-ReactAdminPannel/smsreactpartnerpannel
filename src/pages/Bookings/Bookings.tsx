@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { COLORS, FONTS } from "../../constants/constants";
 import ServiceBookingPanel from "../../components/Booking/BookingCom";
@@ -30,13 +31,13 @@ const bookingsss = [
 
 const Bookings = () => {
    const [showHistory, setShowHistory] = useState(false);
-  const [bookings, setBookings] = useState<any[]>([]); 
+  // const [bookings, setBookings] = useState<any[]>([]); 
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response: any = await getAllBookings('');
-        setBookings(response.data.data)
+        // setBookings(response.data.data)
         console.log(response.data.data);
       } catch (error) {
         console.log("Error fetching bookings:", error);

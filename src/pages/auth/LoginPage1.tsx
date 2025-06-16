@@ -116,6 +116,7 @@ const LoginPage1 = () => {
 									...FONTS.header,
 									fontSize: '56px',
 									fontWeight: 600,
+									color:'white'!,
 								}}
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
@@ -239,7 +240,7 @@ const LoginPage1 = () => {
 
 				{/* Marquee Announcement */}
 				<div className='marquee-container'>
-					<div className='marquee-text' style={{ ...FONTS.paragraph }}>
+					<div className='marquee-text' style={{ ...FONTS.paragraph, color:'white'!, }}>
 						🚗 Free pickup & drop | 🏆 Winner of Best Car Service 2023 | 💰 Upto
 						30% Off on Periodic Maintenance | 📣 New partner bonus now live! |
 						🚘 AI diagnostics now available in select cities |

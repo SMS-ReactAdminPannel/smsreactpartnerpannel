@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
@@ -9,10 +10,10 @@ import { PiPhonePlusFill } from "react-icons/pi";
 import { RiContactsBook3Fill } from "react-icons/ri";
 import { MdAttachEmail } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { FaRegAddressCard, FaFacebook, FaYoutube } from "react-icons/fa";
+import { FaRegAddressCard} from "react-icons/fa";
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { IoIosLink } from "react-icons/io";
-import { IoShareSocial } from "react-icons/io5";
+// import { IoShareSocial } from "react-icons/io5";
 import { getProfile, updateProfile } from "../services";
 import { FONTS } from "../../../constants/constants";
 

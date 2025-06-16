@@ -242,6 +242,7 @@ type ProfileViewComponent = {
 };
 
 const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [customerData, setCustomerData] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -251,6 +252,7 @@ const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await getAllCustomer("");
         console.log("Fetched customers", response.data.customer);
         setCustomerData(response.data.customer);
