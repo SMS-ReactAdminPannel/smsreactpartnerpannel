@@ -44,9 +44,9 @@ const AnnouncementPages = () => {
   }, []);
 
   const togglePin = async(id: number) => {
-    const partnerId:string | null =localStorage.getItem('adminobjectid')
-    const responce =  await pinnedAnnouncementsAPI(partnerId)
-    console.log(responce)
+    // const partnerId:string | null =localStorage.getItem('adminobjectid')
+    // const responce =  await pinnedAnnouncementsAPI(partnerId)
+    // console.log(responce)
     const updated = announcements.map((a,index)=>
       index === id ? { ...a, isPinned: !a.isPinned } : a
     );
