@@ -9,7 +9,8 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdQuestionAnswer } from 'react-icons/md';
 import { FaCogs } from 'react-icons/fa';
 // import { COLORS } from '../../constants/constants';
-import Logo from '../../assets/LOGO.jpg';
+import Logo from '../../assets/YES MECHANIC LOGO .png';
+import MiniLogo from "../../assets/Toggle-Logo.jpg";
 import { FaServicestack } from "react-icons/fa6";
 import { FONTS } from '../../constants/constants';
 
@@ -33,13 +34,13 @@ const SideBar = ({
 	return (
 		<div className='flex h-screen overflow-y-auto scrollbar-hide'>
 			<div className='bg-white border-r shadow-md p-2 transition-all duration-300 fixed top-0 left-0 h-screen z-40 flex flex-col items-center'>
-				<div className='flex justify-center items-center h-20'>
+				<div className={`flex justify-center items-center h-20 transition-all duration-300 ${
+					isOpen ? 'w-40' : 'w-12'
+				}`}>
 					<img
-						src={Logo}
+						src={isOpen ? Logo : MiniLogo}
 						alt='YES Mechanic Logo'
-						className={`object-contain transition-all duration-300 ${
-							isOpen ? 'w-25 h-20' : 'w-10 h-10'
-						}`}
+						className='object-contain h-[48px] transition-all duration-300'
 					/>
 				</div>
 				<div className='w-full flex justify-end px-2 mt-2'>
