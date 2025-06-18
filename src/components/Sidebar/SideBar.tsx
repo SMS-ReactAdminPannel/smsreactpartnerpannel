@@ -64,13 +64,7 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
-						to='/notifications'
-						icon={<FiBell />}
-						label='Notifications'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
+
 					<SidebarLink
 						to='/spare-parts'
 						icon={<FaCogs />}
@@ -121,6 +115,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/> */}
+					<SidebarLink
+						to='/notifications'
+						icon={<FiBell />}
+						label='Notifications'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
 					<SidebarLink
 						to='/announcement'
 						icon={<Megaphone />}

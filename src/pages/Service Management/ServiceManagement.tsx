@@ -312,7 +312,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                           <div className="flex items-center space-x-2">
                             <Car className="w-4 h-4 text-gray-500" />
                             <span className="!text-gray-900" style={{...FONTS.paragraph}}>
-                              {request.customerId.vechicleInfo?.registerNumber || "car"}
+                              {request.customerId.vehicleInfo?.registerNumber || "car"}
                             </span>
                           </div>
                         </td>
