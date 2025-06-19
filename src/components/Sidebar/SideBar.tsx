@@ -131,9 +131,9 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
-						to='/help-center'
+						to='/enquiry-page'
 						icon={<IoIosHelpCircleOutline />}
-						label='Help Center'
+						label='EnquiryPage'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
