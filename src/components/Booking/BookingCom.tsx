@@ -68,7 +68,11 @@ const formatDateTime = (dateTime: string) => {
   return date.toLocaleString();
 };
 
-const ServiceBookingPanel: React.FC = () => {
+interface servicesType{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  services:any;
+}
+const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
   const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
   const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -105,18 +109,22 @@ const ServiceBookingPanel: React.FC = () => {
           </h2>
         </div>
 
-        {bookings.map((booking) => (
+        {services.map((booking:any) => (
           <div
-            key={booking.id}
+            key={booking._id}
             className="bg-[#FAF3EB] rounded-xl shadow p-6 flex flex-col md:flex-row justify-between gap-4 items-start md:items-center hover:shadow-lg hover:scale-[1.02] transition cursor-pointer"
           >
             <div className="flex-1">
               <p className="font-semibold text-lg text-[#9b111e]">
-                {booking.customerName} – {booking.carModel}
+                {booking?.customerId?.firstName} – {booking?.customerId?.vehicleInfo?.model}
               </p>
-              <p className="text-[#e07f62]">{booking.servicePurpose.join(", ")}</p>
+              {
+                booking?.jobCardId?.serviceInfo?.services.map((item:any,index:number)=>{
+                  return <p key={index} className="text-[#e07f62]">{item.description}</p>
+                })
+              }     
               <p className="text-sm text-[#e07f62]">
-                Scheduled: {formatDateTime(booking.serviceDateTime)}
+                Scheduled: {formatDateTime(booking?.jobCardId?.jobInfo?.Schedule)}
               </p>
               <p
                 className={`mt-1 text-sm font-medium ${
@@ -127,25 +135,25 @@ const ServiceBookingPanel: React.FC = () => {
                     : "text-red-500"
                 }`}
               >
-                Status: {booking.status}
+                Status: {booking?.status}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => setSelectedBooking(booking)}
+                // onClick={() => setSelectedBooking(booking)}
                 className=" text-white px-3 py-1 rounded bg-[#4e9bcd] hover:bg-[#55ACEE] transition text-sm"
               >
                 Open Service
               </button>
               <button
-                onClick={() => updateStatus(booking.id, "Viewed")}
+                // onClick={() => updateStatus(booking.id, "Viewed")}
                 className=" text-white px-3 py-1 rounded bg-[#dcbb63] hover:bg-[#d6c779] transition text-sm"
               >
                 Mark as Viewed
               </button>
               <button
-                onClick={() => updateStatus(booking.id, "Solved")}
+                // onClick={() => updateStatus(booking.id, "Solved")}
                 className=" text-white px-3 py-1 rounded bg-[#60cc7d] hover:bg-[#86AF49]  transition text-sm"
               >
                 Completed

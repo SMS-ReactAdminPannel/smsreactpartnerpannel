@@ -13,7 +13,8 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { getAllBookings } from "./services";
 
 const Bookings = () => {
-   const [showHistory, setShowHistory] = useState(false);
+  //  const [showHistory, setShowHistory] = useState(false);
+  const showHistory = false;
   const [bookings, setBookings] = useState<any[]>([]); 
 
   useEffect(() => {
@@ -42,18 +43,18 @@ const Bookings = () => {
 
     
 
-        <button
+        {/* <button
           className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0"
           onClick={() => setShowHistory(!showHistory)}
         >
           {showHistory ? "Back" : "Completed Booking"}
-        </button>
+        </button> */}
       </div>
 
       {showHistory ? (
         <History bkings={bookings} />
       ) : (
-        <div className="w-full flex justify-center m-3">
+        <div className="w-full h-screen flex justify-center m-3">
           <div className="w-full max-w-7xl px-4 py-2 ml-3">
             {/* Dashboard Section */}
             <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
@@ -103,7 +104,7 @@ const Bookings = () => {
 
             {/* Booking Panel */}
             <div className="mb-6 p-4 bg-[#eae5d9] rounded-xl shadow-md mx-4 justify-center items-center px-1">
-              <ServiceBookingPanel />
+              <ServiceBookingPanel services={bookings}/>
             </div>
           </div>
         </div>
