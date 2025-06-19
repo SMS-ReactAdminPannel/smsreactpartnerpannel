@@ -397,9 +397,19 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       serviceInfo: {
         customerComplaint: formData.customerComplaint,
         actionToBeTaken: formData.actionToBeTaken,
-        amount: formData.totalAmount,
-        amounts:formData.totalAmounts,
-        serviceItems: formData.serviceItems,
+        products: formData.serviceItems.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          rate: item.rate,
+          productAmount: parseFloat(item.amount)
+        })),
+        services: formData.servicesmain.map(item => ({
+          description: item.descriptions,
+          quantity: "1", 
+          rate: item.rates,
+          serviceAmount: parseFloat(item.amounts)
+        })),
+        totalAmount: parseFloat(formData.totalAmount),
       },
       vehicleInventory: {
         currentState: {
