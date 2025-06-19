@@ -19,7 +19,8 @@ import {
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { DashboardProfile } from './service';
 
 const dailyRevenueData = [
 	{ day: 'Mon', revenue: 500 },
@@ -101,6 +102,15 @@ const Dashboard = () => {
 	// Combine revenue and spare parts revenue data for the selected period
 	let data = [];
 	let xDataKey = '';
+
+	async function fetchProfile() {
+		const data = await DashboardProfile()
+		console.log(data)
+	}
+
+	useEffect(() => {
+		fetchProfile()
+	}, []);
 
 	if (period === 'daily') {
 		data = dailyRevenueData.map((item, index) => ({

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
 const backEndUrl: string = import.meta.env.VITE_PUBLIC_API_URL;
@@ -28,6 +29,16 @@ Axios.interceptors.request.use((config) => {
   }
   return config;
 });
+
+Axios.interceptors.response.use(
+  (response)=>response,
+  (error)=>{
+    if (error?.response && error?.response.status == 401 && error?.response?.data?.status === "session_expired") {
+      localStorage.removeItem("authToken")
+      window.location.reload()
+    }
+  }
+)
 
 class HttpClient {
   async get(url: string, params: string = '') {
