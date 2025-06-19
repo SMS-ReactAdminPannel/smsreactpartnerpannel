@@ -15,7 +15,7 @@ const ReplyMessageList = () => {
   useEffect(() => {
     const fetchReplies = async () => {
       try {
-        const response = await getEnquiry({});
+        const response = await getEnquiry('');
         console.log("getEnquiry response:", response);
 
         const data = response?.data;

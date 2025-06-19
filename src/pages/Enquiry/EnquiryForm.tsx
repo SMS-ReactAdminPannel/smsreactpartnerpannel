@@ -20,7 +20,8 @@ const EnquiryForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const payload:any = {
         subject: formData.fullName,
         description: formData.enquiry,
         phone: formData.phoneNumber,

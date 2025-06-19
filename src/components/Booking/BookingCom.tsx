@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { COLORS } from "../../constants/constants";
 
@@ -22,46 +23,46 @@ interface ServiceBooking{
 }
 
 
-const initialBookings: ServiceBooking[] = [
-  {
-    id: 1,
-    customerName: "John Doe",
-    carModel: "Toyota Camry",
-    servicePurpose: [
-      "Engine oil",
-      "tyre",
-      "headlight",
-      "fuse change",
-      "full normal check up",
-    ],
-    serviceDateTime: "2025-05-24T10:30",
-    status: "Pending",
-  },
-  {
-    id: 2,
-    customerName: "Jane Smith",
-    carModel: "Honda Civic",
-    servicePurpose: ["Oil Change", "water Wash", "tyre check-up"],
-    serviceDateTime: "2025-05-25T14:30",
-    status: "Viewed",
-  },
-  {
-    id: 3,
-    customerName: "Alice Brown",
-    carModel: "BMW X5",
-    servicePurpose: ["Brake Repair", "full wash", "inside cleaning"],
-    serviceDateTime: "2025-05-26T09:00",
-    status: "Solved",
-  },
-  {
-    id: 4,
-    customerName: "Berlin",
-    carModel: "Audi A4",
-    servicePurpose: ["Car Service"],
-    serviceDateTime: "2025-05-26T02:00",
-    status: "Solved",
-  },
-];
+// const initialBookings: ServiceBooking[] = [
+//   {
+//     id: 1,
+//     customerName: "John Doe",
+//     carModel: "Toyota Camry",
+//     servicePurpose: [
+//       "Engine oil",
+//       "tyre",
+//       "headlight",
+//       "fuse change",
+//       "full normal check up",
+//     ],
+//     serviceDateTime: "2025-05-24T10:30",
+//     status: "Pending",
+//   },
+//   {
+//     id: 2,
+//     customerName: "Jane Smith",
+//     carModel: "Honda Civic",
+//     servicePurpose: ["Oil Change", "water Wash", "tyre check-up"],
+//     serviceDateTime: "2025-05-25T14:30",
+//     status: "Viewed",
+//   },
+//   {
+//     id: 3,
+//     customerName: "Alice Brown",
+//     carModel: "BMW X5",
+//     servicePurpose: ["Brake Repair", "full wash", "inside cleaning"],
+//     serviceDateTime: "2025-05-26T09:00",
+//     status: "Solved",
+//   },
+//   {
+//     id: 4,
+//     customerName: "Berlin",
+//     carModel: "Audi A4",
+//     servicePurpose: ["Car Service"],
+//     serviceDateTime: "2025-05-26T02:00",
+//     status: "Solved",
+//   },
+// ];
 
 const formatDateTime = (dateTime: string) => {
   const date = new Date(dateTime);
@@ -69,11 +70,10 @@ const formatDateTime = (dateTime: string) => {
 };
 
 interface servicesType{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   services:any;
 }
 const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
-  const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
+  // const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
   const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -82,13 +82,13 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
     setIsVisible(true);
   };
 
-  const updateStatus = (id: number, newStatus: BookingStatus) => {
-    setBookings((prev) =>
-      prev.map((booking) =>
-        booking.id === id ? { ...booking, status: newStatus } : booking
-      )
-    );
-  };
+  // const updateStatus = (id: number, newStatus: BookingStatus) => {
+  //   setBookings((prev) =>
+  //     prev.map((booking) =>
+  //       booking.id === id ? { ...booking, status: newStatus } : booking
+  //     )
+  //   );
+  // };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
