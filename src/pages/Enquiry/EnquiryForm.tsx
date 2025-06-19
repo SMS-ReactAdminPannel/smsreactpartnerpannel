@@ -7,7 +7,7 @@ const EnquiryForm = () => {
     fullName: '',
     phoneNumber: '',
     enquiry: '',
-    date: '',
+  //  date: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -24,7 +24,7 @@ const EnquiryForm = () => {
         subject: formData.fullName,
         description: formData.enquiry,
         phone: formData.phoneNumber,
-        date: formData.date,
+      //  date: formData.date,
       };
 
       const response = await createEnquiry(payload);
@@ -37,7 +37,7 @@ const EnquiryForm = () => {
         fullName: '',
         phoneNumber: '',
         enquiry: '',
-        date: '',
+       // date: '',
       });
     } catch (err) {
       console.error('Submission failed:', err);
@@ -95,7 +95,7 @@ const EnquiryForm = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700">Preferred Date</label>
           <input
             type="date"
@@ -104,7 +104,7 @@ const EnquiryForm = () => {
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
           />
-        </div>
+        </div> */}
       </div>
 
       <div>
