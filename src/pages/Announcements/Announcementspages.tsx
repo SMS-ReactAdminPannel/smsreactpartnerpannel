@@ -90,7 +90,7 @@ const AnnouncementPages = () => {
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer p-2 rounded-full ${selectedCategory === cat ? "bg-[#7812A4] font:white font-bold" : ""}`}
+                className={`cursor-pointer p-2 rounded-full  ${selectedCategory === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}

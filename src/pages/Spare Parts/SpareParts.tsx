@@ -11,7 +11,7 @@ interface SparePart {
   price: string;
   productName: string;
   brand: string;
-  image: string[];
+  image: string;
   stock: string;
   inStock: boolean;
   category: string;
@@ -61,12 +61,11 @@ const SpareParts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newPart, setNewPart] = useState<Omit<SparePart, "id">>({
-    _id:"",
+  const [newPart, setNewPart] = useState<Omit<SparePart, "id" |"_id">>({
     productName: "",
     price: "0",
     inStock: true,
-    image: [""],
+    image: "",
     stock: "12",
     slug: "Engine",
     category: "spare",
@@ -138,7 +137,7 @@ const SpareParts: React.FC = () => {
       productName: "",
       price: "0",
       inStock: true,
-      image: [""],
+      image: "",
       slug: "Engine",
       brand: "new",
       category: "Engine",
@@ -489,7 +488,7 @@ const SpareParts: React.FC = () => {
                     const file = e.target.files?.[0];
                     if (file) {
                       const imageUrl = URL.createObjectURL(file);
-                      setNewPart({ ...newPart, image: [imageUrl] });
+                      setNewPart({ ...newPart, image: imageUrl });
                     }
                   }}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
@@ -645,7 +644,7 @@ const SpareParts: React.FC = () => {
                     const file = e.target.files?.[0];
                     if (file) {
                       const imageUrl = URL.createObjectURL(file);
-                      setNewPart({ ...newPart, image: [imageUrl] });
+                      setNewPart({ ...newPart, image: imageUrl });
                     }
                   }}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
