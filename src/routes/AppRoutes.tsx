@@ -52,6 +52,7 @@ const AppRoutes = () => {
 				<Route path='order' element={<Order />} />
 				<Route path='privacy-policy' element={<PrivacyPolicySettings/>}/>
 				<Route path='terms-conditions' element={<TermsConditionsPage />}/>
+				<Route path='*' element={<Navigate to='/' />}/>
 			</Route>
 		</Routes>
 	);

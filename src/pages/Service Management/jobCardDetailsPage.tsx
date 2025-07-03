@@ -484,16 +484,16 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
       <div className=" mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent mb-2"style={{...FONTS.header}}>
+          <h1 className=" bg-clip-text text-transparent mb-2"style={{...FONTS.header}}>
             Job Card Details
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-red-800 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-[#7812A4] mx-auto rounded-full"></div>
         </div>
 
         <div className="space-y-8">
           {/* Job Information Section - Read Only */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+            <div className="bg-[#7812A4] p-2">
               <div className="flex items-center gap-2 !text-white">
                 <Lock className="w-5 h-5" />
                 <h2 className="text-lg !text-white font-semibold"style={{...FONTS.cardSubHeader}}>Job Information (Read Only)</h2>
@@ -546,7 +546,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
 
           {/* Cutomer Information Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-          <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+          <div className="bg-[#7812A4] p-2">
           <div className="flex items-center gap-2 !text-white">
             <FaRegAddressCard />
                 <h2 className="text-lg !text-white font-semibold"style={{...FONTS.cardSubHeader}}>Customer Information</h2>
@@ -610,7 +610,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
 
           {/* Vehicle Inventory Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+            <div className="bg-[#7812A4] p-2">
               <div className="flex items-center gap-2 text-white">
                 <Car className="w-5 h-5" />
                 <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Vehicle Inventory</h2>
@@ -672,11 +672,11 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
           
           <div className="border-t pt-4">
          <label className="block text-sm font-medium !text-gray-700 mb-2"style={{...FONTS.paragraph}}>Fuel Level</label>
-         <div className="space-y-3">
+         <div className="space-y-6">
            <select
              value={formData.fuelLevel}
              onChange={(e) => handleFuelLevelChange(e.target.value as FormData['fuelLevel'])}
-             className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg !text-black focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"style={{...FONTS.subParagraph}}
+             className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-full !text-black  transition-all"style={{...FONTS.subParagraph}}
            >
              <option value="Empty">Empty</option>
              <option value="1/4">1/4</option>
@@ -693,7 +693,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                multiple
                accept="image/*"
                onChange={(e) => handleFuelLevelImageUpload(e.target.files)}
-               className="text-xs file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:hover:text-white file:hover:bg-gradient-to-r file:hover:from-red-600 file:hover:to-red-800"
+               className="text-xs file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:hover:text-white file:hover:bg-[#7812A4]"
              />
 
              {formData.fuelLevelImages.length > 0 && (
@@ -726,14 +726,14 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
       <div className="mt-4 p-4 bg-white rounded-lg shadow">
         <h3 className="font-semibold !text-gray-800 mb-2"style={{...FONTS.paragraph}}>Current State:</h3>
         <div className="text-sm !text-gray-600"style={{...FONTS.paragraph}}>
-          <p><strong>Fuel Level:</strong> {formData.fuelLevel}</p>
-          <p><strong>Selected Items:</strong> {Object.entries(formData.inventory).filter(([key, value]) => key !== 'images' && value).map(([key]) => key).join(', ') || 'None'}</p>
-          <p><strong>Images Uploaded:</strong> {Object.entries(formData.inventory.images).map(([key, files]) => `${key}: ${files.length}`).join(', ') || 'None'}</p>
+          <p className='mt-2'><strong>Fuel Level:</strong> {formData.fuelLevel}</p>
+          <p className='mt-2'><strong>Selected Items:</strong> {Object.entries(formData.inventory).filter(([key, value]) => key !== 'images' && value).map(([key]) => key).join(', ') || 'None'}</p>
+          <p className='mt-2'><strong>Images Uploaded:</strong> {Object.entries(formData.inventory.images).map(([key, files]) => `${key}: ${files.length}`).join(', ') || 'None'}</p>
         </div>
       </div>
           {/* Vehicle Information Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+            <div className="bg-[#7812A4] p-2">
               <div className="flex items-center gap-2 text-white">
                 <Edit3 className="w-5 h-5" />
                 <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Vehicle Information</h2>
@@ -826,7 +826,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
 
           {/* Service Information Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
+            <div className="bg-[#7812A4] p-2">
               <div className="flex items-center gap-2 text-white">
                 <Wrench className="w-5 h-5" />
                 <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Service Information</h2>
@@ -861,7 +861,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   <button
                     type="button"
                     onClick={addServiceItem}
-                    className="bg-gradient-to-r from-red-600 to-red-800 !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
+                    className="bg-[#7812A4] !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
                   >
                     <Plus className="w-4 h-4" />
                     Add Item
@@ -891,7 +891,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                             type="text"
                             value={item.description}
                             onChange={(e) => updateServiceItem(item.id, 'description', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
+                            className="w-full p-2 mt-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Service description"
                           />
                         </div>
@@ -901,7 +901,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                             type="number"
                             value={item.quantity}
                             onChange={(e) => updateServiceItem(item.id, 'quantity', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
+                            className="w-full p-2 mt-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Qty"
                           />
                         </div>
@@ -911,7 +911,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                             type="number"
                             value={item.rate}
                             onChange={(e) => updateServiceItem(item.id, 'rate', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
+                            className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Rate"
                           />
                         </div>
@@ -937,7 +937,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
     <button
       type="button"
       onClick={addServices}
-      className="bg-gradient-to-r from-red-600 to-red-800 !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
+      className="bg-[#7812A4] !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
     >
       <Plus className="w-4 h-4" />
       Add services
@@ -979,7 +979,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               onChange={(e) =>
                 updateServiceItems(items.id, "descriptions", e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
+              className="w-full p-2 mt-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
               placeholder="Service description"
             />
           </div>
@@ -994,7 +994,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               onChange={(e) =>
                 updateServiceItems(items.id, "rates", e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
+              className="w-full p-2 mt-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
               placeholder="Rate"
             />
           </div>
@@ -1003,7 +1003,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
         {/* Calculated Amount */}
         <div className="mt-3 text-right">
           <span className="text-sm font-medium !text-gray-600"style={{...FONTS.paragraph}}>Amount: </span>
-          <span className="text-lg !font-bold !text-[#9b111e]"style={{...FONTS.paragraph}}>
+          <span className="text-lg !font-bold "style={{...FONTS.paragraph}}>
             ₹{items.amounts || "0.00"}
           </span>
         </div>
@@ -1014,47 +1014,34 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
   {/* Total Amount Summary */}
   <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
     <div className="flex justify-between items-center">
-      <span className="text-lg font-semibold !text-[#9b111e]"style={{...FONTS.paragraph}}>
+      <span className="text-lg font-semibold "style={{...FONTS.paragraph}}>
         Total Amount:
       </span>
-      <span className="text-2xl !font-bold !text-[#9b111e]"style={{...FONTS.paragraph}}>
+      <span className="text-2xl !font-bold "style={{...FONTS.paragraph}}>
         ₹{formData.totalAmount}
       </span>
     </div>
   </div>
 </div>
-
-              {/* <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Work Status</label>
-                <select
-                  value={formData.workDone}
-                  onChange={(e) => handleInputChange('workDone', e.target.value as FormData['workDone'])}
-                  className="w-full m-3 md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </div> */}
             </div>
           </div>
 
           {/* Action Button */}
-          <div className="flex justify-center items-center gap-4 mt-8">
+          <div className="flex justify-end gap-4 mt-8">
             <button
               type="button"
               onClick={handleSave}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 !text-white px-4 h-[40px]  rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 "style={{...FONTS.paragraph}}
+              className="bg-[#7812A4] !text-white px-4 h-[40px]  rounded-full shadow-lg hover:shadow-xl transform transition-all duration-200 "style={{...FONTS.paragraph}}
             >
               {/* <Save className="w-5 h-5" /> */}
-              Save 
+              Cancel 
             </button>
             <button
               type="button"
               onClick={handleBack}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 !text-white px-4 h-[40px] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
+              className="bg-[#7812A4] !text-white px-4 h-[40px] rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
             >
-              Cancel
+              Save
             </button>
           </div>
         </div>

@@ -1,9 +1,9 @@
 export const COLORS = {
   primary: "#9b111e",
-  primary_01: "#fdefe9",
+  primary_01: "#7812A4",
   secondary: "#E6A895",
   hover: "#ffd46b",
-  bgColor: "#FAF3EB",
+  bgColor: "E8d6f0",
 };
 
 export const FONTS = {

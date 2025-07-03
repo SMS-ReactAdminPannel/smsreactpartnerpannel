@@ -48,18 +48,13 @@ const AccountSettingsPage: React.FC = () => {
   };
 
   return (
+    
     <div className="p-6 mx-auto bg-white shadow-lg rounded-lg">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-[#9b111e] " style={{...FONTS.header}}>Profile Settings</h1>
-        <p className="text-gray-600 mt-2">
-          Update your personal information, contact details, and preferences
-        </p>
-      </header>
 
       <form className="space-y-8" onSubmit={handleSubmit}>
         {/* Personal Information Section */}
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
+          <div className="flex items-center gap-2  border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <BsFillPersonPlusFill />
             <h2>Personal Information</h2>
           </div>
@@ -80,7 +75,7 @@ const AccountSettingsPage: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, firstName: e.target.value })
                 }
-                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border rounded-lg bg-gray-50 focus:border-transparent transition"
               />
             </div>
 
@@ -98,7 +93,7 @@ const AccountSettingsPage: React.FC = () => {
                 onChange={(e) =>
                   setProfile({ ...profile, lastName: e.target.value })
                 }
-                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border  rounded-lg bg-gray-5 focus:border-transparent transition"
               />
             </div>
 
@@ -112,7 +107,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="date"
                 id="dob"
-                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border  rounded-lg bg-gray-50  focus:border-transparent transition"
               />
             </div>
 
@@ -125,7 +120,7 @@ const AccountSettingsPage: React.FC = () => {
               </label>
               <select
                 id="gender"
-                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition value={profile?.gender || ''}"
+                className="w-full px-4 py-2 !text-gray-700 border rounded-lg bg-gray-50 focus:border-transparent transition value={profile?.gender || ''}"
               >
                 <option value="">Select gender</option>
                 <option>Male</option>
@@ -145,7 +140,7 @@ const AccountSettingsPage: React.FC = () => {
             </label>
             <textarea
               id="bio"
-              className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+              className="w-full !text-gray-700 px-4 py-2 border rounded-lg bg-gray-50 focus:outline-none  focus:border-transparent transition"
               rows={4}
               placeholder="Tell us about yourself..."
             />
@@ -159,7 +154,7 @@ const AccountSettingsPage: React.FC = () => {
               <CgProfile /> Profile Photo
             </label>
             <div className="flex items-center gap-4">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[#9b111e]/30">
+              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2">
                 <img
                   src="https://placehold.co/150x150"
                   alt="Profile placeholder"
@@ -176,14 +171,14 @@ const AccountSettingsPage: React.FC = () => {
                 type="file"
                 id="photo"
                 accept="image/*"
-                className=" w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#9b111e]/10 file:text-[#9b111e] hover:file:bg-[#9b111e]/20"
+                className=" w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium "
               />
             </div>
           </div>
         </section>
 
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
+          <div className="flex items-center gap-2  border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <RiContactsBook3Fill />
             <h2>Contact Information</h2>
           </div>
@@ -204,7 +199,7 @@ const AccountSettingsPage: React.FC = () => {
                   setProfile({ ...profile, email: e.target.value })
                 }
                 value={profile?.email || ""}
-                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border  rounded-lg bg-gray-50 focus:border-transparent transition"
               />
             </div>
 
@@ -229,7 +224,7 @@ const AccountSettingsPage: React.FC = () => {
                   })
                 }
                 value={profile?.contact_info.phoneNumber || ""}
-                className="w-full px-4 !text-gray-700 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 !text-gray-700 py-2 border rounded-lg bg-gray-50  focus:border-transparent transition"
               />
             </div>
 
@@ -253,7 +248,7 @@ const AccountSettingsPage: React.FC = () => {
                   })
                 }
                 value={profile?.contact_info.address1 || ""}
-                className="w-full !text-gray-700 px-4 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full !text-gray-700 px-4 py-2 border  rounded-lg bg-gray-5 focus:border-transparent transition"
               />
             </div>
 
@@ -267,7 +262,7 @@ const AccountSettingsPage: React.FC = () => {
               <select
                 id="State"
                 value={profile?.contact_info.state || ""}
-                className="w-full px-4 !text-gray-700 py-2 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 !text-gray-700 py-2 border rounded-lg bg-gray-50 focus:border-transparent transition"
               >
                 <option value="">Select State</option>
                 <option>Tamil Nadu</option>
@@ -281,7 +276,7 @@ const AccountSettingsPage: React.FC = () => {
         </section>
 
         <section className="space-y-6">
-          <div className="flex items-center gap-2 text-xl font-semibold text-[#9b111e] border-b pb-2" style={{...FONTS.cardSubHeader}}>
+          <div className="flex items-center gap-2  border-b pb-2" style={{...FONTS.cardSubHeader}}>
             <FaRegAddressCard />
             <h2>Professional Information</h2>
           </div>
@@ -297,7 +292,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="text"
                 id="companyName"
-                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border rounded-lg bg-gray-50  focus:border-transparent transition"
               />
             </div>
 
@@ -311,7 +306,7 @@ const AccountSettingsPage: React.FC = () => {
               <input
                 type="url"
                 id="companyWebsite"
-                className="w-full px-4 py-2 !text-gray-700 border border-[#9b111e]/30 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:border-transparent transition"
+                className="w-full px-4 py-2 !text-gray-700 border rounded-lg bg-gray-50  focus:border-transparent transition"
                 placeholder="https://"
               />
             </div>
@@ -360,14 +355,14 @@ const AccountSettingsPage: React.FC = () => {
         <div className="flex justify-end gap-4 pt-4">
           <button
             type="button"
-            className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition"
+            className="px-6 py-2 border border-[#7812A4] rounded-full font-medium !text-[#7812A4] hover:bg-gray-50 transition"
             style={{...FONTS.paragraph}}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-[#9b111e] !text-white rounded-lg font-medium hover:bg-[#9b111e]/90 transition focus:outline-none focus:ring-2 focus:ring-[#9b111e]/50 focus:ring-offset-2"
+            className="px-6 py-2 bg-[#7812A4] !text-white rounded-full "
             style={{...FONTS.paragraph}}
           >
             Save Changes

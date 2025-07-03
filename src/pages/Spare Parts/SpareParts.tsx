@@ -187,7 +187,7 @@ const SpareParts: React.FC = () => {
           </p>
           <button
             onClick={() => setShowAddForm(true)}
-            className="mt-8 bg-[#7812A4] !text-white px-6 py-3 rounded-lg  transition  flex items-center gap-2"style={{ ...FONTS.cardSubHeader,fontWeight:600 }}
+            className="mt-8 bg-[#7812A4] !text-white px-6 py-3 rounded-full  transition  flex items-center gap-2"style={{ ...FONTS.cardSubHeader,fontWeight:600 }}
           >
             <svg
               className="w-5 h-5"
@@ -412,13 +412,13 @@ const SpareParts: React.FC = () => {
           >
             <button
               onClick={() => resetAddForm()}
-              className="absolute top-2 right-2 text-3xl font-bold text-gray-600 hover:text-red-600"
+              className="absolute top-2 right-2 text-3xl font-bold text-gray-600 "
               aria-label="Close modal"
             >
               &times;
             </button>
 
-            <h2 className="text-xl font-bold mb-6 text-[#9b111e]">
+            <h2 className="text-xl font-bold mb-6 ">
               Add New Product
             </h2>
 
@@ -515,7 +515,7 @@ const SpareParts: React.FC = () => {
             <div className="flex justify-between gap-3 mt-8">
               <button
                 onClick={() => resetAddForm()}
-                className="px-6 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+                className="px-6 py-2 text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 transition"
               >
                 Cancel
               </button>
@@ -524,7 +524,7 @@ const SpareParts: React.FC = () => {
                 disabled={
                   !newPart?.productName?.trim() || !newPart?.image[0]?.trim()
                 }
-                className="px-6 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-[#7812A4] text-white rounded-full transition disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Add Product
               </button>

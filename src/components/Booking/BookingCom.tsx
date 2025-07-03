@@ -104,7 +104,7 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
     <div className="p-2 lg:max-w-6xl mx-auto md:max-w-full">
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold text-[#9b111e]" style={{ ...FONTS.header,fontSize:20}}>
+          <h2 className="" style={{ ...FONTS.header,fontSize:20}}>
             Slot Bookings
           </h2>
         </div>

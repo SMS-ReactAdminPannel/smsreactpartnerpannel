@@ -10,6 +10,7 @@ import {
   FaWallet,
   FaGavel,
 } from "react-icons/fa";
+import { FONTS } from "../../constants/constants";
 
 type Category = "General" | "Service" | "Spare Parts" | "Booking" | "Accounts" | "Legal";
 
@@ -242,10 +243,10 @@ const FaqPage = () => {
 
   return (
     <div className="bg-white min-h-screen rounded-2xl">
-      <h1 className="text-4xl font-bold text-center mb-2 pt-4 bg-gradient-to-r from-red-600 to-red-800 text-transparent bg-clip-text">
+      <h1 className=" text-center mb-2 pt-4 "style={{...FONTS.header}}>
         FAQ
       </h1>
-      <p className="text-center text-gray-600 mb-8 mt-4">
+      <p className="text-center mb-8 mt-4"style={{...FONTS.cardSubHeader}}>
         Your questions answered here.
       </p>
 
@@ -260,9 +261,9 @@ const FaqPage = () => {
                   setActiveCategory(category);
                   setActiveIndex(null);
                 }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition duration-200 ${
                   activeCategory === category
-                    ? "bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold shadow-md"
+                    ? "bg-[#7812A4] text-white font-semibold shadow-md"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
@@ -278,8 +279,8 @@ const FaqPage = () => {
           className="w-3/4 max-h-[70vh] overflow-auto pl-4"
           style={{ scrollbarWidth: "none" }}
         >
-          <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-red-800 flex items-center gap-2">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 text-white rounded-full p-2">
+          <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-[#7812A4] flex items-center gap-2">
+            <div className="bg-[#7812A4] text-white rounded-full p-2">
               {categoryIcons[activeCategory] || <FaQuestionCircle />}
             </div>
             {activeCategory} Questions

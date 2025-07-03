@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
+import { FONTS } from "../../constants/constants";
+import toggleon from "../../assets/Toogle On.svg"
+import toggleoff from "../../assets/Toogle Off.svg"
 // import { IoArrowBackOutline } from "react-icons/io5";
 type Category = { name: string; count: number };
 type Service = {
@@ -161,20 +164,20 @@ const ServiceCatList: React.FC = () => {
   };
 
   return (
-    <div>
-     <h2 className="text-3xl text-[#9b111e] font-bold mb-1 ml-4"> 
+    <div className="mt-5">
+     <h2 className=" mb-1  ml-4" style={{ ...FONTS.header}}> 
        {/* <IoArrowBackOutline /> */}
        Service Catalog</h2>
       <div className="flex min-h-screen bg-gray-100">
         <main className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h1 className="text-2xl font-bold">All Services</h1>
-              <p className="text-sm text-gray-500">{filteredServices.length} services found</p>
+              <h1 className="" style={{ ...FONTS.header,fontSize:22}}>All Services</h1>
+              <p className=" "style={{ ...FONTS.description,fontSize:18}}>{filteredServices.length} services found</p>
             </div>
             <div className="flex gap-2">
-              <input type="text" placeholder="Search services..." className="border px-3 py-2 rounded" />
-              <button onClick={handleAddServiceClick} className="bg-red-700 text-white px-4 py-2 rounded">
+              <input type="text" placeholder="Search services..." className="border px-3 py-2 rounded-full" />
+              <button onClick={handleAddServiceClick} className="bg-[#7812A4]  !text-white px-4 py-2 rounded-full"style={{ ...FONTS.cardheader,fontSize:16}}>
                 + Add Service
               </button>
             </div>
@@ -182,7 +185,7 @@ const ServiceCatList: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredServices.map((s) => (
-              <div key={s.id} className="group relative bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 hover:bg-red-100">
+              <div key={s.id} className="group relative bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 ">
                   <img src={s.imageUrl} className="w-full h-40 object-cover" />
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button className="bg-black text-white p-1 rounded-full" onClick={() => handleEditService(s)}>
@@ -192,15 +195,18 @@ const ServiceCatList: React.FC = () => {
                     <FaTrash size={14} />
                   </button>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-bold">{s.name}</h3>
-                  <p className="text-sm text-gray-500">{s.category}</p>
-                  <p className="text-sm mb-1">{s.description}</p>
+                <div className="p-4"style={{ ...FONTS.subParagraph,fontSize:22}}>
+                  <h3 className="">{s.name}</h3>
+                  <p className="text-sm text-gray-500">{s.category.charAt(0).toUpperCase() + s.category.slice(1)}</p>
+                  <p className="text-sm">{s.description.charAt(0).toUpperCase() + s.description.slice(1) }</p>
                   <div className="flex justify-between text-sm text-gray-600">
                     <span>{s.duration}</span>
                     <span>₹{s.price}</span>
                   </div>
-                  <div className="mt-2 text-green-600 text-sm font-semibold">{s.status}</div>
+                  <div className="mt-4 text-green-600 text-sm w-12 h-12 font-semibold">
+                    {s.status === 'Active' ?  <img src={toggleon}/> :  <img src={toggleoff}/>}
+                   
+                  </div>
                 </div>
               </div>
             ))}
@@ -209,23 +215,23 @@ const ServiceCatList: React.FC = () => {
 
         <aside className="w-64 bg-white p-4 border-r">
           <button
-            className="bg-red-700 text-white w-full py-2 rounded mb-4"
+            className=" bg-[#7812A4]  !text-white w-full py-2 rounded-full mb-4"style={{ ...FONTS.cardheader,fontSize:16}}
             onClick={() => setShowCategoryForm(true)}
           >
             + Add Category
           </button>
-          <h3 className="text-xl text-black font-bold mb-2">CATEGORIES</h3>
+          <h3 className=" mb-2"style={{ ...FONTS.cardheader,fontSize:16}}>CATEGORIES</h3>
           {categories.map((cat, index) => (
             <div
               key={cat.name}
-              className={`group relative flex items-center justify-between cursor-pointer px-3 py-2 rounded mb-1 ${
-                selectedCategory === cat.name ? "bg-red-100 text-red-700" : "hover:bg-gray-100"
+              className={`group relative flex items-center justify-between cursor-pointer px-3 py-2 rounded-full mb-1 ${
+                selectedCategory === cat.name ? "bg-[#7812A4] text-white" : "hover:bg-gray-100"
               }`}
               onClick={() => setSelectedCategory(cat.name)}
             >
-              <span>{cat.name} ({cat.count})</span>
+              <span>{cat?.name?.charAt(0).toUpperCase() + cat?.name?.slice(1)} ({cat.count})</span>
               <MdModeEdit
-                className="invisible group-hover:visible text-gray-500 hover:text-red-700 ml-2"
+                className="invisible group-hover:visible text-gray-500 hover:text-[#7812A4] ml-2"
                 onClick={(e) => {
                   e.stopPropagation();
                   setEditingCategoryIndex(index);

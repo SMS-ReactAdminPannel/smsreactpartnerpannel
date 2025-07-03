@@ -351,7 +351,7 @@ const Dashboard = () => {
 											<td className='p-2'>9:30 am</td>
 											<td>
 												<button
-													className='bg-[#7812A4] px-2 py-1 rounded'
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
 													onClick={() => navigate('/service')}
 													style={{ ...FONTS.cardSubHeader, color:'white'! }}
 												>
@@ -366,7 +366,7 @@ const Dashboard = () => {
 											<td className='p-2'>1:45 am</td>
 											<td>
 												<button
-													className='bg-[#7812A4] px-2 py-1 rounded'
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
 													style={{ ...FONTS.cardSubHeader, color: 'white'! }}
 													onClick={() => navigate('/service')}
 												>
@@ -381,7 +381,7 @@ const Dashboard = () => {
 											<td className='p-2'>8:10 pm</td>
 											<td>
 												<button
-													className='bg-[#7812A4] px-2 py-1 rounded'
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
 													onClick={() => navigate('/service')}
 													style={{ ...FONTS.cardSubHeader, color:'white'! }}
 												>
