@@ -166,13 +166,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/help-center'
 						icon={[<img src={Help} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Help1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Help Center'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					
 					
 					<SidebarLink
