@@ -102,7 +102,16 @@ const generateEndpoints = () => {
       forgetPassword:`/api/partner/auth/forget-pass`,
       verifyOtp:`/api/partner/auth/verify-otp`,
       resetPassword:`/api/partner/auth/reset-pass/:id`
-    }
+    },
+
+    serviceCenter: {
+      getAllCat: "/api/admin/category/getAll/:uuid",
+    },
+    category: {
+      update: "/api/admin/category/update/:uuid",
+      delete: "/api/admin/category/delete/:uuid",
+      create: "/api/admin/category/create",
+    },
   };
 };
 

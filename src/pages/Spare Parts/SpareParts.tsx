@@ -421,7 +421,7 @@ const SpareParts: React.FC = () => {
               Add New Product
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-4" style={{...FONTS.subParagraph}}>
               {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium mb-2 text-gray-700">
