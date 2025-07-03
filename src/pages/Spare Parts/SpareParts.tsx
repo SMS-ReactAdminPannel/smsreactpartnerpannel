@@ -10,7 +10,7 @@ interface SparePart {
   price: string;
   productName: string;
   brand: string;
-  image: string[];
+  image: string;
   stock: string;
   inStock: boolean;
   category: string;
@@ -60,8 +60,7 @@ const SpareParts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newPart, setNewPart] = useState<Omit<SparePart, "id">>({
-    _id:"",
+  const [newPart, setNewPart] = useState<Omit<SparePart, "id" |"_id">>({
     productName: "",
     price: "0",
     inStock: true,
@@ -244,7 +243,7 @@ const SpareParts: React.FC = () => {
         {/* Image Section */}
         <div className="h-[180px] flex justify-center items-center overflow-hidden rounded-md">
           <img
-            src={part.image[0] || imageUrl}
+            src={part.image || imageUrl}
             alt={part.productName}
             className="w-full h-full object-cover transition-all duration-300 ease-in-out"
             onError={(e) => {
