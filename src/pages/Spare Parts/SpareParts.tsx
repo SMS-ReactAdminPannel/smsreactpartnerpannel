@@ -237,7 +237,7 @@ const SpareParts: React.FC = () => {
     return (
       <div
         key={index}
-        className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[#fce4ec] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
+        className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[white] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
         onClick={() => setSelectedPart(part)}
         // onMouseEnter={() => setHoveredIndex(index)}
         // onMouseLeave={() => setHoveredIndex(null)}
