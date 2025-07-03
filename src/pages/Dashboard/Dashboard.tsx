@@ -20,7 +20,7 @@ import {
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { DashboardProfile } from './service';
+import { DashboardProfile, getMeDeatails } from './service';
 
 const dailyRevenueData = [
 	{ day: 'Mon', revenue: 500 },
@@ -105,7 +105,9 @@ const Dashboard = () => {
 
 	async function fetchProfile() {
 		const data = await DashboardProfile()
-		console.log(data)
+		const profile = await getMeDeatails()
+		console.log(profile.data,"prfile data")
+		localStorage.setItem("PartnerId",profile.data._id)
 	}
 
 	useEffect(() => {
