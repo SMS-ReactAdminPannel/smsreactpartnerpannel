@@ -6,7 +6,7 @@ import Client from '../../api/index.ts';
 import { FONTS } from '../../constants/constants.ts';
 // import { pinnedAnnouncementsAPI } from './services/index.tsx';
 
-const categories = ["All", "general", "booking", "payments"];
+const categories = ["All", "General", "Booking", "Payments"];
 
 type announcement = {
   userId: {
@@ -73,7 +73,7 @@ const AnnouncementPages = () => {
       : announcements.filter((a) => a.category === selectedCategory);
 
   return (
-    <div className="flex flex-col p-2 bg-gray-50 h-screen">
+    <div className="flex flex-col p-2  h-screen">
       <div className='flex flex-row'>
         
         <h1 className="text-center p-4 "style={{...FONTS.header}}>
@@ -90,7 +90,7 @@ const AnnouncementPages = () => {
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer p-2 rounded-full  ${selectedCategory === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
+                className={`cursor-pointer p-4 rounded-full  ${selectedCategory === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}

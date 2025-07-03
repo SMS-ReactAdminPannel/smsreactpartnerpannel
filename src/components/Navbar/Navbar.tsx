@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // import { FaTools } from 'react-icons/fa';
 import carLogo from '../../assets/icons8-car-service-64.png';
 import booking from '../../assets/New Booking.png'
+import bell from '../../assets/Notification.svg'
 
 
 interface User {
@@ -143,13 +144,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 		<>
 			<nav
 				style={{ backgroundColor: COLORS.primary_01, height: '65px' }}
-				className='flex items-center ml:2 px-4'
+				className='flex items-center  px-4'
 			>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
-						className='bg-white border   rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						className='bg-white border ml-4  rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2  transition-all'
 						style={{ width: '450px', height: '45px' }}
 					/>
 					<button
@@ -208,26 +209,16 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 								isBellActive ? 'scale-90' : 'scale-100'
 							}`}
 						>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								fill='none'
-								viewBox='0 0 24 24'
-								strokeWidth={1.8}
-								stroke='currentColor'
-								className='w-5 h-5 text-[#7812A4]'
-							>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									d='M12 22c1.1 0 2-.9 2-2h-4a2 2 0 002 2zm6-6V11c0-3.3-2.2-6.1-5.3-6.8V4a.7.7 0 00-1.4 0v.2C8.2 4.9 6 7.7 6 11v5l-1.7 1.7a1 1 0 00.7 1.7h14a1 1 0 00.7-1.7L18 16z'
-								/>
-							</svg>
+							<img src={bell} 
+						style={{ width: '20px', height: '20px'}}/>
+
 							{unreadCount > 0 && (
 								<span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
 									{unreadCount}
 								</span>
 							)}
 						</button>
+						
 
 						{showNotifications && (
 							<div className='absolute right-0 mt-2 w-80 rounded-lg shadow-xl bg-white z-50 overflow-hidden'>
@@ -434,13 +425,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 			{showLogoutConfirm && (
 				<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]'>
 					<div className='bg-white rounded-xl shadow-lg w-80 p-6 space-y-4 text-center'>
-						<h2 className='text-lg font-semibold text-red-600'>
+						<h2 className='text-lg font-semibold text-[#7812A4]'>
 							Are you sure you want to logout?
 						</h2>
 						<div className='flex justify-center gap-4 mt-4'>
 							<button
 								onClick={() => setShowLogoutConfirm(false)}
-								className='px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800'
+								className='px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800'
 							>
 								Cancel
 							</button>
@@ -454,7 +445,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 										navigate('/');
 									}, 1000);
 								}}
-								className='px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700'
+								className='px-4 py-2 rounded-full bg-[#7812A4] text-white '
 							>
 								OK
 							</button>

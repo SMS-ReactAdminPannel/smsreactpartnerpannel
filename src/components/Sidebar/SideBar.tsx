@@ -27,7 +27,6 @@ import Announcement from '../../assets/sidebaricon/Announcement.svg'
 import Announcement1 from '../../assets/sidebaricon/whiteicon/Announcement (2).svg'
 import Settings from "../../assets/sidebaricon/Settings.svg"
 import Settings1 from "../../assets/sidebaricon/whiteicon/Settings (3).svg"
-// import CustomerManage from "../../assets/sidebaricon/Service (1).svg"
 import Help from '../../assets/sidebaricon/whiteicon/Enquiry Page (2).svg'
 import Help1 from '../../assets/sidebaricon/Enquiry Page.svg'
 import faq from '../../assets/sidebaricon/FAQs (1).svg';
@@ -107,7 +106,7 @@ const SideBar = ({
 
 					icon={[<img src={spareparts1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={spareparts} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
-						label='Spare Parts Management'
+						label='Spare Parts '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -134,7 +133,7 @@ const SideBar = ({
 						
 					icon={[<img src={Service1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Service} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
-						label='Service Management'
+						label='Service '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -156,10 +155,10 @@ const SideBar = ({
 					{/* <SidebarLink
 						to='/customer'
 						icon={[<img src={Bookings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Bookings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
-						label='Customer Management'
+						label='Customer '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/announcement'
 						icon={[<img src={Announcement1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Announcement} alt="active home icon" style={{ width: 20, height: 20 }} />]}
@@ -191,7 +190,6 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/> */}
-					
 				</nav>
 			</div>
 			<div
