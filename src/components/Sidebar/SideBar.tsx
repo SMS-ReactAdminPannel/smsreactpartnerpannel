@@ -94,13 +94,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 					to='/servicecatList'
 					icon={<FaServicestack />}
 					label='Service Catlog'
 					isOpen={isOpen}
 					onClick={handleLinkClick}
-					/>
+					/> */}
 
 					<SidebarLink
 						to='/settings'

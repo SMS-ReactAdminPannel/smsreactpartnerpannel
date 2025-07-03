@@ -4,23 +4,23 @@ import { COLORS } from "../../constants/constants";
 
 type BookingStatus = "Pending" | "Viewed" | "Solved";
 
-// interface ServiceBooking {
-//   _id: number;
-//   firstName: string;
-//   lastName: string;
-//   serviceItems: string[];
-//   serviceDateTime: string;
-//   status: BookingStatus;
-// }
-
-interface ServiceBooking{
-  id: number,
-  customerName: string,
-  carModel: string,
-  servicePurpose: string[],
-  serviceDateTime: string,
-  status: BookingStatus,
+interface ServiceBooking {
+  _id: number;
+  firstName: string;
+  lastName: string;
+  serviceItems: string[];
+  serviceDateTime: string;
+  status: BookingStatus;
 }
+
+// interface ServiceBooking{
+//   id: number,
+//   customerName: string,
+//   carModel: string,
+//   servicePurpose: string[],
+//   serviceDateTime: string,
+//   status: BookingStatus,
+// }
 
 
 // const initialBookings: ServiceBooking[] = [
@@ -74,7 +74,7 @@ interface servicesType{
 }
 const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
   // const [bookings, setBookings] = useState<ServiceBooking[]>(initialBookings);
-  const [selectedBooking, setSelectedBooking] = useState<ServiceBooking | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -116,7 +116,7 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
           >
             <div className="flex-1">
               <p className="font-semibold text-lg text-[#9b111e]">
-                {booking?.customerId?.firstName} – {booking?.customerId?.vehicleInfo?.model}
+                {booking?.jobCardId?.customerInfo.name} - {booking?.jobCardId?.vehicleInfo?.model}
               </p>
               {
                 booking?.jobCardId?.serviceInfo?.services.map((item:any,index:number)=>{
@@ -141,7 +141,7 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
 
             <div className="flex flex-wrap gap-2">
               <button
-                // onClick={() => setSelectedBooking(booking)}
+                onClick={() => setSelectedBooking(booking)}
                 className=" text-white px-3 py-1 rounded bg-[#4e9bcd] hover:bg-[#55ACEE] transition text-sm"
               >
                 Open Service
@@ -179,13 +179,13 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
               <div className="cursor-default p-4">
                 <h3 className="text-2xl font-bold mb-4 text-[#9b111e]">Service Details</h3>
                 <p>
-                  <strong className="text-[#e07f62]">Customer:</strong> {selectedBooking.customerName}
+                  <strong className="text-[#e07f62]">Customer:</strong> {selectedBooking?.jobCardId?.customerInfo?.name}
                 </p>
                 <p>
-                  <strong className="text-[#e07f62]">Car Model:</strong> {selectedBooking.carModel}
+                  <strong className="text-[#e07f62]">Car Model:</strong> {selectedBooking?.jobCardId?.vehicleInfo?.model}
                 </p>
                 <p>
-                  <strong className="text-[#e07f62]">Date & Time:</strong> {formatDateTime(selectedBooking.serviceDateTime)}
+                  <strong className="text-[#e07f62]">Date & Time:</strong> {formatDateTime(selectedBooking?.service)}
                 </p>
                 <p>
                   <strong className="text-[#e07f62]">Status:</strong>{" "}
@@ -206,16 +206,18 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
               <div className="p-4 flex-1 flex flex-col">
                 <h4 className="font-semibold mb-2 text-[#9b111e]">Services</h4>
                 <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64 scrollbar-hide">
-                  {selectedBooking.servicePurpose.map((purpose, index) => (
+                  {selectedBooking.services.map((purpose, index) => (
                     <div key={index} className="bg-gray-100 hover:scale-[1.022] rounded p-3 text-sm shadow-sm">
                       <p
                         onClick={() => {
-                          setSelectedService(purpose);
+                          setSelectedService(purpose?.name);
                           handleClick();
                         }}
                         className="cursor-pointer"
                       >
-                        {purpose}
+                       {
+                        purpose?.name
+                       }
                       </p>
                     </div>
                   ))}

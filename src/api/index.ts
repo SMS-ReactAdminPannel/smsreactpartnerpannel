@@ -148,6 +148,12 @@ class Client {
     enquery:{
       create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data),
       getAll:(params:string)=>HttpClient.get(HTTP_END_POINTS.enquiry.getAll,params)
+    },
+    serviceCat:{
+      getAll:(params:string)=>HttpClient.get(HTTP_END_POINTS.serviceCenter.getAllCat.replace(":uuid",params))
+    },
+    category:{
+      create:(data:any)=>HttpClient.post(HTTP_END_POINTS.category.create,data)
     }
   };
 }

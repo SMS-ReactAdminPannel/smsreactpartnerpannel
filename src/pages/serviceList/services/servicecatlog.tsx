@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Client from '../../../api';
 
@@ -50,3 +51,22 @@ export const getallServices = async (partnerId?: string) => {
     throw error;
   }
 };
+
+export const GetCatgeory = async()=>{
+  try {
+    const partner:string = localStorage.getItem("PartnerId")?? ''
+    const response:any = await Client.partner.serviceCat.getAll(partner)
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.log("category data ",error)
+  }
+}
+
+export const CreateCategory = async(data:any)=>{
+    try {
+      await Client.partner.category.create(data)
+    } catch (error) {
+      console.log(error)
+    }
+}

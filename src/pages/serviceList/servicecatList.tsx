@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
 import {
+  CreateCategory,
   createService,
   deleteService,
   getallServices,
+  GetCatgeory,
   updateServices,
 } from "./services/servicecatlog";
 
@@ -23,9 +26,7 @@ type Service = {
 
 const ServiceCatList: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
-  const [categories, setCategories] = useState<Category[]>([
-    { name: "All Services", count: 0 },
-  ]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All Services");
   const [showAddForm, setShowAddForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
@@ -34,6 +35,8 @@ const ServiceCatList: React.FC = () => {
   const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
   const [editingCategoryIndex, setEditingCategoryIndex] = useState<number | null>(null);
   const [editedCategory, setEditedCategory] = useState<Category | null>(null);
+
+  const Partner_id = localStorage.getItem("PartnerId")
 
   const [newService, setNewService] = useState<Service>({
     uuid: "",
@@ -48,23 +51,29 @@ const ServiceCatList: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await getallServices();
+      const cats = await GetCatgeory()
+      console.log(cats.data,"get all cate")
+      // setCategories(cats.data)
+      setCategories(cats.data)
+
+      const response:any = await getallServices('');
       if (response?.data && Array.isArray(response.data)) {
         const fetchedServices = response.data;
         setServices(fetchedServices);
 
-        const categoryMap: { [key: string]: number } = {};
-        fetchedServices.forEach((s) => {
-          categoryMap[s.category_id] = (categoryMap[s.category_id] || 0) + 1;
-        });
+        // const categoryMap: { [key: string]: number } = {};
+        // fetchedServices.forEach((s) => {
+        //   categoryMap[s.category_id] = (categoryMap[s.category_id] || 0) + 1;
+        // });
 
-        const updatedCategories = [
-          { name: "All Services", count: fetchedServices.length },
-          ...Object.entries(categoryMap).map(([name, count]) => ({ name, count })),
-        ];
+        // const updatedCategories = [
+        //   { name: "All Services", count: fetchedServices.length },
+        //   ...Object.entries(categoryMap).map(([name, count]) => ({ name, count })),
+        // ];
 
-        setCategories(updatedCategories);
+        // setCategories(updatedCategories);
       }
+      console.log(response.data,"servicess")
     } catch (error) {
       console.error("Failed to fetch services", error);
     }
@@ -101,17 +110,13 @@ const ServiceCatList: React.FC = () => {
   const handleSaveService = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // const PartnerId = localStorage.getItem("partner_id");
-    // if (!PartnerId) {
-    //   alert("Partner ID not found. Please log in again.");
-    //   return;
-    // }
-
     try {
       if (isEditing && editingServiceId) {
         await updateServices(editingServiceId, newService);
       } else {
-        const response = await createService(PartnerId, newService);
+        const data:any = newService
+        data.partnerId = Partner_id
+        const response:any = await createService(data);
         if (!response?.data?.uuid) return;
       }
 
@@ -143,10 +148,12 @@ const ServiceCatList: React.FC = () => {
     setShowAddForm(true);
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async() => {
     if (newCategoryName.trim()) {
       setCategories([...categories, { name: newCategoryName, count: 0 }]);
     }
+    const data = {partnerId:Partner_id,category_name:newCategoryName,slug:newCategoryName}
+    await CreateCategory(data)
     setNewCategoryName("");
     setShowCategoryForm(false);
   };
@@ -220,13 +227,13 @@ const ServiceCatList: React.FC = () => {
           <h3 className="text-xl text-black font-bold mb-2">CATEGORIES</h3>
           {categories.map((cat, index) => (
             <div
-              key={cat.name}
-              className={`group relative flex items-center justify-between cursor-pointer px-3 py-2 rounded mb-1 ${
-                selectedCategory === cat.name ? "bg-red-100 text-red-700" : "hover:bg-gray-100"
+              key={cat.category_name}
+              className={`group relative flex items-center justify-between cursor-pointer px-3 py-2 rounded mb-1 bg-gray-100 ${
+                selectedCategory === cat.category_name ? "bg-red-100 text-red-700" : "hover:bg-gray-100"
               }`}
               onClick={() => setSelectedCategory(cat.name)}
             >
-              <span>{cat.name} ({cat.count})</span>
+              <span>{cat.category_name} ({cat.services.length})</span>
               <MdModeEdit
                 className="invisible group-hover:visible text-gray-500 hover:text-red-700 ml-2"
                 onClick={(e) => {
