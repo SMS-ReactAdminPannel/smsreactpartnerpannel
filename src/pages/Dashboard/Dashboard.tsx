@@ -137,24 +137,27 @@ const Dashboard = () => {
 		xDataKey = 'month';
 	}
 	return (
-		<div className='w-full px-4 py-6 -mt-6 dashboard'>
+		<div className='w-full px-8 py-6 -mt-6 dashboard'>
 			{/* Header */}
-			<div className='rounded-xl shadow-md bg-white pb-4 mb-4'>
+			<div>
 				<p
-					className='text-xl font-semibold pl-6 py-3 '
-					style={{ ...FONTS.header, color: COLORS.primary, fontWeight: 600 }}
+					className='text-xl font-semibold  mt-5 py-3 '
+					style={{ ...FONTS.header }}
 				>
 					Dashboard
 				</p>
 				<p
-					className='text-gray-500 text-sm pb-5 pl-7'
-					style={{ ...FONTS.paragraph, color: COLORS.secondary }}
+					className='text-gray-500 text-sm pb-5 '
+					style={{ ...FONTS.paragraph }}
 				>
 					Service details latest updates and statistics
 				</p>
+			</div>
+			<div className='rounded-xl shadow-md bg-white pb-4  pt-4 mb-4'>
+
 
 				{/* Dashboard Cards */}
-				<div className='mx-1 justify-center items-center px-2'>
+				<div className='mx-8 justify-center items-center px-2'>
 					<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10'>
 						<DashboardCard
 							icon={<AiOutlineThunderbolt />}
@@ -207,10 +210,10 @@ const Dashboard = () => {
 							<div className='flex justify-between items-center mb-4'>
 								<h2
 									style={{
-										...FONTS.paragraph,
-										fontSize: '18px',
-										color: COLORS.primary,
-										fontWeight: 500,
+										...FONTS.header,
+										fontWeight:500,
+										fontSize:20
+								
 									}}
 								>
 									{period.charAt(0).toUpperCase() + period.slice(1)} Revenue
@@ -221,18 +224,19 @@ const Dashboard = () => {
 										setPeriod(e.target.value as 'daily' | 'weekly' | 'monthly')
 									}
 									className='border rounded px-2 py-1'
+									style={{...FONTS.cardSubHeader}}
 									aria-label='Select period'
 								>
-									<option value='daily'>Daily</option>
-									<option value='weekly'>Weekly</option>
-									<option value='monthly'>Monthly</option>
+									<option value='daily' style={{...FONTS.cardSubHeader}}>Daily</option>
+									<option value='weekly'style={{...FONTS.cardSubHeader}}>Weekly</option>
+									<option value='monthly'style={{...FONTS.cardSubHeader}}>Monthly</option>
 								</select>
 							</div>
 
 							<ResponsiveContainer width='100%' height={250}>
 								<LineChart data={data}>
-									<XAxis dataKey={xDataKey} />
-									<YAxis />
+									<XAxis dataKey={xDataKey} style={{...FONTS.cardSubHeader,fontSize:14}} />
+									<YAxis style={{...FONTS.cardSubHeader,fontSize:14}} />
 									<Tooltip />
 									<Line
 										type='monotone'
@@ -260,18 +264,18 @@ const Dashboard = () => {
 							<h2
 								className='mb-4'
 								style={{
-									...FONTS.paragraph,
-									fontSize: '18px',
-									color: COLORS.primary,
-									fontWeight: 500,
-								}}
+										...FONTS.header,
+										fontWeight:500,
+										fontSize:20
+								
+									}}
 							>
 								Service Bookings
 							</h2>
 							<ResponsiveContainer width='100%' height={254}>
 								<BarChart data={bookingData}>
-									<XAxis dataKey='name' />
-									<YAxis />
+									<XAxis dataKey='name' style={{...FONTS.cardSubHeader,fontSize:14}} />
+									<YAxis style={{...FONTS.cardSubHeader,fontSize:14}} />
 									<Tooltip />
 									<Bar dataKey='bookings' fill='#FFDBDB' />
 								</BarChart>
@@ -282,47 +286,39 @@ const Dashboard = () => {
 
 				<motion.div
 					whileHover={{}}
-					className='md:col-span-2 xl:col-span-3 mt-3'
+					className='md:col-span-2 xl:col-span-3 mt-3 '
 				// ref={bookingsRef}
 				>
 					<Card
-						className={`transition-all duration-500 p-4 rounded-xl
-							${NaN ? 'ring-4 ring-yellow-400 bg-yellow-100' : ''}
+						className={`transition-all  duration-500 p-4 rounded-xl
+							${NaN ? 'ring-4 ring-yellow-400 bg-#E9E9E9' : ''}
 						`}
 					>
-						<CardContent>
+						<CardContent className="">
 							<h2
-								className='mb-4'
+								className='mb-4 '
 								style={{
-									...FONTS.paragraph,
-									fontSize: '18px',
-									color: COLORS.primary,
-									fontWeight: 500,
-								}}
+										...FONTS.header,
+										fontWeight:500,
+										fontSize:20
+								
+									}}
 							>
 								Recent Bookings
 							</h2>
 							<div className='overflow-x-auto'>
-								<table className='table-auto w-full min-w-max border-collapse'>
+								<table className='table-auto w-full min-w-max border-collapse '>
 									<thead>
-										<tr className='bg-gray-100 text-left'>
+										<tr className='bg-[#e9e9e9] text-left'>
 											<th
 												className='p-2'
-												style={{
-													...FONTS.paragraph,
-													fontSize: '16px',
-													color: COLORS.primary,
-												}}
+												style={{...FONTS.tableHeader,}}
 											>
 												Customer
 											</th>
 											<th
 												className='p-2 relative'
-												style={{
-													...FONTS.paragraph,
-													fontSize: '16px',
-													color: COLORS.primary,
-												}}
+												style={{...FONTS.tableHeader,}}
 											>
 												Service
 												<span className='absolute top-1 bg-green-100 text-green-600 text-[10px] font-semibold px-2 py-1 rounded-full shadow-sm ml-1'>
@@ -331,77 +327,65 @@ const Dashboard = () => {
 											</th>
 											<th
 												className='p-2'
-												style={{
-													...FONTS.paragraph,
-													fontSize: '16px',
-													color: COLORS.primary,
-												}}
+												style={{...FONTS.tableHeader,}}
 											>
 												Date
 											</th>
 											<th
 												className='p-2'
-												style={{
-													...FONTS.paragraph,
-													fontSize: '16px',
-													color: COLORS.primary,
-												}}
+												style={{...FONTS.tableHeader,}}
 											>
 												Time
 											</th>
 											<th
 												className=''
-												style={{
-													...FONTS.paragraph,
-													fontSize: '16px',
-													color: COLORS.primary,
-												}}
+												style={{...FONTS.tableHeader,}}
 											>
 												Details
 											</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr style={{...FONTS.cardSubHeader}}>
 											<td className='p-2'>John Doe</td>
 											<td className='p-2'>Oil Change</td>
 											<td className='p-2'>2025-05-20</td>
 											<td className='p-2'>9:30 am</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded'
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color:'white'! }}
+													style={{ ...FONTS.cardSubHeader, color:'white'! }}
 												>
 													View
 												</button>
 											</td>
 										</tr>
-										<tr>
+										<tr style={{...FONTS.cardSubHeader}}>
 											<td className='p-2'>Jane Smith</td>
 											<td className='p-2'>Brake Inspection</td>
 											<td className='p-2'>2025-05-22</td>
 											<td className='p-2'>1:45 am</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded'
-													style={{ ...FONTS.paragraph, color: 'white'! }}
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
+													style={{ ...FONTS.cardSubHeader, color: 'white'! }}
 													onClick={() => navigate('/service')}
 												>
 													View
 												</button>
 											</td>
 										</tr>
-										<tr>
+										<tr style={{...FONTS.cardSubHeader}}>
 											<td className='p-2'>Bob Johnson</td>
 											<td className='p-2'>Tire Rotation</td>
 											<td className='p-2'>2025-05-23</td>
 											<td className='p-2'>8:10 pm</td>
 											<td>
 												<button
-													className='bg-[#9b111e] px-2 py-1 rounded'
+													className='bg-[#7812A4] px-2 py-1 rounded-full'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color:'white'! }}
+													style={{ ...FONTS.cardSubHeader, color:'white'! }}
 												>
 													View
 												</button>
@@ -419,14 +403,14 @@ const Dashboard = () => {
 			<footer className='bg-white shadow-md rounded-xl p-4 w-full text-center my-6 -mb-8'>
 				<div className='flex justify-between items-center'>
 					<div className='flex items-center justify-center space-x-1'>
-						<AiOutlineCopyrightCircle color={COLORS.primary} size={18} />
-						<span style={{ color: COLORS.primary }}>YesMechanic Partner</span>
+						<AiOutlineCopyrightCircle style={{ ...FONTS.cardSubHeader,fontWeight:600}} size={18} />
+						<span style={{ ...FONTS.cardSubHeader,fontWeight:600}}>YesMechanic Partner</span>
 					</div>
 					<div>
-						<Link to={'/privacy-policy'} className="text-gray-600 hover:text-gray-800 mx-2 text-sm italic">
+						<Link to={'/privacy-policy'} className="mx-2"style={{ ...FONTS.cardSubHeader}}>
 							Privacy Policy
 						</Link>
-						<Link to={'/terms-conditions'} className="text-gray-600 hover:text-gray-800 mx-2 text-sm italic">
+						<Link to={'/terms-conditions'} className=" mx-2 "style={{ ...FONTS.cardSubHeader}}>
 							Terms & Conditions
 						</Link>
 					</div>

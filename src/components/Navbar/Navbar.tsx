@@ -5,6 +5,9 @@ import { useAuth } from '../../pages/auth/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 // import { FaTools } from 'react-icons/fa';
 import carLogo from '../../assets/icons8-car-service-64.png';
+import booking from '../../assets/New Booking.png'
+import bell from '../../assets/Notification.svg'
+
 
 interface User {
 	name: string;
@@ -141,21 +144,21 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 		<>
 			<nav
 				style={{ backgroundColor: COLORS.primary_01, height: '65px' }}
-				className='flex items-center px-4'
+				className='flex items-center  px-4'
 			>
 				<div className='flex items-center gap-2'>
 					<input
 						type='text'
 						placeholder='Search...'
-						className='bg-[#f0c9bd5d] border border-[#6b1b1b] text-[#6b1b1b] placeholder-[#6b1b1b] rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6b1b1b] transition-all'
+						className='bg-white border ml-4  rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2  transition-all'
 						style={{ width: '450px', height: '45px' }}
 					/>
 					<button
 						type='submit'
-						className='bg-gradient-to-r from-red-600 to-red-800 rounded-full p-3 hover:scale-105 transition-transform'
+						className='bg-white rounded-full p-3 hover:scale-105 transition-transform'
 					>
 						<svg
-							className='w-4 h-4 text-white'
+							className='w-4 h-4 text-[#7812A4]'
 							fill='none'
 							stroke='currentColor'
 							strokeWidth={3}
@@ -170,14 +173,14 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 
 				<div className='ml-auto flex items-center space-x-4 pr-4'>
 					<div
-						className='ml-2 relative rounded-full p-2 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-r from-red-600 to-red-800'
+						className='ml-2 relative rounded-full p-2 hover:scale-105 transition-transform cursor-pointer '
 						onClick={() => navigate('/bookings')}
 					>
 						{/* <FaTools className='w-4 h-4 text-white' /> */}
 						<img
-							src={carLogo}
+							src={booking}
 							alt=''
-							style={{ width: '25px', height: '25px' }}
+							style={{ width: '35px', height: '35px'}}
 						/>
 						<AnimatePresence>
 							{hasNewBooking && (
@@ -191,7 +194,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 										repeat: Infinity,
 										ease: 'easeInOut',
 									}}
-									className='absolute -top-2 -left-0 px-1 py-0.4 text-[8px] font-semibold bg-gradient-to-r from-[#9b111e] to-red-500 text-white rounded-full shadow-md whitespace-nowrap'
+									className='absolute -top-2 -left-0 px-1 py-0.4 text-[8px] font-semibold bg-white text-[#7812A4] rounded-full shadow-md whitespace-nowrap'
 								>
 									New Bookings
 								</motion.div>
@@ -202,34 +205,24 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						<button
 							aria-label='Notifications'
 							onClick={handleBellClick}
-							className={`relative p-2.5 rounded-full bg-gradient-to-r from-red-600 to-red-800 focus:outline-none transform transition-transform duration-200 ease-in-out ${
+							className={`relative p-2.5 rounded-full bg-white focus:outline-none transform transition-transform duration-200 ease-in-out ${
 								isBellActive ? 'scale-90' : 'scale-100'
 							}`}
 						>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								fill='none'
-								viewBox='0 0 24 24'
-								strokeWidth={1.8}
-								stroke='currentColor'
-								className='w-5 h-5 text-white'
-							>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									d='M12 22c1.1 0 2-.9 2-2h-4a2 2 0 002 2zm6-6V11c0-3.3-2.2-6.1-5.3-6.8V4a.7.7 0 00-1.4 0v.2C8.2 4.9 6 7.7 6 11v5l-1.7 1.7a1 1 0 00.7 1.7h14a1 1 0 00.7-1.7L18 16z'
-								/>
-							</svg>
+							<img src={bell} 
+						style={{ width: '20px', height: '20px'}}/>
+
 							{unreadCount > 0 && (
 								<span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
 									{unreadCount}
 								</span>
 							)}
 						</button>
+						
 
 						{showNotifications && (
 							<div className='absolute right-0 mt-2 w-80 rounded-lg shadow-xl bg-white z-50 overflow-hidden'>
-								<div className='bg-gradient-to-r from-red-600 to-red-800 p-3'>
+								<div className='bg-white  p-3'>
 									<h3 className='text-white font-bold'>Notifications</h3>
 								</div>
 								<div className='max-h-80 overflow-y-auto'>
@@ -288,13 +281,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 								/>
 							</div>
 							<div className='flex flex-col'>
-								<span className='text-[#9b111e] font-medium'>
+								<span className='text-[white] font-medium'>
 									{editedUser.name}
 								</span>
-								<div className='flex items-center text-sm text-[#c13340]'>
+								<div className='flex items-center text-sm text-[white]'>
 									Partner
 									<svg
-										className='w-4 h-6 ml-1 text-[#c13340]'
+										className='w-4 h-6 ml-1 text-[white]'
 										fill='none'
 										stroke='currentColor'
 										strokeWidth={2}
@@ -312,14 +305,14 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 
 						{isDropdownOpen && (
 							<div className='absolute right-0 mt-2 w-24 rounded-md shadow-lg z-50 bg-gradient-to-br from-yellow-50 to-yellow-100'>
-								<ul className='py-1 text-sm text-[#9b111e]'>
+								<ul className='py-1 text-sm text-[#7812A4]'>
 									<li>
 										<button
 											onClick={() => {
 												setShowProfileDetails(true);
 												setIsDropdownOpen(false);
 											}}
-											className='block w-full text-center px-4 py-1 transition-colors duration-200 hover:text-white hover:bg-[#d14c4c]'
+											className='block w-full text-center px-4 py-1 transition-colors duration-200 hover:text-white hover:bg-[#7812A4]'
 										>
 											Profile
 										</button>
@@ -330,7 +323,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 												setShowLogoutConfirm(true);
 												setIsDropdownOpen(false);
 											}}
-											className='block w-full text-center px-4 py-1 transition-colors duration-200 hover:text-white hover:bg-[#d14c4c]'
+											className='block w-full text-center px-4 py-1 transition-colors duration-200 hover:text-white hover:bg-[#7812A4]'
 										>
 											Logout
 										</button>
@@ -432,13 +425,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 			{showLogoutConfirm && (
 				<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]'>
 					<div className='bg-white rounded-xl shadow-lg w-80 p-6 space-y-4 text-center'>
-						<h2 className='text-lg font-semibold text-red-600'>
+						<h2 className='text-lg font-semibold text-[#7812A4]'>
 							Are you sure you want to logout?
 						</h2>
 						<div className='flex justify-center gap-4 mt-4'>
 							<button
 								onClick={() => setShowLogoutConfirm(false)}
-								className='px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800'
+								className='px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800'
 							>
 								Cancel
 							</button>
@@ -452,7 +445,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 										navigate('/');
 									}, 1000);
 								}}
-								className='px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700'
+								className='px-4 py-2 rounded-full bg-[#7812A4] text-white '
 							>
 								OK
 							</button>

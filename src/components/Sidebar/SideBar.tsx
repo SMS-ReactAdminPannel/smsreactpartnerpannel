@@ -31,8 +31,6 @@ import Help from '../../assets/sidebaricon/whiteicon/Enquiry Page (2).svg'
 import Help1 from '../../assets/sidebaricon/Enquiry Page.svg'
 import faq from '../../assets/sidebaricon/FAQs (1).svg';
 import faq1 from '../../assets/sidebaricon/whiteicon/FAQs (2).svg'
-
-
 import { FONTS } from '../../constants/constants';
 
 
@@ -109,7 +107,7 @@ const SideBar = ({
 
 					icon={[<img src={spareparts1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={spareparts} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
-						label='Spare Parts Management'
+						label='Spare Parts '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -136,7 +134,7 @@ const SideBar = ({
 						
 					icon={[<img src={Service1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Service} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
-						label='Service Management'
+						label='Service '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -155,13 +153,13 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/customer'
 						icon={[<img src={Bookings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Bookings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
-						label='Customer Management'
+						label='Customer '
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
+					/> */}
 					<SidebarLink
 						to='/announcement'
 						icon={[<img src={Announcement1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Announcement} alt="active home icon" style={{ width: 20, height: 20 }} />]}
@@ -175,8 +173,8 @@ const SideBar = ({
 						label='Help Center'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
-					/>
-					 */}
+					/> */}
+					
 					
 					<SidebarLink
 						to='/faq'

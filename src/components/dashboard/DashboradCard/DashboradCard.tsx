@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { FONTS } from '../../../constants/constants';
 
 type DashboardCardProps = {
   title: string;
@@ -22,7 +23,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   backgroundColor,
 }) => {
   return (
-    <div className='rounded-xl bg-[#FAF3EB] shadow-md p-4 w-full max-w-[250px] h-[130px]'>
+    <div className='rounded-xl bg-[E8d6f0] shadow-md p-4 w-full max-w-[250px] h-[130px]'>
       <div className='flex items-center justify-between'>
         {/* Icon Box */}
         <div
@@ -34,8 +35,8 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
 
         {/* Title and Value */}
         <div className='flex flex-col justify-center ml-2 grow'>
-          <p className='text-xs text-gray-500'>{title}</p>
-          <h3 className='text-xl font-semibold'>{value}</h3>
+          <p className='text-xs text-gray-500'style={{ ...FONTS.paragraph, fontSize:14 }}>{title}</p>
+          <h3 style={{ ...FONTS.tableHeader, fontWeight: 700 }}>{value}</h3>
         </div>
 
         {/* Percentage */}

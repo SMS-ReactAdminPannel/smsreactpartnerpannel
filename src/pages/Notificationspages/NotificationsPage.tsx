@@ -56,16 +56,10 @@ console.log("error",error)
   });
 
   return (
-    <div className="min-h-screen bg-[#FAF3EB] p-2 font-[Poppins]">
+    <div className="min-h-screen  p-2 font-[Poppins]">
       <div className="flex items-center mb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center text-[#9b111e] hover:underline mr-4 pl-2"
-        >
-          
-          <FaArrowLeft className="mr-1" />
-        </button>
-        <h1 className="text-3xl font-bold text-[#9b111e]"
+       
+        <h1
         style={{
                       ...FONTS.header
                     
@@ -75,7 +69,7 @@ console.log("error",error)
 
       <div className="flex h-[80vh] border rounded-2xl overflow-hidden shadow-lg bg-white">
         {/* Sidebar */}
-        <aside className="w-64 border-r bg-[#fdefe9] p-6">
+        <aside className="w-64 border-r  p-6">
           <h2 className="text-lg font-semibold text-[#9b111e] mb-4"
          style={{
                       ...FONTS.cardheader
@@ -94,9 +88,9 @@ console.log("error",error)
                 key={f}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() => setFilter(f as any)}
-                className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ${
+                className={`block w-full text-left px-4 py-2 rounded-full transition-all duration-200 ${
                   filter === f
-                    ? "bg-gradient-to-r from-red-600 to-red-800 !text-white !font-semibold shadow-md"
+                    ? "bg-[#7812A4] !text-white !font-semibold shadow-md"
                     : "!text-gray-700 hover:bg-gray-100"
                 }`}
               >
@@ -130,14 +124,14 @@ console.log("error",error)
                     : "border border-gray-200"
                 }`}
               >
-                <div className="p-[1px] rounded-full bg-gradient-to-r from-red-600 to-red-800 inline-block"
+                <div className="p-[1px] rounded-full bg-gradient-to-r from-[#7812A4] to-[#7812A4] inline-block"
                   >
-                  <div className="w-10 h-10 flex items-center justify-center bg-white text-red-600 rounded-full">
+                  <div className="w-10 h-10 flex items-center justify-center bg-white text-[#7812A4] rounded-full">
                     {mail.title?.charAt(0).toUpperCase()}
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-[#9b111e]"
+                  <p 
                   style={{
                       ...FONTS.paragraph
                     

@@ -94,7 +94,7 @@ const LoginPage1 = () => {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: #9b111e;
+            background: #7812A4;
             color: white;
             font-weight: 500;
             padding: 8px 0;
@@ -150,7 +150,7 @@ const LoginPage1 = () => {
 					transition={{ duration: 1.2 }}
 					className='hidden md:block w-full md:w-3/5 h-64 md:h-screen relative'
 				>
-					<div className='bg-gradient-to-r from-[#9b111e] to-red-600 h-full w-[90%]'>
+					<div className='bg-gradient-to-r from-[#7812A4] to-violet-600 h-full w-[90%]'>
 						<img
 							src={carImage}
 							alt='Login illustration'
@@ -173,22 +173,22 @@ const LoginPage1 = () => {
 					transition={{ duration: 1.2 }}
 					className='w-full md:w-2/5 flex items-center justify-center bg-white px-6 sm:px-8 md:px-12 py-12 md:py-0'
 				>
-					<div className='w-full max-w-md bg-white shadow-2xl glow-border rounded-xl p-8 border border-gray-200'>
+					<div className='w-full max-w-md bg-white shadow-2xl rounded-xl p-8 border border-[#7812A4]'>
 						<form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-							<h2 className='text-2xl font-bold text-[#9b111e] text-center'>
+							<h2 className='text-2xl font-bold text-[#7812A4] text-center'>
 								YM LOGIN
 							</h2>
 
 							{/* Email */}
 							<div className='flex flex-col space-y-2'>
-								<label className='text-sm font-medium text-[#9b111e]'>
+								<label className='text-sm font-medium text-[#7812A4]'>
 									Email
 								</label>
 								<input
 									type='email'
 									{...register('email', { required: 'Email is required' })}
 									placeholder='Enter your email'
-									className='w-full px-4 py-2 border border-[#E6A895] rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e] placeholder-[#c18383]'
+									className='w-full px-4 py-2 border border-[#7812A4] rounded-md focus:outline-none focus:ring-2 focus:ring-[#7812A4] placeholder-[#c18383]'
 								/>
 								{errors.email && (
 									<span className='text-red-500 text-sm'>
@@ -199,7 +199,7 @@ const LoginPage1 = () => {
 
 							{/* Password */}
 							<div className='flex flex-col space-y-2'>
-								<label className='text-sm font-medium text-[#9b111e]'>
+								<label className='text-sm font-medium text-[#7812A4]'>
 									Password
 								</label>
 								<div className='relative'>
@@ -209,16 +209,16 @@ const LoginPage1 = () => {
 											required: 'Password is required',
 										})}
 										placeholder='Enter your password'
-										className='w-full px-4 py-2 border border-[#E6A895] rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-[#9b111e] placeholder-[#c18383]'
+										className='w-full px-4 py-2 border border-[#7812A4] rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-[#7812A4] placeholder-[#c18383]'
 									/>
 									<span
 										className='absolute top-2.5 right-3 text-gray-500 cursor-pointer'
 										onClick={() => setShowPassword(!showPassword)}
 									>
 										{showPassword ? (
-											<EyeSlashIcon className='w-5 h-5 text-[#9b111e]' />
+											<EyeSlashIcon className='w-5 h-5 text-[#7812A4]' />
 										) : (
-											<EyeIcon className='w-5 h-5 text-[#9b111e]' />
+											<EyeIcon className='w-5 h-5 text-[#7812A4]' />
 										)}
 									</span>
 								</div>
@@ -240,7 +240,7 @@ const LoginPage1 = () => {
 								}`}
 								style={{
 									backgroundImage:
-										'linear-gradient(44.99deg, #700808 11%, #d23c3c 102.34%)',
+										'linear-gradient(44.99deg, #7812D2 11%, #7812A4 102.34%)',
 								}}
 							>
 								{isLoading ? (
@@ -259,7 +259,7 @@ const LoginPage1 = () => {
 							<div className='text-right mt-1'>
 								<Link
 									to='/forgot-password'
-									className='text-[#9b111e] hover:underline text-sm'
+									className='text-[#7812A4] hover:underline text-sm'
 								>
 									Forgot Password?
 								</Link>

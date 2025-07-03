@@ -3,9 +3,10 @@ import { TiPin } from "react-icons/ti";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 import Client from '../../api/index.ts';
+import { FONTS } from '../../constants/constants.ts';
 // import { pinnedAnnouncementsAPI } from './services/index.tsx';
 
-const categories = ["All", "general", "booking", "payments"];
+const categories = ["All", "General", "Booking", "Payments"];
 
 type announcement = {
   userId: {
@@ -60,7 +61,7 @@ const AnnouncementPages = () => {
   const handlePinnedClick = async (announcement: announcement) => {
     try {
       const res: any = await Client.partner.annoucement.get({ _id: announcement._id });
-      console.log("Pinned Announcement Full Data:", res.data);
+      console.log(res.data);
     } catch (err) {
       console.error("Failed to fetch pinned announcement:", err);
     }
@@ -72,15 +73,10 @@ const AnnouncementPages = () => {
       : announcements.filter((a) => a.category === selectedCategory);
 
   return (
-    <div className="flex flex-col p-2 bg-gray-50 h-screen">
+    <div className="flex flex-col p-2  h-screen">
       <div className='flex flex-row'>
-        <button
-          onClick={() => navigate(-1)}
-          className="text-blue-600 hover:underline mt-3 flex items-center w-fit"
-        >
-          <HiArrowLeft className="text-3xl text-[#9b111e]" />
-        </button>
-        <h1 className="text-[#9b111e] font-bold text-center p-4 text-4xl">
+        
+        <h1 className="text-center p-4 "style={{...FONTS.header}}>
           Announcements
         </h1>
       </div>
@@ -89,12 +85,12 @@ const AnnouncementPages = () => {
 
         {/* Category List */}
         <div className="w-1/6 bg-white rounded-xl shadow p-2 flex flex-col">
-          <h2 className="text-2xl text-[#9b111e] font-semibold mb-2">Category</h2>
+          <h2 className=" mb-2"style={{...FONTS.header,fontSize:22}}>Category</h2>
           <ul>
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer p-2 rounded ${selectedCategory === cat ? "bg-orange-100 font-bold" : ""}`}
+                className={`cursor-pointer p-4 rounded-full  ${selectedCategory === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -133,7 +129,7 @@ const AnnouncementPages = () => {
 
         {/* Pinned Announcements */}
         <div className="w-1/3 bg-white rounded-xl shadow p-4 flex flex-col">
-          <h2 className="text-2xl font-semibold text-[#9b111e] mb-4 flex items-center gap-1">
+          <h2 className=" mb-4 flex items-center gap-1"style={{...FONTS.header,fontSize:22}}>
             Pinned Announcements
           </h2>
           {pinnedAnnouncements.length === 0 ? (

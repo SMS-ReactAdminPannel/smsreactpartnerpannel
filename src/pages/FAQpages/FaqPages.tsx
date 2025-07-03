@@ -10,6 +10,22 @@ import {
   FaWallet,
   FaGavel,
 } from "react-icons/fa";
+import { FONTS } from "../../constants/constants";
+import legal from "../../assets/faq/Legal (1).svg";
+import Accounts from "../../assets/faq/Accounts (1).svg";
+import General from "../../assets/faq/General (1).svg";
+import Booking from "../../assets/faq/Booking (5).svg";
+import service from "../../assets/faq/Service (5).svg";
+import SpareParts from "../../assets/faq/Spare Parts (5).svg";
+
+// import legal1 from "../../assets/faq/whiteicon/Legal (2).svg";
+// import Accounts1 from "../../assets/faq/whiteicon/Accounts (2).svg";
+// import General1 from "../../assets/faq/whiteicon/General (1) (1).svg";
+// import Booking1 from "../../assets/faq/whiteicon/Booking (3) (1).svg";
+// import service1 from "../../assets/faq/whiteicon/Service (3) (1).svg";
+// import SpareParts1 from "../../assets/faq/whiteicon/Spare Parts (4) (1).svg";
+
+
 
 type Category = "General" | "Service" | "Spare Parts" | "Booking" | "Accounts" | "Legal";
 
@@ -215,22 +231,25 @@ const faqs: Record<Category, { question: string; answer: string }[]> = {
 };
 
 const categories: Category[] = [
+  "Legal",
   "General",
   "Service",
   "Spare Parts",
   "Booking",
   "Accounts",
-  "Legal",
+  
 ];
 
 const categoryIcons: Record<Category, React.ReactNode> = {
-  General: <FaListUl />,
-  Service: <FaTools />,
-  "Spare Parts": <FaCogs />,
-  Booking: <FaCalendarAlt />,
-  Accounts: <FaWallet />,
-  Legal: <FaGavel />,
+     "Legal": legal,
+  "Accounts": Accounts,
+  "General": General,
+  "Booking": Booking,
+  "Service": service,
+  "Spare Parts": SpareParts,
 };
+
+
 
 const FaqPage = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -242,45 +261,59 @@ const FaqPage = () => {
 
   return (
     <div className="bg-white min-h-screen rounded-2xl">
-      <h1 className="text-4xl font-bold text-center mb-2 pt-4 bg-gradient-to-r from-red-600 to-red-800 text-transparent bg-clip-text">
+      <h1 className=" text-center mb-2 pt-4 "style={{...FONTS.header}}>
         FAQ
       </h1>
-      <p className="text-center text-gray-600 mb-8 mt-4">
+      <p className="text-center mb-8 mt-4"style={{...FONTS.cardSubHeader}}>
         Your questions answered here.
       </p>
 
       <div className="flex pl-5">
        
         <div className="w-1/4 pr-6">
-          <ul className="space-y-2">
-            {categories.map((category) => (
-              <li
-                key={category}
-                onClick={() => {
-                  setActiveCategory(category);
-                  setActiveIndex(null);
-                }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition duration-200 ${
-                  activeCategory === category
-                    ? "bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold shadow-md"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                <span className="text-lg pr-2">{categoryIcons[category]}</span>
-                {category}
-              </li>
-            ))}
-          </ul>
-        </div>
+<ul className="space-y-2">
+  {categories.map((category) => (
+    <li
+      key={category}
+      onClick={() => {
+        setActiveCategory(category);
+        setActiveIndex(null);
+      }}
+      className={`group flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition duration-200 ${
+        activeCategory === category
+          ? "bg-[#7812A4] text-white font-semibold shadow-md"
+          : "text-gray-700 hover:bg-gray-100"
+      }`}
+    >
+
+      <img
+  src={categoryIcons[category] ?? ""}
+  // alt={category}
+        className={`w-5 h-5 transition duration-200 ${
+          activeCategory === category
+            ? "filter brightness-0 invert"
+            : "group-hover:filter group-hover:brightness-0"
+        }`}
+      />
+      {category}
+    </li>
+  ))}
+</ul>
+
+</div>
+
 
        
         <div
           className="w-3/4 max-h-[70vh] overflow-auto pl-4"
           style={{ scrollbarWidth: "none" }}
         >
-          <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-red-800 flex items-center gap-2">
-            <div className="bg-gradient-to-r from-red-600 to-red-800 text-white rounded-full p-2">
-              {categoryIcons[activeCategory] || <FaQuestionCircle />}
+          <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-[#7812A4] flex items-center gap-2">
+            <div className="bg-[#7812A4] text-white rounded-full p-2">
+              <img src={categoryIcons[activeCategory]} alt=""  className="w-5 h-5 filter invert brightness-0"
+/>
+
+              
             </div>
             {activeCategory} Questions
           </h2>
@@ -295,12 +328,12 @@ const FaqPage = () => {
                   <h3 className="font-medium">{faq.question}</h3>
                   <div className="rounded-full p-2">
                     {activeIndex === index ? (
-                      <div className="bg-gradient-to-r from-red-600 to-red-800 text-white rounded-full p-2">
+                      <div className="bg-gradient-to-r from-[#7812A4] to-[#7812A4] text-white rounded-full p-2">
                         <FaMinus />
                       </div>
                     ) : (
-                      <div className="p-[1px] rounded-full bg-gradient-to-r from-red-600 to-red-800 inline-block">
-                        <div className="bg-white text-red-600 rounded-full p-2">
+                      <div className="p-[1px] rounded-full bg-gradient-to-r from-[#7812A4] to-[#7812A4] inline-block">
+                        <div className="bg-white text-[#7812A4] rounded-full p-2">
                           <FaPlus />
                         </div>
                       </div>

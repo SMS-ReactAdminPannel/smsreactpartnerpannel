@@ -23,7 +23,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
 }) => {
     //bg-[#FAF3EB]
   return (
-    <div className="rounded-xl bg-[#FAF3EB] shadow-md p-4 w-full max-w-[250px] h-[150px] ">
+    <div className="rounded-xl bg-[white] shadow-md p-4 w-full max-w-[250px] h-[150px] ">
       <div className="flex items-center justify-between ">
         {/* Icon box */}
         <div

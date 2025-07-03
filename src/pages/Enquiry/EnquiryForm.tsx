@@ -78,7 +78,7 @@ const EnquiryForm = () => {
             value={formData.fullName}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="mt-1 block w-full px-4 py-2 border rounded-md "
             placeholder="Enter your name"
           />
         </div>
@@ -91,7 +91,7 @@ const EnquiryForm = () => {
             value={formData.phoneNumber}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline focus:ring-2 focus:ring-red-500"
+            className="mt-1 block w-full px-4 py-2 border rounded-md  "
             placeholder="Enter phone number"
           />
         </div>
@@ -116,14 +116,14 @@ const EnquiryForm = () => {
           onChange={handleChange}
           required
           rows={4}
-          className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="mt-1 block w-full px-4 py-2 border rounded-md"
           placeholder="Describe your issue or question..."
         />
       </div>
 
       <button
         type="submit"
-        className="w-full md:w-auto px-6 py-2 text-white bg-red-900 hover:bg-red-700 rounded-md transition-all"
+        className="w-full md:w-auto px-6 py-2 text-white bg-[#7812A4] rounded-full transition-all"
       >
         Submit
       </button>

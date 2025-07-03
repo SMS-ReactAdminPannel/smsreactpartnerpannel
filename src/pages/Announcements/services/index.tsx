@@ -6,7 +6,7 @@ export const pinnedAnnouncementsAPI= async (data:any)=>{
        return response;
     }
     catch (error){
-console.log('pinned error',error)
+console.log(error)
     }
 }
 
@@ -16,6 +16,6 @@ export const announcementget=async (data:any )=>{
         return response;
     }
     catch(error){
-        console.log('error show data',error)
+        console.log(error)
     }
 }
