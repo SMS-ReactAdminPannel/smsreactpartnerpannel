@@ -1034,14 +1034,14 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               className="bg-[#7812A4] !text-white px-4 h-[40px]  rounded-full shadow-lg hover:shadow-xl transform transition-all duration-200 "style={{...FONTS.paragraph}}
             >
               {/* <Save className="w-5 h-5" /> */}
-              Cancel 
+              Save
             </button>
             <button
               type="button"
               onClick={handleBack}
               className="bg-[#7812A4] !text-white px-4 h-[40px] rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
             >
-              Save
+              Cancel
             </button>
           </div>
         </div>

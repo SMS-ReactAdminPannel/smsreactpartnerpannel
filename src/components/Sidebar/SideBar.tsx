@@ -91,15 +91,7 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
-						to='/notifications'
-						// icon={<FiBell />}
-				icon={[<img src={notifications1} alt="notifications icon" style={{ width: 20, height: 20 }} />,<img src={notifications} alt="active home icon" style={{ width: 20, height: 20 }} />]}
-
-						label='Notifications'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
+					
 					<SidebarLink
 						to='/spare-parts'
 						// icon={<FaCogs />}
@@ -160,9 +152,25 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/> */}
 					<SidebarLink
+						to='/notifications'
+						// icon={<FiBell />}
+						icon={[<img src={notifications1} alt="notifications icon" style={{ width: 20, height: 20 }} />, <img src={notifications} alt="active home icon" style={{ width: 20, height: 20 }} />]}
+
+						label='Notifications'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
 						to='/announcement'
 						icon={[<img src={Announcement1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Announcement} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Announcement'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/enquiry-page'
+						icon={[<img src={Help} alt="home icon" style={{ width: 20, height: 20 }} />, <img src={Help1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
+						label='Enquiry'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
