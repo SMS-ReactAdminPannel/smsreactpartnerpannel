@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
-import { IoArrowBackOutline } from "react-icons/io5";
+// import { IoArrowBackOutline } from "react-icons/io5";
 type Category = { name: string; count: number };
 type Service = {
   id: string;
@@ -162,7 +162,9 @@ const ServiceCatList: React.FC = () => {
 
   return (
     <div>
-     <h2 className="text-3xl text-[#9b111e] font-bold mb-1">  <IoArrowBackOutline />Service Catalog</h2>
+     <h2 className="text-3xl text-[#9b111e] font-bold mb-1 ml-4"> 
+       {/* <IoArrowBackOutline /> */}
+       Service Catalog</h2>
       <div className="flex min-h-screen bg-gray-100">
         <main className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">

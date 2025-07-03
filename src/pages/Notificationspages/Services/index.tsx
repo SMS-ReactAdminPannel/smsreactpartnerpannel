@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Client from '../../../api';
 
 export const createNotications=async(data:any)=>{
@@ -131,7 +132,7 @@ export const getPreference = async(params:string)=>{
 
 export const getAllNotificationss = async () => {
   try {
-    const response = await  Client.partner.notifications.getAll();
+    const response = await  Client.partner.notifications.getAll('');
     return response;
   } catch (error) {
     console.error("Error fetching notifications:", error);
@@ -152,8 +153,9 @@ export const markNotificationsAsReads = async (uuid: string) => {
 
 export const updateNotifications = async (data: any, uuid: string) => {
   try {
-    const response = await Client.partner.notifications.update(data, uuid);
-    return response;
+    // const response = await Client.partner.notifications.update(data, uuid);
+    // return response;
+    console.log(data,uuid)
   } catch (error) {
     console.log("Error updating notification:", error);
     throw error;

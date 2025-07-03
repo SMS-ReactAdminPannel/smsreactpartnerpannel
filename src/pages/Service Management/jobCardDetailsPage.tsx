@@ -45,7 +45,6 @@ interface ServiceItem {
 }
 
 interface servicesmain {
-  amount(amount: any): unknown;
   id:string;
   descriptions:string;
   rates:string;
@@ -53,7 +52,6 @@ interface servicesmain {
 }
 
 interface FormData {
-  totalAmounts: any;
   inventory: VehicleInventory;
   fuelLevel: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full';
   fuelLevelImages: File[];
@@ -69,8 +67,10 @@ interface FormData {
   actionToBeTaken: string;
   workDone: 'pending' | 'in-progress' | 'completed';
   serviceItems: ServiceItem[];
-  servicesmain:servicesmain[]
-  totalAmount: string;
+  servicesmain:servicesmain[];
+  productTotalAmount:string;
+  serviceTotalAmount:string;
+  totalAmount:string;
   
   name: string;
   address: string;
@@ -150,12 +150,15 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
     serviceItems: [
       { id: '1', description: '', quantity: '', rate: '', amount: '' }
     ],
-    totalAmount: '0',
+    
     servicesmain:[
       {id:'1',descriptions:'',rates:'',amounts:''}
-    ]
-    // servicesmain
+    ],
 
+    productTotalAmount: '0',
+    serviceTotalAmount: '0',
+    totalAmount: '0',
+    // servicesmain
   });
 
   const handleInputChange = <K extends keyof FormData>(
@@ -290,13 +293,22 @@ const removeFuelLevelImage = (index: number) => {
   };
 
   const calculateTotalAmount = (): void => {
-    const total = formData.serviceItems.reduce((sum, item) => {
-      return sum + (parseFloat(item.amount) || 0);
-    }, 0);
+    
+    const productTotal = formData.serviceItems.reduce((sum, item) => {
+    return sum + (parseFloat(item.amount) || 0);
+  }, 0);
+
+  const serviceTotal = formData.servicesmain.reduce((sum, item) => {
+    return sum + (parseFloat(item.amounts) || 0);
+  }, 0);
+
+  const total = productTotal + serviceTotal
     
     setFormData(prev => ({
       ...prev,
-      totalAmount: total.toFixed(2)
+      productTotalAmount: productTotal.toFixed(2),
+      serviceTotalAmount: serviceTotal.toFixed(2),
+      totalAmounts : total.toFixed(2)
     }));
   };
 
@@ -347,7 +359,7 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       return items;
     });
 
-    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amount) || 0), 0);
+    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amounts) || 0), 0);
 
     return {
       ...prev,
@@ -356,18 +368,6 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     };
   });
 };
-
-// const calculateTotalAmounts = (): void => {
-//   const total = formData.servicesmain.reduce((sum, items) => {
-//     return sum + (parseFloat(items.amounts) || 0);
-//   }, 0);
-
-//   setFormData(prev => ({
-//     ...prev,
-//     totalAmounts: total.toFixed(2)
-//   }));
-// };
-
 
   const getPriorityColor = (priority: ApiData['priority']): string => {
     switch(priority) {
@@ -409,9 +409,20 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       serviceInfo: {
         customerComplaint: formData.customerComplaint,
         actionToBeTaken: formData.actionToBeTaken,
-        amount: formData.totalAmount,
-        amounts:formData.totalAmounts,
-        serviceItems: formData.serviceItems,
+        products: formData.serviceItems.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          rate: item.rate,
+          productAmount: parseFloat(item.amount)
+        })),
+        services: formData.servicesmain.map(item => ({
+          description: item.descriptions,
+          rate: item.rates,
+          serviceAmount: parseFloat(item.amounts)
+        })),
+         productTotalAmount: parseFloat(formData.productTotalAmount),
+         serviceTotalAmount: parseFloat(formData.serviceTotalAmount),
+         totalAmount:parseFloat(formData.totalAmount),
       },
       vehicleInventory: {
         currentState: {
@@ -913,15 +924,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   ))}
                 </div>
                 
-                
-                {/* Total Amount */}
-                <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold !text-[#9b111e]"style={{...FONTS.paragraph}}>Total Amount:</span>
-                    <span className="text-2xl !font-bold !text-[#9b111e]"style={{...FONTS.paragraph}}>₹{formData.totalAmount}</span>
-                  </div>
-                </div>
-              </div>
+    </div>
 
 
 

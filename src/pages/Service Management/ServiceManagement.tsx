@@ -32,9 +32,9 @@ const MustCare = () => (
 );
 
 // Mock COLORS constant
-const COLORS = {
-  bgColor: "#f8fafc",
-};
+// const COLORS = {
+//   bgColor: "#f8fafc",
+// };
 
 interface JobCard {
   cutomerInfo: any;
@@ -96,14 +96,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
-  const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
+  // const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
 
   const fetchupdatejobcards = async (params: string, data: any) => {
     try {
       const response = await updateJobCards(params, data);
 
       if (response && response.data) {
-        setupdatedJobcards(response.data);
+        // setupdatedJobcards(response.data);
+        setJobCards(prev =>[...prev,response.data])
         console.log("Job card updated successfully:", response.data);
       }
     } catch (error) {
@@ -125,7 +126,6 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const fetchJobCards = async () => {
     try {
       const response: any = await getAllJobCards();
-      console.log("Fetched job cards:", response.data.data);
       setJobCards(response.data.data);
     } catch (error) {
       console.error("Error fetching job cards:", error);
@@ -300,14 +300,11 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                             {request.requestId}
                           </span>
                         </td>
-                        <td className="py-4 px-6">
+                        <td className="flex py-4 px-6">
                           <div>
-                            <p className="font-medium !text-gray-900"style={{...FONTS.paragraph}}>
+                            <p className="font-medium flex !text-gray-900"style={{...FONTS.paragraph}}>
+                              <Phone className="w-3 h-3 mt-1 mr-1" />
                               {request.customerId.contact_info.phoneNumber}
-                            </p>
-                            <p className="text-sm text-gray-600 flex items-center mt-1">
-                              <Phone className="w-3 h-3 mr-1" />
-                              {request.phone}
                             </p>
                           </div>
                         </td>
@@ -315,7 +312,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                           <div className="flex items-center space-x-2">
                             <Car className="w-4 h-4 text-gray-500" />
                             <span className="!text-gray-900" style={{...FONTS.paragraph}}>
-                              {request.vechicle_info.name}
+                              {request.customerId.vehicleInfo?.registerNumber || "car"}
                             </span>
                           </div>
                         </td>
@@ -323,11 +320,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                           <div className="text-sm">
                             <p className="!text-gray-900 flex items-center">
                               <Calendar className="w-3 h-3 mr-1" style={{...FONTS.paragraph}}/>
-                              {request.schedule_date}
+                              {/* {request.schedule_date} */}
+                              {request?.assigned_date.split('T')[0]}
                             </p>
                             <p className="!text-gray-600 flex items-center mt-1">
                               <Clock className="w-3 h-3 mr-1" style={{...FONTS.paragraph}} />
-                              {request.scheduledTime}
+                              {/* {request.scheduledTime} */}
+                              {request.assigned_date.split('T')[1].split('.')[0]}
                             </p>
                           </div>
                         </td>
