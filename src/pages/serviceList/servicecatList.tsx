@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { createService, deleteService, getallServices, updateServices } from "./services/servicecatlog";
+import {
+  createService,
+  deleteService,
+  getallServices,
+  updateServices,
+} from "./services/servicecatlog";
 
 type Category = { name: string; count: number };
 type Service = {
@@ -95,15 +100,22 @@ const ServiceCatList: React.FC = () => {
 
   const handleSaveService = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // const PartnerId = localStorage.getItem("partner_id");
+    // if (!PartnerId) {
+    //   alert("Partner ID not found. Please log in again.");
+    //   return;
+    // }
+
     try {
       if (isEditing && editingServiceId) {
         await updateServices(editingServiceId, newService);
       } else {
-        const response = await createService(newService);
+        const response = await createService(PartnerId, newService);
         if (!response?.data?.uuid) return;
       }
 
-      await fetchData(); // Refresh after add/edit
+      await fetchData();
       setShowAddForm(false);
       setIsEditing(false);
       setEditingServiceId(null);
@@ -117,7 +129,7 @@ const ServiceCatList: React.FC = () => {
     if (window.confirm("Are you sure you want to delete this service?")) {
       try {
         await deleteService(uuid);
-        await fetchData(); // Refresh after delete
+        await fetchData();
       } catch (error) {
         console.error("Error deleting service:", error);
       }
