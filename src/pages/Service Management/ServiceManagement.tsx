@@ -254,7 +254,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   <input
                     type="search"
                     placeholder="Search request..."
-                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
+                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-full"
                   />
                 </div>
 
@@ -269,7 +269,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="overflow-x-auto">
             <div className="max-h-96 overflow-y-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b  border-gray-200 !text-gray-900" style={{...FONTS.tableHeader}}>
+                <thead className="bg-gray-50 border-b  border-gray-200 " style={{...FONTS.tableHeader}}>
                   <tr>
                     <th className="text-left py-3 px-6 ">
                       Request ID
@@ -342,7 +342,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <td className="py-4 px-6">
                           <button
                             onClick={onView}
-                            className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
+                            className="flex items-center space-x-1 text-sm text-[#717171] font-medium hover:underline"
                           >
                             <Plus className="w-4 h-4"/>
                             <span style={{...FONTS.paragraph}}> Create</span>
@@ -378,7 +378,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     placeholder="Search job cards..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
+                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
               </div>
@@ -459,7 +459,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold !text-[#9b111e]"style={{...FONTS.cardheader}}>
+                <h2 style={{...FONTS.header,fontWeight:22}}>
                   Job Card Details
                 </h2>
                 <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>
@@ -471,7 +471,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   <>
                     <button
                       onClick={handleEditModal}
-                      className="flex items-center space-x-2 px-4 py-2 !bg-[#9b111e] !text-white rounded-lg hover:bg-red-800"style={{...FONTS.paragraph}}
+                      className="flex items-center space-x-2 px-4 py-2 !bg-[#7812a4] !text-white rounded-lg hover:bg-red-800"style={{...FONTS.paragraph}}
                     >
                       <Edit className="w-4 h-4" />
                       <span>Edit</span>
@@ -506,7 +506,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
             <div className="p-6 space-y-6">
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
+                <h3 className=" mb-4"style={{...FONTS.header,fontWeight:14}}>
                   Customer Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -580,7 +580,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
               </div>
 
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
+                <h3 className=" mb-4"style={{...FONTS.header,fontWeight:14}}>
                   Vehicle Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -691,7 +691,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
               </div>
 
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
+                <h3 className=" mb-4"style={{...FONTS.header,fontWeight:16}}>
                   Complaint & Diagnosis
                 </h3>
                 {isEditingModal ? (
@@ -711,7 +711,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
               </div>
 
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>Estimate</h3>
+                <h3 className=" mb-4"style={{...FONTS.header,fontWeight:14}}>Estimate</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div>
                     <span className="!text-gray-600"style={{...FONTS.paragraph}}>Labour:</span>
@@ -771,7 +771,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
               </div>
 
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
+                <h3 className="mb-4"style={{...FONTS.header,fontWeight:14}}>
                   Service Details
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

@@ -36,28 +36,22 @@ const Bookings = () => {
         {/* Header Row */}
         <h2
           className="text-2xl font-semibold text-[#9b111e] ml-4"
-          style={{ ...FONTS.header, color: COLORS.primary }}
+          style={{ ...FONTS.header}}
         >
           Service Bookings
         </h2>
 
     
 
-        {/* <button
-          className="bg-[#9b111e] text-white px-4 py-2 rounded-lg shadow hover:bg-[#800f1a] transition font-medium mt-2 md:mt-0"
-          onClick={() => setShowHistory(!showHistory)}
-        >
-          {showHistory ? "Back" : "Completed Booking"}
-        </button> */}
       </div>
 
       {showHistory ? (
         <History bkings={bookings} />
       ) : (
-        <div className="w-full h-screen flex justify-center m-3">
-          <div className="w-full max-w-7xl px-4 py-2 ml-3">
+        <div className="w-full h-screen flex justify-left">
+          <div className="w-full max-w-7xl px-4 py-2 ">
             {/* Dashboard Section */}
-            <div className="bg-[#eae5d9] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
+            <div className="bg-[E8d6f0] rounded-xl shadow-md p-6 mb-6 md:p-3 mx-4 justify-center items-center px-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-10">
                 <DashboardCard
                   icon={<GiIncomingRocket />}
@@ -103,7 +97,7 @@ const Bookings = () => {
             </div>
 
             {/* Booking Panel */}
-            <div className="mb-6 p-4 bg-[#eae5d9] rounded-xl shadow-md mx-4 justify-center items-center px-1">
+            <div className="mb-6 p-4 bg-[E8d6f0] rounded-xl shadow-md mx-4 justify-center items-center px-1">
               <ServiceBookingPanel services={bookings}/>
             </div>
           </div>

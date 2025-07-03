@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
-import { COLORS } from "../../constants/constants";
+import { COLORS, FONTS } from "../../constants/constants";
 
 type BookingStatus = "Pending" | "Viewed" | "Solved";
 
@@ -104,7 +104,7 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
     <div className="p-2 lg:max-w-6xl mx-auto md:max-w-full">
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold text-[#9b111e]" style={{ color: COLORS.primary }}>
+          <h2 className="" style={{ ...FONTS.header,fontSize:20}}>
             Slot Bookings
           </h2>
         </div>
