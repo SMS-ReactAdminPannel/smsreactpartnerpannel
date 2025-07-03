@@ -60,7 +60,9 @@ const SideBar = ({
 	return (
 		<div className='flex h-screen overflow-y-auto scrollbar-hide'>
 			<div className='bg-white border-r shadow-md p-2 transition-all duration-300 fixed top-0 left-0 h-screen z-40 flex flex-col items-center'>
-				<div className='flex justify-center items-center h-20'>
+				<div className={`flex justify-center items-center h-20 transition-all duration-300 ${
+					isOpen ? 'w-40' : 'w-12'
+				}`}>
 					<img
 						src={isOpen ? Logo1 : Logo}
 						alt='YES Mechanic Logo'
@@ -83,7 +85,7 @@ const SideBar = ({
 					</button>
 				</div>
 
-				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'>
+				<nav className='flex flex-col gap-4 mt-4 w-full items-center overflow-auto scrollbar-hide'style={{...FONTS.cardSubHeader}}>
 					<SidebarLink
 						to='/'
 						icon={[<img src={home} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={home1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
@@ -139,13 +141,21 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					<SidebarLink
+					to='/servicecatList'
+					icon={<FaServicestack />}
+					label='Service Catlog'
+					isOpen={isOpen}
+					onClick={handleLinkClick}
+					/>
+
+					<SidebarLink
 						to='/settings'
 						icon={[<img src={Settings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Settings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Settings'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/customer'
 						icon={[<img src={Bookings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Bookings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Customer Management'
@@ -166,6 +176,8 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
+					
+					
 					<SidebarLink
 						to='/faq'
 						icon={[<img src={faq1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={faq} alt="active home icon" style={{ width: 20, height: 20 }} />]}
@@ -174,11 +186,13 @@ const SideBar = ({
 						onClick={handleLinkClick}
 					/>
 					{/* <SidebarLink
+					{/* <SidebarLink
 						to='/order'
 						icon={[<img src={Bookings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Bookings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='orders'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
+					/> */}
 					/> */}
 				</nav>
 			</div>

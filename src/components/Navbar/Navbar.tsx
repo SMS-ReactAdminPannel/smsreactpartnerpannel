@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { COLORS } from '../../constants/constants';
+import { COLORS, FONTS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 // import { FaTools } from 'react-icons/fa';
@@ -349,7 +349,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						ref={modalRef}
 						className='bg-[#FAF3EB] rounded-2xl shadow-2xl w-full max-w-2xl md:max-w-xl sm:max-w-md overflow-hidden'
 					>
-						<div className='bg-gradient-to-r from-red-600 to-red-800 p-6 flex items-center justify-between text-white'>
+						<div className='bg-gradient-to-r from-red-600 to-red-800 p-6 flex items-center justify-between !text-white'>
 							<div className='flex items-center space-x-4'>
 								<img
 									src={editedUser.avatar}
@@ -357,8 +357,8 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 									className='w-20 h-20 rounded-full border-4 border-white shadow-md'
 								/>
 								<div>
-									<h2 className='text-2xl font-bold'>{editedUser.name}</h2>
-									<p className='text-sm opacity-90'>Partner</p>
+									<h2 className='text-2xl !text-white font-bold'style={{...FONTS.cardheader}}>{editedUser.name}</h2>
+									<p className='text-sm opacity-90 !text-white' style={{...FONTS.cardSubHeader}}>Partner</p>
 								</div>
 							</div>
 							<button
@@ -383,21 +383,21 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 							</button>
 						</div>
 
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 p-6 text-gray-700'>
+						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 p-6 !text-gray-700'style={{...FONTS.paragraph}}>
 							<div className='space-y-3'>
 								{['phone', 'email', 'location'].map((field) => (
 									<div key={field}>
-										<h4 className='text-sm text-gray-500'>
+										<h4 className='text-sm !text-gray-500'style={{...FONTS.paragraph}} >
 											{field.charAt(0).toUpperCase() + field.slice(1)}
 										</h4>
-										<p className='text-lg'>{editedUser[field as keyof User]}</p>
+										<p className='text-lg'style={{...FONTS.tableHeader}}>{editedUser[field as keyof User]}</p>
 									</div>
 								))}
 							</div>
 							<div className='space-y-3'>
 								{['role', 'joinDate', 'status'].map((field) => (
 									<div key={field}>
-										<h4 className='text-sm text-gray-500'>
+										<h4 className='text-sm !text-gray-500'style={{...FONTS.paragraph}}>
 											{field === 'joinDate'
 												? 'Join Date'
 												: field.charAt(0).toUpperCase() + field.slice(1)}
@@ -416,7 +416,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 												{editedUser.status}
 											</span>
 										) : (
-											<p className='text-lg'>
+											<p className='text-lg'style={{...FONTS.tableHeader}}>
 												{editedUser[field as keyof User]}
 											</p>
 										)}

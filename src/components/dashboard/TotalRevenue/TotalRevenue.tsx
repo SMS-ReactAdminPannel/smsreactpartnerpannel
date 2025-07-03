@@ -10,7 +10,7 @@ import {
 	ResponsiveContainer,
 } from 'recharts';
 import { ChevronDown } from 'lucide-react';
-import { COLORS, FONTS } from '../../../constants/constants';
+import { FONTS } from '../../../constants/constants';
 
 //for data
 const data = [
@@ -54,7 +54,7 @@ const TotalRevenue: React.FC = () => {
 			<div className='flex justify-between items-center '>
 				{/* content  */}
 				<div>
-					<h2 className='text-lg ' style={{ color: COLORS.primary, ...FONTS.paragraph, fontWeight: 500, fontSize: '18px' }}>
+					<h2 className='text-lg ' style={{...FONTS.paragraph, fontWeight: 500, fontSize: '18px' }}>
 						Total Revenue
 					</h2>
 					<div className='flex space-x-4 text-xs mt-4'>

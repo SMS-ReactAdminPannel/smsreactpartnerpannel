@@ -151,16 +151,14 @@ import { getAllCustomer } from "./Services";
 
 const ITEMS_PER_PAGE = 5;
 
-const SimpleDonutChart = () => {
+const SimpleDonutChart = ({
+  data,
+}: {
+  data: { label: string; value: number; color: string }[];
+}) => {
   const radius = 40;
   const stroke = 10;
   const circumference = 2 * Math.PI * radius;
-
-  const data = [
-    { label: "Active", value: 65, color: "#10B981" },
-    { label: "Inactive", value: 35, color: "#EF4444" },
-  ];
-
   let cumulativePercent = 0;
 
   const renderSegments = data.map((slice, index) => {
@@ -244,6 +242,7 @@ type ProfileViewComponent = {
 };
 
 const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [customerData, setCustomerData] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -253,15 +252,36 @@ const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await getAllCustomer("");
         console.log("Fetched customers", response.data.customer);
         setCustomerData(response.data.customer);
       } catch (error) {
-        console.log("Error fetching notifications", error);
+        console.log("Error fetching customer", error);
       }
     };
     fetchCustomer();
   }, []);
+
+  const activeCount = customerData.filter((c) => c.is_active).length;
+  const inactiveCount = customerData.filter((c) => !c.is_active).length;
+  const total = activeCount + inactiveCount;
+
+  const donutChartData =
+    total > 0
+      ? [
+          {
+            label: "Active",
+            value: Math.round((activeCount / total) * 100),
+            color: "#10B981",
+          },
+          {
+            label: "Inactive",
+            value: Math.round((inactiveCount / total) * 100),
+            color: "#EF4444",
+          },
+        ]
+      : [];
 
   const filteredData = Array.isArray(customerData)
     ? customerData.filter((customer) => {
@@ -399,7 +419,7 @@ const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
           whileHover={{ y: -5 }}
           className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 relative h-48"
         >
-          <SimpleDonutChart />
+          <SimpleDonutChart data={donutChartData} />
         </motion.div>
       </div>
 
@@ -533,10 +553,7 @@ const CustomerDetails: React.FC<ProfileViewComponent> = ({ onProfileView }) => {
                       {customer.orders}
                     </div>
                     <div className="text-gray-600 truncate pr-2">
-                      {customer.
-vehicleInfo.model
-
-}
+                      {customer.vehicleInfo.model}
                     </div>
                     <div className="flex justify-center">
                       <motion.span
@@ -547,7 +564,7 @@ vehicleInfo.model
                         }`}
                         whileHover={{ scale: 1.05 }}
                       >
-                         {customer.is_active ? "Active" : "Inactive"}
+                        {customer.is_active ? "Active" : "Inactive"}
                       </motion.span>
                     </div>
                     <div>

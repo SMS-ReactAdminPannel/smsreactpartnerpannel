@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import HttpClient from "./httpClient";
 import { HTTP_END_POINTS } from "./httpEndpoints";
 
@@ -30,7 +31,7 @@ class Client {
           data,
           params
         ),
-      delete: () => HttpClient.delete(HTTP_END_POINTS.spareparts.delete),
+      delete: (id: string) => HttpClient.delete(`${HTTP_END_POINTS.spareparts.delete}/${id}`),
     },
     order_history: {
       create: (data: any) =>
@@ -64,12 +65,14 @@ class Client {
     job_card:{
       create : (data:any)=> 
         HttpClient.post(HTTP_END_POINTS.job_card.create,data),
-      getAll : (params:string)=>
+      getAll : ()=> 
         HttpClient.get(HTTP_END_POINTS.job_card.getAll),
       getById : (params:string)=>
         HttpClient.get(HTTP_END_POINTS.job_card.getById,params),
-      update :(data:any, params:string)=>
-        HttpClient.update(HTTP_END_POINTS.job_card.update,data,params)
+      update :( params:string,data:any)=>
+        HttpClient.update(HTTP_END_POINTS.job_card.update.replace(':id',data),params,data),
+      delete : (params:string)=>
+        HttpClient.delete(HTTP_END_POINTS.job_card.delete.replace(':uuid',params))
     },
     services: {
       create: (data: any) =>
@@ -82,6 +85,7 @@ class Client {
         HttpClient.update(HTTP_END_POINTS.services.update, data, params),
       updateStatus: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.services.updateStatus, data, params),
+      deleteservice:()=>HttpClient.delete(HTTP_END_POINTS.services.delete)
     },
     notifications: {
       create: (data: any) =>
@@ -120,13 +124,16 @@ class Client {
         HttpClient.get(HTTP_END_POINTS.notifications.getPreference, params),
     },
     profile:{
-        getProfile:(data:any)=>HttpClient.get(HTTP_END_POINTS.profile.getProfile,data),
-        updateProfile:(data:any, params:string)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,data,params),
+        getProfile:(data?:any)=>HttpClient.get(HTTP_END_POINTS.profile.getProfile,data),
+        updateProfile:(data:any)=>HttpClient.update(HTTP_END_POINTS.profile.updateProfile,'',data),
         createNewProfile:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.createNewProfile,data),
         loginUser:(data:any)=>HttpClient.post(HTTP_END_POINTS.profile.loginUser,data)
     },
     customer_management:{
       getallCustomer:(data:any)=>HttpClient.get(HTTP_END_POINTS.customer_management.getAll,data),
+    },
+    customermanagement_history:{
+      getallHistory:(data:any)=>HttpClient.get(HTTP_END_POINTS.customermanagement_history.getAll,data)
     },
     auth:{
         forgetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.forgetPassword,data),
@@ -134,10 +141,13 @@ class Client {
         resetPassword:(data:any)=>HttpClient.post(HTTP_END_POINTS.auth.resetPassword,data)
     },
     annoucement:{
-       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll)
+       getAll:()=>HttpClient.get(HTTP_END_POINTS.announcement.getAll),
+       update:(data:any)=>HttpClient.update(HTTP_END_POINTS.announcement.update,'',data),
+       get:(data:any)=>HttpClient.get(HTTP_END_POINTS.announcement.get.replace(':uuid',data))
     },
     enquery:{
-      create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data)
+      create:(data:any)=>HttpClient.post(HTTP_END_POINTS.enquiry.create,data),
+      getAll:(params:string)=>HttpClient.get(HTTP_END_POINTS.enquiry.getAll,params)
     }
   };
 }

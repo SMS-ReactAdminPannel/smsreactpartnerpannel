@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { getAllNotifications, markNotificationsAsRead } from "./Services/index";
+import { FONTS } from "../../constants/constants";
 
 
 type MailItem = {
@@ -27,6 +28,7 @@ export default function GmailStyleInbox() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await getAllNotifications("");
         setMails(response.data.data);
       } catch (error) {
@@ -37,9 +39,8 @@ export default function GmailStyleInbox() {
   }, []);
 
 
-const updated= async (uuid:string)=>{
+const updated = async (uuid:string)=>{
 try{
-  console.log(uuid)
 const updatedresponse= await  markNotificationsAsRead(uuid);
 console.log(updatedresponse)
 }
@@ -64,22 +65,39 @@ console.log("error",error)
           
           <FaArrowLeft className="mr-1" />
         </button>
-        <h1 className="text-3xl font-bold text-[#9b111e]">Notification</h1>
+        <h1 className="text-3xl font-bold text-[#9b111e]"
+        style={{
+                      ...FONTS.header
+                    
+            }}
+                  >Notification</h1>
       </div>
 
       <div className="flex h-[80vh] border rounded-2xl overflow-hidden shadow-lg bg-white">
         {/* Sidebar */}
         <aside className="w-64 border-r bg-[#fdefe9] p-6">
-          <h2 className="text-lg font-semibold text-[#9b111e] mb-4">Filters</h2>
-          <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-[#9b111e] mb-4"
+         style={{
+                      ...FONTS.cardheader
+                    
+            }}
+                  >Filters</h2>
+          <div className="space-y-3"
+          
+                  >
             {["all", "unread", "read"].map((f) => (
               <button
+              style={{
+                      ...FONTS.cardSubHeader
+                    
+            }}
                 key={f}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() => setFilter(f as any)}
                 className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ${
                   filter === f
-                    ? "bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold shadow-md"
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-red-600 to-red-800 !text-white !font-semibold shadow-md"
+                    : "!text-gray-700 hover:bg-gray-100"
                 }`}
               >
                 {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -91,6 +109,7 @@ console.log("error",error)
         {/* Main content */}
         <main className="flex-1 flex">
           <section className="w-1/2 overflow-y-auto border-r custom-scroll px-4 py-4 space-y-4">
+          
             {filteredMails.map((mail, index) => (
               <div key={index}
                 onClick={async()=>{
@@ -103,6 +122,7 @@ console.log("error",error)
                       )
                     );
                   }
+                  updated(mail.uuid)
                 }}
                 className={`cursor-pointer flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition duration-150 ${
                   !mail.is_read
@@ -110,16 +130,25 @@ console.log("error",error)
                     : "border border-gray-200"
                 }`}
               >
-                <div className="p-[1px] rounded-full bg-gradient-to-r from-red-600 to-red-800 inline-block">
+                <div className="p-[1px] rounded-full bg-gradient-to-r from-red-600 to-red-800 inline-block"
+                  >
                   <div className="w-10 h-10 flex items-center justify-center bg-white text-red-600 rounded-full">
                     {mail.title?.charAt(0).toUpperCase()}
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-[#9b111e]">
+                  <p className="text-sm font-medium text-[#9b111e]"
+                  style={{
+                      ...FONTS.paragraph
+                    
+            }}>
                     {mail.title}
                   </p>
-                  <p className="text-xs text-gray-600 truncate">
+                  <p className="text-xs !text-gray-600 truncate"
+                  style={{
+                      ...FONTS.subParagraph
+                    
+            }}>
                     {mail.message}
                   </p>
                 </div>
@@ -139,20 +168,36 @@ console.log("error",error)
                 <button
                   onClick={() => setSelectedMail(null)}
                   className="text-md text-[#9b111e] hover:underline mb-4 inline-flex items-center"
+                  style={{
+                      ...FONTS.paragraph
+                    
+            }}
                 >
                   ← Back to list
                 </button>
 
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                <h2 className="text-2xl font-bold !text-gray-800 mb-2"
+                style={{
+                      ...FONTS.cardheader
+                    
+            }}>
                   {selectedMail.title}
                 </h2>
 
                 <div className="flex items-center text-lg text-gray-600 mb-4">
                   <div>
-                    <p className="font-semibold text-gray-800 capitalize">
+                    <p className="font-semibold text-gray-800 capitalize"
+                    style={{
+                      ...FONTS.subParagraph
+                    
+            }}>
                       {selectedMail.sender}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm !text-gray-500"
+                    style={{
+                      ...FONTS.subParagraph
+                    
+            }}>
                       {selectedMail.updated_at}
                     </p>
                   </div>
@@ -160,7 +205,11 @@ console.log("error",error)
 
                 <hr className="my-4 border-t-1 border-gray-400" />
 
-                <div className="whitespace-pre-wrap text-md leading-relaxed text-gray-800">
+                <div className="whitespace-pre-wrap text-md leading-relaxed !text-gray-800"
+                style={{
+                      ...FONTS.cardSubHeader
+                    
+            }}>
                   {selectedMail.message}
                 </div>
               </div>

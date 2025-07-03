@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -7,7 +8,6 @@ import {
   Clock,
   Phone,
   Plus,
-  Filter,
   Search,
   Edit,
   Trash2,
@@ -20,7 +20,9 @@ import { MdHomeFilled } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCertificate } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { getAllJobCards, getAllServiceRequests } from "./Services";
+import { deleteJobCards, getAllJobCards, getAllServiceRequests, updateJobCards } from "./Services";
+import { FONTS } from "../../constants/constants";
+
 
 // Mock MustCare component
 const MustCare = () => (
@@ -30,15 +32,35 @@ const MustCare = () => (
 );
 
 // Mock COLORS constant
-const COLORS = {
-  bgColor: "#f8fafc",
-};
+// const COLORS = {
+//   bgColor: "#f8fafc",
+// };
 
 interface JobCard {
-  id: string;
+  cutomerInfo: any;
+  vehicleInventory: any;
+  _id: string;
   customerName: string;
   phone: string;
-  vehicleInfo: string;
+  vehicleInfo: {
+    chassisNo: string;
+    color: string;
+    engineNo: string;
+    model: string;
+    registrationNo: string;
+  },
+  jobInfo: {
+    ContactNo: string;
+    VehicleNo: string;
+    jobId: string;
+    customerName: string;
+  },
+  customerInfo: {
+    email: string;
+    name: string;
+    address: string;
+    contactNo: string;
+  },
   jobNumber: string;
   isEditing: boolean;
   address?: string;
@@ -74,7 +96,22 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [showJobCardModal, setShowJobCardModal] = useState(false);
   const [isEditingModal, setIsEditingModal] = useState(false);
   const [editFormData, setEditFormData] = useState<JobCard | null>(null);
+  // const [updatedJobcards, setupdatedJobcards] = useState<JobCard | null>(null);
 
+  const fetchupdatejobcards = async (params: string, data: any) => {
+    try {
+      const response = await updateJobCards(params, data);
+
+      if (response && response.data) {
+        // setupdatedJobcards(response.data);
+        setJobCards(prev =>[...prev,response.data])
+        console.log("Job card updated successfully:", response.data);
+      }
+    } catch (error) {
+      console.error("Failed to update job card:", error);
+
+    }
+  }
 
   const fetchServiceRequests = async () => {
     try {
@@ -88,8 +125,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const fetchJobCards = async () => {
     try {
-      const response: any = await getAllJobCards("");
-      console.log("Fetched job cards:", response.data.data);
+      const response: any = await getAllJobCards();
       setJobCards(response.data.data);
     } catch (error) {
       console.error("Error fetching job cards:", error);
@@ -105,7 +141,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
     { label: "Completed Today", value: "23", change: "+8%", color: "green" },
     { label: "Pending", value: "15", change: "-5%", color: "yellow" },
-    { label: "Revenue", value: " ₹12,450", change: "+15%", color: "purple" },
+    
   ];
 
   const getPriorityColor = (Priority: string) => {
@@ -121,7 +157,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     }
   };
 
-  const handleView = (jobCard: JobCard) => {
+  const handleView = (jobCard: any) => {
+    console.log(jobCard)
     setSelectedJobCard(jobCard);
     setShowJobCardModal(true);
   };
@@ -133,11 +170,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
 
   const handleSaveEdit = () => {
     if (editFormData) {
+      console.log(editFormData, "edit")
       setJobCards(
         jobCards.map((card) =>
-          card.id === editFormData.id ? editFormData : card
+          card._id === editFormData._id ? editFormData : card
         )
       );
+      fetchupdatejobcards(editFormData._id, editFormData);
       setSelectedJobCard(editFormData);
       setIsEditingModal(false);
     }
@@ -157,8 +196,18 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     }
   };
 
+  const deleteJob = async (param: string) => {
+    try {
+      const deleteCard = await deleteJobCards(param);
+      console.log(deleteCard)
+      setJobCards(jobCards.filter((c) => c.uuid !== param))
+    } catch (error) {
+      console.log("Job Cards Deleted ", error)
+    }
+  }
+
   return (
-    <div className="p-4" style={{ background: COLORS.bgColor }}>
+    <div className="p-4" >
       {/* Stats Section */}
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
@@ -168,14 +217,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className=" mb-1" style={{...FONTS.cardSubHeader}}>{stat.label}</p>
+                <p className=" font-bolt !text-gray-900" style={{...FONTS.cardheader}}>{stat.value}</p>
                 <p
-                  className={`text-sm ${
-                    stat.change.startsWith("+")
+                  className={`text-sm ${stat.change.startsWith("+")
                       ? "text-green-600"
                       : "text-red-600"
-                  }`}
+                    }`}
                 >
                   {stat.change} from last week
                 </p>
@@ -193,116 +241,118 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className=" !text-gray-900" style={{...FONTS.cardheader}}>
                   Service Requests
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className=" mt-1 !text-gray-600"style={{...FONTS.paragraph}}>
                   Manage incoming service appointments
                 </p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                  <Search className="w-5 h-5  absolute left-3 top-1/2 transform -translate-y-1/2" style={{...FONTS.paragraph}} />
                   <input
                     type="search"
-                    placeholder="Search requests..."
+                    placeholder="Search request..."
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9b111e] transition"
                   />
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+
+                {/* <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
                   <Filter className="w-4 h-4" />
                   <span>Filter</span>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Request ID
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Customer
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Vehicle
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Schedule
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Priority
-                  </th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-900">
-                    Jobcard
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {Array.isArray(serviceRequests) &&
-                  serviceRequests.map((request) => (
-                    <tr key={request.id} className="hover:bg-gray-50">
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-blue-600">
-                          {request.requestId}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            {request.customerId.contact_info.phoneNumber}
-                          </p>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <Phone className="w-3 h-3 mr-1" />
-                            {request.phone}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-2">
-                          <Car className="w-4 h-4 text-gray-500" />
-                          <span className="text-gray-900">
-                            {request.vechicle_info.name}
+            <div className="max-h-96 overflow-y-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b  border-gray-200 !text-gray-900" style={{...FONTS.tableHeader}}>
+                  <tr>
+                    <th className="text-left py-3 px-6 ">
+                      Request ID
+                    </th>
+                    <th className="text-left py-3 px-6 ">
+                      Customer
+                    </th>
+                    <th className="text-left py-3 px-6 ">
+                      Vehicle
+                    </th>
+                    <th className="text-left py-3 px-6 ">
+                      Schedule
+                    </th>
+                    <th className="text-left py-3 px-6">
+                      Priority
+                    </th>
+                    <th className="text-left py-3 px-6" >
+                      Jobcard
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {Array.isArray(serviceRequests) &&
+                    serviceRequests.map((request) => (
+                      <tr key={request._id} className="hover:bg-gray-50">
+                        <td className="py-4 px-6">
+                          <span className="font-medium !text-blue-600"style={{...FONTS.paragraph}}>
+                            {request.requestId}
                           </span>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm">
-                          <p className="text-gray-900 flex items-center">
-                            <Calendar className="w-3 h-3 mr-1" />
-                            {request.schedule_date}
-                          </p>
-                          <p className="text-gray-600 flex items-center mt-1">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {request.scheduledTime}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span
-                          className={`text-sm font-medium capitalize ${getPriorityColor(
-                            request.priority
-                          )}`}
-                        >
-                          {request.priority}
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <button
-                          onClick={onView}
-                          className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
-                        >
-                          <Plus className="w-4 h-4" />
-                          <span>Create</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+                        </td>
+                        <td className="flex py-4 px-6">
+                          <div>
+                            <p className="font-medium flex !text-gray-900"style={{...FONTS.paragraph}}>
+                              <Phone className="w-3 h-3 mt-1 mr-1" />
+                              {request.customerId.contact_info.phoneNumber}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center space-x-2">
+                            <Car className="w-4 h-4 text-gray-500" />
+                            <span className="!text-gray-900" style={{...FONTS.paragraph}}>
+                              {request.customerId.vehicleInfo?.registerNumber || "car"}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="text-sm">
+                            <p className="!text-gray-900 flex items-center">
+                              <Calendar className="w-3 h-3 mr-1" style={{...FONTS.paragraph}}/>
+                              {/* {request.schedule_date} */}
+                              {request?.assigned_date.split('T')[0]}
+                            </p>
+                            <p className="!text-gray-600 flex items-center mt-1">
+                              <Clock className="w-3 h-3 mr-1" style={{...FONTS.paragraph}} />
+                              {/* {request.scheduledTime} */}
+                              {request.assigned_date.split('T')[1].split('.')[0]}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6"style={{...FONTS.paragraph}} >
+                          <span
+                            className={`text-sm font-medium capitalize ${getPriorityColor(
+                              request.priority
+                            )}`}
+                          >
+                            {request.priority}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <button
+                            onClick={onView}
+                            className="flex items-center space-x-1 text-sm text-[#9b111e] font-medium hover:underline"
+                          >
+                            <Plus className="w-4 h-4"/>
+                            <span style={{...FONTS.paragraph}}> Create</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -313,16 +363,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className=" !text-gray-900" style={{...FONTS.cardheader}}>
                   Job Card Register
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="!text-gray-600 mt-1"style={{...FONTS.paragraph}}>
                   Track and manage job card details
                 </p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                  <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" style={{...FONTS.paragraph}}/>
                   <input
                     type="search"
                     placeholder="Search job cards..."
@@ -348,7 +398,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   .toLowerCase()
                   .includes(searchTerm.toLowerCase())
               )
-              .map((card,index) => (
+              .map((card, index) => (
                 <div
                   key={index}
                   className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -366,9 +416,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() =>
-                          setJobCards(jobCards.filter((c) => c.id !== card.id))
-                        }
+                        onClick={() => deleteJob(card.uuid)}
                         className="p-1 text-red-600 hover:bg-red-50 rounded"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -381,20 +429,20 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   </h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Vehicle:</span>
-                      <span className="font-medium text-blue-600">
+                      <span className="!text-gray-600"style={{...FONTS.paragraph}}>Vehicle:</span>
+                      <span className="font-medium !text-blue-600"style={{...FONTS.paragraph}}>
                         {card.jobInfo?.VehicleNo}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Job No:</span>
-                      <span className="text-gray-900">
+                      <span className="!text-gray-600" style={{...FONTS.paragraph}}>Job No:</span>
+                      <span className="!text-gray-900"style={{...FONTS.paragraph}}>
                         {card.jobInfo?.jobId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Phone:</span>
-                      <span className="text-gray-900">
+                      <span className="!text-gray-600"style={{...FONTS.paragraph}}>Phone:</span>
+                      <span className="!text-gray-900"style={{...FONTS.paragraph}}>
                         {card.jobInfo?.ContactNo}
                       </span>
                     </div>
@@ -411,11 +459,11 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-[#9b111e]">
+                <h2 className="text-2xl font-bold !text-[#9b111e]"style={{...FONTS.cardheader}}>
                   Job Card Details
                 </h2>
-                <p className="text-gray-600">
-                  Job Number: {selectedJobCard.jobNumber}
+                <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>
+                  Job Number: {selectedJobCard?.jobInfo?.jobId}
                 </p>
               </div>
               <div className="flex items-center space-x-2">
@@ -423,7 +471,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   <>
                     <button
                       onClick={handleEditModal}
-                      className="flex items-center space-x-2 px-4 py-2 bg-[#9b111e] text-white rounded-lg hover:bg-red-800"
+                      className="flex items-center space-x-2 px-4 py-2 !bg-[#9b111e] !text-white rounded-lg hover:bg-red-800"style={{...FONTS.paragraph}}
                     >
                       <Edit className="w-4 h-4" />
                       <span>Edit</span>
@@ -439,14 +487,14 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                   <div className="flex space-x-2">
                     <button
                       onClick={handleSaveEdit}
-                      className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      className="flex items-center space-x-2 px-4 py-2 !bg-green-600 !text-white rounded-lg hover:bg-green-700"style={{...FONTS.paragraph}}
                     >
                       <CheckCircle className="w-4 h-4" />
                       <span>Save</span>
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="flex items-center space-x-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                      className="flex items-center space-x-2 px-4 py-2 !bg-gray-500 !text-white rounded-lg hover:bg-gray-600"style={{...FONTS.paragraph}}
                     >
                       <X className="w-4 h-4" />
                       <span>Cancel</span>
@@ -457,18 +505,17 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Customer Information */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">
+                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
                   Customer Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Name:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Name:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.customerName || ""}
+                        value={editFormData?.jobInfo?.customerName || ""}
                         onChange={(e) =>
                           handleEditInputChange("customerName", e.target.value)
                         }
@@ -476,12 +523,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.customerName}
+                        {selectedJobCard?.jobInfo?.customerName}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Phone:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Phone:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -492,11 +539,11 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium">{selectedJobCard.phone}</p>
+                      <p className="font-medium">{selectedJobCard.jobInfo?.ContactNo}</p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Email:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Email:</span>
                     {isEditingModal ? (
                       <input
                         type="email"
@@ -508,12 +555,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.email || "N/A"}
+                        {selectedJobCard?.customerInfo?.email || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Address:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Address:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -525,25 +572,24 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.address || "N/A"}
+                        {selectedJobCard.cutomerInfo?.address || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Vehicle Information */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">
+                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
                   Vehicle Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Vehicle Number:</span>
+                    <span className="!text-gray-600" style={{...FONTS.paragraph}}>Vehicle Number:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.vehicleNumber || ""}
+                        value={editFormData?.jobInfo?.VehicleNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("vehicleNumber", e.target.value)
                         }
@@ -551,16 +597,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.vehicleNumber || "N/A"}
+                        {selectedJobCard.jobInfo?.VehicleNo || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Make & Model:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Make & Model:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.makeModel || ""}
+                        value={editFormData?.vehicleInfo?.model || ""}
                         onChange={(e) =>
                           handleEditInputChange("makeModel", e.target.value)
                         }
@@ -568,17 +614,17 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.makeModel ||
-                          selectedJobCard.vehicleInfo}
+                        {selectedJobCard?.vehicleInfo?.model ||
+                          selectedJobCard.vehicleInfo.model}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Engine Number:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Engine Number:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.engineNumber || ""}
+                        value={editFormData?.vehicleInfo?.engineNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("engineNumber", e.target.value)
                         }
@@ -586,16 +632,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.engineNumber || "N/A"}
+                        {selectedJobCard?.vehicleInfo?.engineNo || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Chassis Number:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Chassis Number:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.chassisNumber || ""}
+                        value={editFormData?.vehicleInfo?.chassisNo || ""}
                         onChange={(e) =>
                           handleEditInputChange("chassisNumber", e.target.value)
                         }
@@ -603,16 +649,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.chassisNumber || "N/A"}
+                        {selectedJobCard.vehicleInfo?.chassisNo || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Color:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Color:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.color || ""}
+                        value={editFormData?.vehicleInfo?.color || ""}
                         onChange={(e) =>
                           handleEditInputChange("color", e.target.value)
                         }
@@ -620,16 +666,16 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.color || "N/A"}
+                        {selectedJobCard.vehicleInfo?.color || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Fuel Level:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Fuel Level:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
-                        value={editFormData?.fuelLevel || ""}
+                        value={editFormData?.vehicleInventory?.fuelLevel || ""}
                         onChange={(e) =>
                           handleEditInputChange("fuelLevel", e.target.value)
                         }
@@ -637,16 +683,15 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.fuelLevel || "N/A"}
+                        {selectedJobCard?.vehicleInventory?.fuelLevel || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Complaint & Diagnosis */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">
+                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
                   Complaint & Diagnosis
                 </h3>
                 {isEditingModal ? (
@@ -659,18 +704,17 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     placeholder="Enter complaint details..."
                   />
                 ) : (
-                  <p className="text-sm">
-                    {selectedJobCard.complaint || "No complaint specified"}
+                  <p className="text-sm !text-gray-900" style={{...FONTS.subParagraph}}>
+                    {selectedJobCard?.complaint || "No complaint specified"}
                   </p>
                 )}
               </div>
 
-              {/* Estimate */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">Estimate</h3>
+                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>Estimate</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Labour:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Labour:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -685,12 +729,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.estimateLabour || "N/A"}
+                        {selectedJobCard?.estimateLabour || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Parts:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Parts:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -702,12 +746,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.estimateParts || "N/A"}
+                        {selectedJobCard?.estimateParts || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Total:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Total:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -718,22 +762,21 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                         className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#9b111e]"
                       />
                     ) : (
-                      <p className="font-medium text-[#9b111e]">
-                        {selectedJobCard.totalEstimate || "N/A"}
+                      <p className="font-medium">
+                        {selectedJobCard?.totalEstimate || "N/A"}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Service Details */}
               <div className="border rounded-lg p-4">
-                <h3 className="font-semibold text-[#9b111e] mb-4">
+                <h3 className="font-semibold !text-[#9b111e] mb-4"style={{...FONTS.cardheader}}>
                   Service Details
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Technician:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Technician:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -748,12 +791,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.technicianName || "N/A"}
+                        {selectedJobCard?.technicianName || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Service Advisor:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Service Advisor:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -768,12 +811,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.serviceAdvisor || "N/A"}
+                        {selectedJobCard?.serviceAdvisor || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Promised Delivery:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Promised Delivery:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -788,12 +831,12 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.promisedDeliveryDate || "N/A"}
+                        {selectedJobCard?.promisedDeliveryDate || "N/A"}
                       </p>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-600">Created Date:</span>
+                    <span className="!text-gray-600"style={{...FONTS.paragraph}}>Created Date:</span>
                     {isEditingModal ? (
                       <input
                         type="text"
@@ -805,7 +848,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       />
                     ) : (
                       <p className="font-medium">
-                        {selectedJobCard.createdDate || "N/A"}
+                        {selectedJobCard?.createdDate || "N/A"}
                       </p>
                     )}
                   </div>
@@ -816,9 +859,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
         </div>
       )}
 
-      {/* Footer Section */}
       <div className="mt-16">
-        <h2 className="text-3xl font-bold text-center">
+        <h2 className=" font-bold text-center"style={{...FONTS.header}}>
           Customised Care For All Your Needs
         </h2>
         <div className="flex justify-center mt-8 space-x-8">
@@ -826,29 +868,29 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
             <div className="flex justify-center mb-2">
               <MdHomeFilled className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="font-bold text-xl">4000+</p>
-            <p className="text-gray-600">Authorized Service Centers</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>4000+</p>
+            <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Authorized Service Centers</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <FaLocationDot className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="font-bold text-xl">3800+</p>
-            <p className="text-gray-600">Cities Nationwide Connected</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>3800+</p>
+            <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Cities Nationwide Connected</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <TbCertificate className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="font-bold text-xl">5000+</p>
-            <p className="text-gray-600">Certified Technicians</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>5000+</p>
+            <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Certified Technicians</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <RiCustomerService2Fill className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="font-bold text-xl">10+ yrs</p>
-            <p className="text-gray-600">Of Customer Care Expertise</p>
+            <p className="!font-bold !text-black" style={{...FONTS.cardSubHeader}}>10+ yrs</p>
+            <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Of Customer Care Expertise</p>
           </div>
         </div>
         <MustCare />

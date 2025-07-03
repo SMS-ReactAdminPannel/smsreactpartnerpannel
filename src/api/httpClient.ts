@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
 const backEndUrl: string = import.meta.env.VITE_PUBLIC_API_URL;
@@ -20,6 +21,25 @@ Axios.interceptors.request.use((config) => {
   return config;
 });
 
+Axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("authToken");
+
+  if (token) {
+    config.headers["Authorization"] = `${token ? token : ""}`;
+  }
+  return config;
+});
+
+Axios.interceptors.response.use(
+  (response)=>response,
+  (error)=>{
+    if (error?.response && error?.response.status == 401 && error?.response?.data?.status === "session_expired") {
+      localStorage.removeItem("authToken")
+      window.location.reload()
+    }
+  }
+)
+
 class HttpClient {
   async get(url: string, params: string = '') {
     const response: unknown = await Axios.get(url, {
@@ -36,13 +56,13 @@ class HttpClient {
     return response;
   }
 
-  // async update(url: string, params: string, data?: string,) {
-  //   const response = await Axios.put(url, data, {
-  //     params: params,
-  //     headers: {},
-  //   });
-  //   return response?.data;
-  // }
+  async update(url: string, params: string, data?: string,) {
+    const response = await Axios.put(url, data, {
+      params: params,
+      headers: {},
+    });
+    return response?.data;
+  }
   async patch(url: string, params: string, data?: string,) {
     const response = await Axios.patch(url, data, {
       params: params,
