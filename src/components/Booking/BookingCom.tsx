@@ -5,16 +5,12 @@ import { COLORS } from "../../constants/constants";
 type BookingStatus = "Pending" | "Viewed" | "Solved";
 
 interface ServiceBooking {
-  _id: number;
-  firstName: string;
-  lastName: string;
-  serviceItems: string[];
+  id: number;
+  customerName: string;
+  carModel: string;
+  servicePurpose: string[];
   serviceDateTime: string;
   status: BookingStatus;
-}
-
-interface ServiceBooking{
-
 }
 
 const initialBookings: ServiceBooking[] = [
@@ -90,6 +86,7 @@ const ServiceBookingPanel: React.FC = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedBooking]);
+
   return (
     <div className="p-2 lg:max-w-6xl mx-auto md:max-w-full">
       <div className="space-y-4">
