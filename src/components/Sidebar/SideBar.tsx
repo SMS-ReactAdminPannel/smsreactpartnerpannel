@@ -41,6 +41,7 @@ import { FONTS } from '../../constants/constants';
 
 const COLOR = {
 	primary: '#7812A4',
+	font:'#717171',
 	bgColor: '#faf3eb',
 	secondary: '#E6A895',
 };
@@ -168,14 +169,14 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					<SidebarLink
+					{/* <SidebarLink
 						to='/help-center'
 						icon={[<img src={Help} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Help1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Help Center'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
-					
+					 */}
 					
 					<SidebarLink
 						to='/faq'
@@ -226,7 +227,7 @@ const SidebarLink = ({
       ? COLOR.bgColor
       : "transparent";
 
-  const textColor = isActive ? COLOR.bgColor : COLOR.primary;
+  const textColor = isActive ? COLOR.bgColor : COLOR.font;
 
   return (
     <Link
