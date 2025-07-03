@@ -10,7 +10,7 @@ import {
 	ResponsiveContainer,
 } from 'recharts';
 import { ChevronDown } from 'lucide-react';
-import { COLORS, FONTS } from '../../../constants/constants';
+import { FONTS } from '../../../constants/constants';
 
 //for data
 const data = [
@@ -50,7 +50,7 @@ const BarCharts: React.FC = () => {
 			<div className='flex justify-between items-center '>
 				{/* content  */}
 				<div className=''>
-					<h2 className='text-lg ' style={{ color: COLORS.primary, ...FONTS.paragraph, fontSize: '18px', fontWeight: 500 }}>
+					<h2 className='text-lg ' style={{...FONTS.paragraph, fontSize: '18px', fontWeight: 500 }}>
 						Customer Management
 					</h2>
 					<div className='flex space-x-4 text-xs mt-4'>

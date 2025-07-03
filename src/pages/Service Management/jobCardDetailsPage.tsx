@@ -4,6 +4,7 @@ import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 // import { HiXMark } from "react-icons/hi2";
 import { FaRegAddressCard} from "react-icons/fa";
 import { createJobCards } from './Services';
+import { FONTS } from '../../constants/constants';
 
 interface ApiData {
   jobId: string;
@@ -44,7 +45,6 @@ interface ServiceItem {
 }
 
 interface servicesmain {
-  amount(amount: any): unknown;
   id:string;
   descriptions:string;
   rates:string;
@@ -52,7 +52,6 @@ interface servicesmain {
 }
 
 interface FormData {
-  totalAmounts: any;
   inventory: VehicleInventory;
   fuelLevel: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full';
   fuelLevelImages: File[];
@@ -68,8 +67,10 @@ interface FormData {
   actionToBeTaken: string;
   workDone: 'pending' | 'in-progress' | 'completed';
   serviceItems: ServiceItem[];
-  servicesmain:servicesmain[]
-  totalAmount: string;
+  servicesmain:servicesmain[];
+  productTotalAmount:string;
+  serviceTotalAmount:string;
+  totalAmount:string;
   
   name: string;
   address: string;
@@ -149,12 +150,15 @@ const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({
     serviceItems: [
       { id: '1', description: '', quantity: '', rate: '', amount: '' }
     ],
-    totalAmount: '0',
+    
     servicesmain:[
       {id:'1',descriptions:'',rates:'',amounts:''}
-    ]
-    // servicesmain
+    ],
 
+    productTotalAmount: '0',
+    serviceTotalAmount: '0',
+    totalAmount: '0',
+    // servicesmain
   });
 
   const handleInputChange = <K extends keyof FormData>(
@@ -289,13 +293,22 @@ const removeFuelLevelImage = (index: number) => {
   };
 
   const calculateTotalAmount = (): void => {
-    const total = formData.serviceItems.reduce((sum, item) => {
-      return sum + (parseFloat(item.amount) || 0);
-    }, 0);
+    
+    const productTotal = formData.serviceItems.reduce((sum, item) => {
+    return sum + (parseFloat(item.amount) || 0);
+  }, 0);
+
+  const serviceTotal = formData.servicesmain.reduce((sum, item) => {
+    return sum + (parseFloat(item.amounts) || 0);
+  }, 0);
+
+  const total = productTotal + serviceTotal
     
     setFormData(prev => ({
       ...prev,
-      totalAmount: total.toFixed(2)
+      productTotalAmount: productTotal.toFixed(2),
+      serviceTotalAmount: serviceTotal.toFixed(2),
+      totalAmounts : total.toFixed(2)
     }));
   };
 
@@ -346,7 +359,7 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       return items;
     });
 
-    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amount) || 0), 0);
+    const total = updatedItems.reduce((sum, items) => sum + (parseFloat(items.amounts) || 0), 0);
 
     return {
       ...prev,
@@ -355,18 +368,6 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     };
   });
 };
-
-// const calculateTotalAmounts = (): void => {
-//   const total = formData.servicesmain.reduce((sum, items) => {
-//     return sum + (parseFloat(items.amounts) || 0);
-//   }, 0);
-
-//   setFormData(prev => ({
-//     ...prev,
-//     totalAmounts: total.toFixed(2)
-//   }));
-// };
-
 
   const getPriorityColor = (priority: ApiData['priority']): string => {
     switch(priority) {
@@ -408,9 +409,20 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
       serviceInfo: {
         customerComplaint: formData.customerComplaint,
         actionToBeTaken: formData.actionToBeTaken,
-        amount: formData.totalAmount,
-        amounts:formData.totalAmounts,
-        serviceItems: formData.serviceItems,
+        products: formData.serviceItems.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          rate: item.rate,
+          productAmount: parseFloat(item.amount)
+        })),
+        services: formData.servicesmain.map(item => ({
+          description: item.descriptions,
+          rate: item.rates,
+          serviceAmount: parseFloat(item.amounts)
+        })),
+         productTotalAmount: parseFloat(formData.productTotalAmount),
+         serviceTotalAmount: parseFloat(formData.serviceTotalAmount),
+         totalAmount:parseFloat(formData.totalAmount),
       },
       vehicleInventory: {
         currentState: {
@@ -472,7 +484,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
       <div className=" mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent mb-2"style={{...FONTS.header}}>
             Job Card Details
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-red-800 mx-auto rounded-full"></div>
@@ -482,48 +494,48 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
           {/* Job Information Section - Read Only */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
-              <div className="flex items-center gap-2 text-white">
+              <div className="flex items-center gap-2 !text-white">
                 <Lock className="w-5 h-5" />
-                <h2 className="text-lg font-semibold">Job Information (Read Only)</h2>
+                <h2 className="text-lg !text-white font-semibold"style={{...FONTS.cardSubHeader}}>Job Information (Read Only)</h2>
               </div>
             </div>
             <div className="p-6 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Job ID</label>
-                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600 font-mono">
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Job ID</label>
+                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600 font-mono"style={{...FONTS.subParagraph}}>
                     {apiData.jobId}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Customer Name</label>
-                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600">
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Customer Name</label>
+                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600"style={{...FONTS.subParagraph}}>
                     {apiData.customerName}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Contact No</label>
-                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600">
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Contact No</label>
+                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600"style={{...FONTS.subParagraph}}>
                     {apiData.contact}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Vehicle No</label>
-                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600 font-mono">
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Vehicle No</label>
+                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600 font-mono"style={{...FONTS.subParagraph}}>
                     {apiData.vehicle}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Schedule</label>
-                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600">
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Schedule</label>
+                  <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600"style={{...FONTS.subParagraph}}>
                     {apiData.schedule}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Priority</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Priority</label>
                   <div className="flex items-center gap-2">
                     <div className={`w-3 h-3 rounded-full ${getPriorityColor(apiData.priority)}`}></div>
-                    <div className="bg-white p-3 rounded-lg border-2 border-gray-200 text-gray-600 capitalize flex-1">
+                    <div className="bg-white p-3 rounded-lg border-2 border-gray-200 !text-gray-600 capitalize flex-1"style={{...FONTS.subParagraph}}>
                       {apiData.priority}
                     </div>
                   </div>
@@ -535,60 +547,60 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
           {/* Cutomer Information Section */}
           <div className="bg-white rounded-2xl shadow-xl border border-red-100 overflow-hidden">
           <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
-          <div className="flex items-center gap-2 text-white">
+          <div className="flex items-center gap-2 !text-white">
             <FaRegAddressCard />
-                <h2 className="text-lg font-semibold">Customer Information</h2>
+                <h2 className="text-lg !text-white font-semibold"style={{...FONTS.cardSubHeader}}>Customer Information</h2>
           </div>   
           </div>
           <div className="p-6 bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Name</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Name</label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Customer name"
                   />
           </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Address </label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Address </label>
                   <input
                     type="text"
                     value={formData.address}
                     onChange={(e) => handleInputChange('address', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Address"
                   />
           </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Office Address </label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Office Address </label>
                   <input
                     type="text"
                     value={formData.officeaddress}
                     onChange={(e) => handleInputChange('officeaddress', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Office Address"
                   />
           </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Contact No </label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Contact No </label>
                   <input
                     type="text"
                     value={formData.contactno}
                     onChange={(e) => handleInputChange('contactno', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Contact No"
                   />
           </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">E mail </label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>E mail </label>
                   <input
                     type="text"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Address"
                   />
           </div>
@@ -601,7 +613,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Car className="w-5 h-5" />
-                <h2 className="text-lg font-semibold">Vehicle Inventory</h2>
+                <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Vehicle Inventory</h2>
               </div>
             </div>
             <div className="p-6">
@@ -615,7 +627,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                       onChange={() => handleInventoryChange(item.key)}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-[#9b111e]">
+                    <span className="text-sm font-semibold !text-gray-700 group-hover:text-[#9b111e]"style={{...FONTS.subParagraph}}>
                       {item.label}
                     </span>
                   </label>
@@ -628,7 +640,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                           multiple
                           accept="image/*"
                           onChange={(e) => handleImageUpload(item.key, e.target.files)}
-                          className="text-xs file:text-black file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-white file:hover:text-white file:hover:bg-gradient-to-r file:hover:from-red-600 file:hover:to-red-800"
+                          className="text-xs file:text-black file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-white file:hover:text-white file:hover:bg-gradient-to-r file:hover:from-red-600 file:hover:to-red-800"style={{...FONTS.subParagraph}}
                         />
                       </div>
 
@@ -659,12 +671,12 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
           </div>
           
           <div className="border-t pt-4">
-         <label className="block text-sm font-medium text-gray-700 mb-2">Fuel Level</label>
+         <label className="block text-sm font-medium !text-gray-700 mb-2"style={{...FONTS.paragraph}}>Fuel Level</label>
          <div className="space-y-3">
            <select
              value={formData.fuelLevel}
              onChange={(e) => handleFuelLevelChange(e.target.value as FormData['fuelLevel'])}
-             className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+             className="w-full md:w-48 p-3 border-2 border-gray-300 rounded-lg !text-black focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"style={{...FONTS.subParagraph}}
            >
              <option value="Empty">Empty</option>
              <option value="1/4">1/4</option>
@@ -675,7 +687,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   
            {/* Add this entire section */}
            <div className="space-y-2">
-             <label className="block text-sm font-medium text-gray-700">Upload Fuel Level Images</label>
+             <label className="block text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Upload Fuel Level Images</label>
              <input
                type="file"
                multiple
@@ -712,8 +724,8 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
       
       {/* Debug Info */}
       <div className="mt-4 p-4 bg-white rounded-lg shadow">
-        <h3 className="font-semibold text-gray-800 mb-2">Current State:</h3>
-        <div className="text-sm text-gray-600">
+        <h3 className="font-semibold !text-gray-800 mb-2"style={{...FONTS.paragraph}}>Current State:</h3>
+        <div className="text-sm !text-gray-600"style={{...FONTS.paragraph}}>
           <p><strong>Fuel Level:</strong> {formData.fuelLevel}</p>
           <p><strong>Selected Items:</strong> {Object.entries(formData.inventory).filter(([key, value]) => key !== 'images' && value).map(([key]) => key).join(', ') || 'None'}</p>
           <p><strong>Images Uploaded:</strong> {Object.entries(formData.inventory.images).map(([key, files]) => `${key}: ${files.length}`).join(', ') || 'None'}</p>
@@ -724,88 +736,88 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Edit3 className="w-5 h-5" />
-                <h2 className="text-lg font-semibold">Vehicle Information</h2>
+                <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Vehicle Information</h2>
               </div>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Registration No</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Registration No</label>
                   <input
                     type="text"
                     value={formData.registrationNo}
                     onChange={(e) => handleInputChange('registrationNo', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter registration number"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Model</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Model</label>
                   <input
                     type="text"
                     value={formData.model}
                     onChange={(e) => handleInputChange('model', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter vehicle model"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Engine No</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Engine No</label>
                   <input
                     type="text"
                     value={formData.engineNo}
                     onChange={(e) => handleInputChange('engineNo', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter engine number"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Mileage</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Mileage</label>
                   <input
                     type="text"
                     value={formData.mileage}
                     onChange={(e) => handleInputChange('mileage', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter mileage"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Color</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Color</label>
                   <input
                     type="text"
                     value={formData.color}
                     onChange={(e) => handleInputChange('color', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter vehicle color"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Chassis No</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Chassis No</label>
                   <input
                     type="text"
                     value={formData.chassisNo}
                     onChange={(e) => handleInputChange('chassisNo', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter chassis number"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Insurance Company</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Insurance Company</label>
                   <input
                     type="text"
                     value={formData.insuranceCompany}
                     onChange={(e) => handleInputChange('insuranceCompany', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                     placeholder="Enter insurance company"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Insurance Renewal Date</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Insurance Renewal Date</label>
                   <input
                     type="date"
                     value={formData.insuranceRenewalDate}
                     onChange={(e) => handleInputChange('insuranceRenewalDate', e.target.value)}
-                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                    className="w-full p-3 border-2 !text-gray-400 border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"style={{...FONTS.subParagraph}}
                   />
                 </div>
               </div>
@@ -817,27 +829,27 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
             <div className="bg-gradient-to-r from-red-600 to-red-800 p-2">
               <div className="flex items-center gap-2 text-white">
                 <Wrench className="w-5 h-5" />
-                <h2 className="text-lg font-semibold">Service Information</h2>
+                <h2 className="text-lg !text-white font-semibold" style={{...FONTS.cardSubHeader}}>Service Information</h2>
               </div>
             </div>
             <div className="p-6 space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Customer Complaint</label>
+                <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Customer Complaint</label>
                 <textarea
                   value={formData.customerComplaint}
                   onChange={(e) => handleInputChange('customerComplaint', e.target.value)}
                   rows={4}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none"
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none"style={{...FONTS.subParagraph}}
                   placeholder="Describe the customer's complaint..."
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Action to be Taken</label>
+                <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Action to be Taken</label>
                 <textarea
                   value={formData.actionToBeTaken}
                   onChange={(e) => handleInputChange('actionToBeTaken', e.target.value)}
                   rows={4}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none"
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all resize-none"style={{...FONTS.subParagraph}}
                   placeholder="Describe the action to be taken..."
                 />
               </div>
@@ -845,11 +857,11 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               {/* Dynamic Service Items */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Service Items</label>
+                  <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Service Items</label>
                   <button
                     type="button"
                     onClick={addServiceItem}
-                    className="bg-gradient-to-r from-red-600 to-red-800 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                    className="bg-gradient-to-r from-red-600 to-red-800 !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
                   >
                     <Plus className="w-4 h-4" />
                     Add Item
@@ -860,12 +872,12 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                   {formData.serviceItems.map((item, index) => (
                     <div key={item.id} className="bg-gray-50 p-4 rounded-lg border-2 border-gray-200">
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-medium text-gray-700">Item #{index + 1}</span>
+                        <span className="text-sm font-medium !text-gray-700"style={{...FONTS.subParagraph}}>Item #{index + 1}</span>
                         {formData.serviceItems.length > 1 && (
                           <button
                             type="button"
                             onClick={() => removeServiceItem(item.id)}
-                            className="text-red-600 hover:text-red-800 p-1 hover:bg-red-100 rounded transition-all"
+                            className="text-red-600 hover:text-red-800 p-1 hover:bg-red-100 rounded transition-all"style={{...FONTS.subParagraph}}
                           >
 
                             <Trash2 className="w-4 h-4" />
@@ -874,66 +886,58 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div className="md:col-span-2">
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Description</label>
+                          <label className="block text-xs font-medium !text-gray-600 mb-1"style={{...FONTS.paragraph}}>Description</label>
                           <input
                             type="text"
                             value={item.description}
                             onChange={(e) => updateServiceItem(item.id, 'description', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Service description"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Quantity</label>
+                          <label className="block text-xs font-medium !text-gray-600 mb-1"style={{...FONTS.paragraph}}>Quantity</label>
                           <input
                             type="number"
                             value={item.quantity}
                             onChange={(e) => updateServiceItem(item.id, 'quantity', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Qty"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Rate (₹)</label>
+                          <label className="block text-xs font-medium !text-gray-600 mb-1"style={{...FONTS.paragraph}}>Rate (₹)</label>
                           <input
                             type="number"
                             value={item.rate}
                             onChange={(e) => updateServiceItem(item.id, 'rate', e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
                             placeholder="Rate"
                           />
                         </div>
                       </div>
                       <div className="mt-3 text-right">
-                        <span className="text-sm font-medium text-gray-600">Amount: </span>
-                        <span className="text-lg font-bold text-[#9b111e]">₹{item.amount || '0.00'}</span>
+                        <span className="text-sm font-medium !text-gray-600"style={{...FONTS.paragraph}}>Amount: </span>
+                        <span className="text-lg !font-bold text-[#9b111e]"style={{...FONTS.paragraph}}>₹{item.amount || '0.00'}</span>
                       </div>
                     </div>
                   ))}
                 </div>
                 
-                
-                {/* Total Amount */}
-                <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold text-[#9b111e]">Total Amount:</span>
-                    <span className="text-2xl font-bold text-[#9b111e]">₹{formData.totalAmount}</span>
-                  </div>
-                </div>
-              </div>
+    </div>
 
 
 
 
-{/* Service Items Section */} 2
+{/* Service Items Section */} 
 <div className="space-y-4">
   {/* Header and Add Button */}
   <div className="flex items-center justify-between">
-    <label className="text-sm font-medium text-gray-700">Service Items</label>
+    <label className="text-sm font-medium !text-gray-700"style={{...FONTS.paragraph}}>Service Items</label>
     <button
       type="button"
       onClick={addServices}
-      className="bg-gradient-to-r from-red-600 to-red-800 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+      className="bg-gradient-to-r from-red-600 to-red-800 !text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
     >
       <Plus className="w-4 h-4" />
       Add services
@@ -949,7 +953,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
       >
         {/* Header with Item Number and Remove Button */}
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium !text-gray-700"style={{...FONTS.subParagraph}}>
             Item {index + 1}
           </span>
           {formData.servicesmain.length > 1 && (
@@ -966,7 +970,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
         {/* Inputs */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-gray-600 mb-1">
+            <label className="block text-xs font-medium !text-gray-600 mb-1"style={{...FONTS.paragraph}}>
               Description
             </label>
             <input
@@ -975,13 +979,13 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               onChange={(e) =>
                 updateServiceItems(items.id, "descriptions", e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
               placeholder="Service description"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1 ml-50">
+            <label className="block text-xs font-medium !text-gray-600 mb-1 ml-50"style={{...FONTS.paragraph}}>
               Rate (₹)
             </label>
             <input
@@ -990,7 +994,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
               onChange={(e) =>
                 updateServiceItems(items.id, "rates", e.target.value)
               }
-              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"
+              className="w-full p-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all"style={{...FONTS.subParagraph}}
               placeholder="Rate"
             />
           </div>
@@ -998,8 +1002,8 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
 
         {/* Calculated Amount */}
         <div className="mt-3 text-right">
-          <span className="text-sm font-medium text-gray-600">Amount: </span>
-          <span className="text-lg font-bold text-[#9b111e]">
+          <span className="text-sm font-medium !text-gray-600"style={{...FONTS.paragraph}}>Amount: </span>
+          <span className="text-lg !font-bold !text-[#9b111e]"style={{...FONTS.paragraph}}>
             ₹{items.amounts || "0.00"}
           </span>
         </div>
@@ -1010,10 +1014,10 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
   {/* Total Amount Summary */}
   <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
     <div className="flex justify-between items-center">
-      <span className="text-lg font-semibold text-[#9b111e]">
+      <span className="text-lg font-semibold !text-[#9b111e]"style={{...FONTS.paragraph}}>
         Total Amount:
       </span>
-      <span className="text-2xl font-bold text-[#9b111e]">
+      <span className="text-2xl !font-bold !text-[#9b111e]"style={{...FONTS.paragraph}}>
         ₹{formData.totalAmount}
       </span>
     </div>
@@ -1040,7 +1044,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
             <button
               type="button"
               onClick={handleSave}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-4 h-[40px]  rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 "
+              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 !text-white px-4 h-[40px]  rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 "style={{...FONTS.paragraph}}
             >
               {/* <Save className="w-5 h-5" /> */}
               Save 
@@ -1048,7 +1052,7 @@ const handleFuelLevelChange = (level: 'Empty' | '1/4' | '1/2' | '3/4' | 'Full'):
             <button
               type="button"
               onClick={handleBack}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-4 h-[40px] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 !text-white px-4 h-[40px] rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"style={{...FONTS.paragraph}}
             >
               Cancel
             </button>

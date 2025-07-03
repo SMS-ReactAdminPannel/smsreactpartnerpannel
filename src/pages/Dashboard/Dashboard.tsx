@@ -18,8 +18,9 @@ import {
 	Line,
 } from 'recharts';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { DashboardProfile, getMeDeatails } from './service';
 
 const dailyRevenueData = [
 	{ day: 'Mon', revenue: 500 },
@@ -102,6 +103,17 @@ const Dashboard = () => {
 	let data = [];
 	let xDataKey = '';
 
+	async function fetchProfile() {
+		const data = await DashboardProfile()
+		const profile = await getMeDeatails()
+		console.log(profile.data,"prfile data")
+		localStorage.setItem("PartnerId",profile.data._id)
+	}
+
+	useEffect(() => {
+		fetchProfile()
+	}, []);
+
 	if (period === 'daily') {
 		data = dailyRevenueData.map((item, index) => ({
 			...item,
@@ -132,7 +144,7 @@ const Dashboard = () => {
 					className='text-xl font-semibold pl-6 py-3 '
 					style={{ ...FONTS.header, color: COLORS.primary, fontWeight: 600 }}
 				>
-					Overview of our services
+					Dashboard
 				</p>
 				<p
 					className='text-gray-500 text-sm pb-5 pl-7'
@@ -271,7 +283,7 @@ const Dashboard = () => {
 				<motion.div
 					whileHover={{}}
 					className='md:col-span-2 xl:col-span-3 mt-3'
-					// ref={bookingsRef}
+				// ref={bookingsRef}
 				>
 					<Card
 						className={`transition-all duration-500 p-4 rounded-xl
@@ -359,7 +371,7 @@ const Dashboard = () => {
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color:'white'! }}
 												>
 													View
 												</button>
@@ -373,7 +385,7 @@ const Dashboard = () => {
 											<td>
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color: 'white'! }}
 													onClick={() => navigate('/service')}
 												>
 													View
@@ -389,7 +401,7 @@ const Dashboard = () => {
 												<button
 													className='bg-[#9b111e] px-2 py-1 rounded'
 													onClick={() => navigate('/service')}
-													style={{ ...FONTS.paragraph, color: COLORS.white }}
+													style={{ ...FONTS.paragraph, color:'white'! }}
 												>
 													View
 												</button>
@@ -405,10 +417,18 @@ const Dashboard = () => {
 
 			{/* Footer */}
 			<footer className='bg-white shadow-md rounded-xl p-4 w-full text-center my-6 -mb-8'>
-				<div>
+				<div className='flex justify-between items-center'>
 					<div className='flex items-center justify-center space-x-1'>
 						<AiOutlineCopyrightCircle color={COLORS.primary} size={18} />
 						<span style={{ color: COLORS.primary }}>YesMechanic Partner</span>
+					</div>
+					<div>
+						<Link to={'/privacy-policy'} className="text-gray-600 hover:text-gray-800 mx-2 text-sm italic">
+							Privacy Policy
+						</Link>
+						<Link to={'/terms-conditions'} className="text-gray-600 hover:text-gray-800 mx-2 text-sm italic">
+							Terms & Conditions
+						</Link>
 					</div>
 				</div>
 			</footer>

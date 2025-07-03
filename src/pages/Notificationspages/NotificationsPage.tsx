@@ -28,6 +28,7 @@ export default function GmailStyleInbox() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await getAllNotifications("");
         setMails(response.data.data);
       } catch (error) {
@@ -91,6 +92,7 @@ console.log("error",error)
                     
             }}
                 key={f}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() => setFilter(f as any)}
                 className={`block w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ${
                   filter === f

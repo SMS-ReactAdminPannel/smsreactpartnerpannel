@@ -181,15 +181,15 @@ const JobCardPage: React.FC<JobCardPageProps> = ({ setstate, jobCards, setJobCar
       others: false,
     })
 
-    // Navigate back to service management
+    
     setstate(true)
   }
 
-  // Rest of the component remains the same...
+
   return (
     <div className="p-4 max-w-screen-xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-        {/* Header */}
+      
         <div className="border-b border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -204,9 +204,9 @@ const JobCardPage: React.FC<JobCardPageProps> = ({ setstate, jobCards, setJobCar
           </div>
         </div>
 
-        {/* Body Form */}
+        
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Customer Information */}
+      
           <fieldset className="border p-4 rounded-lg">
             <legend className="font-semibold text-[#9b111e] mb-4">Customer Information</legend>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

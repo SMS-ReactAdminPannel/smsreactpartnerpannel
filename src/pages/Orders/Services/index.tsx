@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Client from '../../../api';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const getOrdersHistory = async(params: string)=>{
     try{
         const response = await Client.partner.order_history.getAll(params)
