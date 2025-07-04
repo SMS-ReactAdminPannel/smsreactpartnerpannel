@@ -4,7 +4,7 @@ import {
   createSparePart,
   deleteSpareParts,
   getAllSpareParts,
-} from "./Services";
+} from "./Services/index";
 import { FONTS } from "../../constants/constants";
 
 interface SparePart {
@@ -17,6 +17,7 @@ interface SparePart {
   inStock: boolean;
   category: string;
   slug: string;
+  partnerId:string;
 }
 
 const partTypes = [
@@ -43,7 +44,7 @@ const ToggleSwitch: React.FC<{ enabled: boolean; onToggle: () => void }> = ({
   <button
     onClick={onToggle}
     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9b111e] ${
-      enabled ? "bg-[#7812A4]" : "bg-gray-300"
+      enabled ? "bg-[#9b111e]" : "bg-gray-300"
     }`}
     aria-pressed={enabled}
   >
@@ -71,12 +72,15 @@ const SpareParts: React.FC = () => {
     slug: "Engine",
     category: "spare",
     brand: "new",
+    partnerId:"",
   });
+
+  const partner_id = localStorage.getItem("PartnerId") ?? ''
 
   useEffect(() => {
     const fetchParts = async () => {
       try {
-        const response: any = await getAllSpareParts();
+        const response: any = await getAllSpareParts(partner_id);
         console.log("Fetched spare parts:", response.data.data);
         setPartsData(response.data.data);
       } catch (error) {
@@ -85,11 +89,13 @@ const SpareParts: React.FC = () => {
     };
 
     fetchParts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addNewPart = async () => {
     try {
       console.log(newPart);
+      newPart.partnerId = partner_id
       const response: any = await createSparePart(newPart);
       console.log(response);
       const createdPart = response.data.data;
@@ -142,6 +148,7 @@ const SpareParts: React.FC = () => {
       brand: "new",
       category: "Engine",
       stock: "12",
+      partnerId:partner_id
     });
     setShowAddForm(false);
   };
@@ -670,14 +677,14 @@ const SpareParts: React.FC = () => {
                   if (selectedPart) updatePart(selectedPart);
                   setSelectedPart(null);
                 }}
-                className="bg-[#7812A4] text-white py-2 px-3 rounded hover:bg-red-700 transition text-xs"
+                className="bg-[#9b111e] text-white py-2 px-3 rounded hover:bg-red-700 transition text-xs"
               >
                 Save & Close
               </button>
 
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="bg-[#7812A4] text-white py-2 px-3 rounded hover:bg-[#7812A4] transition text-xs"
+                className="bg-red-600 text-white py-2 px-3 rounded hover:bg-red-700 transition text-xs"
               >
                 Delete
               </button>

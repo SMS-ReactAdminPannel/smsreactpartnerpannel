@@ -22,7 +22,7 @@ class Client {
       getById: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.spareparts.getById, params),
       getAll: (params: string) =>
-        HttpClient.get(HTTP_END_POINTS.spareparts.getAll.replace(":uuid",params), params),
+        HttpClient.get(HTTP_END_POINTS.spareparts.getAll.replace(":uuid",params)),
       update: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.spareparts.getAll, data, params),
       updateStatus: (data: any, params: string) =>

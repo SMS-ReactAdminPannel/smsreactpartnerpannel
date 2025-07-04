@@ -19,9 +19,8 @@ export const getSparePartById = async (params: string) => {
   }
 };
 
-export const getAllSpareParts = async () => {
+export const getAllSpareParts = async (partnerId:string) => {
   try {
-    const partnerId = localStorage.getItem("PartnerId") ?? ''
     const response = await Client.partner.spareparts.getAll(partnerId);
     return response;
   } catch (error) {
