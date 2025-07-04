@@ -5,7 +5,7 @@ import Client from '../../api/index.ts';
 import { FONTS } from '../../constants/constants.ts';
 // import { pinnedAnnouncementsAPI } from './services/index.tsx';
 
-const categories = ["All", "General", "Booking", "Payments"];
+const categories = ["All", "General", "Offeres", "Services"];
 
 type announcement = {
   userId: {
@@ -71,7 +71,7 @@ const AnnouncementPages = () => {
       : announcements.filter((a) => a.category === selectedCategory);
 
   return (
-    <div className="flex flex-col p-2  h-screen">
+    <div className="flex flex-col p-2  h-[650px]">
       <div className='flex flex-row'>
         
         <h1 className="text-center p-4 "style={{...FONTS.header}}>
@@ -79,16 +79,15 @@ const AnnouncementPages = () => {
         </h1>
       </div>
 
-      <div className="flex gap-4 flex-row mt-3 items-stretch">
+      <div className="flex gap-4 h-[550px] xl:h-[700px] flex-row mt-3 items-stretch">
 
-        {/* Category List */}
         <div className="w-1/6 bg-white rounded-xl shadow p-2 flex flex-col">
           <h2 className=" mb-2"style={{...FONTS.header,fontSize:22}}>Category</h2>
           <ul>
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer p-4 rounded-full  ${selectedCategory === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
+                className={`cursor-pointer p-4 rounded-full  ${selectedCategory.toLowerCase() === cat ? "bg-[#7812A4] text-white font-bold" : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -97,8 +96,7 @@ const AnnouncementPages = () => {
           </ul>
         </div>
 
-        {/* Announcement List */}
-        <div className="w-2/4 bg-white rounded-xl shadow p-4 flex flex-col space-y-4">
+        <div className="w-2/4 bg-white rounded-xl shadow p-4 flex flex-col space-y-4 overflow-auto" style={{scrollbarWidth:"none"}}>
           {filteredAnnouncements.map((a) => (
             <div
               key={a.uuid}
@@ -125,7 +123,6 @@ const AnnouncementPages = () => {
           ))}
         </div>
 
-        {/* Pinned Announcements */}
         <div className="w-1/3 bg-white rounded-xl shadow p-4 flex flex-col">
           <h2 className=" mb-4 flex items-center gap-1"style={{...FONTS.header,fontSize:22}}>
             Pinned Announcements

@@ -6,6 +6,7 @@ import {
   getAllSpareParts,
 } from "./Services/index";
 import { FONTS } from "../../constants/constants";
+import { EllipsisVertical } from "lucide-react";
 
 interface SparePart {
   _id: string;
@@ -62,6 +63,7 @@ const SpareParts: React.FC = () => {
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPart, setNewPart] = useState<Omit<SparePart, "id" |"_id">>({
     productName: "",
@@ -101,19 +103,10 @@ const SpareParts: React.FC = () => {
       const createdPart = response.data.data;
       setPartsData((prev) => [...prev, createdPart]);
       resetAddForm();
-      // if (newPart.productName.trim() && newPart.image[0].trim()) {
-      //   // const id = Math.max(...partsData.map(p => p._i;
-      //   const partToAdd: SparePart = {
-      //     ...newPart,
-      //   };
-      //   setPartsData((prev) => [...prev, newPart]);
-      //   setShowAddForm(false);
-      //   setNewPart(null);
-      // }
     } catch (error) {
       console.error("Error creating spare part:", error);
     }
-    //  setShowAddForm(false);
+     setShowAddForm(false);
   };
 
   const deletePart = async (partId: string) => {
@@ -134,9 +127,6 @@ const SpareParts: React.FC = () => {
     );
   };
 
-  // const addNewPart = () => {
-
-  // };
 
   const resetAddForm = () => {
     setNewPart({
@@ -230,35 +220,59 @@ const SpareParts: React.FC = () => {
       {/* Product Grid */}
      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
   {filteredParts?.map((part, index) => {
-    const imageUrls = [
-      "https://carfromjapan.com/wp-content/uploads/2017/11/1-1.jpg", 
-      "https://www.autoeducation.com/images/engine2.jpg", 
-      "https://performancedrive.com.au/wp-content/uploads/2013/12/Volvo-S60-Polestar-V8-Supercar-engine-4.jpg", 
-      "https://performancedrive.com.au/wp-content/uploads/2013/12/Volvo-S60-Polestar-V8-Supercar-engine-2.jpg", 
-      "https://www.h2-view.com/wp-content/files/33423/engine-scaled.jpg" 
-    
-    ];
-
-    const imageUrl = imageUrls[index % imageUrls.length];
-
+  
     return (
       <div
         key={index}
         className="group relative border rounded-lg overflow-hidden shadow transition-transform duration-300 cursor-pointer bg-[white] hover:scale-105 hover:shadow-[0_0_10px_rgba(155,17,30,0.5)]"
-        onClick={() => setSelectedPart(part)}
+        // onClick={() => setSelectedPart(part)}
         // onMouseEnter={() => setHoveredIndex(index)}
         // onMouseLeave={() => setHoveredIndex(null)}
         style={{ minHeight: "260px" }}
       >
-        {/* Image Section */}
+
+        <div className="relative">
+          <button
+            className="absolute top-3 right-3 z-10 p-2 bg-white/90 hover:bg-white rounded-3xl shadow-md transition-all duration-200"
+            aria-label="Quick view"
+            onClick={(e) => {
+              e.stopPropagation(); 
+              setMenuOpenId(menuOpenId === part._id ? null : part._id);
+            }}
+          >
+            <EllipsisVertical className="w-4 h-4 text-black" />
+          </button>
+
+          {menuOpenId === part._id && (
+            <div className="absolute right-3 top-12 z-20 w-20 bg-white border border-gray-200 rounded-3xl shadow-lg">
+              <button
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-3xl"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedPart(part)
+                  setMenuOpenId(null);
+                }}
+              >
+                Edit
+              </button>
+              {/* <button
+                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-3xl"
+                onClick={() => {
+                  if (selectedPart) deletePart(selectedPart?._id);
+                  setSelectedPart(null);
+                }}
+              >
+                Delete
+              </button> */}
+            </div>
+          )}
+        </div>
+       
         <div className="h-[180px] flex justify-center items-center overflow-hidden rounded-md">
           <img
-            src={part?.image?.length >= 0 && part?.image[0] || imageUrl}
+            src={part?.image}
             alt={part?.productName}
             className="w-full h-full object-cover transition-all duration-300 ease-in-out"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = imageUrl;
-            }}
           />
         </div>
 
