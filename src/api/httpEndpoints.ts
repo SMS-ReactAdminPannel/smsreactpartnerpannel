@@ -36,7 +36,7 @@ const generateEndpoints = () => {
     spareparts: {
       create: `/api/admin/spareparts/create`,
       getById: `/api/admin/spareparts/get/:id`,
-      getAll: `/api/admin/spareparts/getall`,
+      getAll: `/api/admin/spareparts/getall/:uuid`,
       update: `/api/admin/spareparts/update/:uuid`,
       updateStatus: `/api/admin/spareparts/updatestatus/:id`,
       delete: `/api/admin/spareparts/delete`,

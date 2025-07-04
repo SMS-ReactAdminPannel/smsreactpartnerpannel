@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import { TiPin } from "react-icons/ti";
-import { HiArrowLeft } from "react-icons/hi";
-import { useNavigate } from 'react-router-dom';
 import Client from '../../api/index.ts';
 import { FONTS } from '../../constants/constants.ts';
 // import { pinnedAnnouncementsAPI } from './services/index.tsx';
@@ -28,7 +27,6 @@ const AnnouncementPages = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [announcements, setAnnouncements] = useState<announcement[]>([]);
   const [pinnedAnnouncements, setPinnedAnnouncements] = useState<announcement[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {

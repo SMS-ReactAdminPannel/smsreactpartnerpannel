@@ -22,10 +22,10 @@ const EnquiryForm = () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const payload:any = {
-        subject: formData.fullName,
-        description: formData.enquiry,
-        phone: formData.phoneNumber,
-      //  date: formData.date,
+        fullName: formData.fullName,
+        yourEnquiry: formData.enquiry,
+        phoneNumber: formData.phoneNumber,
+        Date: new Date() ,
       };
 
       const response = await createEnquiry(payload);

@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
 import { getAllNotifications, markNotificationsAsRead } from "./Services/index";
 import { FONTS } from "../../constants/constants";
 
@@ -19,7 +17,6 @@ type MailItem = {
 
 
 export default function GmailStyleInbox() {
-  const navigate = useNavigate();
 
   const [selectedMail, setSelectedMail] = useState<MailItem | null>(null);
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");

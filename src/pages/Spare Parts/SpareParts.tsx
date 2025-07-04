@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import {
   createSparePart,
@@ -75,7 +76,7 @@ const SpareParts: React.FC = () => {
   useEffect(() => {
     const fetchParts = async () => {
       try {
-        const response: any = await getAllSpareParts("");
+        const response: any = await getAllSpareParts();
         console.log("Fetched spare parts:", response.data.data);
         setPartsData(response.data.data);
       } catch (error) {
@@ -133,7 +134,6 @@ const SpareParts: React.FC = () => {
 
   const resetAddForm = () => {
     setNewPart({
-      _id:'',
       productName: "",
       price: "0",
       inStock: true,

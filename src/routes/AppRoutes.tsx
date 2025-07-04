@@ -15,7 +15,7 @@ import AnnouncementPage from '../pages//Announcements/Announcementspages';
 import LoginPage1 from '../pages/auth/LoginPage1';
 import Order from '../pages/Orders/order';
 import Service from '../pages/Service Management/Service';
-import ServiceCatList from '../pages/serviceList/servicecatList';
+// import ServiceCatList from '../pages/serviceList/servicecatList';
 import PrivacyPolicySettings from '../pages/SettingsPage/pages/PrivacyPolicyPage';
 import TermsConditionsPage from '../pages/SettingsPage/pages/TermsContionsPage';
 import EnquiryPage from '../pages/Enquiry/EnquiryPage';
@@ -41,7 +41,7 @@ const AppRoutes = () => {
 				<Route path='service' element={<Service/>} />
 				<Route path='profile' element={<ProfileManagement />} />
 				<Route path='bookings' element={<Bookings />} />
-				<Route path='servicecatList' element={<ServiceCatList/>} />
+				{/* <Route path='servicecatList' element={<ServiceCatList/>} /> */}
 				<Route path='customer' element={<CustomerManagement />} />
 				<Route path='spare-parts' element={<SpareParts />} />
 				<Route path='settings' element={<SettingsPage />} />

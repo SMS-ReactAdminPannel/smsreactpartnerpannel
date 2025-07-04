@@ -1,5 +1,5 @@
 import { AiOutlineCopyrightCircle, AiOutlineDashboard } from 'react-icons/ai';
-import { COLORS, FONTS } from '../../constants/constants';
+import { FONTS } from '../../constants/constants';
 import DashboardCard from '../../components/dashboard/DashboradCard/DashboradCard';
 import { Card, CardContent } from '../../components/dashboard/ui/card';
 import {
@@ -104,7 +104,7 @@ const Dashboard = () => {
 	let xDataKey = '';
 
 	async function fetchProfile() {
-		const data = await DashboardProfile()
+		await DashboardProfile()
 		const profile = await getMeDeatails()
 		console.log(profile.data,"prfile data")
 		localStorage.setItem("PartnerId",profile.data._id)

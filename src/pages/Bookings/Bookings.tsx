@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
-import { COLORS, FONTS } from "../../constants/constants";
+import { FONTS } from "../../constants/constants";
 import ServiceBookingPanel from "../../components/Booking/BookingCom";
 import DashboardCard from "../../components/Booking/BookingDashCard/DashCardBooking";
 import History from "../../components/Booking/BookingHistroy/BookingHistroy";

@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { COLORS, FONTS } from '../../constants/constants';
 import { useAuth } from '../../pages/auth/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-// import { FaTools } from 'react-icons/fa';
-import carLogo from '../../assets/icons8-car-service-64.png';
 import booking from '../../assets/New Booking.png'
 import bell from '../../assets/Notification.svg'
 
@@ -35,8 +33,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const [isBellActive, setIsBellActive] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [showProfileDetails, setShowProfileDetails] = useState(false);
-	// const [isEditing, setIsEditing] = useState(false);
-	const [isEditing, _setIsEditing] = useState(false);
+	const isEditing = false;
 	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 	const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
@@ -45,9 +42,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	const notificationRef = useRef<HTMLDivElement | null>(null);
 	const modalRef = useRef<HTMLDivElement | null>(null);
 	const { logout } = useAuth();
-	// const [notifications, setNotifications] = useState<Notification[]>([
-	const [notifications, _setNotifications] = useState<Notification[]>([
-
+	const [notifications, setNotifications] = useState<Notification[]>([
 		{
 			id: 1,
 			message: 'New task assigned to you: Project Review',
@@ -102,6 +97,32 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 				setShowNotifications(false);
 			}
 		};
+		setNotifications([
+			{
+				id: 1,
+				message: 'New task assigned to you: Project Review',
+				time: '5 minutes ago',
+				isRead: true,
+			},
+			{
+				id: 2,
+				message: 'Your report has been approved',
+				time: '1 hour ago',
+				isRead: true,
+			},
+			{
+				id: 3,
+				message: 'System maintenance scheduled for tomorrow',
+				time: '3 hours ago',
+				isRead: true,
+			},
+			{
+				id: 4,
+				message: 'Welcome to the dashboard! Take a tour',
+				time: '1 day ago',
+				isRead: true,
+			},
+		])
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => document.removeEventListener('mousedown', handleClickOutside);
 	}, []);

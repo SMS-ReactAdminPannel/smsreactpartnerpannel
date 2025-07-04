@@ -22,7 +22,7 @@ class Client {
       getById: (params: string) =>
         HttpClient.get(HTTP_END_POINTS.spareparts.getById, params),
       getAll: (params: string) =>
-        HttpClient.get(HTTP_END_POINTS.spareparts.getAll, params),
+        HttpClient.get(HTTP_END_POINTS.spareparts.getAll.replace(":uuid",params), params),
       update: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.spareparts.getAll, data, params),
       updateStatus: (data: any, params: string) =>
@@ -85,7 +85,7 @@ class Client {
         HttpClient.update(HTTP_END_POINTS.services.update, data, params),
       updateStatus: (data: any, params: string) =>
         HttpClient.update(HTTP_END_POINTS.services.updateStatus, data, params),
-      deleteservice:()=>HttpClient.delete(HTTP_END_POINTS.services.delete)
+      deleteservice:(params:string)=>HttpClient.delete(HTTP_END_POINTS.services.delete.replace(":id",params))
     },
     notifications: {
       create: (data: any) =>
@@ -154,6 +154,10 @@ class Client {
     },
     category:{
       create:(data:any)=>HttpClient.post(HTTP_END_POINTS.category.create,data)
+    },
+    Enquiry:{
+      create:(data:any)=>HttpClient.post(HTTP_END_POINTS.Enquiry.create,data),
+      get:()=>HttpClient.get(HTTP_END_POINTS.Enquiry.get),
     }
   };
 }

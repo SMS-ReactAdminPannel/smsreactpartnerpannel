@@ -2,16 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { COLORS, FONTS } from "../../constants/constants";
 
-type BookingStatus = "Pending" | "Viewed" | "Solved";
+// type BookingStatus = "Pending" | "Viewed" | "Solved";
 
-interface ServiceBooking {
-  _id: number;
-  firstName: string;
-  lastName: string;
-  serviceItems: string[];
-  serviceDateTime: string;
-  status: BookingStatus;
-}
+// interface ServiceBooking {
+//   _id: number;
+//   firstName: string;
+//   lastName: string;
+//   serviceItems: string[];
+//   serviceDateTime: string;
+//   status: BookingStatus;
+// }
 
 // interface ServiceBooking{
 //   id: number,
@@ -206,7 +206,7 @@ const ServiceBookingPanel: React.FC<servicesType> = ({services}) => {
               <div className="p-4 flex-1 flex flex-col">
                 <h4 className="font-semibold mb-2 text-[#9b111e]">Services</h4>
                 <div className="space-y-2 overflow-y-auto flex-1 pr-1 max-h-64 scrollbar-hide">
-                  {selectedBooking.services.map((purpose, index) => (
+                  {selectedBooking.services.map((purpose:any, index:number) => (
                     <div key={index} className="bg-gray-100 hover:scale-[1.022] rounded p-3 text-sm shadow-sm">
                       <p
                         onClick={() => {

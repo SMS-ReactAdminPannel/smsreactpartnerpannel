@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Client from '../../../api'
-export const createEnquiry = async (data:string)=>{
+export const createEnquiry = async (data:any)=>{
     try{
-   const response:any=await Client.partner.enquery.create(data)
-   return response
+        const response:any=await Client.partner.Enquiry.create(data)
+        return response
     }
     catch(error){
-    console.log('created successfully ',error)
+        console.log('created successfully ',error)
     }
 }
 

@@ -5,6 +5,7 @@ import { MdModeEdit } from "react-icons/md";
 import { FONTS } from "../../constants/constants";
 import toggleon from "../../assets/Toogle On.svg"
 import toggleoff from "../../assets/Toogle Off.svg"
+import { CreateCategory, createService, deleteService, getallServices, GetCatgeory, updateServices } from "./services/servicecatlog";
 // import { IoArrowBackOutline } from "react-icons/io5";
 type Category = { name: string; count: number };
 type Service = {
@@ -19,7 +20,7 @@ type Service = {
 };
 
 const ServiceCatList: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All Services");
   const [showAddForm, setShowAddForm] = useState(false);
@@ -32,7 +33,7 @@ const ServiceCatList: React.FC = () => {
 
   const Partner_id = localStorage.getItem("PartnerId")
 
-  const [newService, setNewService] = useState<Service>({
+  const [newService, setNewService] = useState<any>({
     uuid: "",
     service_name: "",
     category_id: "",
@@ -54,18 +55,6 @@ const ServiceCatList: React.FC = () => {
       if (response?.data && Array.isArray(response.data)) {
         const fetchedServices = response.data;
         setServices(fetchedServices);
-
-        // const categoryMap: { [key: string]: number } = {};
-        // fetchedServices.forEach((s) => {
-        //   categoryMap[s.category_id] = (categoryMap[s.category_id] || 0) + 1;
-        // });
-
-        // const updatedCategories = [
-        //   { name: "All Services", count: fetchedServices.length },
-        //   ...Object.entries(categoryMap).map(([name, count]) => ({ name, count })),
-        // ];
-
-        // setCategories(updatedCategories);
       }
       console.log(response.data,"servicess")
     } catch (error) {
@@ -183,8 +172,8 @@ const ServiceCatList: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredServices.map((s) => (
-              <div key={s.id} className="group relative bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 ">
+            {filteredServices.map((s,index) => (
+              <div key={index} className="group relative bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 ">
                   <img src={s.imageUrl} className="w-full h-40 object-cover" />
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button className="bg-black text-white p-1 rounded-full" onClick={() => handleEditService(s)}>
