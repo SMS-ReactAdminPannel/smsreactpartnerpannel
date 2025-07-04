@@ -868,28 +868,28 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
             <div className="flex justify-center mb-2">
               <MdHomeFilled className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>4000+</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader,fontSize:18}}>4000+</p>
             <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Authorized Service Centers</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <FaLocationDot className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>3800+</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader,fontSize:18}}>3800+</p>
             <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Cities Nationwide Connected</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <TbCertificate className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader}}>5000+</p>
+            <p className="!font-bold !text-black"style={{...FONTS.cardSubHeader,fontSize:18}}>5000+</p>
             <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Certified Technicians</p>
           </div>
           <div className="text-center">
             <div className="flex justify-center mb-2">
               <RiCustomerService2Fill className="w-8 h-8 text-[#9b111e]" />
             </div>
-            <p className="!font-bold !text-black" style={{...FONTS.cardSubHeader}}>10+ yrs</p>
+            <p className="!font-bold !text-black" style={{...FONTS.cardSubHeader,fontSize:18}}>10+ yrs</p>
             <p className="!text-gray-600"style={{...FONTS.cardSubHeader}}>Of Customer Care Expertise</p>
           </div>
         </div>
