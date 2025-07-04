@@ -153,15 +153,7 @@ const SideBar = ({
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/> */}
-					<SidebarLink
-						to='/notifications'
-						// icon={<FiBell />}
-						icon={[<img src={notifications1} alt="notifications icon" style={{ width: 20, height: 20 }} />, <img src={notifications} alt="active home icon" style={{ width: 20, height: 20 }} />]}
-
-						label='Notifications'
-						isOpen={isOpen}
-						onClick={handleLinkClick}
-					/>
+					
 					<SidebarLink
 						to='/announcement'
 						icon={[<img src={Announcement1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Announcement} alt="active home icon" style={{ width: 20, height: 20 }} />]}
@@ -189,6 +181,15 @@ const SideBar = ({
 						to='/faq'
 						icon={[<img src={faq1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={faq} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='FAQs'
+						isOpen={isOpen}
+						onClick={handleLinkClick}
+					/>
+					<SidebarLink
+						to='/notifications'
+						// icon={<FiBell />}
+						icon={[<img src={notifications1} alt="notifications icon" style={{ width: 20, height: 20 }} />, <img src={notifications} alt="active home icon" style={{ width: 20, height: 20 }} />]}
+
+						label='Notifications'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
