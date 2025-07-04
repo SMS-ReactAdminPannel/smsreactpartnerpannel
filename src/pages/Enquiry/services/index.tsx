@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Client from '../../../api'
 export const createEnquiry = async (data:string)=>{
     try{

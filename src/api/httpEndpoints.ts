@@ -112,6 +112,11 @@ const generateEndpoints = () => {
       delete: "/api/admin/category/delete/:uuid",
       create: "/api/admin/category/create",
     },
+    Enquiry:{
+      create:"/api/serviceEnquiry/createEnquiry",
+      get:"/api/serviceEnquiry/getAllEnquiries",
+      put:"/api/serviceEnquiry/updateEnquiry/:id"
+    }
   };
 };
 
