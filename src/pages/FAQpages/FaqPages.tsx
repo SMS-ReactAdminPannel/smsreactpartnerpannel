@@ -279,17 +279,14 @@ const FaqPage = () => {
       }`}
     >
 
-      {
-      categoryIcons[category] ??
       <img
-      src={categoryIcons[category] || ""}
+      src={`${categoryIcons[category]}`}
         className={`w-5 h-5 transition duration-200 ${
           activeCategory === category
             ? "filter brightness-0 invert"
             : "group-hover:filter group-hover:brightness-0"
         }`}
       />
-      }
       {category}
     </li>
   ))}
@@ -305,10 +302,7 @@ const FaqPage = () => {
         >
           <h2 className="text-xl font-semibold bg-white mb-4 sticky top-0 text-[#7812A4] flex items-center gap-2">
             <div className="bg-[#7812A4] text-white rounded-full p-2">
-              {
-                categoryIcons[activeCategory] ?? <img src={categoryIcons[activeCategory] ?? ''} alt=""  className="w-5 h-5 filter invert brightness-0"/>
-              }
-
+             <img src={` ${categoryIcons[activeCategory]} `} alt="logo"  className="w-5 h-5 filter invert brightness-0"/>
               
             </div>
             {activeCategory} Questions
