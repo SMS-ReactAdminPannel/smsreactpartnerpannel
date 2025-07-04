@@ -57,7 +57,7 @@ const AboutPage: React.FC = () => {
   return (
     <div className="  bg-white shadow-lg rounded-xl ">
       {/* Hero Section */}
-      <div className="relative bg-[#9b111e] !text-white rounded-lg ">
+      <div className="relative bg-[#7812A4] !text-white rounded-lg ">
         <div className="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="!text-5xl !text-white !font-bold mb-6 !bg-gradient-to-r !from-white !to-blue-200 !bg-clip-text "
@@ -246,7 +246,7 @@ const AboutPage: React.FC = () => {
 
 
       {/* Contact CTA */}
-      <div className="bg-[#9b111e] py-20">
+      <div className="bg-[#7812A4] py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="!text-4xl !font-bold !text-white mb-6" style={{...FONTS.header}}>Ready to Experience the Difference?</h2>
           <p className="!text-lg !text-blue-100 mb-8 max-w-2xl mx-auto" style={{ ...FONTS.paragraph }}>

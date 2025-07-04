@@ -342,7 +342,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						ref={modalRef}
 						className='bg-[#FAF3EB] rounded-2xl shadow-2xl w-full max-w-2xl md:max-w-xl sm:max-w-md overflow-hidden'
 					>
-						<div className='bg-gradient-to-r from-red-600 to-red-800 p-6 flex items-center justify-between !text-white'>
+						<div className='bg-gradient-to-r from-[#7812A4] to-[#7812A4] p-6 flex items-center justify-between !text-white'>
 							<div className='flex items-center space-x-4'>
 								<img
 									src={editedUser.avatar}
