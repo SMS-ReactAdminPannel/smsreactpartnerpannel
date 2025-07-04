@@ -138,9 +138,9 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   }, []);
 
   const stats = [
-    { label: "Total Requests", value: "248", change: "+12%", color: "blue" },
-    { label: "Completed Today", value: "23", change: "+8%", color: "green" },
-    { label: "Pending", value: "15", change: "-5%", color: "yellow" },
+    { label: "Total Requests", value: serviceRequests.length, change: "+12%", color: "blue" },
+    { label: "Completed Today", value: "3", change: "+8%", color: "green" },
+    { label: "Pending", value: jobCards.length, change: "-5%", color: "yellow" },
     
   ];
 
@@ -200,7 +200,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
     try {
       const deleteCard = await deleteJobCards(param);
       console.log(deleteCard)
-      setJobCards(jobCards.filter((c) => c.uuid !== param))
+      setJobCards(jobCards.filter((c) => c.uuid != param))
     } catch (error) {
       console.log("Job Cards Deleted ", error)
     }

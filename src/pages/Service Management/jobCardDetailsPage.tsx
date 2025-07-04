@@ -438,8 +438,9 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
 
     const response:any = await createJobCards(payload);
     if (response?.data) {
-      alert("Job Card Created Successfully!");
+      // alert("Job Card Created Successfully!");
       if (onClose) onClose();
+      handleBack()
     } else {
       throw new Error("No response from server.");
     }
