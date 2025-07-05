@@ -91,6 +91,7 @@ interface ServiceManagementProps {
 const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
   const [jobCards, setJobCards] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchReq, setSearchReq] = useState("");
   const [serviceRequests, setServiceRequests] = useState<any[]>([]);
   const [selectedJobCard, setSelectedJobCard] = useState<JobCard | null>(null);
   const [showJobCardModal, setShowJobCardModal] = useState(false);
@@ -255,6 +256,8 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                     type="search"
                     placeholder="Search request..."
                     className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-full"
+                    value={searchReq}
+                    onChange={(e)=> setSearchReq(e.target.value)}
                   />
                 </div>
 
@@ -275,7 +278,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                       Request ID
                     </th>
                     <th className="text-left py-3 px-6 ">
-                      Customer
+                      Phone No
                     </th>
                     <th className="text-left py-3 px-6 ">
                       Vehicle
@@ -293,7 +296,13 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {Array.isArray(serviceRequests) &&
-                    serviceRequests.map((request) => (
+                    serviceRequests.filter((req)=>[
+                      req.requestId,
+                      req.customerId.contact_info.phoneNumber,
+                      req.customerId.vehicleInfo?.registerNumber
+                    ]
+                    .join("").toLowerCase().includes(searchReq.toLowerCase())
+                  ).map((request) => (
                       <tr key={request._id} className="hover:bg-gray-50">
                         <td className="py-4 px-6">
                           <span className="font-medium !text-blue-600"style={{...FONTS.paragraph}}>
