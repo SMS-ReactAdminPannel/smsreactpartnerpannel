@@ -5,7 +5,7 @@ import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 import { FaRegAddressCard} from "react-icons/fa";
 import { createJobCards } from './Services';
 import { FONTS } from '../../constants/constants';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 interface ApiData {
@@ -104,7 +104,7 @@ const defaultApiData: ApiData = {
 };
 
 const JobCardDetailsPage: React.FC<JobCardDetailsPageProps> = ({ 
-  apiData = defaultApiData, onClose, handleBack
+  apiData = defaultApiData, handleBack
 }) => {
   const [formData, setFormData] = useState<FormData>({
     // Vehicle Inventory
@@ -380,7 +380,7 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     }
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSave = async (): Promise<void> => {
   try {
