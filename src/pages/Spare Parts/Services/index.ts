@@ -31,6 +31,7 @@ export const getAllSpareParts = async (partnerId:string) => {
 export const updateSparePart = async (data: any, params: string) => {
   try {
     const response = await Client.partner.spareparts.update(data, params);
+    console.log(response,"update cheicnng")
     return response
   } catch (error) {
     console.log('Error updating spare part:', error);

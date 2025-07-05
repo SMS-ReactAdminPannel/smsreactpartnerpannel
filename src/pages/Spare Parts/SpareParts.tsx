@@ -4,6 +4,7 @@ import {
   createSparePart,
   deleteSpareParts,
   getAllSpareParts,
+  updateSparePart,
 } from "./Services/index";
 import { FONTS } from "../../constants/constants";
 import { EllipsisVertical } from "lucide-react";
@@ -18,6 +19,7 @@ interface SparePart {
   inStock: boolean;
   category: string;
   slug: string;
+  warrantyPeriod:string;
   partnerId:string;
 }
 
@@ -75,6 +77,7 @@ const SpareParts: React.FC = () => {
     category: "spare",
     brand: "new",
     partnerId:"",
+    warrantyPeriod:""
   });
 
   const partner_id = localStorage.getItem("PartnerId") ?? ''
@@ -121,10 +124,24 @@ const SpareParts: React.FC = () => {
 
   const filteredParts = partsData.filter((part) => part.productName);
 
-  const updatePart = (updatedPart: SparePart) => {
+  const updatePart = async(updatedParts: SparePart) => {
     setPartsData((prev) =>
-      prev.map((part) => (part._id === updatedPart._id ? updatedPart : part))
+      prev.map((part) => (part._id === updatedParts._id ? updatedParts : part))
     );
+    const datas ={
+      productName: selectedPart?.productName,
+      price: selectedPart?.price,
+      slug: selectedPart?.slug,
+      brand: selectedPart?.brand,
+      image: selectedPart?.image,
+      stock: selectedPart?.stock,
+      inStock:selectedPart?.inStock,
+      category: selectedPart?.category,
+      warrantyPeriod: selectedPart?.warrantyPeriod,
+      reStockAuto: false,
+    }
+    await updateSparePart(datas,updatedParts._id ?? '')
+    // setSelectedPart(null);
   };
 
 
@@ -138,7 +155,8 @@ const SpareParts: React.FC = () => {
       brand: "new",
       category: "Engine",
       stock: "12",
-      partnerId:partner_id
+      partnerId:partner_id,
+      warrantyPeriod:""
     });
     setShowAddForm(false);
   };
@@ -255,7 +273,7 @@ const SpareParts: React.FC = () => {
               >
                 Edit
               </button>
-              {/* <button
+              <button
                 className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-3xl"
                 onClick={() => {
                   if (selectedPart) deletePart(selectedPart?._id);
@@ -263,7 +281,7 @@ const SpareParts: React.FC = () => {
                 }}
               >
                 Delete
-              </button> */}
+              </button>
             </div>
           )}
         </div>
@@ -574,7 +592,7 @@ const SpareParts: React.FC = () => {
             {/* Product Image */}
             <div className="mb-4 flex justify-center">
               <img
-                src="https://carfromjapan.com/wp-content/uploads/2017/11/1-1.jpg"
+                src={selectedPart?.image}
                 alt={selectedPart?.productName}
                 className="w-48 h-48 object-cover rounded-lg shadow-md"
               />
@@ -687,10 +705,7 @@ const SpareParts: React.FC = () => {
 
             <div className="flex justify-between gap-2 mt-6">
               <button
-                onClick={() => {
-                  if (selectedPart) updatePart(selectedPart);
-                  setSelectedPart(null);
-                }}
+                onClick={() => {updatePart(selectedPart);}}
                 className="bg-[#9b111e] text-white py-2 px-3 rounded hover:bg-red-700 transition text-xs"
               >
                 Save & Close
