@@ -5,6 +5,8 @@ import { Lock, Car, Wrench, Edit3, Plus, Trash2 } from 'lucide-react';
 import { FaRegAddressCard} from "react-icons/fa";
 import { createJobCards } from './Services';
 import { FONTS } from '../../constants/constants';
+import { useNavigate } from 'react-router-dom';
+
 
 interface ApiData {
   jobId: string;
@@ -378,6 +380,8 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     }
   };
 
+  const navigate = useNavigate();
+
   const handleSave = async (): Promise<void> => {
   try {
     const payload = {
@@ -440,11 +444,11 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
     if (response?.data) {
       // alert("Job Card Created Successfully!");
       if (onClose) onClose();
-      handleBack()
+      // handleBack()
+      navigate("/service")
     } else {
       throw new Error("No response from server.");
     }
-    handleBack()
   } catch (err) {
     console.error("Failed to create job card:", err);
     alert("Failed to create job card. Please try again.");

@@ -5,11 +5,20 @@ import { useAuth } from '../../pages/auth/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import booking from '../../assets/New Booking.png'
 import bell from '../../assets/Notification.svg'
+import { getProfile } from '../../pages/SettingsPage/services';
+import Avatar from "../../assets/Partner_Avatar.jpg"
 
 
 interface User {
-	name: string;
-	phone: string;
+	firstName: string;
+	lastName: string;
+	companyName: string;
+	contact_info : {
+       phoneNumber: string;
+	   city: string;
+	   state: string;
+	}
+	is_active: boolean
 	email: string;
 	avatar: string;
 	role: string;
@@ -69,17 +78,17 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 		},
 	]);
 
-	const [editedUser, setEditedUser] = useState<User>({
-		name: 'SMS Partner',
-		phone: '+1 856-589-998-1236',
-		email: 'smspartner@gmail.com',
-		avatar:
-			'https://img.freepik.com/free-photo/cute-smiling-young-man-with-bristle-looking-satisfied_176420-18989.jpg?semt=ais_hybrid&w=740',
-		role: 'System Administrator',
-		location: 'San Francisco, CA',
-		joinDate: 'August 17, 2018',
-		status: 'Active',
-	});
+	const [editedUser, setEditedUser] = useState<User>();
+
+	const fetchProfile = async () => {
+		const Profile: any = await getProfile("");
+		console.log("Profile", Profile)
+		setEditedUser(Profile?.data?.data)
+	}
+
+	useEffect(() => {
+		fetchProfile()
+	}, [])
 
 	// 🔁 Handle outside clicks for dropdown & notifications
 	useEffect(() => {
@@ -201,7 +210,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						<img
 							src={booking}
 							alt=''
-							style={{ width: '35px', height: '35px'}}
+							style={{ width: '35px', height: '35px' }}
 						/>
 						<AnimatePresence>
 							{hasNewBooking && (
@@ -226,12 +235,11 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						<button
 							aria-label='Notifications'
 							onClick={handleBellClick}
-							className={`relative p-2.5 rounded-full bg-white focus:outline-none transform transition-transform duration-200 ease-in-out ${
-								isBellActive ? 'scale-90' : 'scale-100'
-							}`}
+							className={`relative p-2.5 rounded-full bg-white focus:outline-none transform transition-transform duration-200 ease-in-out ${isBellActive ? 'scale-90' : 'scale-100'
+								}`}
 						>
-							<img src={bell} 
-						style={{ width: '20px', height: '20px'}}/>
+							<img src={bell}
+								style={{ width: '20px', height: '20px' }} />
 
 							{unreadCount > 0 && (
 								<span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
@@ -239,7 +247,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 								</span>
 							)}
 						</button>
-						
+
 
 						{showNotifications && (
 							<div className='absolute right-0 mt-2 w-80 rounded-lg shadow-xl bg-white z-50 overflow-hidden'>
@@ -251,9 +259,8 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 										notifications.map((notification) => (
 											<div
 												key={notification.id}
-												className={`group relative p-3 border-b hover:bg-gray-50 transition-colors duration-150 ${
-													notification.isRead ? 'bg-white' : 'bg-red-50'
-												}`}
+												className={`group relative p-3 border-b hover:bg-gray-50 transition-colors duration-150 ${notification.isRead ? 'bg-white' : 'bg-red-50'
+													}`}
 											>
 												{/* This vertical red line will now appear on hover */}
 												<div className='absolute left-0 top-0 h-full w-1 bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200'></div>
@@ -296,14 +303,14 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						>
 							<div className='w-12 h-12 rounded-full overflow-hidden'>
 								<img
-									src={editedUser.avatar}
+									src={editedUser?.avatar}
 									alt='User Avatar'
 									className='w-full h-full object-cover'
 								/>
 							</div>
 							<div className='flex flex-col'>
 								<span className='text-[white] font-medium'>
-									{editedUser.name}
+									{editedUser?.firstName}
 								</span>
 								<div className='flex items-center text-sm text-[white]'>
 									Partner
@@ -366,13 +373,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 						<div className='bg-gradient-to-r from-[#7812A4] to-[#7812A4] p-6 flex items-center justify-between !text-white'>
 							<div className='flex items-center space-x-4'>
 								<img
-									src={editedUser.avatar}
+									src={editedUser?.avatar}
 									alt='User'
 									className='w-20 h-20 rounded-full border-4 border-white shadow-md'
 								/>
 								<div>
-									<h2 className='text-2xl !text-white font-bold'style={{...FONTS.cardheader}}>{editedUser.name}</h2>
-									<p className='text-sm opacity-90 !text-white' style={{...FONTS.cardSubHeader}}>Partner</p>
+									<h2 className='text-2xl !text-white font-bold' style={{ ...FONTS.cardheader }}>{editedUser?.firstName + " " + editedUser?.lastName}</h2>
+									<p className='text-sm opacity-90 !text-white' style={{ ...FONTS.cardSubHeader }}>{editedUser?.companyName}</p>
 								</div>
 							</div>
 							<button
@@ -397,21 +404,31 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 							</button>
 						</div>
 
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 p-6 !text-gray-700'style={{...FONTS.paragraph}}>
+						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 p-6 !text-gray-700' style={{ ...FONTS.paragraph }}>
 							<div className='space-y-3'>
-								{['phone', 'email', 'location'].map((field) => (
-									<div key={field}>
-										<h4 className='text-sm !text-gray-500'style={{...FONTS.paragraph}} >
-											{field.charAt(0).toUpperCase() + field.slice(1)}
-										</h4>
-										<p className='text-lg'style={{...FONTS.tableHeader}}>{editedUser[field as keyof User]}</p>
-									</div>
-								))}
+								{['phone', 'email', 'location'].map((field) => {
+									let value = '';
+
+									if (field === 'phone') value = editedUser?.contact_info?.phoneNumber || '-';
+									else if (field === 'email') value = editedUser?.email || '-';
+									else if (field === 'location') value = `${editedUser?.contact_info?.city || ''}, ${editedUser?.contact_info?.state || ''}`.trim();
+
+									return (
+										<div key={field}>
+											<h4 className='text-sm !text-gray-500' style={{ ...FONTS.paragraph }}>
+												{field.charAt(0).toUpperCase() + field.slice(1)}
+											</h4>
+											<p className='text-lg' style={{ ...FONTS.tableHeader }}>
+												{value}
+											</p>
+										</div>
+									);
+								})}
 							</div>
 							<div className='space-y-3'>
 								{['role', 'joinDate', 'status'].map((field) => (
 									<div key={field}>
-										<h4 className='text-sm !text-gray-500'style={{...FONTS.paragraph}}>
+										<h4 className='text-sm !text-gray-500' style={{ ...FONTS.paragraph }}>
 											{field === 'joinDate'
 												? 'Join Date'
 												: field.charAt(0).toUpperCase() + field.slice(1)}
@@ -427,10 +444,10 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 											/>
 										) : field === 'status' ? (
 											<span className='inline-block px-3 py-1 text-sm rounded-full bg-green-100 text-green-700'>
-												{editedUser.status}
+												{editedUser?.is_active === true ? "Active" : "In Active"}
 											</span>
 										) : (
-											<p className='text-lg'style={{...FONTS.tableHeader}}>
+											<p className='text-lg' style={{ ...FONTS.tableHeader }}>
 												{editedUser[field as keyof User]}
 											</p>
 										)}
