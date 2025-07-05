@@ -297,23 +297,23 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                 <tbody className="divide-y divide-gray-200">
                   {Array.isArray(serviceRequests) &&
                     serviceRequests.filter((req)=>[
-                      req.requestId,
-                      req.customerId.contact_info.phoneNumber,
-                      req.customerId.vehicleInfo?.registerNumber
+                      req?.requestId,
+                      req?.customerId?.contact_info?.phoneNumber,
+                      req?.customerId?.vehicleInfo?.registerNumber
                     ]
                     .join("").toLowerCase().includes(searchReq.toLowerCase())
                   ).map((request) => (
                       <tr key={request._id} className="hover:bg-gray-50">
                         <td className="py-4 px-6">
                           <span className="font-medium !text-blue-600"style={{...FONTS.paragraph}}>
-                            {request.requestId}
+                            {request?.requestId}
                           </span>
                         </td>
                         <td className="flex py-4 px-6">
                           <div>
                             <p className="font-medium flex !text-gray-900"style={{...FONTS.paragraph}}>
                               <Phone className="w-3 h-3 mt-1 mr-1" />
-                              {request.customerId.contact_info.phoneNumber}
+                              {request?.customerId?.contact_info?.phoneNumber}
                             </p>
                           </div>
                         </td>
@@ -321,7 +321,7 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                           <div className="flex items-center space-x-2">
                             <Car className="w-4 h-4 text-gray-500" />
                             <span className="!text-gray-900" style={{...FONTS.paragraph}}>
-                              {request.customerId.vehicleInfo?.registerNumber || "car"}
+                              {request?.customerId?.vehicleInfo?.registerNumber || "car"}
                             </span>
                           </div>
                         </td>
@@ -335,17 +335,17 @@ const ServiceManagement: React.FC<ServiceManagementProps> = ({ onView }) => {
                             <p className="!text-gray-600 flex items-center mt-1">
                               <Clock className="w-3 h-3 mr-1" style={{...FONTS.paragraph}} />
                               {/* {request.scheduledTime} */}
-                              {request.assigned_date.split('T')[1].split('.')[0]}
+                              {request?.assigned_date.split('T')[1].split('.')[0]}
                             </p>
                           </div>
                         </td>
                         <td className="py-4 px-6"style={{...FONTS.paragraph}} >
                           <span
                             className={`text-sm font-medium capitalize ${getPriorityColor(
-                              request.priority
+                              request?.priority
                             )}`}
                           >
-                            {request.priority}
+                            {request?.priority}
                           </span>
                         </td>
                         <td className="py-4 px-6">
