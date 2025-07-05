@@ -23,8 +23,8 @@ const LoginPage1 = () => {
 		formState: { errors },
 	} = useForm<LoginData>({
 		defaultValues:{
-			email:"partner@gmail.com",
-			password:"Partner@123"
+			email:"",
+			password:""
 		}
 	});
 	const [showPassword, setShowPassword] = useState(false);
