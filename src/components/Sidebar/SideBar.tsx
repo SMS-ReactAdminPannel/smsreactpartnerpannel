@@ -1,19 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import { FiHome, FiBell, FiSettings} from 'react-icons/fi';
-// import { IoIosHelpCircleOutline } from 'react-icons/io';
-// import { RiCustomerService2Fill } from 'react-icons/ri';
-// import { Megaphone } from 'lucide-react';
 import { RiMenu2Line, RiMenu3Line } from 'react-icons/ri';
-// import { MdBuild } from 'react-icons/md';
-// import { AiOutlineCalendar } from 'react-icons/ai';
-// import { MdQuestionAnswer } from 'react-icons/md';
-// import { FaCogs } from 'react-icons/fa';
-// import { COLORS } from '../../constants/constants';
 import Logo from '../../assets/sidebaricon/logo/Partner_sm_logo.png'
 import Logo1 from '../../assets/sidebaricon/logo/Partner_lg_logo.png'
-// import { BsCart4 } from 'react-icons/bs';
 import  home from '../../assets/sidebaricon/Dashboard (1).svg'
 import home1 from '../../assets/sidebaricon/Dashboard (1) (2).svg'
 import notifications from '../../assets/sidebaricon/Notifications.svg'
@@ -33,10 +22,6 @@ import Help1 from '../../assets/sidebaricon/Enquiry Page.svg'
 import faq from '../../assets/sidebaricon/FAQs (1).svg';
 import faq1 from '../../assets/sidebaricon/whiteicon/FAQs (2).svg'
 import { FONTS } from '../../constants/constants';
-
-
-
-
 
 const COLOR = {
 	primary: '#7812A4',
@@ -90,6 +75,7 @@ const SideBar = ({
 						icon={[<img src={home} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={home1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 
 						label='Dashboard'
+						tooltip='dashboard'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -101,6 +87,7 @@ const SideBar = ({
 					icon={[<img src={spareparts1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={spareparts} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
 						label='Spare Parts '
+						tooltip='spare parts'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -118,6 +105,7 @@ const SideBar = ({
 					icon={[<img src={Bookings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Bookings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
 						label='Bookings'
+						tooltip='bookings'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -128,6 +116,7 @@ const SideBar = ({
 					icon={[<img src={Service1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Service} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 			
 						label='Service '
+						tooltip='service'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -143,6 +132,7 @@ const SideBar = ({
 						to='/settings'
 						icon={[<img src={Settings1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Settings} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Settings'
+						tooltip='settings'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -158,6 +148,7 @@ const SideBar = ({
 						to='/announcement'
 						icon={[<img src={Announcement1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={Announcement} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Announcement'
+						tooltip='announcement'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -165,6 +156,7 @@ const SideBar = ({
 						to='/enquiry-page'
 						icon={[<img src={Help} alt="home icon" style={{ width: 20, height: 20 }} />, <img src={Help1} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='Enquiry'
+						tooltip='enqiry'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -181,6 +173,7 @@ const SideBar = ({
 						to='/faq'
 						icon={[<img src={faq1} alt="home icon" style={{ width: 20, height: 20 }} />,<img src={faq} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 						label='FAQs'
+						tooltip='faqs'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -190,6 +183,7 @@ const SideBar = ({
 						icon={[<img src={notifications1} alt="notifications icon" style={{ width: 20, height: 20 }} />, <img src={notifications} alt="active home icon" style={{ width: 20, height: 20 }} />]}
 
 						label='Notifications'
+						tooltip='notification'
 						isOpen={isOpen}
 						onClick={handleLinkClick}
 					/>
@@ -218,50 +212,79 @@ const SidebarLink = ({
   label,
   isOpen,
   onClick,
+  tooltip,
 }: {
   to: string;
   icon: any;
   label: string;
   isOpen: boolean;
+  tooltip: string;
   onClick: () => void;
 }) => {
   const location = useLocation();
   const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isActive = location.pathname === to;
 
   const backgroundColor = isActive
     ? COLOR.primary
     : isHovered
-      ? COLOR.bgColor
-      : "transparent";
+    ? COLOR.bgColor
+    : "transparent";
 
-  const textColor = isActive ? COLOR.bgColor : COLOR.font;
+  const textColor = isActive ? COLOR.bgColor : "gray";
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePosition({ x: e.clientX, y: e.clientY });
+  };
 
   return (
-    <Link
-      to={to}
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ backgroundColor }}
-      className={`flex items-center transition-all py-1 
-        ${
-          isOpen
-            ? " justify-start gap-5  w-[200px] py-2.5 px-4"
-            : "justify-center w-10 h-10 py-2"
-        } 
-        rounded-full
-      `}
-    >
-      <div className="text-xl" style={{ color: textColor }}>
-        {isActive ? icon[0]: icon[1]}
-      </div>
-      {isOpen && (
-        <span style={{ ...FONTS.cardSubHeader, color: textColor }}>
-          {label}
-        </span>
+    <div className="relative w-full flex justify-center">
+      <Link
+        to={to}
+        onClick={onClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onMouseMove={handleMouseMove}
+        style={{ backgroundColor }}
+        className={`flex items-center transition-all py-1 
+          ${
+            isOpen
+              ? "justify-start gap-5 w-[200px] py-2.5 px-4"
+              : "justify-center w-10 h-10 py-2"
+          } 
+          rounded-full
+        `}
+      >
+        <div className="text-xl" style={{ color: textColor }}>
+          {isActive ? icon[0] : icon[1]}
+        </div>
+        {isOpen && (
+          <span
+            style={{
+              ...FONTS.cardSubHeader,
+              color: textColor,
+              fontWeight: 500,
+            }}
+          >
+            {label}
+          </span>
+        )}
+      </Link>
+
+      {/* Tooltip on cursor position */}
+      {!isOpen && isHovered && (
+        <div
+          className="fixed bg-gray-200 text-black text-xs rounded px-2 py-1 z-50 whitespace-nowrap shadow-md pointer-events-none"
+          style={{
+            top: mousePosition.y + 30,
+            left: mousePosition.x - 20,
+          }}
+        >
+          {tooltip}
+        </div>
       )}
-    </Link>
+    </div>
   );
 };
 
