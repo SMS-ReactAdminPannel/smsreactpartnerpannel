@@ -7,7 +7,7 @@ import {
   updateSparePart,
 } from "./Services/index";
 import { FONTS } from "../../constants/constants";
-import { EllipsisVertical, Search } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 import { IoMdClose } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
 

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import booking from '../../assets/New Booking.png'
 import bell from '../../assets/Notification.svg'
 import { getProfile } from '../../pages/SettingsPage/services';
-import Avatar from "../../assets/Partner_Avatar.jpg"
+// import Avatar from "../../assets/Partner_Avatar.jpg"
 
 
 interface User {
@@ -165,7 +165,7 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 	};
 
 	const handleChange = <K extends keyof User>(field: K, value: User[K]) => {
-		setEditedUser((prev) => ({ ...prev, [field]: value }));
+		setEditedUser((prev:any) => ({ ...prev, [field]: value }));
 	};
 
 	const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -436,7 +436,13 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 										{isEditing ? (
 											<input
 												type='text'
-												value={editedUser[field as keyof User]}
+												value={
+													editedUser
+														? typeof editedUser[field as keyof User] === 'string' || typeof editedUser[field as keyof User] === 'number'
+															? String(editedUser[field as keyof User])
+															: ''
+														: ''
+												}
 												onChange={(e) =>
 													handleChange(field as keyof User, e.target.value)
 												}
@@ -448,7 +454,16 @@ const Navbar: React.FC<Props> = ({ hasNewBooking }) => {
 											</span>
 										) : (
 											<p className='text-lg' style={{ ...FONTS.tableHeader }}>
-												{editedUser[field as keyof User]}
+												{editedUser
+													? typeof editedUser[field as keyof User] === 'string' || typeof editedUser[field as keyof User] === 'number'
+														? String(editedUser[field as keyof User])
+														: typeof editedUser[field as keyof User] === 'boolean'
+															? editedUser[field as keyof User] ? 'Yes' : 'No'
+															: editedUser[field as keyof User] && typeof editedUser[field as keyof User] === 'object'
+																? JSON.stringify(editedUser[field as keyof User])
+																: '-'
+													: '-'
+												}
 											</p>
 										)}
 									</div>
