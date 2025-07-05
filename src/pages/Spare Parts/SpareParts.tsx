@@ -589,7 +589,7 @@ const SpareParts: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={() => setSelectedPart(null)}
+              onClick={() =>{seteditForm(false); setSelectedPart(null)}}
               className="absolute top-2 right-2 text-3xl font-bold text-gray-600 hover:text-red-600"
               aria-label="Close modal"
             >
