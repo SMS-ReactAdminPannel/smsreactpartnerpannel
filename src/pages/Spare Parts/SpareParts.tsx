@@ -81,6 +81,7 @@ const SpareParts: React.FC = () => {
     partnerId:"",
     warrantyPeriod:""
   });
+  const [editForm, seteditForm] = useState(false);
 
   const partner_id = localStorage.getItem("PartnerId") ?? ''
 
@@ -273,6 +274,7 @@ const SpareParts: React.FC = () => {
                 className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-3xl"
                 onClick={(e) => {
                   e.stopPropagation();
+                  seteditForm(true)
                   setSelectedPart(part)
                   setMenuOpenId(null);
                 }}
@@ -281,7 +283,9 @@ const SpareParts: React.FC = () => {
               </button>
               <button
                 className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-3xl"
-                onClick={() => setShowDeleteConfirm(true)}
+                onClick={() =>{ 
+                  setSelectedPart(part)
+                  setShowDeleteConfirm(true)}}
               >
                 Delete
               </button>
@@ -575,7 +579,7 @@ const SpareParts: React.FC = () => {
       )}
 
       {/* Edit Product Modal */}
-      {selectedPart && (
+      {selectedPart&& editForm  && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4"
           onClick={() => setSelectedPart(null)}
@@ -726,7 +730,7 @@ const SpareParts: React.FC = () => {
       )}
 
       {/* Delete Confirmation Toast */}
-      {showDeleteConfirm && selectedPart && (
+      {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg">
             <div className="flex items-center mb-4">
