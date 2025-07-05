@@ -442,13 +442,11 @@ const updateServiceItems = (id: string, field: keyof servicesmain, value: string
 
     const response:any = await createJobCards(payload);
     if (response?.data) {
-      // alert("Job Card Created Successfully!");
-      if (onClose) onClose();
-      // handleBack()
-      navigate("/service")
-    } else {
-      throw new Error("No response from server.");
-    }
+  alert("Job Card Created Successfully!");
+    setTimeout(() => handleBack(), 0); // Defer routing till after modal unmount
+  } else {
+    handleBack()
+  }
   } catch (err) {
     console.error("Failed to create job card:", err);
     alert("Failed to create job card. Please try again.");
